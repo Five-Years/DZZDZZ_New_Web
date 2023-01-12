@@ -1,39 +1,29 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
-  }
-}
-
-.App-header {
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
 }
 
-.App-link {
-  color: rgb(112, 76, 182);
+
+
+
+@font-face {
+  font-family: 'PFStardust';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
-@keyframes App-logo-float {
-  0% {
-    transform: translateY(0);
+
+
+  
+  /* @media screen and (max-width:1024px) and (min-width:900px){
+  
+  img{width:300px;}
+  
   }
-  50% {
-    transform: translateY(10px);
+  
+  @media screen and (max-width:900px){
+  
+  img{width:250px;}
+  
   }
-  100% {
-    transform: translateY(0px);
-  }
-}
+  [출처] Day14 CSS : 미디어쿼리, flex-grow|작성자 무기력인간 */
