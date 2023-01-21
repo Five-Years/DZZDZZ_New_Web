@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice,configureStore } from '@reduxjs/toolkit';
 
 const initialState = {
-  value: false
+  value: false,
+  query : 1
 };
 
  const StateSlice = createSlice({
@@ -12,6 +13,9 @@ const initialState = {
     Popup: (state) => {
       state.value = !state.value
     },
+    Number : (state,action) => {
+      state.query = action.payload
+    }
   },
  
 });

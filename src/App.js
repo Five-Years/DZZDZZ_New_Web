@@ -3,8 +3,10 @@ import './App.css';
 import styled from 'styled-components';
 import MainHeader from './Components/MainHeader';
 import Footer from './Components/Footer';
-import Question from './Components/Question';
+import Inquiry from './Components/Inquiry';
 import { useSelector, useDispatch } from 'react-redux';
+import { AnimatePresence } from "framer-motion";
+
 function App() {
   const Popup = useSelector((state) => {return state.Popup.value});
   const [Rendering, setRendering] = useState(false)
@@ -15,13 +17,16 @@ function App() {
 
   return (
     <div className="App">
+      <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
         <MainFrame>
         <MainHeader />
         <Footer />
         </MainFrame>
         {/* 애니메이션 효과 추가하기 */}
         {/* framer motion */}
-        {Rendering ? <Question/> : <></>}
+        <AnimatePresence>
+        <Inquiry />
+        </AnimatePresence>
     </div>
   );
 }
