@@ -1,188 +1,259 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
-import { motion, transform, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import StateSlice from "../features/State/StateSlice";
 import { useDispatch, useSelector } from "react-redux";
-import emailjs from '@emailjs/browser';
+import emailjs from "@emailjs/browser";
 
 function Inquiry() {
-    const form = useRef();
-
-    const sendEmail = (e) => {
-      e.preventDefault();
-  
-      emailjs.sendForm('service_im4e0a8', 'template_26k6dnn', form.current, 'JyampQ_mf0PiiMRiP')
-        .then((result) => {
-            alert("전송완료")
-            console.log(result.text);
-        }, (error) => {
-            console.log(error.text);
-        });
-    };
+  const form = useRef();
+  const checkform = () => {
+    var from_corporate = document.getElementById("from_corporate")
+    var from_name = document.getElementById("from_name")
+    var from_phone = document.getElementById("from_phone")
+    var from_email = document.getElementById("from_email")
+    var from_address = document.getElementById("from_address")
+    var from_path = document.getElementById("from_path")
+    //var from_message = document.getElementById("from_message")
     
+
+    if(from_corporate.value === "" || from_name.value==="" || from_phone.value==="" || from_email.value ==="" || from_address.value==="" || from_path.value==="") {
+      alert("필수 옵션을 채워주세요");
+      return false     
+  }
+  return true
+  }
+  // 필수입력 옵션 체크 기능 넣기
+  const sendEmail = (e) => {
+    if(checkform())
+    {    e.preventDefault();
+      emailjs
+      .sendForm(
+        "service_im4e0a8",
+        "template_26k6dnn",
+        form.current,
+        "JyampQ_mf0PiiMRiP"
+      )
+      .then(
+        (result) => {
+          alert("전송완료");
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );}
+  };
+
   const Popup = useSelector((state) => {
     return state.Popup.value;
   });
   const Number = useSelector((state) => {
     return state.Popup.query;
-  }); // 제휴/광고 구분코드, 제휴문의코드 => 1 광고문의코드 => 2
+  });
+  // 제휴/광고 구분, 제휴문의 => 1 광고문의 => 2
   const dispatch = useDispatch();
 
   const variants = {
     start: {
       y: Popup ? "100vh" : 0,
-      opacity : Popup? 1 : 0,
+      opacity: Popup ? 1 : 0,
     },
     end: {
       y: Popup ? 0 : "100vh",
-      opacity : 1,
+      opacity: 1,
 
       transition: {
-        duration: 1,
+        duration: 0.5,
       },
     },
   };
-  //  event 감지로 없애기
   return (
     <AnimatePresence>
-        {Popup? <InquiryContainer
-      key={Popup}
-      variants={variants}
-      initial="start"
-      animate="end"
-      exit={{y : "100vh", opacity : 0, transition : {duration : 1}} }
-    >
-      <ContentContainer>
-        <Cancel>
-          <span
-            onClick={() => {
-              dispatch(StateSlice.actions.Popup());
-            }}
-          >
-            X
-          </span>
-        </Cancel>
-        <ContentDiv>
-          <TitleContainer>
-            <TitleTopic>
-              {Number == 1 ? (
-                <span>제휴문의</span>
-              ) : (
-                <span>광고 상담/문의</span>
-              )}
-            </TitleTopic>
-            <TitleDetail>
-              <span>
-                아래의 신청 항목을 작성해주시면, 담당자 확인 후 최대한 빠르게
-                연락 드리도록 하겠습니다.
+      {Popup ? (
+        <InquiryContainer
+          key={Popup}
+          variants={variants}
+          initial="start"
+          animate="end"
+          exit={{ y: "100vh", opacity: 0, transition: { duration: 0.5 } }}
+        >
+          <ContentContainer>
+            <Cancel>
+              <span
+                onClick={() => {
+                  dispatch(StateSlice.actions.Popup());
+                }}
+              >
+                X
               </span>
-            </TitleDetail>
-          </TitleContainer>
+            </Cancel>
+            <ContentDiv>
+              <TitleContainer>
+                <TitleTopic>
+                  {Number === 1 ? (
+                    <span>제휴문의</span>
+                  ) : (
+                    <span>광고 상담/문의</span>
+                  )}
+                </TitleTopic>
+                <TitleDetail>
+                  <span>
+                    아래의 신청 항목을 작성해주시면, 담당자 확인 후 최대한
+                    빠르게 연락 드리도록 하겠습니다.
+                  </span>
+                </TitleDetail>
+              </TitleContainer>
 
-          <InputContainer>
-          <form ref={form} onSubmit={sendEmail}>
-            <Input>
-              <EachInput>
-                <InputTitle>
-                  <span>기업명</span>
-                  <span className="essential">*</span>
-                </InputTitle>
-                <InputWindow>
-                  <input placeholder="기업명을 입력해주세요" type="text" name="from_corporate"></input>
-                </InputWindow>
-              </EachInput>
-              <EachInput>
-                <InputTitle>
-                  <span>담당자</span>
-                  <span className="essential">*</span>
-                </InputTitle>
-                <InputWindow>
-                  <input placeholder="담당자 성함" type="text" name="from_name"></input>
-                </InputWindow>
-              </EachInput>
-            </Input>{" "}
-            {/* 모바일에선 세로로 출력*/}
-            <Input>
-              <EachInput>
-                <InputTitle>
-                  <span>연락처</span>
-                  <span className="essential">*</span>
-                </InputTitle>
-                <InputWindow>
-                  <input placeholder="담당자 개인 번호" type="text" name="from_phone"></input>
-                </InputWindow>
-              </EachInput>
-              <EachInput>
-                <InputTitle>
-                  <span>이메일</span>
-                  <span className="essential">*</span>
-                </InputTitle>
-                <InputWindow>
-                  <input placeholder="biz@5iveyears.com" type="text" name="from_email"></input>
-                </InputWindow>
-              </EachInput>
-            </Input>{" "}
-            {/* 모바일에선 세로로 출력*/}
-            <Input className="long">
-              <EachInput className="long">
-                <InputTitle className="long">
-                  <span>주소</span>
-                  <span className="essential">*</span>
-                </InputTitle>
-                <InputWindow className="long">
-                  <input
-                    className="long"
-                    type="text"
-                    placeholder="주소를 입력해주세요."
-                    name="from_address"
-                  ></input>
-                </InputWindow>
-              </EachInput>
-            </Input>
-            <Input className="long">
-              <EachInput className="long">
-                <InputTitle className="long">
-                  <span>유입경로</span>
-                  <span className="essential">*</span>
-                </InputTitle>
-                <InputWindow className="long">
-                  <input
-                    className="long"
-                    type="text"
-                    placeholder="어떤 경로를 통해서 알게되셨나요?."
-                    name="from_path"
-                  ></input>
-                </InputWindow>
-              </EachInput>
-            </Input>
-            <InputFree>
-              <InputTitle className="FreeTitle">
-                <span>문의사항</span>
-              </InputTitle>
-              <InputWindow className="FreeInput">
-                <textarea
-                  placeholder="문의사항을 입력해주세요."
-                  cols="50"
-                  rows="3"
-                  type="text"
-                  name="from_message"
-                ></textarea>
-              </InputWindow>
-            </InputFree>
-            </form>
-          </InputContainer>
-          <ButtonContainer className="pc">
-            <Button onClick={sendEmail}>문의하기</Button>
-          </ButtonContainer>
-        </ContentDiv>
-        <MobileWrapper className="mobile">
-          <ButtonContainer>
-            <Button onClick={sendEmail}>문의하기</Button>
-          </ButtonContainer>
-        </MobileWrapper>
-      </ContentContainer>
-    </InquiryContainer>: <></>}
-    
+              <InputContainer>
+                <form ref={form} name = "myform">
+                  <Input>
+                    <EachInput>
+                      <InputTitle>
+                        <span>기업명</span>
+                        <span className="essential">*</span>
+                      </InputTitle>
+                      <InputWindow>
+                        <input
+                          placeholder="기업명을 입력해주세요"
+                          type="text"
+                          name="from_corporate"
+                          id="from_corporate"
+                          required
+                        ></input>
+                      </InputWindow>
+                    </EachInput>
+                    <EachInput>
+                      <InputTitle>
+                        <span>담당자</span>
+                        <span className="essential">*</span>
+                      </InputTitle>
+                      <InputWindow>
+                        <input
+                          placeholder="담당자 성함"
+                          type="text"
+                          name="from_name"
+                          id="from_name"
+                          required
+                        ></input>
+                      </InputWindow>
+                    </EachInput>
+                  </Input>
+                  {/* 모바일에선 세로로 출력*/}
+                  <Input>
+                    <EachInput>
+                      <InputTitle>
+                        <span>연락처</span>
+                        <span className="essential">*</span>
+                      </InputTitle>
+                      <InputWindow>
+                        <input
+                          placeholder="담당자 개인 번호"
+                          type="text"
+                          name="from_phone"
+                          id="from_phone"
+                          required
+                        ></input>
+                      </InputWindow>
+                    </EachInput>
+                    <EachInput>
+                      <InputTitle>
+                        <span>이메일</span>
+                        <span className="essential">*</span>
+                      </InputTitle>
+                      <InputWindow>
+                        <input
+                          placeholder="biz@5iveyears.com"
+                          type="text"
+                          name="from_email"
+                          id="from_email"
+                          required
+                        ></input>
+                      </InputWindow>
+                    </EachInput>
+                  </Input>
+                  {/* 모바일에선 세로로 출력*/}
+                  <Input className="long">
+                    <EachInput className="long">
+                      <InputTitle className="long">
+                        <span className="address">주소</span>
+                        <span className="essential">*</span>
+                      </InputTitle>
+                      <InputWindow className="long">
+                        <input
+                          className="long"
+                          type="text"
+                          placeholder="주소를 입력해주세요."
+                          name="from_address"
+                          id="from_address"
+                          required
+                        ></input>
+                      </InputWindow>
+                    </EachInput>
+                  </Input>
+                  <Input className="long">
+                    <EachInput className="long">
+                      <InputTitle className="long">
+                        <span>유입경로</span>
+                        <span className="essential">*</span>
+                      </InputTitle>
+                      <InputWindow className="long">
+                        <input
+                          className="long"
+                          type="text"
+                          placeholder="어떤 경로를 통해서 알게되셨나요?."
+                          name="from_path"
+                          id="from_path"
+                          required
+                        ></input>
+                      </InputWindow>
+                    </EachInput>
+                  </Input>
+                  <InputFree>
+                    <InputTitle className="FreeTitle">
+                      <span>문의사항</span>
+                    </InputTitle>
+                    <InputWindow className="FreeInput">
+                      <textarea
+                        placeholder="문의사항을 입력해주세요."
+                        cols="50"
+                        rows="3"
+                        type="text"
+                        name="from_message"
+                        id="from_message"
+                      ></textarea>
+                    </InputWindow>
+                  </InputFree>
+                </form>
+              </InputContainer>
+              <ButtonContainer className="pc">
+                <Button
+                  onClick={sendEmail}
+                  style={{
+                    backgroundColor: Number === 1 ? "#FF477E" : "#0094FF",
+                  }}
+                >
+                  문의하기
+                </Button>
+              </ButtonContainer>
+            </ContentDiv>
+            <MobileWrapper className="mobile">
+              <ButtonContainer>
+                <Button
+                  onClick={sendEmail}
+                  style={{
+                    backgroundColor: Number === 1 ? "#FF477E" : "#0094FF",
+                  }}
+                >
+                  문의하기
+                </Button>
+              </ButtonContainer>
+            </MobileWrapper>
+          </ContentContainer>
+        </InquiryContainer>
+      ) : (
+        <></>
+      )}
     </AnimatePresence>
   );
 }
@@ -399,7 +470,7 @@ const InputTitle = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 5px;
+  //gap: 5px;
   width: 350px;
   height: 21px;
 
@@ -423,7 +494,7 @@ const InputTitle = styled.div`
 
   &.long {
     width: 740px;
-
+    text-align: start;
     > span {
       width: 58px;
       color: #000000;
@@ -720,13 +791,12 @@ const Button = styled.div`
   gap: 10px;
   width: 245px;
   height: 48px;
-  background: #ff477e;
   border-width: 1px 2px 2px 1px;
   border-style: solid;
   border-color: #49516f;
   border-radius: 6px;
 
   :active {
-    opacity : 0.5;
+    opacity: 0.5;
   }
 `;

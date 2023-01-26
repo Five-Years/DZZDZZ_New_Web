@@ -2,10 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import MainPopup from "./MainPopup";
 import MainEvent from "./MainEvent";
+import { useSelector, useDispatch } from 'react-redux';
+import StateSlice from "../features/State/StateSlice";
 
 function MainHeader() {
+  const Popup = useSelector((state) => {return state.Popup.value});
+  const dispatch = useDispatch()
   return (
-    <HeaderBackground>
+    <HeaderBackground onClick={() => {Popup ? dispatch(StateSlice.actions.Popup()) : <></> }}  style = {{backgroundColor : Popup?  "rgba(35, 24, 21, 0.3)" : "white"}}>
       <HeaderContainer>
         <HeaderContentContainer>
           <MainPopup />
@@ -22,7 +26,6 @@ export default MainHeader;
 const HeaderBackground = styled.div`
   width: 100vw;
   height: 57.5vh;
-  background-color: white;
   display: flex;
   justify-content: center;
 

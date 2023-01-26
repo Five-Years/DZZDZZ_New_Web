@@ -3,20 +3,20 @@ import styled from "styled-components";
 
 function MainEvent() {
 
-  const [Day,setDay] = useState("00");
+//  const [Day,setDay] = useState("00");
   const [Hour,setHour] = useState("00");
   const [Minute,setMinute] = useState("00");
   const [Second,setSecond] = useState("00");
 
   useEffect(()=> {
-    const Times = setInterval(()=> {
+    setInterval(()=> {
     const Dday = new Date('2023-03-01T00:00:00+0900')
     const now = new Date()
 
 
     const dis = Dday.getTime()-now.getTime() // 잔여시간(ms단위)
     const min = 1000 * 60 //1000ms => 1s , 1s*60 = 1m 
-    setDay(String(Math.floor(dis/(min*60*24))).padStart(2,'0'))
+    // setDay(String(Math.floor(dis/(min*60*24))).padStart(2,'0'))
     setHour(String(Math.floor((dis%(min*60*24))/ (min*60))).padStart(2,'0'))
     setMinute(String(Math.floor((dis% (min*60))/ min)).padStart(2,'0'))
     setSecond(String(Math.floor((dis%min)/1000)).padStart(2,0))
@@ -40,8 +40,8 @@ function MainEvent() {
           <span>다운로드</span>
         </DownButton>
         <Sns>
-          <img src={require("../assets/insta.png")} alt="" />
-          <img src={require("../assets/kakao.png")} alt="" />
+          <img src={require("../assets/insta.png")} alt="" onClick={()=>{window.open("http://www.naver.com")}}/>
+          <img src={require("../assets/kakao.png")} alt="" onClick={()=>{window.open("http://www.naver.com")}} />
         </Sns>
       </Description>
     </ContentContainer>
@@ -191,6 +191,10 @@ const Sns = styled.div`
   height: 94px;
 
   > img {
+    :active {
+      opacity : 0.5;
+    }
+
     width: 50px;
     height: 50px;
   }
@@ -205,6 +209,9 @@ const Sns = styled.div`
     gap: 40px;
 
     > img {
+      :active {
+      opacity : 0.5;
+    }
       width: 40px;
       height: 40px;
     }

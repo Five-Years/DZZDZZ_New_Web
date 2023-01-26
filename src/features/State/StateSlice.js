@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice,configureStore } from '@reduxjs/toolkit';
+import {  createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   value: false,

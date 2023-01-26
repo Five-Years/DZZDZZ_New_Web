@@ -197,7 +197,12 @@ const Link = styled.div`
   color: white;
   gap: 24px;
 
+
   > a {
+    :active {
+        opacity : 0.5;
+    }
+
     font-family: "Noto Sans";
     font-style: normal;
     font-weight: 500;
