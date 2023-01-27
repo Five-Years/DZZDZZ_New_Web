@@ -1,48 +1,55 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
-import StateSlice from "../features/State/StateSlice";
+import StateSlice from "../../features/State/StateSlice";
 import { useDispatch, useSelector } from "react-redux";
 import emailjs from "@emailjs/browser";
 
 function Inquiry() {
   const form = useRef();
   const checkform = () => {
-    var from_corporate = document.getElementById("from_corporate")
-    var from_name = document.getElementById("from_name")
-    var from_phone = document.getElementById("from_phone")
-    var from_email = document.getElementById("from_email")
-    var from_address = document.getElementById("from_address")
-    var from_path = document.getElementById("from_path")
+    var from_corporate = document.getElementById("from_corporate");
+    var from_name = document.getElementById("from_name");
+    var from_phone = document.getElementById("from_phone");
+    var from_email = document.getElementById("from_email");
+    var from_address = document.getElementById("from_address");
+    var from_path = document.getElementById("from_path");
     //var from_message = document.getElementById("from_message")
-    
 
-    if(from_corporate.value === "" || from_name.value==="" || from_phone.value==="" || from_email.value ==="" || from_address.value==="" || from_path.value==="") {
+    if (
+      from_corporate.value === "" ||
+      from_name.value === "" ||
+      from_phone.value === "" ||
+      from_email.value === "" ||
+      from_address.value === "" ||
+      from_path.value === ""
+    ) {
       alert("필수 옵션을 채워주세요");
-      return false     
-  }
-  return true
-  }
+      return false;
+    }
+    return true;
+  };
   // 필수입력 옵션 체크 기능 넣기
   const sendEmail = (e) => {
-    if(checkform())
-    {    e.preventDefault();
+    if (checkform()) {
+      e.preventDefault();
       emailjs
-      .sendForm(
-        "service_im4e0a8",
-        "template_26k6dnn",
-        form.current,
-        "JyampQ_mf0PiiMRiP"
-      )
-      .then(
-        (result) => {
-          alert("전송완료");
-          console.log(result.text);
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );}
+        .sendForm(
+          "service_im4e0a8",
+          "template_26k6dnn",
+          form.current,
+          "JyampQ_mf0PiiMRiP"
+        )
+        .then(
+          (result) => {
+            alert("전송완료");
+            console.log(result.text);
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        );
+    }
   };
 
   const Popup = useSelector((state) => {
@@ -106,7 +113,7 @@ function Inquiry() {
               </TitleContainer>
 
               <InputContainer>
-                <form ref={form} name = "myform">
+                <form ref={form} name="myform">
                   <Input>
                     <EachInput>
                       <InputTitle>
@@ -205,7 +212,14 @@ function Inquiry() {
                           name="from_path"
                           id="from_path"
                           required
-                        ></input>
+                          list="path"
+                        />
+                        <datalist id="path">
+                          <option>광고</option>
+                          <option>검색</option>
+                          <option>링크</option>
+                          <option>홍보</option>
+                        </datalist>
                       </InputWindow>
                     </EachInput>
                   </Input>
@@ -555,6 +569,9 @@ const InputWindow = styled.div`
     margin-left: 10px;
     border: none;
     outline: none;
+    ::-webkit-calendar-picker-indicator {
+      opacity: 100;
+    }
   }
 
   &.long {
@@ -562,7 +579,7 @@ const InputWindow = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: flex-end;
     width: 740px;
     height: 41px;
     background: #ffffff;

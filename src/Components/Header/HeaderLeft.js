@@ -3,7 +3,7 @@ import styled from "styled-components";
 import CloseIcon from "@mui/icons-material/Close";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 
-function MainPopup() {
+function HeaderLeft() {
   return (
     <PopupContainer>
       <PopupClose>
@@ -13,7 +13,7 @@ function MainPopup() {
         <PopupImage>
           <img
             className="team"
-            src={require("../assets/dz.jpg")}
+            src={require("../../assets/dz.jpg")}
             alt="이미지"
           />
         </PopupImage>
@@ -25,19 +25,19 @@ function MainPopup() {
       <PopupDivder></PopupDivder>
       <ButtonContainer>
         <AppButton className="Android">
-          <img src={require("../assets/GooglePlayLogo.png")} alt="" />
-          <img src={require("../assets/AndroidLogo2.png")} alt="" />
+          <img src={require("../../assets/GooglePlayLogo.png")} alt="" />
+          <img src={require("../../assets/AndroidLogo2.png")} alt="" />
         </AppButton>
         <AppButton className="Ios">
-          <img src={require("../assets/AppStoreLogo.png")} alt="" />
-          <img src={require("../assets/AppleLogo.png")} alt="" />
+          <img src={require("../../assets/AppStoreLogo.png")} alt="" />
+          <img src={require("../../assets/AppleLogo.png")} alt="" />
         </AppButton>
       </ButtonContainer>
     </PopupContainer>
   );
 }
 
-export default MainPopup;
+export default HeaderLeft;
 
 const PopupContainer = styled.div`
   box-sizing: border-box;

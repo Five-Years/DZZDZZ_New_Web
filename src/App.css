@@ -4,28 +4,10 @@
   height : 100vh;
 }
 
-
-
-
+/* 폰트 */
 @font-face {
   font-family: 'PFStardust';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
-
-
-
-  
-  /* @media screen and (max-width:1024px) and (min-width:900px){
-  
-  img{width:300px;}
-  
-  }
-  
-  @media screen and (max-width:900px){
-  
-  img{width:250px;}
-  
-  }
-  [출처] Day14 CSS : 미디어쿼리, flex-grow|작성자 무기력인간 */
