@@ -163,6 +163,7 @@ const Frame6935 = styled.div`
 
   width: 260px;
   height: 228px;
+
 `;
 
 const Frame6945 = styled.div`
@@ -212,7 +213,8 @@ const Frame6885 = styled.div`
   position: absolute;
   width: 390px;
   height: 50px;
-  bottom: 168px;
+  bottom: 20%;
+
 
   > text {
     width: 127px;
