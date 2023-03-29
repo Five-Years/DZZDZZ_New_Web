@@ -101,10 +101,8 @@ function Home() {
 export default Home;
 
 const MobileContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  min-width: 390px;
-  min-height: 746px;
+  width: 100vw;
+  height: 100vh;
   background-color: white;
 `;
 
@@ -112,7 +110,7 @@ const Rectangle187 = styled.div`
   position: absolute;
   width: 100%;
   height: 418px;
-  background: #ff477e;
+  background: #ff477e;  
 `;
 
 const Frame6952 = styled.div`
@@ -134,8 +132,9 @@ const Frame6952 = styled.div`
   position: absolute;
   width: 393px;
   height: 210px;
-  left: -1px;
+  transform: translate(50%,0);
   top: 535px;
+
 `;
 
 const CardFrame6936 = styled.div`
@@ -254,13 +253,14 @@ const Ticket = styled.div`
 
 const CardContainer = styled.div`
   position: absolute;
-  display: flexbox;
+  display: flex;
   flex-direction: row;
   width: 260px;
   height: 353px;
-  left: 65px;
-  top: 166px;
+  left: 50%;
   gap: 25px;
+  transform: translate(-50%, 0%);
+  top: 166px;
   overflow-x: scroll;
 `;
 

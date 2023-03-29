@@ -72,10 +72,8 @@ export default Matching2;
 
 const MatchingContainer = styled.div`
   position: relative;
-  width: 100%;
-  height: 100%;
-  min-width: 390px;
-  min-height: 844px;
+  width: 100vw;
+  height: 100vh;
 
   /* white */
 
@@ -90,7 +88,7 @@ const Frame6933Content = styled.div`
   //padding: 9px 10px 9px 30px;
   gap: 4px;
 
-  width: 195px;
+  width: 100%;
   height: 100px;
 `;
 
@@ -213,11 +211,12 @@ const Frame6941 = styled.div`
 const Frame6942 = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   padding: 0px;
 
   position: absolute;
-  width: 390px;
+  width: 100%;
   height: 100px;
   left: 0px;
   top: 572px;
@@ -242,7 +241,7 @@ const Frame6944 = styled.div`
   gap: 10px;
 
   position: absolute;
-  width: 390px;
+  width: 100%;
   height: 58px;
   left: 0px;
   top: 750px;
@@ -291,12 +290,11 @@ const Content = styled.div`
 
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding: 0px;
-
   position: absolute;
-  width: 390px;
+  width: 100%;
   height: 48px;
   left: 0px;
   top: 46px;
@@ -357,7 +355,8 @@ const Frame68872 = styled.div`
   position: absolute;
   width: 390px;
   height: 22px;
-  left: 3px;
+  left: 50%;
+  transform : translate(-50%,0);
   top: 530px;
 
   > img {
