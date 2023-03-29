@@ -5,14 +5,27 @@ import { store } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
-<meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
+import Home from "./Home";
+import Matching from "./Matching";
+import Matching2 from "./Matching2";
+import Purchase from "./Purchase";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      {/*<App />*/}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/matching" element={<Matching />}></Route>
+          <Route path="/matching2" element={<Matching2 />}></Route>
+          <Route path="/purchase" element={<Purchase />}></Route>
+        </Routes>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

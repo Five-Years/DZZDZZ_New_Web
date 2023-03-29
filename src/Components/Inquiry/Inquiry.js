@@ -4,8 +4,40 @@ import { motion, AnimatePresence } from "framer-motion";
 import StateSlice from "../../features/State/StateSlice";
 import { useDispatch, useSelector } from "react-redux";
 import emailjs from "@emailjs/browser";
-
+import axios from "axios";
 function Inquiry() {
+
+  const headers = {
+    'Content-Type' : 'application/json',
+  };
+
+  const response = async(from_corporate) => {
+    try {
+      const {data} = await axios({
+        method : 'post',
+        url : "https://cors-anywhere.herokuapp.com/"+"https://hooks.slack.com/services/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",
+        headers,
+        data : {
+          blocks : [
+            {
+              type : 'section',
+              text : {
+                type : 'mrkdwn',
+                text : `${from_corporate}로 부터 문의가 접수됐습니다`,
+              }
+            }
+          ]
+        }
+      });
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+    }
+  
+  
+
+
   const form = useRef();
   const checkform = () => {
     var from_corporate = document.getElementById("from_corporate");
@@ -27,6 +59,8 @@ function Inquiry() {
       alert("필수 옵션을 채워주세요");
       return false;
     }
+    alert("전송 완료")
+    response(from_corporate.value)
     return true;
   };
   // 필수입력 옵션 체크 기능 넣기
