@@ -124,17 +124,16 @@ const Frame6952 = styled.div`
     height: 210px;
     left: -1px;
     bottom : 0px; */
+    
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0px;
-
   position: absolute;
   width: 393px;
   height: 210px;
-  transform: translate(50%,0);
   top: 535px;
-
+  left : 50%;
+  transform: translate(-50%,0);
 `;
 
 const CardFrame6936 = styled.div`
