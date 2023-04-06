@@ -1,53 +1,54 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useState,useEffect } from "react";
 
 var Spinner = require("react-spinkit");
 
 function Matching() {
+  const location = useLocation();
+	const theme = location.state.theme;
+  const [loading, setLoading] = useState(true)
+  setInterval(() => {setLoading(false)}, 5000);
+
   return (
-    <MatchingContainer>
-      <Frame70>
+    <MatchingContainer style={{backgroundColor : (theme===0)? "#FF477E" : "#49516f" }}>
+      {loading ? <SpinnerContainer>
         <Spinner
           name="line-spin-fade-loader"
           style={{
             display: "flex",
-            alignItems: "center",
+            left : 35,
+            top: 30,
             color: "white",
-            justifyContent: "center",
             width: 80,
             height: 80,
-            left: 35,
-            top: 35,
           }}
         />
-      </Frame70>
-      <Frame9>
-        <Frame6936>
-          <Frame6935>
-            <Frame6945>
+      </SpinnerContainer> : <></>}
+      <MatchingCardContainer>
+        <MatchingCardContent> 
+            <ContentContainer>
               {/*<img src={require("./assets/dzzdzz_logo2.png")}
             alt="이미지"
           /> */}
-              <img src={require("./assets/dzzdzz_logo.png")} alt="이미지" />
+              {(theme === 0) ? <img src={require("./assets/dzzdzz_logo2.png")} alt="이미지" />: <img src={require("./assets/dzzdzz_logo.png")} alt="이미지" />}
               <text>
                 지금부터<br></br>
                 <span>매칭</span>이<br />
                 시작됩니다!
               </text>
-            </Frame6945>
-          </Frame6935>
-        </Frame6936>
-      </Frame9>
-      <Frame6885>
-        {/*<text>곧 매칭된 상대방을
-볼 수 있어요!</text>*/}
-        <Button>
-          <Link to="/matching2">
+            </ContentContainer>
+        </MatchingCardContent>
+      </MatchingCardContainer>
+      <ConfirmContainer>
+        {loading ? <text>곧 매칭된 상대방을 볼 수 있어요!</text> : <Button>
+          <Link to="/matching2" style={{color : '#48484A', textDecorationLine : "none"}}>
             <text>확인하기</text>
           </Link>
-        </Button>
-      </Frame6885>
+        </Button>}
+      </ConfirmContainer>
     </MatchingContainer>
   );
 }
@@ -59,15 +60,6 @@ const MatchingContainer = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  min-width: 390px;
-  min-height: 844px;
-  justify-content: center;
-  /* dzz_pink */
-  //이성 매칭
-  //background: #FF477E;
-
-  //혼성 매칭
-  background: #49516f;
   justify-content: center;
 `;
 
@@ -79,7 +71,8 @@ const Button = styled.div`
   padding: 16px;
   gap: 10px;
 
-  width: 260px;
+  width: 66.66%;
+  max-width : 260px;
   height: 32px;
 
   /* white */
@@ -105,40 +98,35 @@ const Button = styled.div`
   }
 `;
 
-const Frame9 = styled.div`
+const MatchingCardContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  //padding: 29px 0px;
   gap: 10px;
-
   position: absolute;
-  width: 260px;
-  height: 317px;
-  top: 116px;
-
-  /* white */
-
+  width: 66.66%;
+  max-width : 260px;
+  height: 37.56%;
+  max-height : 320px;
+  top: 13.74%;
   background: #ffffff;
-  /* card */
-
   box-shadow: 0px 13px 12px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
 `;
 
-const Frame6936 = styled.div`
+const MatchingCardContent = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 0px;
+  align-items: center;
   gap: 15px;
 
-  width: 260px;
-  height: 228px;
+  width: 100%;
+  height : 71.92%;
+  min-height: 228px;
 `;
 
-const Frame70 = styled.div`
+const SpinnerContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -149,32 +137,23 @@ const Frame70 = styled.div`
   position: absolute;
   width: 100px;
   height: 100px;
-  top: 494px;
+  top: 58.53%;
 
   border-radius: 5px;
 `;
 
-const Frame6935 = styled.div`
+
+const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0px;
-  gap: 38px;
-
-  width: 260px;
-  height: 228px;
-
-`;
-
-const Frame6945 = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
   padding: 0px;
   gap: 30px;
 
-  width: 135px;
-  height: 228px;
+  width: 50%;
+  min-width : 125px;
+  height: 100%;
 
   > text {
     width: 135px;
@@ -197,12 +176,14 @@ const Frame6945 = styled.div`
   }
 
   > img {
-    width: 96px;
-    height: px;
+    width: 80%;
+    height: 80%;
+    max-width : 96px;
+    max-height : 96px;  
   }
 `;
 
-const Frame6885 = styled.div`
+const ConfirmContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -211,9 +192,9 @@ const Frame6885 = styled.div`
   gap: 10px;
 
   position: absolute;
-  width: 390px;
+  width: 100%;
   height: 50px;
-  bottom: 20%;
+  top: 74.17%;
 
 
   > text {

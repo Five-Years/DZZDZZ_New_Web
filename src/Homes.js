@@ -83,7 +83,7 @@ function Home() {
         }
     </MobileContainer>
     <ButtonContainer>
-      <EachButtonContainer><EachButton className="ticket"><text className="ticket">{ticket===0 ? <Link to="/purchase" style={{color : 'white', textDecorationLine : "none"}}>충전하기</Link> : <Link to="/matching" style={{color : 'white', textDecorationLine : "none"}}>신청하기</Link>}</text></EachButton></EachButtonContainer>
+      <EachButtonContainer><EachButton className="ticket"><text className="ticket">{ticket===0 ? <Link to="/purchase" style={{color : 'white', textDecorationLine : "none"}}>충전하기</Link> : <Link to="/matching" state={{theme : theme}} style={{color : 'white', textDecorationLine : "none"}}>신청하기</Link>}</text></EachButton></EachButtonContainer>
       <EachButtonContainer><EachButton><text>내 정보 수정하기</text></EachButton></EachButtonContainer>
       <EachButtonContainer><EachButton>{authentification ? <><text className="authentification">학생 인증 완료</text><img src={require("./assets/CircleWavyCheck.png")} alt="이미지"  /></> : <text>학생 인증 하기</text>}</EachButton></EachButtonContainer>
     </ButtonContainer>

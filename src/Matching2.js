@@ -1,69 +1,66 @@
 import React from "react";
 import styled from "styled-components";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { ClassNames } from "@emotion/react";
 
 function Matching2() {
   return (
     <MatchingContainer>
-      <Content>
+      <ContentContainer>
         <ContentLeft>
-          <img src={require("./assets/Vector.png")} alt="이미지" />
+          <ArrowBackIosIcon style={{marginLeft : "20px", width : "28px", height : "28px"}}/>
         </ContentLeft>
         <ContentTitle>
           <text></text>
         </ContentTitle>
         <ContentRight>
-          <Frame6880>
-            <img src={require("./assets/DotsThree.png")} alt="이미지" />
-          </Frame6880>
+          <MoreHorizIcon style={{width: "32px", height : "32px", marginRight : "20px"}} />
         </ContentRight>
-      </Content>
-      <Frame6931>
-        <img src={require("./assets/dzzdzz_logo.png")} alt="이미지" />
+      </ContentContainer>
+      <ProfileImageContainer>
+        <img src={require("./assets/mango.jpg")} alt="이미지" />
         <Frame6887></Frame6887>
-      </Frame6931>
-      <Frame68872>
-        <Group72>
+      </ProfileImageContainer>
+      <IntroduceContainer>
+        <TextContainer>
           <text>학교에서 과제만 하기엔 너무 아쉽지 않아?</text>
-        </Group72>
+        </TextContainer>
         <img
           src={require("./assets/arrow.png")}
           onClick={() => {
             "확장 감소";
           }}
         />
-      </Frame68872>
-      <Frame6883>
-        <Frame6941>
+      </IntroduceContainer>
+      <ProfileNameContainer>
+        <ProfileName>
           <img src={require("./assets/CircleWavyCheck.png")} />
           <text>단짠지기임당</text>
-        </Frame6941>
-      </Frame6883>
-      <Frame6942>
-        <Frame6933>
-          <Frame6933Content>
-            <Frame6885>
+        </ProfileName>
+      </ProfileNameContainer>
+      <SelectionContainer>
+        <Selection>
+            <Option>
               <img src={require("./assets/Like.png")} />
               <text className="select">선택하기</text>
-            </Frame6885>
-          </Frame6933Content>
-        </Frame6933>
-        <Frame6933>
-          <Frame6933Content>
-            <Frame6885>
+            </Option>
+        </Selection>
+        <Selection>
+          
+            <Option>
               <img src={require("./assets/Close.png")} />
               <text className="reject">거절하기</text>
-            </Frame6885>
-          </Frame6933Content>
-        </Frame6933>
-      </Frame6942>
-      <Frame6944>
+            </Option>
+        </Selection>
+      </SelectionContainer>
+      <DetailContainer>
         <KeyboardDoubleArrowUpIcon color="disabled" fontSize="large" />
         <Frame69412>
           <text>자세히 보기</text>
         </Frame69412>
-      </Frame6944>
+      </DetailContainer>
     </MatchingContainer>
   );
 }
@@ -74,35 +71,21 @@ const MatchingContainer = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
-
-  /* white */
-
-  background: #ffffff;
+  background: white;
 `;
 
-const Frame6933Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  //padding: 9px 10px 9px 30px;
-  gap: 4px;
 
-  width: 100%;
-  height: 100px;
-`;
-
-const Frame6885 = styled.div`
+const Option = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 0px;
   gap: 17px;
-
-  width: 74px;
+  width : 37.95%;
+  top : 10%;
+  min-width: 74px;
   height: 82px;
-
   > img {
     width: 35px;
     height: 35px;
@@ -131,8 +114,9 @@ const Frame6885 = styled.div`
   }
 `;
 
-const Group72 = styled.div`
-  width: 208px;
+const TextContainer = styled.div`
+  width : 53.33%;
+  min-width: 208px;
   height: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -145,41 +129,32 @@ const Group72 = styled.div`
     font-weight: 300;
     font-size: 16px;
     line-height: 22px;
-    /* identical to box height */
-
     display: flex;
     align-items: center;
-
-    /* Text Gray */
-
     color: #888888;
   }
 `;
 
-const Frame6883 = styled.div`
+const ProfileNameContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0px;
   gap: 10px;
-
   position: absolute;
   width: 100%;
   height: 24px;
-  /* left: 3px; */
-  top: 497px;
+  top: 58.89%;
 `;
 
-const Frame6941 = styled.div`
+const ProfileName = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 0px;
-  gap: 4px;
 
-  width: 140px;
+  width: 33.5%;
+  min-width : 340px;
   height: 24px;
 
   > img {
@@ -208,43 +183,37 @@ const Frame6941 = styled.div`
 `;
 
 // const Frame6887 = styled.div``;
-const Frame6942 = styled.div`
+const SelectionContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 0px;
-
   position: absolute;
   width: 100%;
   height: 100px;
   left: 0px;
-  top: 572px;
+  top: 67.78%;
 `;
 
-const Frame6933 = styled.div`
+const Selection = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 0px;
-
-  width: 195px;
-  height: 100px;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 100%;
 `;
 
-const Frame6944 = styled.div`
+const DetailContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0px;
   gap: 10px;
-
   position: absolute;
   width: 100%;
   height: 58px;
-  left: 0px;
-  top: 750px;
+  top: 86%;
 
   > KeyboardDoubleArrowUpIcon {
     width: 40px;
@@ -283,42 +252,26 @@ const Frame69412 = styled.div`
   }
 `;
 
-const Content = styled.div`
+const ContentContainer = styled.div`
   box-sizing: border-box;
-
-  /* Auto layout */
-
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0px;
   position: absolute;
   width: 100%;
-  height: 48px;
-  left: 0px;
-
-  /* Text Gray */
-
+  height: 68px;
   border-bottom: 0.3px solid #888888;
-  background: blue;
 `;
 
 const ContentLeft = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0px;
   gap: 5px;
 
-  width: 130px;
-  height: 48px;
-
-  > img {
-    padding-left: 20px;
-    width: 10px;
-    height: 20px;
-  }
+  width: 33.33%;
+  height: 100%;
 `;
 
 const ContentTitle = styled.div`
@@ -344,20 +297,16 @@ const Frame6887 = styled.div`
   height: 7px;
 `;
 
-const Frame68872 = styled.div`
+const IntroduceContainer = styled.div`
   display: flex;
+  position: absolute;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 0px;
   gap: 10px;
-
-  position: absolute;
-  width: 390px;
+  width: 100%;
   height: 22px;
-  left: 50%;
-  transform : translate(-50%,0);
-  top: 530px;
+  top: 62.8%;
 
   > img {
     width: 20px;
@@ -370,31 +319,25 @@ const ContentRight = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0px;
+  justify-content: flex-end;
   gap: 10px;
 
-  width: 130px;
-  height: 32px;
 
-  > img {
-    width: 32px;
-    height: 32px;
-  }
+  width: 33.33%;
+  height: 100%;
 `;
 
-const Frame6931 = styled.div`
+const ProfileImageContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  padding: 0px;
   gap: 10px;
 
   position: absolute;
+  top : 68px;
   width: 100%;
-  height: 373px;
-  left: 0px;
-  top: 94px;
+  height: 46.74%;
 
   > img {
     width: 100%;
