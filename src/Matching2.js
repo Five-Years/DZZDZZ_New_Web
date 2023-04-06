@@ -297,11 +297,11 @@ const Content = styled.div`
   width: 100%;
   height: 48px;
   left: 0px;
-  top: 46px;
 
   /* Text Gray */
 
   border-bottom: 0.3px solid #888888;
+  background: blue;
 `;
 
 const ContentLeft = styled.div`

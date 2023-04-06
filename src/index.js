@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import './index.css';
 import Home from "./Home";
 import Matching from "./Matching";
+import Homes from './Homes';
 import Matching2 from "./Matching2";
 import Purchase from "./Purchase";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -17,13 +18,13 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      {/*<App />*/}
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}></Route>
+          <Route path="/" element={<Homes />}></Route>
           <Route path="/matching" element={<Matching />}></Route>
           <Route path="/matching2" element={<Matching2 />}></Route>
           <Route path="/purchase" element={<Purchase />}></Route>
+          <Route path="/pc" element={<App />}></Route>
         </Routes>
       </BrowserRouter>
     </Provider>

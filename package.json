@@ -8,8 +8,9 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@material-ui/icons": "*",
-    "@mui/icons-material": "^5.11.0",
-    "@mui/material": "^5.11.3",
+    "@mui/icons-material": "^5.11.11",
+    "@mui/material": "^5.11.15",
+    "@mui/styles": "^5.11.13",
     "@reduxjs/toolkit": "^1.9.1",
     "@slack/bolt": "^3.12.2",
     "@slack/socket-mode": "^1.3.2",
@@ -22,9 +23,11 @@
     "querystring-es3": "^0.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-material-ui-carousel": "^3.4.2",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
+    "react-slick": "^0.29.0",
     "react-spinkit": "^3.0.0",
     "redux": "^4.2.0",
     "styled-components": "^5.3.6",
@@ -56,5 +59,8 @@
   },
   "resolutions": {
     "styled-components": "^5"
+  },
+  "devDependencies": {
+    "slick-carousel": "^1.8.1"
   }
 }
