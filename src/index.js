@@ -9,6 +9,7 @@ import Homes from './Homes';
 import Matching from "./Matching";
 import Matching2 from "./Matching2";
 import Purchase from "./Purchase";
+import DetailProfile from './DetailProfile';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const container = document.getElementById('root');
@@ -23,6 +24,7 @@ root.render(
           <Route path="/matching" element={<Matching />}></Route>
           <Route path="/matching2" element={<Matching2 />}></Route>
           <Route path="/purchase" element={<Purchase />}></Route>
+          <Route path="/detail" element={<DetailProfile />}></Route>
           <Route path="/pc" element={<App />}></Route>
         </Routes>
       </BrowserRouter>

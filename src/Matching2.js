@@ -1,22 +1,35 @@
 import React from "react";
 import styled from "styled-components";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { ClassNames } from "@emotion/react";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { useState } from "react";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Matching2() {
+  const [detail, setDetail] = useState(false);
+  const navigate = useNavigate();
   return (
     <MatchingContainer>
       <ContentContainer>
         <ContentLeft>
-          <ArrowBackIosIcon style={{marginLeft : "20px", width : "28px", height : "28px"}}/>
+          <ArrowBackIosIcon
+            style={{ marginLeft: "20px", width: "28px", height: "28px" }}
+            onClick={() => {
+              navigate("/");
+            }}
+          />
         </ContentLeft>
         <ContentTitle>
           <text></text>
         </ContentTitle>
         <ContentRight>
-          <MoreHorizIcon style={{width: "32px", height : "32px", marginRight : "20px"}} />
+          <MoreHorizIcon
+            style={{ width: "32px", height: "32px", marginRight: "20px" }}
+          />
         </ContentRight>
       </ContentContainer>
       <ProfileImageContainer>
@@ -24,15 +37,31 @@ function Matching2() {
         <Frame6887></Frame6887>
       </ProfileImageContainer>
       <IntroduceContainer>
-        <TextContainer>
-          <text>학교에서 과제만 하기엔 너무 아쉽지 않아?</text>
-        </TextContainer>
-        <img
-          src={require("./assets/arrow.png")}
-          onClick={() => {
-            "확장 감소";
-          }}
-        />
+        {detail ? (
+          <DetailTextView
+            onClick={() => {
+              setDetail(false);
+            }}
+          >
+            <DetailText>
+              <text>학교에서 과제만 하기엔 너무 아쉽지 않아?</text>
+              <text>
+                <KeyboardArrowUpIcon />
+              </text>
+            </DetailText>
+          </DetailTextView>
+        ) : (
+          <>
+            <TextContainer
+              onClick={() => {
+                setDetail(true);
+              }}
+            >
+              <text>학교에서 과제만 하기엔 너무 아쉽지 않아?</text>
+            </TextContainer>
+            <KeyboardArrowDownIcon style={{ color: "#888888" }} />
+          </>
+        )}
       </IntroduceContainer>
       <ProfileNameContainer>
         <ProfileName>
@@ -41,25 +70,39 @@ function Matching2() {
         </ProfileName>
       </ProfileNameContainer>
       <SelectionContainer>
+        {/* 선택시 확인작업 거치고 진행 */}
         <Selection>
-            <Option>
-              <img src={require("./assets/Like.png")} />
-              <text className="select">선택하기</text>
-            </Option>
+          <Option
+            onClick={() => {
+              if (!detail) {
+                alert("선택하셨습니다");
+              }
+            }}
+          >
+            <img src={require("./assets/Like.png")} />
+            <text className="select">선택하기</text>
+          </Option>
         </Selection>
         <Selection>
-          
-            <Option>
-              <img src={require("./assets/Close.png")} />
-              <text className="reject">거절하기</text>
-            </Option>
+          <Option
+            onClick={() => {
+              if (!detail) {
+                alert("거절하셨습니다");
+              }
+            }}
+          >
+            <img src={require("./assets/Close.png")} />
+            <text className="reject">거절하기</text>
+          </Option>
         </Selection>
       </SelectionContainer>
       <DetailContainer>
         <KeyboardDoubleArrowUpIcon color="disabled" fontSize="large" />
-        <Frame69412>
-          <text>자세히 보기</text>
-        </Frame69412>
+        <DetailView>
+          <Links to="/detail">
+            <text>자세히 보기</text>
+          </Links>
+        </DetailView>
       </DetailContainer>
     </MatchingContainer>
   );
@@ -74,7 +117,6 @@ const MatchingContainer = styled.div`
   background: white;
 `;
 
-
 const Option = styled.div`
   display: flex;
   flex-direction: column;
@@ -82,8 +124,8 @@ const Option = styled.div`
   align-items: center;
   padding: 0px;
   gap: 17px;
-  width : 37.95%;
-  top : 10%;
+  width: 37.95%;
+  top: 10%;
   min-width: 74px;
   height: 82px;
   > img {
@@ -115,7 +157,7 @@ const Option = styled.div`
 `;
 
 const TextContainer = styled.div`
-  width : 53.33%;
+  width: 53.33%;
   min-width: 208px;
   height: 20px;
   overflow: hidden;
@@ -133,6 +175,11 @@ const TextContainer = styled.div`
     align-items: center;
     color: #888888;
   }
+
+  > img {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 const ProfileNameContainer = styled.div`
@@ -147,6 +194,32 @@ const ProfileNameContainer = styled.div`
   top: 58.89%;
 `;
 
+const DetailTextView = styled.div`
+  display: flex;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: #888888;
+  opacity: 80%;
+
+  align-items: center;
+  justify-content: center;
+`;
+
+const DetailText = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 24px;
+  top: 62.8%;
+  text-align: center;
+
+  > text {
+    color: white;
+  }
+`;
+
 const ProfileName = styled.div`
   display: flex;
   flex-direction: row;
@@ -154,7 +227,7 @@ const ProfileName = styled.div`
   align-items: center;
 
   width: 33.5%;
-  min-width : 340px;
+  min-width: 340px;
   height: 24px;
 
   > img {
@@ -171,13 +244,8 @@ const ProfileName = styled.div`
     font-weight: 400;
     font-size: 19px;
     line-height: 22px;
-    /* identical to box height, or 116% */
-
     text-align: center;
     letter-spacing: -0.408px;
-
-    /* Text Black */
-
     color: #000000;
   }
 `;
@@ -221,7 +289,7 @@ const DetailContainer = styled.div`
   }
 `;
 
-const Frame69412 = styled.div`
+const DetailView = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -231,7 +299,10 @@ const Frame69412 = styled.div`
 
   width: 80px;
   height: 22px;
+`;
 
+const Links = styled(Link)`
+  text-decoration-line: none;
   > text {
     width: 80px;
     height: 22px;
@@ -322,7 +393,6 @@ const ContentRight = styled.div`
   justify-content: flex-end;
   gap: 10px;
 
-
   width: 33.33%;
   height: 100%;
 `;
@@ -335,7 +405,7 @@ const ProfileImageContainer = styled.div`
   gap: 10px;
 
   position: absolute;
-  top : 68px;
+  top: 68px;
   width: 100%;
   height: 46.74%;
 

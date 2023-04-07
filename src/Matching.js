@@ -2,52 +2,71 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 var Spinner = require("react-spinkit");
 
 function Matching() {
   const location = useLocation();
-	const theme = location.state.theme;
-  const [loading, setLoading] = useState(true)
-  setInterval(() => {setLoading(false)}, 5000);
+  const theme = location.state.theme;
+  const [loading, setLoading] = useState(true);
+  setInterval(() => {
+    setLoading(false);
+  }, 5000);
 
   return (
-    <MatchingContainer style={{backgroundColor : (theme===0)? "#FF477E" : "#49516f" }}>
-      {loading ? <SpinnerContainer>
-        <Spinner
-          name="line-spin-fade-loader"
-          style={{
-            display: "flex",
-            left : 35,
-            top: 30,
-            color: "white",
-            width: 80,
-            height: 80,
-          }}
-        />
-      </SpinnerContainer> : <></>}
+    <MatchingContainer
+      style={{ backgroundColor: theme === 0 ? "#FF477E" : "#49516f" }}
+    >
+      {loading ? (
+        <SpinnerContainer>
+          <Spinner
+            name="line-spin-fade-loader"
+            style={{
+              display: "flex",
+              left: 35,
+              top: 30,
+              color: "white",
+              width: 80,
+              height: 80,
+            }}
+          />
+        </SpinnerContainer>
+      ) : (
+        <></>
+      )}
       <MatchingCardContainer>
-        <MatchingCardContent> 
-            <ContentContainer>
-              {/*<img src={require("./assets/dzzdzz_logo2.png")}
+        <MatchingCardContent>
+          <ContentContainer>
+            {/*<img src={require("./assets/dzzdzz_logo2.png")}
             alt="이미지"
           /> */}
-              {(theme === 0) ? <img src={require("./assets/dzzdzz_logo2.png")} alt="이미지" />: <img src={require("./assets/dzzdzz_logo.png")} alt="이미지" />}
-              <text>
-                지금부터<br></br>
-                <span>매칭</span>이<br />
-                시작됩니다!
-              </text>
-            </ContentContainer>
+            {theme === 0 ? (
+              <img src={require("./assets/dzzdzz_logo2.png")} alt="이미지" />
+            ) : (
+              <img src={require("./assets/dzzdzz_logo.png")} alt="이미지" />
+            )}
+            <text>
+              지금부터<br></br>
+              <span>매칭</span>이<br />
+              시작됩니다!
+            </text>
+          </ContentContainer>
         </MatchingCardContent>
       </MatchingCardContainer>
       <ConfirmContainer>
-        {loading ? <text>곧 매칭된 상대방을 볼 수 있어요!</text> : <Button>
-          <Link to="/matching2" style={{color : '#48484A', textDecorationLine : "none"}}>
-            <text>확인하기</text>
-          </Link>
-        </Button>}
+        {loading ? (
+          <text>곧 매칭된 상대방을 볼 수 있어요!</text>
+        ) : (
+          <Button>
+            <Link
+              to="/matching2"
+              style={{ color: "#48484A", textDecorationLine: "none" }}
+            >
+              <text>확인하기</text>
+            </Link>
+          </Button>
+        )}
       </ConfirmContainer>
     </MatchingContainer>
   );
@@ -72,7 +91,7 @@ const Button = styled.div`
   gap: 10px;
 
   width: 66.66%;
-  max-width : 260px;
+  max-width: 260px;
   height: 32px;
 
   /* white */
@@ -106,9 +125,9 @@ const MatchingCardContainer = styled.div`
   gap: 10px;
   position: absolute;
   width: 66.66%;
-  max-width : 260px;
+  max-width: 260px;
   height: 37.56%;
-  max-height : 320px;
+  max-height: 320px;
   top: 13.74%;
   background: #ffffff;
   box-shadow: 0px 13px 12px rgba(0, 0, 0, 0.1);
@@ -122,7 +141,7 @@ const MatchingCardContent = styled.div`
   gap: 15px;
 
   width: 100%;
-  height : 71.92%;
+  height: 71.92%;
   min-height: 228px;
 `;
 
@@ -142,7 +161,6 @@ const SpinnerContainer = styled.div`
   border-radius: 5px;
 `;
 
-
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -152,7 +170,7 @@ const ContentContainer = styled.div`
   gap: 30px;
 
   width: 50%;
-  min-width : 125px;
+  min-width: 125px;
   height: 100%;
 
   > text {
@@ -178,8 +196,8 @@ const ContentContainer = styled.div`
   > img {
     width: 80%;
     height: 80%;
-    max-width : 96px;
-    max-height : 96px;  
+    max-width: 96px;
+    max-height: 96px;
   }
 `;
 
@@ -195,7 +213,6 @@ const ConfirmContainer = styled.div`
   width: 100%;
   height: 50px;
   top: 74.17%;
-
 
   > text {
     width: 127px;
