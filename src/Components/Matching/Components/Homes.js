@@ -50,8 +50,7 @@ function Item(props) {
 
 function Homes() {
   const listener = (event) => {
-
-    const arr = JSON.parse(event);
+    const arr = JSON.parse(event.data);
     setPadding(arr[1].data)
   };
 
@@ -59,7 +58,7 @@ function Homes() {
 document.addEventListener("message", listener);
 //ios
 window.addEventListener("message", listener);
-  const [padding, setPadding] = useState(0)
+  const [padding, setPadding] = useState(1)
   // 유저티켓 보유 갯수 확인, 추후 서버 연동 필요
   const Ticket = useSelector((state) => {
     return state.Popup.ticket;
