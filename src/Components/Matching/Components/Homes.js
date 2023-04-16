@@ -50,16 +50,8 @@ function Item(props) {
 
 function Homes() {
   const listener = (event) => {
-    const { arr, type } = JSON.parse(event.data);
-    switch (type) {
-      case "dzzdzz": {
-        alert(arr[0].data);
-        console.log(arr[0].data);
-      }
-      case "paddingTop" : {
-        setPadding(arr[1].data)
-      }
-    }
+    const arr = JSON.parse(event.data);
+    setPadding(arr[1].data)
   };
 
   //android
@@ -143,7 +135,9 @@ window.addEventListener("message", listener);
                 <br />
                 <span>시즌2(이성)</span>
                 <br />
-                접수기간입니다!
+                접수기간입니다! 
+                <br />
+                padding 값은 {padding}
               </text>
             </StageContainer>
           </HeaderRight>
