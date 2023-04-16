@@ -5,10 +5,11 @@ import { store } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
-import Homes from './Homes';
-import Matching from "./Matching";
-import Matching2 from "./Matching2";
+import Homes from './Components/Matching/Components/Homes';
+import Matching from "./Components/Matching/Components/Matching";
+import Matching2 from "./Components/Matching/Components/Matching2";
 import Purchase from "./Purchase";
+import Purchasing from './Components/Matching/Components/Purchasing';
 import DetailProfile from './DetailProfile';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -24,6 +25,7 @@ root.render(
           <Route path="/matching" element={<Matching />}></Route>
           <Route path="/matching2" element={<Matching2 />}></Route>
           <Route path="/purchase" element={<Purchase />}></Route>
+          <Route path="/purchasing" element={<Purchasing />}></Route>
           <Route path="/detail" element={<DetailProfile />}></Route>
           <Route path="/pc" element={<App />}></Route>
         </Routes>
