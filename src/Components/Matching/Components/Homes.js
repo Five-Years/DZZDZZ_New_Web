@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Paper } from "@mui/material";
@@ -45,20 +45,21 @@ function Item(props) {
 }
 
 
-
-
-
 function Homes() {
   const listener = (event) => {
-    const arr = JSON.parse(event.data);
+    const arr = JSON.parse(event);
+    console.log(arr[1].data)
+    alert(arr[1].data)
     setPadding(arr[1].data)
   };
 
   //android
 document.addEventListener("message", listener);
+
 //ios
 window.addEventListener("message", listener);
-  const [padding, setPadding] = useState(1)
+
+  const [padding, setPadding] = useState(0)
   // 유저티켓 보유 갯수 확인, 추후 서버 연동 필요
   const Ticket = useSelector((state) => {
     return state.Popup.ticket;
