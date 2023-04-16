@@ -5,10 +5,12 @@ import { store } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
-import Home from "./Home";
-import Matching from "./Matching";
-import Matching2 from "./Matching2";
+import Homes from './Components/Matching/Components/Homes';
+import Matching from "./Components/Matching/Components/Matching";
+import Matching2 from "./Components/Matching/Components/Matching2";
 import Purchase from "./Purchase";
+import Purchasing from './Components/Matching/Components/Purchasing';
+import DetailProfile from './DetailProfile';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const container = document.getElementById('root');
@@ -17,13 +19,15 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      {/*<App />*/}
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}></Route>
+          <Route path="/" element={<Homes />}></Route>
           <Route path="/matching" element={<Matching />}></Route>
           <Route path="/matching2" element={<Matching2 />}></Route>
           <Route path="/purchase" element={<Purchase />}></Route>
+          <Route path="/purchasing" element={<Purchasing />}></Route>
+          <Route path="/detail" element={<DetailProfile />}></Route>
+          <Route path="/pc" element={<App />}></Route>
         </Routes>
       </BrowserRouter>
     </Provider>

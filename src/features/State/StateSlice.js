@@ -2,7 +2,8 @@ import {  createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   value: false,
-  query : 1
+  query : 1,
+  ticket : 0,
 };
 
  const StateSlice = createSlice({
@@ -15,6 +16,9 @@ const initialState = {
     },
     Number : (state,action) => {
       state.query = action.payload
+    },
+    Ticket : (state,action) => {
+      state.ticket = state.ticket + 1
     }
   },
  
