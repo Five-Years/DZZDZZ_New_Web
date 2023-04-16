@@ -44,28 +44,36 @@ function Item(props) {
   );
 }
 
-const listener = (event) => {
-  const { data, type } = JSON.parse(event.data);
-  switch (type) {
-    case "dzzdzz": {
-      alert(data);
-      console.log(data);
-    }
-  }
-};
 
-//android
+
+
+
+function Homes() {
+  const listener = (event) => {
+    const { arr, type } = JSON.parse(event.data);
+    switch (type) {
+      case "dzzdzz": {
+        alert(arr[0].data);
+        console.log(arr[0].data);
+      }
+      case "paddingTop" : {
+        setPadding(arr[1].data)
+      }
+    }
+  };
+
+  //android
 document.addEventListener("message", listener);
 //ios
 window.addEventListener("message", listener);
-
-function Homes() {
+  const [padding, setPadding] = useState(0)
   // 유저티켓 보유 갯수 확인, 추후 서버 연동 필요
   const Ticket = useSelector((state) => {
     return state.Popup.ticket;
   });
   const dispatch = useDispatch();
   const [theme, setTheme] = useState(0);
+
 
   // 유저인증여부 확인, 추후 서버 연동 필요
   const authentification = true;
@@ -117,7 +125,7 @@ function Homes() {
     <>
       {/* 테마 이미지 */}
       <BackgroundCard theme={theme}></BackgroundCard>
-      <MobileContainer>
+      <MobileContainer style = {{ paddingTop : padding }} >
         <HeaderContainer>
           <HeaderLeft>
             {/* 사용자 프로필 사진 가져오기 */}
