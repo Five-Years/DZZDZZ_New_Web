@@ -50,7 +50,8 @@ function Item(props) {
 
 function Homes() {
   const listener = (event) => {
-    const arr = JSON.parse(event.data);
+
+    const arr = JSON.parse(event);
     setPadding(arr[1].data)
   };
 
@@ -135,9 +136,9 @@ window.addEventListener("message", listener);
                 <br />
                 <span>시즌2(이성)</span>
                 <br />
-                접수기간입니다! 
+                접수기간입니다!
                 <br />
-                padding 값은 {padding}
+                padding값은 {padding}
               </text>
             </StageContainer>
           </HeaderRight>
