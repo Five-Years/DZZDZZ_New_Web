@@ -135,7 +135,9 @@ window.addEventListener("message", listener);
                 <br />
                 <span>시즌2(이성)</span>
                 <br />
-                접수기간입니다!
+                접수기간입니다! 
+                <br />
+                padding 값은 {padding}
               </text>
             </StageContainer>
           </HeaderRight>
