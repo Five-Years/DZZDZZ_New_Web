@@ -56,7 +56,6 @@ function Homes() {
     }
   };
 
-  alert("message sending")
 
   useEffect(()=> {
 //android
@@ -153,7 +152,7 @@ return () => {
                 <br />
                 접수기간입니다!
                 <br />
-                padding값은 {paddingTop}
+                padding값 = {paddingTop}
               </text>
             </StageContainer>
           </HeaderRight>
@@ -203,7 +202,9 @@ return () => {
           </EachButton>
         </EachButtonContainer>
         <EachButtonContainer>
-          <EachButton>
+          <EachButton onClick={()=> {    window.ReactNativeWebView.postMessage(JSON.stringify({type : "onLoad"}))
+
+}}>
             <text>내 정보 수정하기</text>
           </EachButton>
         </EachButtonContainer>
