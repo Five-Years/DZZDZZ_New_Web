@@ -46,18 +46,33 @@ function Item(props) {
 
 
 function Homes() {
+
+  const [paddingTop, setPaddingTop] = useState(0)
   const listener = (event) => {
-    const arr = JSON.parse(event.data);
-    console.log(arr[1].data)
-    alert(arr[1].data)
-    setPadding(arr[1].data)
+    const data = JSON.parse(event);
+    if(data[1].type === 'paddingTop')
+    {
+      setPaddingTop(Number(data[1].data))
+    }
   };
 
-  //android
-document.addEventListener("message", listener);
+  alert("message sending")
 
+  useEffect(()=> {
+//android
+document.addEventListener("message", (e)=> listener(e.data));
 //ios
-window.addEventListener("message", listener);
+window.addEventListener("message", (e)=> listener(e.data));
+return () => {
+  //android
+  window.removeEventListener("message", (e)=> listener(e.data));
+  //ios
+  document.removeEventListener("message", (e)=> listener(e.data));
+}
+  })
+
+
+
 
   const [padding, setPadding] = useState(0)
   // 유저티켓 보유 갯수 확인, 추후 서버 연동 필요
@@ -138,7 +153,7 @@ window.addEventListener("message", listener);
                 <br />
                 접수기간입니다!
                 <br />
-                padding값은 {padding}
+                padding값은 {paddingTop}
               </text>
             </StageContainer>
           </HeaderRight>
