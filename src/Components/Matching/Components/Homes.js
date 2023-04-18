@@ -47,7 +47,7 @@ function Item(props) {
 
 function Homes() {
   const listener = (event) => {
-    const arr = JSON.parse(event);
+    const arr = JSON.parse(event.data);
     console.log(arr[1].data)
     alert(arr[1].data)
     setPadding(arr[1].data)
