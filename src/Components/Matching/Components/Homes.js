@@ -132,7 +132,7 @@ return () => {
     <>
       {/* 테마 이미지 */}
       <BackgroundCard theme={theme}></BackgroundCard>
-      <MobileContainer style={{}}>
+      <MobileContainer style={{paddingTop : paddingtop}}>
         <HeaderContainer>
           <HeaderLeft>
             {/* 사용자 프로필 사진 가져오기 */}
