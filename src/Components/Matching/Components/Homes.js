@@ -62,13 +62,14 @@ function Homes() {
 document.addEventListener("message", (e)=> listener(e.data));
 //ios
 window.addEventListener("message", (e)=> listener(e.data));
+window.ReactNativeWebView?.postMessage(JSON.stringify({type : "onLoad"}))
 return () => {
   //android
   window.removeEventListener("message", (e)=> listener(e.data));
   //ios
   document.removeEventListener("message", (e)=> listener(e.data));
 }
-  })
+  },[])
 
 
 
@@ -79,7 +80,7 @@ return () => {
     return state.Popup.ticket;
   });
   const dispatch = useDispatch();
-  const [theme, setTheme] = useState(0);
+  const [theme, setTheme] = useState(1);
 
 
   // 유저인증여부 확인, 추후 서버 연동 필요
@@ -160,7 +161,7 @@ return () => {
         <MatchingCardContainer>
           <MatchingCard>
             <>
-              <Carousel
+              <Carousel index={theme}
                 onChange={(now) => {
                   setTheme(now);
                 }}
@@ -202,14 +203,12 @@ return () => {
           </EachButton>
         </EachButtonContainer>
         <EachButtonContainer>
-          <EachButton onClick={()=> {    window.ReactNativeWebView.postMessage(JSON.stringify({type : "onLoad"}))
-
-}}>
+          <EachButton>
             <text>내 정보 수정하기</text>
           </EachButton>
         </EachButtonContainer>
         <EachButtonContainer>
-          <EachButton>
+          <EachButton onClick={()=>{setPaddingTop(1);}}>
             {authentification ? (
               <>
                 <text className="authentification">학생 인증 완료</text>
