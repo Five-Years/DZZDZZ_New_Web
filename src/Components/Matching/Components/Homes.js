@@ -47,12 +47,11 @@ function Item(props) {
 
 function Homes() {
 
-  const [paddingTop, setPaddingTop] = useState(0)
   const listener = (event) => {
-    const data = JSON.parse(event);
-    if(data[1].type === 'paddingTop')
-    {
-      setPaddingTop(Number(data[1].data))
+    const {data,type} = JSON.parse(event);
+    switch (type) {
+      case 'paddingTop' :
+        setPaddingTop(data)
     }
   };
 
@@ -74,7 +73,7 @@ return () => {
 
 
 
-  const [padding, setPadding] = useState(0)
+  const [paddingtop, setPaddingTop] = useState(0)
   // 유저티켓 보유 갯수 확인, 추후 서버 연동 필요
   const Ticket = useSelector((state) => {
     return state.Popup.ticket;
@@ -133,7 +132,7 @@ return () => {
     <>
       {/* 테마 이미지 */}
       <BackgroundCard theme={theme}></BackgroundCard>
-      <MobileContainer style = {{ paddingTop : padding }} >
+      <MobileContainer style = {{ paddingTop : paddingtop }} >
         <HeaderContainer>
           <HeaderLeft>
             {/* 사용자 프로필 사진 가져오기 */}
@@ -153,7 +152,7 @@ return () => {
                 <br />
                 접수기간입니다!
                 <br />
-                padding값 = {paddingTop}
+                padding값 = {paddingtop}
               </text>
             </StageContainer>
           </HeaderRight>
