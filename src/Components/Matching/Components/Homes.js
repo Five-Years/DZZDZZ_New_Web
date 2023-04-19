@@ -132,7 +132,7 @@ return () => {
     <>
       {/* 테마 이미지 */}
       <BackgroundCard theme={theme}></BackgroundCard>
-      <MobileContainer style = {{ paddingTop : paddingtop }} >
+      <MobileContainer style={{}}>
         <HeaderContainer>
           <HeaderLeft>
             {/* 사용자 프로필 사진 가져오기 */}
@@ -152,7 +152,6 @@ return () => {
                 <br />
                 접수기간입니다!
                 <br />
-                padding값 = {paddingtop}
               </text>
             </StageContainer>
           </HeaderRight>
@@ -207,7 +206,7 @@ return () => {
           </EachButton>
         </EachButtonContainer>
         <EachButtonContainer>
-          <EachButton onClick={()=>{setPaddingTop(1);}}>
+          <EachButton>
             {authentification ? (
               <>
                 <text className="authentification">학생 인증 완료</text>
