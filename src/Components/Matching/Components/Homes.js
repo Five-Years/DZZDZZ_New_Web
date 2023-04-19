@@ -52,6 +52,8 @@ function Homes() {
     switch (type) {
       case 'paddingTop' :
         setPaddingTop(data)
+      case 'accessToken' :
+        setName(data)
     }
   };
 
@@ -74,6 +76,7 @@ return () => {
 
 
   const [paddingtop, setPaddingTop] = useState(0)
+  const [name, setName] = useState("미쥬미쥬미쥬")
   // 유저티켓 보유 갯수 확인, 추후 서버 연동 필요
   const Ticket = useSelector((state) => {
     return state.Popup.ticket;
@@ -140,7 +143,7 @@ return () => {
               <img src={require("../../../assets/mango.jpg")} alt="이미지" />
             </HeaderAvatar>
             <HeaderProfile>
-              <text>미쥬미쥬미쥬님 안녕하세요!</text>
+              <text>{name}님 안녕하세요!</text>
             </HeaderProfile>
           </HeaderLeft>
           <HeaderRight>
@@ -167,7 +170,7 @@ return () => {
                 autoPlay={false}
                 navButtonsAlwaysInvisible={true}
                 indicators={true}
-                indicatorContainerProps={{ style: { marginTop: "-20px" } }}
+                indicatorContainerProps={{ style: { marginTop: "-18px" } }}
               >
                 {items.map((item, i) => (
                   <Item key={i} item={item} theme={theme} ticket={Ticket} />
