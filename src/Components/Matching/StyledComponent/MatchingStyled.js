@@ -303,7 +303,6 @@ export const EachButton = styled.div`
   justify-content: center;
   align-items: center;
   width: 53.85%;
-  max-width: 182px;
   height: 84.6%;
   /* white */
   background: #FFFFFF;
