@@ -6,3 +6,13 @@ margin : 0;
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } */
+
+@font-face {
+	font-family: "OpenSans";
+	src: url(./fonts/OpenSans-Regular.ttf);
+}
+
+:root {
+	--font-OpenSans: "OpenSans";
+}
+

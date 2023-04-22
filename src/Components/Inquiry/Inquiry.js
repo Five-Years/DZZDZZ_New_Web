@@ -251,6 +251,7 @@ function Inquiry() {
                 </Button>
               </ButtonContainer>
             </ContentDiv>
+            {/* 
             <MobileWrapper className="mobile">
               <ButtonContainer>
                 <Button
@@ -262,7 +263,7 @@ function Inquiry() {
                   문의하기
                 </Button>
               </ButtonContainer>
-            </MobileWrapper>
+            </MobileWrapper> */}
           </ContentContainer>
         </InquiryContainer>
       ) : (
