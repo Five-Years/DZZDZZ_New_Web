@@ -35,9 +35,15 @@ function Meta() {
         </Information>
       </ContentInformation>
       <ContentSns>
-        <img src={require("../../assets/facebook.png")} alt="" />
-        <img src={require("../../assets/Instagram.png")} alt="" />
-        <img src={require("../../assets/Github.png")} alt="" />
+        <img src={require("../../assets/facebook.png")} onClick={() => {
+              window.open("https://www.facebook.com/");
+            }} alt="" />
+        <img src={require("../../assets/Instagram.png")} onClick={() => {
+              window.open("https://instagram.com/dzzdzz_official?igshid=YmMyMTA2M2Y=");
+            }} alt="" />
+        <img src={require("../../assets/Github.png")} onClick={() => {
+              window.open("https://github.com/orgs/Five-Years");
+            }} alt="" />
       </ContentSns>
     </>
   );
@@ -110,6 +116,12 @@ const ContentSns = styled.div`
 
   width: 385px;
   height: 30px;
+
+  > img {
+    :active {
+      opacity : 0.5;
+    }
+  }
 
   @media screen and (max-width: 800px) {
     display: none;

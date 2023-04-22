@@ -33,9 +33,7 @@ const FooterContainer = styled.div`
   background-color: #231815;
 
   @media screen and (max-width: 800px) {
-    /* 전체 가로 390 세로 844px 중 헤더부분은 가로 390 세로 중 */
     height: 44.7vh;
-    padding: 0px;
   }
 `;
 
@@ -77,7 +75,6 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0px;
   gap: 10px;
 
   width: 93.8%;
