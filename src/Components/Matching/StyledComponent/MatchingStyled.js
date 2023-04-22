@@ -22,59 +22,64 @@ export const MobileContainer = styled.div`
 `;
 
 export const HeaderContainer = styled.div`
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0px;
-  width: 100%;
-  height: 11.29%;
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+
+position: absolute;
+width: 100%;
+height: 12.57%;
+left: 0px;
+top: 3.57%;
 `;
 
 export const HeaderLeft = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 20px;
-
-  left: 0px;
-  position: absolute;
-  width: 59.74%;
-  height: 100%;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+padding: 0px;
+margin-left: 16.67%;
+width: 36.41%;
+height: 78.41%;
+min-width : 155px;
 `;
 
 export const HeaderAvatar = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0px;
-  gap: 9px;
-  margin-left: 10%;
+position: absolute;
 
-  > img {
-    width: 37px;
-    height: 37px;
-    border-radius: 50%;
-    border: 1px solid #000000;
-
+top: 9px;
+left : 66.66%;
+> img {
+  width: 50px;
+  height: 46px;
   }
 `;
 
 
 export const HeaderRight = styled.div`
-  display: flex;
-  position: absolute;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  right: 0px;
+width: 54.36%;
+height: 19px;
+min-width : 230px;
+margin-left : 16.67%;
 
-  width: 33.33%;
-  height: 100%;
+> text {
+  font-family: var(--font-OpenSans);
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 19px;
+/* identical to box height */
+/* Text Black */
+color: #000000;
+}
 
-  /* 진행단계별 색상 변경필요 */
-  background: #FFF100;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+> text > span {
+  color : #0094FF;
+  font-weight: 600;
+font-size: 14px;
+}
+
 `;
 
 export const MatchingCardContainer = styled.div`
@@ -82,9 +87,9 @@ export const MatchingCardContainer = styled.div`
   position: absolute;
   align-items: center;
   justify-content: center;
-  width: 100vw;
-  height: 47.71vh;
-  top: 16.86%;
+  width: 100%;
+  height: 47.71%;
+  top: 18.29%;
 `;
 
 export const MatchingCard = styled.div`
@@ -93,11 +98,11 @@ export const MatchingCard = styled.div`
   gap: 10px;
   width: 66.66%;
   height: 100%;
-  background: #ffffff;
-
-  box-shadow: 0px 13px 12px rgba(0, 0, 0, 0.1);
+  background: ${props => props.theme === 1 ? "#E3F1FF" : "#FFE9E9"  };
+  // 이성매칭 
+  box-shadow: ${props => props.theme === 1 ? "0px 0px 10px rgba(0, 148, 255, 0.6), 0px 13px 12px rgba(0, 0, 0, 0.1)" : "0px 0px 10px rgba(255, 71, 126, 0.6), 0px 13px 12px rgba(0, 0, 0, 0.1)"};
   border-radius: 20px;
-
+  // 동성매칭 
   > div {
     top: 5%;
     width: 100%;
@@ -159,15 +164,17 @@ export const CardTag = styled.div`
   text-align: center;
   gap: 10px;
 
-  width: 113px;
-  height: 32px;
+  width: 43.46%;
+  min-width : 113px;
+  height: 11.59%;
+  min-height : 32px;
 
   /* white */
 
   background: #ffffff;
   /* dzz_pink */
 
-  border: 0.5px solid #ff477e;
+  border: 1px solid #ff477e;
   border-radius: 19px;
 
   > text {
@@ -212,10 +219,12 @@ export const CardTicket = styled.div`
   align-items: center;
   justify-content: space-evenly;
 
-  width: 193px;
-  height: 40px;
+  width : 74.23%;
+  height : 14.49%;
+  min-width: 193px;
+  min-height: 40px;
 
-  /* white */
+  background: #FFFFFF;
   border-radius: 32px;
 
   > img {
@@ -242,27 +251,39 @@ export const CardTicket = styled.div`
 
 
 export const HeaderProfile = styled.div`
-  width: 142px;
-  height: 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0px;
+
+width: 100%;
+height: 73.91%;
 
   > text {
     font-family: var(--font-OpenSans);
     font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 25px;
+    color: #000000;
+  }
+
+  > text.name{
     font-weight: 600;
-    font-size: 20px;
+    font-size: 22px;
     line-height: 26px;
-    color: #ffffff;
   }
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  justify-content: space-between;
   position: absolute;
   width: 100%;
-  height: 28.15%;
-  top : 69.57%;
+  height: 24%;
+  top : 72.71%;
 `;
 
 export const EachButtonContainer = styled.div`
@@ -273,7 +294,7 @@ export const EachButtonContainer = styled.div`
   gap: 4px;
 
   width: 100%;
-  height: 33.33%;
+  height: 30.95%;
 `;
 
 export const EachButton = styled.div`
@@ -281,27 +302,20 @@ export const EachButton = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
-  width: 44.1%;
+  width: 53.85%;
   max-width: 182px;
-  height: 52px;
-
+  height: 84.6%;
   /* white */
-
-  background: #ffffff;
-  /* Text Black */
-
-  border: 1px solid #000000;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
   border-radius: 30px;
 
   &.ticket {
-    background: ${props => props.theme === 1 ?  "#1B2D70" : "#FF477E"};
+    background: ${props => props.theme === 1 ?  "#0094FF" : "#FF477E"};
   }
 
   > text {
-    width: 81.4%;
     height: 24px;
-
     font-family: var(--font-OpenSans);
     font-style: normal;
     font-weight: 600;
@@ -313,6 +327,13 @@ export const EachButton = styled.div`
     letter-spacing: 0.05em;
     text-transform: capitalize;
     color: #000000;
+  }
+
+  > img {
+    margin-left: 5px;
+    width : 24px;
+    height : 24px;
+
   }
   > text.ticket {
     color: #ffffff;
@@ -366,7 +387,7 @@ export const Confirmation = styled(ConfirmationNumberIcon)`
 `;
 
 export const Carousels = styled(Carousel)`
-  &.indicatorContainerProps{margin-top: -20px}
+  &.indicatorContainerProps{margin-top: -30px}
 `;
 
 

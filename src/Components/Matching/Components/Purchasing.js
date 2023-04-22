@@ -5,7 +5,6 @@ import {
   BackgroundCards,
   HeaderContainer,
   HeaderLeft,
-  HeaderAvatar,
   HeaderProfile,
   HeaderRight,
   StageContainer,
@@ -20,9 +19,6 @@ function Purchasing() {
         <HeaderContainer>
           <HeaderLeft>
             {/* 사용자 프로필 사진 가져오기 */}
-            <HeaderAvatar>
-              <img src={require("../../../assets/mango.jpg")} alt="이미지" />
-            </HeaderAvatar>
             <HeaderProfile>
               <text>미쥬미쥬미쥬님 안녕하세요!</text>
             </HeaderProfile>

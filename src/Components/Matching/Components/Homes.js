@@ -3,13 +3,13 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Paper } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 import Carousel from "react-material-ui-carousel";
 import {
   BackgroundCard,
   MobileContainer,
   HeaderContainer,
   HeaderLeft,
-  HeaderAvatar,
   HeaderProfile,
   HeaderRight,
   StageContainer,
@@ -25,27 +25,30 @@ import {
   TextField,
   MatchingCardContainer,
   MatchingCard,
+  HeaderAvatar
 } from "../StyledComponent/MatchingStyled";
-function Item(props) {
-  return (
-    <Paper>
-      <CardTitleContainer>
-        <CardTag>
-          <text>{props.item.title}</text>
-        </CardTag>
-        <CardTitle>{props.item.description}</CardTitle>
-        <CardTicket>
-          {/* 티켓 이미지 */}
-          <Confirmation theme={props.theme} />
-          <text>현재 보유 티켓 : {props.ticket}</text>
-        </CardTicket>
-      </CardTitleContainer>
-    </Paper>
-  );
-}
+
 
 
 function Homes() {
+
+  function Item(props) {
+    return (
+      <Paper>
+        <CardTitleContainer>
+          <CardTag>
+            <text>{props.item.title}</text>
+          </CardTag>
+          <CardTitle>{props.item.description}</CardTitle>
+          <CardTicket>
+            {/* 티켓 이미지 */}
+            <Confirmation theme={props.theme} />
+            <text>현재 보유 티켓 : {props.ticket}</text>
+          </CardTicket>
+        </CardTitleContainer>
+      </Paper>
+    );
+  }
 
   const listener = (event) => {
     const {data,type} = JSON.parse(event);
@@ -130,37 +133,31 @@ return () => {
       ),
     },
   ];
+
+
   return (
     //  "#FF477E" : "#49516F"
     <>
       {/* 테마 이미지 */}
-      <BackgroundCard theme={theme}></BackgroundCard>
+      {/* <BackgroundCard theme={theme}></BackgroundCard> */}
       <MobileContainer style={{paddingTop : paddingtop}}>
         <HeaderContainer>
+        <HeaderAvatar>
+              <img src={require("../../../assets/donut.png")} alt="이미지" />
+            </HeaderAvatar>
           <HeaderLeft>
             {/* 사용자 프로필 사진 가져오기 */}
-            <HeaderAvatar>
-              <img src={require("../../../assets/mango.jpg")} alt="이미지" />
-            </HeaderAvatar>
             <HeaderProfile>
-              <text>{name}님 안녕하세요!</text>
+              <text className="name">{name}님</text>
+              <text>안녕하세요!</text>
             </HeaderProfile>
           </HeaderLeft>
           <HeaderRight>
-            <StageContainer>
-              <text>
-                지금은
-                <br />
-                <span>시즌2(이성)</span>
-                <br />
-                접수기간입니다!
-                <br />
-              </text>
-            </StageContainer>
+              <text>지금은 <span>시즌2 (혼성)</span> 접수기간입니다!</text>
           </HeaderRight>
         </HeaderContainer>
         <MatchingCardContainer>
-          <MatchingCard>
+          <MatchingCard theme = {theme}>
             <>
               <Carousel index={theme}
                 onChange={(now) => {
@@ -170,7 +167,7 @@ return () => {
                 autoPlay={false}
                 navButtonsAlwaysInvisible={true}
                 indicators={true}
-                indicatorContainerProps={{ style: { marginTop: "-18px" } }}
+                indicatorContainerProps={{ style: { marginTop: "-19px" } }}
               >
                 {items.map((item, i) => (
                   <Item key={i} item={item} theme={theme} ticket={Ticket} />
@@ -212,7 +209,7 @@ return () => {
           <EachButton>
             {authentification ? (
               <>
-                <text className="authentification">학생 인증 완료</text>
+                <text className="authentification">학생 인증 완료 </text>
                 <img
                   src={require("../../../assets/CircleWavyCheck.png")}
                   alt="이미지"
