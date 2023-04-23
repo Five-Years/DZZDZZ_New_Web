@@ -19,6 +19,7 @@ export const MobileContainer = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
+  max-width : 720px;
 `;
 
 export const HeaderContainer = styled.div`
@@ -88,8 +89,9 @@ export const MatchingCardContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 47.71%;
-  top: 18.29%;
+  height: 47%;
+  top: 18.14%;
+  max-height : 334px;
 `;
 
 export const MatchingCard = styled.div`
@@ -308,9 +310,12 @@ export const EachButton = styled.div`
   background: #FFFFFF;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
   border-radius: 30px;
+  pointer-events : ${(props)=>(props.season !== props.theme?'none':null)};
+
 
   &.ticket {
-    background: ${props => props.theme === 1 ?  "#0094FF" : "#FF477E"};
+    background: ${props => (props.theme === props.season)? ((props.season === props.theme) ? ("#0094FF"): ("#BDE5FF")) : ((props.season === props.theme)? ("#FF477E") : ("#FEC7D7"))}
+
   }
 
   > text {
@@ -382,7 +387,7 @@ text-align: center;
 export const Confirmation = styled(ConfirmationNumberIcon)`
   width: 24px;
   height: 24px;
-  color: ${props => props.theme === 1 ? "#0094FF" : "#FF477E"  }
+  color: ${props => props.theme === 1 ? "#0094FF" : "#FF477E"  };
 `;
 
 export const Carousels = styled(Carousel)`
@@ -397,8 +402,6 @@ export const MatchingContainer = styled.div`
   height: 100%;
   justify-content: center;
   background-color : ${props=>props.theme === 1 ? "#49516f" :  "#FF477E"};
-
-  
 `;
 
 export const Button = styled.div`
@@ -880,28 +883,29 @@ export const ProfileImageContainer = styled.div`
 `;
 
 export const PurchasePageContainer = styled(MatchingContainer)`
+background-color: #FFE9EF;
 `
 
 export const Purchasingbox = styled.div`
-display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: flex-start;
-gap: 10px;
 position: absolute;
-width: 87.2%;
-height: 79.14%;
-left : 6.41%;
-top : 17.14%;
-
-/* white */
-
-background: #FFFFFF;
-/* card */
-
-box-shadow: 0px 13px 12px rgba(0, 0, 0, 0.1);
-border-radius: 20px;
+width: 100%;
+height: 12.71%;
+left: 0px;
+top: 3.57%;
+background-color: red;
 `;
 
+export const PurchasingHeader = styled.div`
+display: flex;
+flex-direction: column;
+align-items: flex-end;
+padding: 0px;
+gap: 4px;
+margin-left : 39.23%;
+
+width: 44.1%;
+height: 100%;
+background-color: green;
+`;
 
 

@@ -25,7 +25,7 @@ root.render(
           <Route path="/" element={<Homes />}></Route>
           <Route path="/matching" element={<Matching />}></Route>
           <Route path="/matching2" element={<Matching2 />}></Route>
-          <Route path="/purchase" element={<Purchase />}></Route>
+          <Route path="/purchase" element={<Purchasing />}></Route>
           <Route path="/purchasing" element={<Purchasing />}></Route>
           <Route path="/detail" element={<DetailProfile />}></Route>
           <Route path="/pc" element={<App />}></Route>

@@ -85,7 +85,11 @@ return () => {
     return state.Popup.ticket;
   });
   const dispatch = useDispatch();
-  const [theme, setTheme] = useState(1);
+  const [seasonNumber, setSeasonNumber] = useState(2); //현재 진행중인 시즌회차
+  const [season, setSeason] = useState(1) // 현재 진행중인 시즌테마 (혼성, 동성)
+  const [theme, setTheme] = useState(season); //내가 선택중인 테마 
+  const seasonlist = ["이성","혼성"]
+
 
 
   // 유저인증여부 확인, 추후 서버 연동 필요
@@ -140,7 +144,7 @@ return () => {
     <>
       {/* 테마 이미지 */}
       {/* <BackgroundCard theme={theme}></BackgroundCard> */}
-      <MobileContainer style={{paddingTop : paddingtop}}>
+      <MobileContainer>
         <HeaderContainer>
         <HeaderAvatar>
               <img src={require("../../../assets/donut.png")} alt="이미지" />
@@ -153,13 +157,13 @@ return () => {
             </HeaderProfile>
           </HeaderLeft>
           <HeaderRight>
-              <text>지금은 <span>시즌2 (혼성)</span> 접수기간입니다!</text>
+              <text>지금은 <span>시즌{seasonNumber} ({seasonlist[season]})</span> 접수기간입니다!</text>
           </HeaderRight>
         </HeaderContainer>
         <MatchingCardContainer>
           <MatchingCard theme = {theme}>
             <>
-              <Carousel index={theme}
+              <Carousel index={season}
                 onChange={(now) => {
                   setTheme(now);
                 }}
@@ -179,7 +183,7 @@ return () => {
       </MobileContainer>
       <ButtonContainer>
         <EachButtonContainer>
-          <EachButton className="ticket" theme={theme}>
+          <EachButton className="ticket" theme={theme} season={season}> 
             <text className="ticket">
               {Ticket === 0 ? (
                 <Link
