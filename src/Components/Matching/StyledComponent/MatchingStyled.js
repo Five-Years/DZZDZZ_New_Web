@@ -245,6 +245,33 @@ export const CardTicket = styled.div`
   }
 `;
 
+export const PurchasingCardTicket = styled(CardTicket)`
+display: flex;
+flex-direction: row;
+align-items: center;
+
+width: 193px;
+height: 40px;
+border-radius: 0px;
+
+> text {
+  width: 140px;
+    height: 24px;
+
+    font-family: var(--font-OpenSans);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+
+    /* Text Black */
+
+    color: #000000;
+}
+
+`;
+
 
 export const HeaderProfile = styled.div`
   display: flex;
@@ -878,28 +905,42 @@ export const ProfileImageContainer = styled.div`
 
 export const PurchasePageContainer = styled(MatchingContainer)`
 background-color: #FFE9EF;
+
 `
 
-export const Purchasingbox = styled.div`
+export const PurchasingHeaderContainer = styled.div`
 position: absolute;
 width: 100%;
 height: 12.71%;
 left: 0px;
 top: 3.57%;
-background-color: red;
 `;
+
+
 
 export const PurchasingHeader = styled.div`
 display: flex;
 flex-direction: column;
 align-items: flex-end;
+
 padding: 0px;
 gap: 4px;
 margin-left : 39.23%;
 
 width: 44.1%;
 height: 100%;
-background-color: green;
+min-width : 190px;
+
+> text {
+  font-family: var(--font-OpenSans);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: right;
+  /* dzz_pink */
+  color: #FF477E;
+}
 `;
 
 
