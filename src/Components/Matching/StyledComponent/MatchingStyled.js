@@ -16,10 +16,9 @@ export const BackgroundCard = styled.div`
 `;
 
 export const MobileContainer = styled.div`
-  position: relative;
+  position: absolute;
   width: 100vw;
   height: 100vh;
-  max-width : 720px;
 `;
 
 export const HeaderContainer = styled.div`
@@ -29,9 +28,9 @@ align-items: flex-start;
 
 position: absolute;
 width: 100%;
-height: 12.57%;
+height: 11.91%;
 left: 0px;
-top: 3.57%;
+top: 3.38%;
 `;
 
 export const HeaderLeft = styled.div`
@@ -89,9 +88,8 @@ export const MatchingCardContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 47%;
-  top: 18.14%;
-  max-height : 334px;
+  height: 45.2%;
+  top: 17.32%;
 `;
 
 export const MatchingCard = styled.div`
@@ -106,7 +104,7 @@ export const MatchingCard = styled.div`
   border-radius: 20px;
   // 동성매칭 
   > div {
-    top: 5%;
+    top : 6%;
     width: 100%;
     height: 100%;
   }
@@ -149,9 +147,8 @@ export const CardTitleContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 38px;
-
   width: 100%;
-  height: 82.63%;
+  height: 83.63%;
 `;
 
 export const CardTag = styled.div`
@@ -167,15 +164,12 @@ export const CardTag = styled.div`
   gap: 10px;
 
   width: 43.46%;
-  min-width : 113px;
   height: 11.59%;
+  min-width : 113px;
   min-height : 32px;
-
   /* white */
-
   background: #ffffff;
   /* dzz_pink */
-
   border: 1px solid #ff477e;
   border-radius: 19px;
 
@@ -284,8 +278,8 @@ export const ButtonContainer = styled.div`
   justify-content: space-between;
   position: absolute;
   width: 100%;
-  height: 24%;
-  top : 72.71%;
+  height: 22.73%;
+  top : 68.88%;
 `;
 
 export const EachButtonContainer = styled.div`

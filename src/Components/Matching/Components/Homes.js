@@ -180,8 +180,7 @@ return () => {
             </>
           </MatchingCard>
         </MatchingCardContainer>
-      </MobileContainer>
-      <ButtonContainer>
+        <ButtonContainer>
         <EachButtonContainer>
           <EachButton className="ticket" theme={theme} season={season}> 
             <text className="ticket">
@@ -225,6 +224,7 @@ return () => {
           </EachButton>
         </EachButtonContainer>
       </ButtonContainer>
+      </MobileContainer>
     </>
   );
 }
