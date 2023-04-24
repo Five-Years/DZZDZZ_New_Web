@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Carousel from "react-material-ui-carousel";
 import { Navigate } from "react-router-dom";
+import {  useLocation } from 'react-router-dom';
 
 import {
   BackgroundCard,
@@ -34,7 +35,7 @@ import {
 
 function Homes() {
   const navigate = useNavigate()
-
+  const location = useLocation()
   function Item(props) {
     return (
       <Paper>
@@ -61,7 +62,11 @@ function Homes() {
       case 'accessToken' :
         setName(data)
       case 'onBlur' :
-        navigate("/");
+          if(location.pathname !== "/" )
+          {
+            navigate("/");
+          }
+        
     }
   };
 
@@ -71,6 +76,7 @@ function Homes() {
 document.addEventListener("message", (e)=> listener(e.data));
 //ios
 window.addEventListener("message", (e)=> listener(e.data));
+
 window.ReactNativeWebView?.postMessage(JSON.stringify({type : "onLoad", data : "" }))
 return () => {
   //android
