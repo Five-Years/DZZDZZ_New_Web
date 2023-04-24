@@ -1,0 +1,13 @@
+.App {
+  display: flex;
+  width : 100vw;
+  height : 100vh;
+}
+
+/* 폰트 */
+@font-face {
+  font-family: 'PFStardust';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
