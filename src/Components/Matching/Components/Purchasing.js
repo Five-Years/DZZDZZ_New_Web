@@ -15,7 +15,7 @@ import {
   PurchasingCardTicket,
 } from "../StyledComponent/MatchingStyled";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import StateSlice from "../../../features/State/StateSlice";
 function Purchasing() {
@@ -24,6 +24,33 @@ function Purchasing() {
   });
   const dispatch = useDispatch();
   const [theme, setTheme] = useState(1);
+  const listener = (event) => {
+    const {data,type} = JSON.parse(event);
+    switch (type) {
+      case 'buyComplete' :
+        {
+          alert("구매 성공")
+        }
+      case 'buyFail ' :
+        {
+          alert ("구매 실패")
+        }
+    }
+  };
+
+  useEffect(()=> {
+    //android
+    document.addEventListener("message", (e)=> listener(e.data));
+    //ios
+    window.addEventListener("message", (e)=> listener(e.data));
+    window.ReactNativeWebView?.postMessage(JSON.stringify({type : "onLoad", data : "" }))
+    return () => {
+      //android
+      window.removeEventListener("message", (e)=> listener(e.data));
+      //ios
+      document.removeEventListener("message", (e)=> listener(e.data));
+    }
+      },[])
   return (
     <>
       <PurchasePageContainer theme = {theme}>
