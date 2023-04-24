@@ -215,7 +215,7 @@ return () => {
           </EachButton>
         </EachButtonContainer>
         <EachButtonContainer>
-          <EachButton onClick={()=> {window.ReactNativeWebView?.postMessage(JSON.stringify({type : "modify"}))}}>
+          <EachButton onClick={()=> {window.ReactNativeWebView?.postMessage(JSON.stringify({type : "modify", data : ""}))}}>
             <text>내 정보 수정하기</text>
           </EachButton>
         </EachButtonContainer>
