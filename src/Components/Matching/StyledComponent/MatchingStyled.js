@@ -904,7 +904,7 @@ export const ProfileImageContainer = styled.div`
 `;
 
 export const PurchasePageContainer = styled(MatchingContainer)`
-background-color: #FFE9EF;
+background-color: ${props=> props.theme === 1 ? "#E3F1FF" : "#FFE9EF" }
 
 `
 

@@ -14,6 +14,7 @@ import {
   Confirmation,
   PurchasingCardTicket,
 } from "../StyledComponent/MatchingStyled";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import StateSlice from "../../../features/State/StateSlice";
@@ -22,10 +23,10 @@ function Purchasing() {
     return state.Popup.ticket;
   });
   const dispatch = useDispatch();
-  const [theme, setTheme] = useState(0);
+  const [theme, setTheme] = useState(1);
   return (
     <>
-      <PurchasePageContainer>
+      <PurchasePageContainer theme = {theme}>
         <PurchasingHeaderContainer>
           <PurchasingHeader>
           <HeaderContentContainer>
@@ -54,12 +55,12 @@ function Purchasing() {
                 <TicketContainer><TicketImage><img src={require("../../../assets/ticket3.png")} alt="이미지" /></TicketImage><TicketCount><text>티켓 12개</text><text className="bonus">10개 + 보너스 2개</text></TicketCount><TicketPrice><text>15,000 </text><img src={require("../../../assets/won.png")} alt="이미지" /></TicketPrice><TicketButton><text>구매</text></TicketButton></TicketContainer>
                 <TicketContainer><TicketImage><img src={require("../../../assets/ticket4.png")} alt="이미지" /></TicketImage><TicketCount><text>티켓 35개</text><text className="bonus">30개 + 보너스 5개</text></TicketCount><TicketPrice><text>52,500 </text><img src={require("../../../assets/won.png")} alt="이미지" /></TicketPrice><TicketButton><text>구매</text></TicketButton></TicketContainer>
               </BuyTicket>
-              <BackHome><img src={require("../../../assets/Rollback.png")} alt="이미지" /></BackHome>
+              <BackHome><Link to="/"><img src={require("../../../assets/Rollback.png")} alt="이미지" /></Link></BackHome>
             </BoxContent>
           </PurchasingBox>
         </PurchasingBoxContainer>
         <HeaderImg><img src={require("../../../assets/gift.png")} alt="이미지" /></HeaderImg>
-        <BottomImg><img src={require("../../../assets/cart.png")} alt="이미지" /></BottomImg>
+        <BottomImg onClick={()=>{}}><img src={require("../../../assets/cart.png")} alt="이미지" /></BottomImg>
       </PurchasePageContainer>
     </>
   );
