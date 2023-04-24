@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Paper } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Carousel from "react-material-ui-carousel";
+import { Navigate } from "react-router-dom";
+
 import {
   BackgroundCard,
   MobileContainer,
@@ -31,6 +33,7 @@ import {
 
 
 function Homes() {
+  const navigate = useNavigate()
 
   function Item(props) {
     return (
@@ -57,6 +60,8 @@ function Homes() {
         setPaddingTop(data)
       case 'accessToken' :
         setName(data)
+      case 'onBlur' :
+        navigate("/");
     }
   };
 
@@ -66,7 +71,7 @@ function Homes() {
 document.addEventListener("message", (e)=> listener(e.data));
 //ios
 window.addEventListener("message", (e)=> listener(e.data));
-window.ReactNativeWebView?.postMessage(JSON.stringify({type : "onLoad"}))
+window.ReactNativeWebView?.postMessage(JSON.stringify({type : "onLoad", data : "" }))
 return () => {
   //android
   window.removeEventListener("message", (e)=> listener(e.data));

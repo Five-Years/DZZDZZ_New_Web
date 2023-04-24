@@ -12,10 +12,23 @@ import Matching2 from "./Components/Matching/Components/Matching2";
 import Purchase from "./Purchase";
 import Purchasing from './Components/Matching/Components/Purchasing';
 import DetailProfile from './DetailProfile';
+import Parents from './Parents';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const container = document.getElementById('root');
 const root = createRoot(container);
+
+
+// onBlur 타입이 오면 메인으로 이동
+// const listener = (event) => {
+//   const {data,type} = JSON.parse(event);
+//   switch (type) {
+//     case 'onBlur' :
+//       navigate("/");
+//   }
+// };
+// const navigate = useNavigate();
 
 root.render(
   <React.StrictMode>
@@ -34,6 +47,7 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
