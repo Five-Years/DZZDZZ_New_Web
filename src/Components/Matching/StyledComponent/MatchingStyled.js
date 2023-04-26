@@ -331,12 +331,11 @@ export const EachButton = styled.div`
   background: #FFFFFF;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
   border-radius: 30px;
-  pointer-events : ${(props)=>(props.season !== props.theme?'none':null)};
 
 
   &.ticket {
-    background: ${props => (props.theme === props.season)? ((props.season === props.theme) ? ("#0094FF"): ("#BDE5FF")) : ((props.season === props.theme)? ("#FF477E") : ("#FEC7D7"))}
-
+    background: ${props => (props.theme === props.season)? ((props.season === props.theme) ? ("#0094FF"): ("#BDE5FF")) : ((props.season === props.theme)? ("#FF477E") : ("#FEC7D7"))};
+    pointer-events : ${(props)=>(props.season !== props.theme?'none':null)};
   }
 
   > text {

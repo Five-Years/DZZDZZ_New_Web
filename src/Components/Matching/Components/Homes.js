@@ -213,12 +213,7 @@ window.ReactNativeWebView?.postMessage(JSON.stringify({type : "onLoad", data : "
           </EachButton>
         </EachButtonContainer>
         <EachButtonContainer>
-          <EachButton onClick={()=> {
-            window.ReactNativeWebView?.postMessage(JSON.stringify({type : "modify", data : ""}))
-          
-          }
-            
-            }>
+          <EachButton onClick={()=>{window.ReactNativeWebView?.postMessage(JSON.stringify({type : "modify", data : ""}))}}>
             <text>내 정보 수정하기</text>
           </EachButton>
         </EachButtonContainer>
