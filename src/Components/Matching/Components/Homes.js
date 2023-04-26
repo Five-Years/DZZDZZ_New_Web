@@ -62,13 +62,8 @@ function Homes() {
         break
 
       case 'onBlur' :
-          if(location.pathname !== "/" )
-          {
-            navigate("/");
-          }
+          navigate("/");
           break
-
-    
     }
   };
 
