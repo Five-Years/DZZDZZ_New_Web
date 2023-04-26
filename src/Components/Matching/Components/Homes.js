@@ -3,20 +3,16 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Paper } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
 import Carousel from "react-material-ui-carousel";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 import {  useLocation } from 'react-router-dom';
 
 import {
-  BackgroundCard,
   MobileContainer,
   HeaderContainer,
   HeaderLeft,
   HeaderProfile,
   HeaderRight,
-  StageContainer,
-  Carousels,
   ButtonContainer,
   EachButtonContainer,
   EachButton,
@@ -56,17 +52,23 @@ function Homes() {
 
   const listener = (event) => {
     const {data,type} = JSON.parse(event);
+
     switch (type) {
       case 'paddingTop' :
         setPaddingTop(data)
+        break
       case 'accessToken' :
         setName(data)
+        break
+
       case 'onBlur' :
           if(location.pathname !== "/" )
           {
             navigate("/");
           }
-        
+          break
+
+    
     }
   };
 
@@ -78,12 +80,6 @@ document.addEventListener("message", (e)=> listener(e.data));
 window.addEventListener("message", (e)=> listener(e.data));
 
 window.ReactNativeWebView?.postMessage(JSON.stringify({type : "onLoad", data : "" }))
-return () => {
-  //android
-  window.removeEventListener("message", (e)=> listener(e.data));
-  //ios
-  document.removeEventListener("message", (e)=> listener(e.data));
-}
   },[])
 
 
@@ -138,9 +134,11 @@ return () => {
             <br />
             누군가의 소울메이트🥹?!
             <br />
-            ‘맛집 뿌실 단짝 어디 없나?’
+            <text className="highlight">‘맛집 뿌실 단짝 어디 없나?’</text>
             <br />
-            애매하게 서성이지 말고
+            <span>
+              <span className="highlight">애매하게 서성이지</span>말고
+            </span>
             <br />
             시즌 입장!
           </text>
@@ -215,7 +213,12 @@ return () => {
           </EachButton>
         </EachButtonContainer>
         <EachButtonContainer>
-          <EachButton onClick={()=> {window.ReactNativeWebView?.postMessage(JSON.stringify({type : "modify", data : ""}))}}>
+          <EachButton onClick={()=> {
+            window.ReactNativeWebView?.postMessage(JSON.stringify({type : "modify", data : ""}))
+          
+          }
+            
+            }>
             <text>내 정보 수정하기</text>
           </EachButton>
         </EachButtonContainer>

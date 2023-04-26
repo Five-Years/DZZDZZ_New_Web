@@ -422,7 +422,7 @@ export const MatchingContainer = styled.div`
   width: 100%;
   height: 100%;
   justify-content: center;
-  background-color : ${props=>props.theme === 1 ? "#49516f" :  "#FF477E"};
+  background : ${props=>props.theme === 1 ? "linear-gradient(180deg, #345084 30.21%, #6A7FA5 100%);" :  "linear-gradient(180deg, #FD5084 0%, #F993AD 83.63%);"};
 `;
 
 export const Button = styled.div`
@@ -469,10 +469,8 @@ export const MatchingCardContainers = styled.div`
   gap: 10px;
   position: absolute;
   width: 66.66%;
-  height: 45.29%;
-  max-width: 260px;
-  max-height: 320px;
-  top: 8.57%;
+  height: 34.46%;
+  top: 16.55%;
   background: #ffffff;
   box-shadow: 0px 13px 12px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
@@ -485,8 +483,7 @@ export const MatchingCardContent = styled.div`
   gap: 15px;
 
   width: 100%;
-  height: 71.92%;
-  min-height: 228px;
+  height: 69.29%;
 `;
 
 
@@ -501,7 +498,7 @@ export const SpinnerContainer = styled.div`
   position: absolute;
   width: 100px;
   height: 100px;
-  top: 63.71%;
+  top: 54.62%;
 
   border-radius: 5px;
 `;
@@ -524,13 +521,13 @@ export const ContentContainer = styled.div`
   height: 100%;
 
   > text {
-    width: 135px;
-    height: 102px;
+    width: 100%;
+    height: 57.95%;
     white-space: pre-line;
     font-family: var(--font-OpenSans);
     font-style: normal;
     font-weight: 600;
-    font-size: 25px;
+    font-size: 22px;
     line-height: 34px;
     text-align: center;
 
@@ -540,14 +537,12 @@ export const ContentContainer = styled.div`
   }
 
   > text > span {
-    color: #ff477e;
+    color: #FF7A00;
   }
 
   > img {
-    width: 80%;
-    height: 80%;
-    max-width: 96px;
-    max-height: 96px;
+    width: 50px;
+    height: 44px;
   }
 `;
 
@@ -563,7 +558,7 @@ export const ConfirmContainer = styled.div`
   position: absolute;
   width: 100%;
   height: 50px;
-  top: 82.57%;
+  top: 68.88%;
 
   > text {
     width: 127px;
