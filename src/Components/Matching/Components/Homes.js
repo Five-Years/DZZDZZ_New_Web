@@ -63,7 +63,6 @@ function Homes() {
 
       case 'onBlur' :
           navigate("/");
-          alert("onBlur!")
           break
     }
   };
