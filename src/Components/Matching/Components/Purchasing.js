@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { ReactComponent as Won } from "../../../assets/won.svg"
+import { ReactComponent as Return } from "../../../assets/return.svg"
+
 import {
   PurchasePageContainer,
   PurchasingHeaderContainer,
@@ -76,12 +79,12 @@ function Purchasing() {
           </PurchasingCardTicket>
               </MyTicket>
               <BuyTicket>
-                <TicketContainer><TicketImage><img src={require("../../../assets/ticket1.png")} alt="이미지" /></TicketImage><TicketCount><text>티켓 1개</text></TicketCount><TicketPrice><text>1,500 </text><img src={require("../../../assets/won.png")} alt="이미지" /></TicketPrice><TicketButton onClick={()=> {window.ReactNativeWebView?.postMessage(JSON.stringify({type : "buy", data : "1"})); dispatch(StateSlice.actions.Ticket());}}><text>구매</text></TicketButton></TicketContainer>
-                <TicketContainer><TicketImage><img src={require("../../../assets/ticket2.png")} alt="이미지" /></TicketImage><TicketCount><text>티켓 5개</text><text className="bonus">4개 + 보너스 1개</text></TicketCount><TicketPrice><text>6,000 </text><img src={require("../../../assets/won.png")} alt="이미지" /></TicketPrice><TicketButton onClick={()=> {window.ReactNativeWebView?.postMessage(JSON.stringify({type : "buy", data : "4"}))}}><text>구매</text></TicketButton></TicketContainer>
-                <TicketContainer><TicketImage><img src={require("../../../assets/ticket3.png")} alt="이미지" /></TicketImage><TicketCount><text>티켓 12개</text><text className="bonus">10개 + 보너스 2개</text></TicketCount><TicketPrice><text>15,000 </text><img src={require("../../../assets/won.png")} alt="이미지" /></TicketPrice><TicketButton onClick={()=> {window.ReactNativeWebView?.postMessage(JSON.stringify({type : "buy", data : "10"}))}}><text>구매</text></TicketButton></TicketContainer>
-                <TicketContainer><TicketImage><img src={require("../../../assets/ticket4.png")} alt="이미지" /></TicketImage><TicketCount><text>티켓 35개</text><text className="bonus">30개 + 보너스 5개</text></TicketCount><TicketPrice><text>52,500 </text><img src={require("../../../assets/won.png")} alt="이미지" /></TicketPrice><TicketButton onClick={()=> {window.ReactNativeWebView?.postMessage(JSON.stringify({type : "buy", data : "30"}))}}><text>구매</text></TicketButton></TicketContainer>
+                <TicketContainer><TicketImage><img src={require("../../../assets/ticket1.png")} alt="이미지" /></TicketImage><TicketCount><text>티켓 1개</text></TicketCount><TicketPrice><text>1,500 </text><Won /></TicketPrice><TicketButton onClick={()=> {window.ReactNativeWebView?.postMessage(JSON.stringify({type : "buy", data : "1"})); dispatch(StateSlice.actions.Ticket());}}><text>구매</text></TicketButton></TicketContainer>
+                <TicketContainer><TicketImage><img src={require("../../../assets/ticket2.png")} alt="이미지" /></TicketImage><TicketCount><text>티켓 5개</text><text className="bonus">4개 + 보너스 1개</text></TicketCount><TicketPrice><text>6,000 </text><Won /></TicketPrice><TicketButton onClick={()=> {window.ReactNativeWebView?.postMessage(JSON.stringify({type : "buy", data : "4"}))}}><text>구매</text></TicketButton></TicketContainer>
+                <TicketContainer><TicketImage><img src={require("../../../assets/ticket3.png")} alt="이미지" /></TicketImage><TicketCount><text>티켓 12개</text><text className="bonus">10개 + 보너스 2개</text></TicketCount><TicketPrice><text>15,000 </text><Won /></TicketPrice><TicketButton onClick={()=> {window.ReactNativeWebView?.postMessage(JSON.stringify({type : "buy", data : "10"}))}}><text>구매</text></TicketButton></TicketContainer>
+                <TicketContainer><TicketImage><img src={require("../../../assets/ticket4.png")} alt="이미지" /></TicketImage><TicketCount><text>티켓 35개</text><text className="bonus">30개 + 보너스 5개</text></TicketCount><TicketPrice><text>52,500 </text><Won /></TicketPrice><TicketButton onClick={()=> {window.ReactNativeWebView?.postMessage(JSON.stringify({type : "buy", data : "30"}))}}><text>구매</text></TicketButton></TicketContainer>
               </BuyTicket>
-              <BackHome><Link to="/"><img src={require("../../../assets/Rollback.png")} alt="이미지" /></Link></BackHome>
+              <BackHome><Link to="/"><Return /></Link></BackHome>
             </BoxContent>
           </PurchasingBox>
         </PurchasingBoxContainer>

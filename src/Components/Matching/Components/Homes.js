@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Paper } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import Carousel from "react-material-ui-carousel";
-// import { Navigate } from "react-router-dom";
-import {  useLocation } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import {
   MobileContainer,
@@ -24,14 +24,12 @@ import {
   TextField,
   MatchingCardContainer,
   MatchingCard,
-  HeaderAvatar
+  HeaderAvatar,
 } from "../StyledComponent/MatchingStyled";
 
-
-
 function Homes() {
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
   function Item(props) {
     return (
       <Paper>
@@ -41,7 +39,6 @@ function Homes() {
           </CardTag>
           <CardTitle>{props.item.description}</CardTitle>
           <CardTicket>
-            {/* 티켓 이미지 */}
             <Confirmation theme={props.theme} />
             <text>현재 보유 티켓 : {props.ticket}</text>
           </CardTicket>
@@ -51,48 +48,40 @@ function Homes() {
   }
 
   const listener = (event) => {
-    const {data,type} = JSON.parse(event);
+    const { data, type } = JSON.parse(event);
 
     switch (type) {
-      case 'paddingTop' :
-        setPaddingTop(data)
-        break
-      case 'accessToken' :
-        setName(data)
-        break
+      case "accessToken":
+        setName(data);
+        break;
 
-      case 'onBlur' :
-          navigate("/");
-          break
+      case "onBlur":
+        navigate("/");
+        break;
     }
   };
 
+  useEffect(() => {
+    //android
+    document.addEventListener("message", (e) => listener(e.data));
+    //ios
+    window.addEventListener("message", (e) => listener(e.data));
 
-  useEffect(()=> {
-//android
-document.addEventListener("message", (e)=> listener(e.data));
-//ios
-window.addEventListener("message", (e)=> listener(e.data));
+    window.ReactNativeWebView?.postMessage(
+      JSON.stringify({ type: "onLoad", data: "" })
+    );
+  }, []);
 
-window.ReactNativeWebView?.postMessage(JSON.stringify({type : "onLoad", data : "" }))
-  },[])
-
-
-
-
-  const [paddingtop, setPaddingTop] = useState(0)
-  const [name, setName] = useState("미쥬미쥬미쥬")
+  const [name, setName] = useState("미쥬미쥬미쥬");
   // 유저티켓 보유 갯수 확인, 추후 서버 연동 필요
   const Ticket = useSelector((state) => {
     return state.Popup.ticket;
   });
   const dispatch = useDispatch();
-  const [seasonNumber, setSeasonNumber] = useState(2); //현재 진행중인 시즌회차
-  const [season, setSeason] = useState(1) // 현재 진행중인 시즌테마 (혼성, 동성)
-  const [theme, setTheme] = useState(season); //내가 선택중인 테마 
-  const seasonlist = ["이성","혼성"]
-
-
+  const [seasonNumber, setSeasonNumber] = useState(2); 
+  const [season, setSeason] = useState(1); 
+  const [theme, setTheme] = useState(season); 
+  const seasonlist = ["이성", "혼성"];
 
   // 유저인증여부 확인, 추후 서버 연동 필요
   const authentification = true;
@@ -142,17 +131,13 @@ window.ReactNativeWebView?.postMessage(JSON.stringify({type : "onLoad", data : "
     },
   ];
 
-
   return (
-    //  "#FF477E" : "#49516F"
     <>
-      {/* 테마 이미지 */}
-      {/* <BackgroundCard theme={theme}></BackgroundCard> */}
       <MobileContainer>
         <HeaderContainer>
-        <HeaderAvatar>
-              <img src={require("../../../assets/donut.png")} alt="이미지" />
-            </HeaderAvatar>
+          <HeaderAvatar>
+            <img src={require("../../../assets/donut.png")} alt="이미지" />
+          </HeaderAvatar>
           <HeaderLeft>
             {/* 사용자 프로필 사진 가져오기 */}
             <HeaderProfile>
@@ -161,13 +146,20 @@ window.ReactNativeWebView?.postMessage(JSON.stringify({type : "onLoad", data : "
             </HeaderProfile>
           </HeaderLeft>
           <HeaderRight>
-              <text>지금은 <span>시즌{seasonNumber} ({seasonlist[season]})</span> 접수기간입니다!</text>
+            <text>
+              지금은{" "}
+              <span>
+                시즌{seasonNumber} ({seasonlist[season]})
+              </span>{" "}
+              접수기간입니다!
+            </text>
           </HeaderRight>
         </HeaderContainer>
         <MatchingCardContainer>
-          <MatchingCard theme = {theme}>
+          <MatchingCard theme={theme}>
             <>
-              <Carousel index={season}
+              <Carousel
+                index={season}
                 onChange={(now) => {
                   setTheme(now);
                 }}
@@ -185,49 +177,55 @@ window.ReactNativeWebView?.postMessage(JSON.stringify({type : "onLoad", data : "
           </MatchingCard>
         </MatchingCardContainer>
         <ButtonContainer>
-        <EachButtonContainer>
-          <EachButton className="ticket" theme={theme} season={season}> 
-            <text className="ticket">
-              {Ticket === 0 ? (
-                <Link
-                  to="/purchase"
-                  style={{ color: "white", textDecorationLine: "none" }}
-                >
-                  충전하기
-                </Link>
+          <EachButtonContainer>
+            <EachButton onClick={()=>{ Ticket === 0 ? navigate('/purchase') : navigate('/matching' , {state : {theme : theme}} )}} className="ticket" theme={theme} season={season}>
+              <text className="ticket">
+                {Ticket === 0 ? (
+                  <Link
+                    to="/purchase"
+                    style={{ color: "white", textDecorationLine: "none" }}
+                  >
+                    충전하기
+                  </Link>
+                ) : (
+                  <Link
+                    // to="/matching"
+                    // state={{ theme: theme }}
+                    style={{ color: "white", textDecorationLine: "none" }}
+                  >
+                    신청하기
+                  </Link>
+                )}
+              </text>
+            </EachButton>
+          </EachButtonContainer>
+          <EachButtonContainer>
+            <EachButton
+              onClick={() => {
+                window.ReactNativeWebView?.postMessage(
+                  JSON.stringify({ type: "modify", data: "" })
+                );
+              }}
+            >
+              <text>내 정보 수정하기</text>
+            </EachButton>
+          </EachButtonContainer>
+          <EachButtonContainer>
+            <EachButton>
+              {authentification ? (
+                <>
+                  <text className="authentification">학생 인증 완료 </text>
+                  <img
+                    src={require("../../../assets/CircleWavyCheck.png")}
+                    alt="이미지"
+                  />
+                </>
               ) : (
-                <Link
-                  to="/matching"
-                  state={{ theme: theme }}
-                  style={{ color: "white", textDecorationLine: "none" }}
-                >
-                  신청하기
-                </Link>
+                <text>학생 인증 하기</text>
               )}
-            </text>
-          </EachButton>
-        </EachButtonContainer>
-        <EachButtonContainer>
-          <EachButton onClick={()=>{window.ReactNativeWebView?.postMessage(JSON.stringify({type : "modify", data : ""}))}}>
-            <text>내 정보 수정하기</text>
-          </EachButton>
-        </EachButtonContainer>
-        <EachButtonContainer>
-          <EachButton>
-            {authentification ? (
-              <>
-                <text className="authentification">학생 인증 완료 </text>
-                <img
-                  src={require("../../../assets/CircleWavyCheck.png")}
-                  alt="이미지"
-                />
-              </>
-            ) : (
-              <text>학생 인증 하기</text>
-            )}
-          </EachButton>
-        </EachButtonContainer>
-      </ButtonContainer>
+            </EachButton>
+          </EachButtonContainer>
+        </ButtonContainer>
       </MobileContainer>
     </>
   );

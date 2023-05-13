@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
   MatchingContainer,
@@ -20,6 +20,7 @@ function Matching() {
   setInterval(() => {
     setLoading(false);
   }, 5000);
+  const navigate = useNavigate();
 
   return (
     <MatchingContainer theme={theme}>
@@ -33,9 +34,6 @@ function Matching() {
       <MatchingCardContainers>
         <MatchingCardContent>
           <ContentContainer>
-            {/*<img src={require("./assets/dzzdzz_logo2.png")}
-            alt="이미지"
-          /> */}
             {theme === 0 ? (
               <img
                 src={require("../../../assets/dzzdzz_logo2.png")}
@@ -59,7 +57,7 @@ function Matching() {
         {loading ? (
           <text>곧 매칭된 상대방을 볼 수 있어요!</text>
         ) : (
-          <Button>
+          <Button onClick={()=> {navigate('/matching2')}}>
             <Link
               to="/matching2"
               style={{ color: "#48484A", textDecorationLine: "none" }}
