@@ -937,4 +937,250 @@ min-width : 190px;
 }
 `;
 
+//Purchasing
+export const HeaderContentContainer = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+align-items: center;
+gap: 20px;
+left : 17.44%;
+width: 82.56%;
+min-width : 151px;
+height: 100%;
+`;
+
+export const TicketImage = styled.div`
+width: 10.96%;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+> img {
+  width : 30px;
+  height : 30px;
+}
+`;
+export const TicketCount = styled.div`
+display: flex;
+flex-direction: column;
+width: 19.01%;
+min-width : 100px;
+height: 100%;
+margin-left : 12px;
+align-items: start;
+justify-content: center;
+text-align: center;
+
+> text{
+  font-family: var(--font-OpenSans);
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 24px;
+/* identical to box height, or 171% */
+/* Text Black */
+color: #000000;
+}
+
+> text.bonus {
+font-weight: 400;
+font-size: 11px;
+line-height: 15px;
+color: #FF477E;
+}
+
+`;
+export const TicketPrice = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: flex-end;
+align-items: center;
+padding: 0px;
+gap: 3px;
+width: 39.21%;
+height: 100%;
+margin-left : 12px;
+margin-right : 7px;
+
+> text {
+  font-family: var(--font-OpenSans);
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 24px;
+/* identical to box height, or 171% */
+
+text-align: right;
+
+/* Text Black */
+
+color: #000000;
+}
+`;
+export const TicketButton = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+gap: 10px;
+width: 59px;
+height: 31px;
+left : 9px;
+background: #FF477E;
+border-radius: 30px;
+
+> text {
+  font-family: var(--font-OpenSans);
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 150%;
+/* identical to box height, or 21px */
+text-align: center;
+letter-spacing: 0.05em;
+text-transform: capitalize;
+color: #FFFFFF;
+}
+`;
+export const HeaderContents = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+align-items: flex-end;
+padding: 0px;
+
+width: 100%;
+min-width : 154px;
+height: 73.91%;
+
+
+> text {
+  font-family: var(--font-OpenSans);
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 25px;
+}
+
+> text.name {
+font-weight: 600;
+font-size: 22px;
+line-height: 26px;
+/* identical to box height, or 116% */
+
+
+/* Text Black */
+
+color: #000000;
+}
+`;
+
+export const TicketContainer = styled.div`
+width : 100%;
+height : 15.38%;
+display: flex;
+position: relative;
+flex-direction: row;
+align-items: center;
+`;
+
+export const PurchasingBoxContainer = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+
+position: absolute;
+width: 100%;
+height: 63.06%;
+top: 18.67%;
+`;
+
+export const PurchasingBox = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+gap: 10px;
+
+position: absolute;
+width: 87.18%;
+height: 100%;
+
+/* white */
+
+background: #FFFFFF;
+box-shadow: 0px 0px 4px rgba(255, 71, 126, 0.6), 0px 13px 12px rgba(0, 0, 0, 0.1);
+border-radius: 20px;
+`;
+
+export const BoxContent = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+align-items: center;
+gap: 10px;
+
+width: 82.88%;
+height: 93.56%;
+`;
+
+export const MyTicket = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 15px;
+
+width: 100%;
+height: 9.17%;
+
+`;
+
+export const BuyTicket = styled.div`
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+justify-content: space-between;
+padding: 0px;
+gap: 36px;
+
+width: 100%;
+height: 58.14%;
+`;
+
+export const BackHome = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0px;
+
+width: 100%;
+height: 9.17%;
+
+`;
+
+export const HeaderImg = styled.div`
+display: flex;
+position: absolute;
+width: 16.92%;
+height: 16.97%;
+left: 14.1%;
+top: 0.84%;
+`;
+
+export const BottomImg = styled.div`
+display: flex;
+position: absolute;
+width: 37.69%;
+height: 18.09%;
+left: 53.31%;
+top: 77.56%;
+`;
+
+
+
 
