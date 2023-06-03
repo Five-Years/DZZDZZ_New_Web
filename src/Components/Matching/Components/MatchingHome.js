@@ -358,7 +358,7 @@ gap: 10px;
 position: absolute;
 width: 66.66%;
 height: 36.57%;
-left: calc(50% - 260px/2);
+left: 16.67%;
 top: 32.43%;
 
 background: #FFFFFF;
