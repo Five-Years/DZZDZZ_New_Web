@@ -57,7 +57,11 @@ function Matching() {
         {loading ? (
           <text>곧 매칭된 상대방을 볼 수 있어요!</text>
         ) : (
-          <Button onClick={()=> {navigate('/matching2')}}>
+          <Button
+            onClick={() => {
+              navigate("/matching2");
+            }}
+          >
             <Link
               to="/matching2"
               style={{ color: "#48484A", textDecorationLine: "none" }}

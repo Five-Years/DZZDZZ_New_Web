@@ -1,62 +1,52 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { ReactComponent as Appstore } from "../../assets/appstore.svg";
+import { ReactComponent as Androidstore } from "../../assets/androidstore.svg";
+import { ReactComponent as Logo } from "../../assets/webLogo.svg";
+
 
 function HeaderRight() {
-  //  const [Day,setDay] = useState("00");
-  const [Hour, setHour] = useState("00");
+   const [Day,setDay] = useState("00");
+  const [Hour, setHour] = useState("01");
   const [Minute, setMinute] = useState("00");
   const [Second, setSecond] = useState("00");
 
   useEffect(() => {
     setInterval(() => {
-      const Dday = new Date("2023-03-01T00:00:00+0900");
+      const Dday = new Date("2023-06-05T00:00:00+0900");
       const now = new Date();
-
       const dis = Dday.getTime() - now.getTime(); // 잔여시간(ms단위)
       const min = 1000 * 60; //1000ms => 1s , 1s*60 = 1m
-      // setDay(String(Math.floor(dis/(min*60*24))).padStart(2,'0'))
-      setHour(
-        String(Math.floor((dis % (min * 60 * 24)) / (min * 60))).padStart(
-          2,
-          "0"
-        )
-      );
+      setDay(String(Math.floor(dis/(min*60*24))).padStart(2,'0'))
+      setHour(String(Math.floor((dis % (min * 60 * 24)) / (min * 60))).padStart(2,"0"));
       setMinute(String(Math.floor((dis % (min * 60)) / min)).padStart(2, "0"));
-      setSecond(String(Math.floor((dis % min) / 1000)).padStart(2, 0));
+      setSecond(String(Math.floor((dis % min) / 1000)).padStart(2, "0"));
     }, 1000);
-  }, [Minute, Second]);
+  }, [Hour,Minute, Second]);
 
   return (
     <ContentContainer>
-      <img src={require("../../assets/dz.jpg")} alt="" />
+      <Logo />
       <Title>
         <span>SEASON 2</span>
         <span className="text">마감까지</span>
       </Title>
       <Description>
         <Timer>
-          [<span>{Hour}</span>:<span>{Minute}</span>:<span>{Second}</span>]
+          [<span>{Day}</span>:<span>{Hour}</span>:<span>{Minute}</span>:<span>{Second}</span>]
         </Timer>
         {/* 타이머 구현필요 */}
         <DownButton>
           <span>다운로드</span>
         </DownButton>
         <Sns>
-          <img
-            src={require("../../assets/insta.png")}
-            alt=""
-            onClick={() => {
-              window.open("http://www.naver.com");
-            }}
-          />
-          <img
-            src={require("../../assets/kakao.png")}
-            alt=""
-            onClick={() => {
-              window.open("http://www.naver.com");
-            }}
-          />
+        <span>단짠단짠 앱 다운로드</span>         
+          <div>
+            <div><Appstore /></div>
+            <div><Androidstore /></div>
+          </div>
         </Sns>
+        <MobileSns><SnsContainer><img src={require("../../assets/insta.png")} alt="이미지" /><img src={require("../../assets/kakao.png")} alt="이미지" /></SnsContainer></MobileSns>
       </Description>
     </ContentContainer>
   );
@@ -64,12 +54,41 @@ function HeaderRight() {
 
 export default HeaderRight;
 
+const MobileSns = styled.div`
+display: none;
+
+@media screen and (max-width: 800px) {
+  display: flex;
+  position: absolute;
+  width : 100%;
+  height : 40px;
+  top : 46.45%;
+  align-items: center;
+  justify-content: center;
+}
+`
+
+const SnsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+
+  width: 38.46%;
+  height: 100%;
+
+  > img {
+    width : 34px;
+    height : 34px;
+  }
+`;
+
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0px 30px;
   gap: 8px;
   width: 468px;
   height: 238px;
@@ -79,7 +98,7 @@ const ContentContainer = styled.div`
   }
 
   @media screen and (max-width: 800px) {
-    gap: 25px;
+    gap: 10px;
 
     > img {
       width: 120px;
@@ -165,15 +184,17 @@ const Description = styled.div`
     width: 100%;
     height: 150px;
     align-items: center;
+    justify-content: center;
+    gap : 10px
   }
 `;
 
 const Timer = styled.div`
   width: 408px;
   height: 80px;
-  font-family: "PFStardust";
+  font-family: 'NanumSquare';
   font-style: normal;
-  font-weight: 500;
+  font-weight: 800;
   font-size: 80px;
   line-height: 80px;
   color: #ff477e;
@@ -196,14 +217,32 @@ const Timer = styled.div`
 
 const Sns = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-end;
-  padding: 22px 0px;
-  gap: 30px;
+  align-items: center;
   width: 408px;
-  height: 94px;
+  margin-top: 20px;
 
+  > span {
+    width : 100%;
+    font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  text-transform: capitalize;
+  }
+
+  > div {
+    display : flex;
+    width : 100%;
+    margin-top: 10px;
+    flex-direction: row;
+    justify-content: center;
+
+    gap : 10px;
+  }
   > img {
     :active {
       opacity: 0.5;
@@ -214,7 +253,8 @@ const Sns = styled.div`
   }
 
   @media screen and (max-width: 800px) {
-    display: flex;
+    display: none;
+    /* display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -228,8 +268,8 @@ const Sns = styled.div`
       }
       width: 40px;
       height: 40px;
-    }
-  }
+    }*/
+  } 
 `;
 
 const DownButton = styled.div`

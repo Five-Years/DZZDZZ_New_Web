@@ -217,8 +217,7 @@ function Inquiry() {
                   <Input className="long">
                     <EachInput className="long">
                       <InputTitle className="long">
-                        <span className="address">주소</span>
-                        <span className="essential">*</span>
+                        <span className="address">주소<span className="essential"> * </span></span>
                       </InputTitle>
                       <InputWindow className="long">
                         <input
@@ -235,8 +234,7 @@ function Inquiry() {
                   <Input className="long">
                     <EachInput className="long">
                       <InputTitle className="long">
-                        <span>유입경로</span>
-                        <span className="essential">*</span>
+                        <span>유입경로</span><span className="essential"> * </span>
                       </InputTitle>
                       <InputWindow className="long">
                         <input
@@ -544,14 +542,23 @@ const InputTitle = styled.div`
   &.long {
     width: 740px;
     text-align: start;
+
     > span {
-      width: 58px;
+      width : 58px;
       color: #000000;
     }
 
+    > span > span {
+      font-family: "SF Pro";
+      font-style: normal;
+      font-weight: 510;
+      font-size: 14px;
+      line-height: 150%;
+      letter-spacing: 0.5px;
+      color: #ff477e;
+    }
+
     > span.essential {
-      width: 7px;
-      height: 21px;
       font-family: "SF Pro";
       font-style: normal;
       font-weight: 510;

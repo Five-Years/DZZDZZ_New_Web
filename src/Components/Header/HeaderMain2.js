@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import StateSlice from "../../features/State/StateSlice";
 
 
-function HeaderMain() {
+function HeaderMain2() {
   const Popup = useSelector((state) => {
     return state.Popup.value;
   });
@@ -28,7 +28,7 @@ function HeaderMain() {
   );
 }
 
-export default HeaderMain;
+export default HeaderMain2;
 
 //전체 헤더부분
 const HeaderBackground = styled.div`

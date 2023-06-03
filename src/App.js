@@ -4,6 +4,8 @@ import styled from "styled-components";
 import HeaderMain from "./Components/Header/HeaderMain";
 import Footer from "./Components/Footer/Footer";
 import Inquiry from "./Components/Inquiry/Inquiry";
+import HeaderBar from "./Components/Header/HeaderBar";
+import HeaderMain2 from "./Components/Header/HeaderMain2";
 import { AnimatePresence } from "framer-motion";
 
 function App() {
@@ -15,7 +17,8 @@ function App() {
       />
       {/* user-scalable=no, 모바일 화면에서 input창 확대되는것 방지 */}
       <MainFrame>
-        <HeaderMain />
+        <HeaderBar />
+        <HeaderMain2 />
         <Footer />
       </MainFrame>
       <AnimatePresence>

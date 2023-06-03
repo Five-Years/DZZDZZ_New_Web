@@ -28,9 +28,10 @@ align-items: flex-start;
 
 position: absolute;
 width: 100%;
-height: 11.91%;
+height: 24.29%;
 left: 0px;
-top: 3.38%;
+top: 4.29%;
+background-color: red;
 `;
 
 export const HeaderLeft = styled.div`
@@ -43,6 +44,7 @@ margin-left: 16.67%;
 width: 36.41%;
 height: 78.41%;
 min-width : 155px;
+background-color: red;
 `;
 
 export const HeaderAvatar = styled.div`

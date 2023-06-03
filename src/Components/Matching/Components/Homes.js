@@ -78,9 +78,9 @@ function Homes() {
     return state.Popup.ticket;
   });
   const dispatch = useDispatch();
-  const [seasonNumber, setSeasonNumber] = useState(2); 
-  const [season, setSeason] = useState(1); 
-  const [theme, setTheme] = useState(season); 
+  const [seasonNumber, setSeasonNumber] = useState(2);
+  const [season, setSeason] = useState(1);
+  const [theme, setTheme] = useState(season);
   const seasonlist = ["이성", "혼성"];
 
   // 유저인증여부 확인, 추후 서버 연동 필요
@@ -178,7 +178,16 @@ function Homes() {
         </MatchingCardContainer>
         <ButtonContainer>
           <EachButtonContainer>
-            <EachButton onClick={()=>{ Ticket === 0 ? navigate('/purchase') : navigate('/matching' , {state : {theme : theme}} )}} className="ticket" theme={theme} season={season}>
+            <EachButton
+              onClick={() => {
+                Ticket === 0
+                  ? navigate("/purchase")
+                  : navigate("/matching", { state: { theme: theme } });
+              }}
+              className="ticket"
+              theme={theme}
+              season={season}
+            >
               <text className="ticket">
                 {Ticket === 0 ? (
                   <Link
@@ -232,3 +241,6 @@ function Homes() {
 }
 
 export default Homes;
+
+
+

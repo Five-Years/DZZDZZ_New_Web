@@ -9,16 +9,22 @@ import './index.css';
 import Homes from './Components/Matching/Components/Homes';
 import Matching from "./Components/Matching/Components/Matching";
 import Matching2 from "./Components/Matching/Components/Matching2";
+import Homepage from './Components/Matching/Components/Homepage';
+import MatchingHome from './Components/Matching/Components/MatchingHome';
+import MatchingProgress from './Components/Matching/Components/MatchingProgress';
 import Purchase from "./Purchase";
 import Purchasing from './Components/Matching/Components/Purchasing';
 import DetailProfile from './DetailProfile';
 import Parents from './Parents';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import PCHome from './PCHome';
+import MobileMenu from './Components/Matching/Components/MobileMenu';
+import DzzDzzIntrodue from './Components/Matching/Components/DzzDzzIntrodue';
+
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 const container = document.getElementById('root');
 const root = createRoot(container);
-
 
 // onBlur 타입이 오면 메인으로 이동
 // const listener = (event) => {
@@ -35,13 +41,17 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Homes />}></Route>
-          <Route path="/matching" element={<Matching />}></Route>
+          <Route path="/" element={<Homepage />}></Route>
+          <Route path="/MatchingHome" element={<MatchingHome />}></Route>
+          <Route path="/MatchingProgress" element={<MatchingProgress />}></Route>
           <Route path="/matching2" element={<Matching2 />}></Route>
           <Route path="/purchase" element={<Purchasing />}></Route>
           <Route path="/purchasing" element={<Purchasing />}></Route>
           <Route path="/detail" element={<DetailProfile />}></Route>
+          <Route path="/PCHome" element={<PCHome />}></Route>
           <Route path="/pc" element={<App />}></Route>
+          <Route path="MobileMenu" element={<MobileMenu />}></Route>
+          <Route path="DzzIntroduce" element={<DzzDzzIntrodue />}></Route>
         </Routes>
       </BrowserRouter>
     </Provider>
