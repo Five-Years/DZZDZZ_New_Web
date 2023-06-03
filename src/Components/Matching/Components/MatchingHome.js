@@ -88,6 +88,7 @@ function MatchingHome() {
           </CardTicket>
           </HeaderBottom>
         </HeaderContainer>
+        <MatchingContainer>
         <MatchingCardContainer theme={theme}>
         <CardContainer>
         <CardTitleContainer>
@@ -130,6 +131,7 @@ function MatchingHome() {
         </CardTitleContainer>
         </CardContainer>
         </MatchingCardContainer>
+        </MatchingContainer>
         <ButtonContainer>
         <EachButtonContainer>{theme === season ? <EachButton onClick={()=> {navigate("/MatchingProgress", { state: { theme: theme } });}} className="activate"><text className="enter">신청하기</text></EachButton> : <EachButton className="deactivate"><text className="enter">지금은 신청 기간이 아니에요</text></EachButton> }</EachButtonContainer>
         <EachButtonContainer><EachButton><text>내 정보 수정하기</text></EachButton></EachButtonContainer>
@@ -141,6 +143,30 @@ function MatchingHome() {
 }
 
 export default MatchingHome
+
+const MatchingContainer = styled.div`
+display: flex;
+position: absolute;
+width : 100%;
+height: 36.57%;
+top : 32.43%;
+align-items: center;
+justify-content : center;
+`;
+
+const MatchingCardContainer = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+gap: 10px;
+position: absolute;
+width: 66.66%;
+height: 100%;
+background: #FFFFFF;
+${props=> props.theme === 1 ? "box-shadow: 0px 0px 5px #0094FF, 0px 9px 6px rgba(0, 0, 0, 0.1)" : "{box-shadow: 0px 0px 5px #FF477E, 0px 9px 6px rgba(0, 0, 0, 0.1)" }; 
+border-radius: 20px;
+`;
 
 const TextField = styled.div`
 > text {
@@ -348,26 +374,7 @@ color : #FFFFFF;
 }
 `;
 
-const MatchingCardContainer = styled.div`
-display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-gap: 10px;
 
-position: absolute;
-width: 66.66%;
-height: 36.57%;
-left: 16.67%;
-top: 32.43%;
-
-background: #FFFFFF;
-${props=> props.theme === 1 ? "box-shadow: 0px 0px 5px #0094FF, 0px 9px 6px rgba(0, 0, 0, 0.1)" : "{box-shadow: 0px 0px 5px #FF477E, 0px 9px 6px rgba(0, 0, 0, 0.1)" }; 
-
-border-radius: 20px;
-
-
-`;
 const CardTicket = styled.div`
 display: flex;
 flex-direction: row;

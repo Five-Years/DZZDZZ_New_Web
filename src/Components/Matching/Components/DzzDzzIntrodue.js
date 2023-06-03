@@ -3,6 +3,10 @@ import styled from 'styled-components';
 function DzzDzzIntrodue() {
   return (
     <DzzDzzContainer>
+              <MobileHeaderBar>
+        <MobileMenuBar onClick={()=>{navigate("/MobileMenu")}}><MenuIcon style={{width : 32, height : 32}} /></MobileMenuBar>
+        {/* <MobileLogoContainer><Logo width={35} height={28} /></MobileLogoContainer> */}
+      </MobileHeaderBar>
       <text>단짠단짠 소개글</text>
     </DzzDzzContainer>
   )
