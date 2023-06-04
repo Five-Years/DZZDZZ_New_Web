@@ -202,7 +202,6 @@ function Purchasing() {
           <img src={require("../../../assets/gift.png")} alt="이미지" />
         </HeaderImg>
         <BottomImg onClick={() => {}}>
-          <img src={require("../../../assets/cart.png")} alt="이미지" />
         </BottomImg>
       </PurchasePageContainer>
     </>

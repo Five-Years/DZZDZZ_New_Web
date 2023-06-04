@@ -118,7 +118,7 @@ function MatchingHome() {
           누군가의 소울메이트🥹?!
           <br />
           <text className="highlight">‘맛집 뿌실 단짝 어디 없나?’</text>
-          <br />ㅈ
+          <br />
           <span>
             <span className="highlight">애매하게 서성이지</span>말고
           </span>
@@ -168,7 +168,7 @@ position: absolute;
 width: 66.66%;
 height: 100%;
 background: #FFFFFF;
-border: 0.5px solid ${props=> props.theme === 1 ? "#0094FF" : "#FF477E" }; 
+border: 1px solid ${props=> props.theme === 1 ? "#0094FF" : "#FF477E" }; 
 border-radius: 20px;
 `;
 
