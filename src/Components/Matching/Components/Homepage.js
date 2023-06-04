@@ -286,9 +286,8 @@ color: #000000;
 
 
 export const MobileContainer = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  flex : 1;
+
 `;
 
 export const HeaderContainer = styled.div`
