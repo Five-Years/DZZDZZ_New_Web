@@ -465,7 +465,8 @@ const Selection = styled.div`
     height: 50%;
     
     :hover {
-        background: ${props=> props.theme === 1 ? "#EFF6FC" : "#FEF1F5"}
+        background: ${props=> props.theme === 1 ? "#EFF6FC" : "#FEF1F5"};
+        transition-duration: 1s;
     }
 `;
 
