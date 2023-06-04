@@ -7,10 +7,12 @@ import emailjs from "@emailjs/browser";
 import axios from "axios";
 function Inquiry() {
 
+
   const headers = {
     'Content-Type' : 'application/json',
   };
 
+  
   const response = async(from_corporate) => {
     try {
       const {data} = await axios({

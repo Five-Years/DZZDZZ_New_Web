@@ -50,6 +50,8 @@ function Homepage() {
   const [seasonNumber, setSeasonNumber] = useState(2);
   const [season, setSeason] = useState(1); //현재 시즌 정보,  0 : 이성매칭 1 : 혼성매칭 2 : 준비중
   const seasonlist = ["이성", "혼성","정리중"];
+  const [checked,setChecked] = useState(false)
+  console.log(checked)
 
   // 유저인증여부 확인, 추후 서버 연동 필요
   const authentification = true;
@@ -109,9 +111,11 @@ function Homepage() {
         </SelectionContainer>
         <MatchingOptionContainer>
             <MatchingOption>
-                <input type="checkbox"/>
+                <input type="checkbox" checked={checked} onChange={({ target: { checked } }) => setChecked(checked)}/>
                 <text>같은 학교끼리 만나기</text>
-                <InfoContainer><Info /></InfoContainer>
+                <InfoContainer><Info onClick={()=>{window.ReactNativeWebView?.postMessage(
+                        JSON.stringify({ type: "same", data: 0 })
+                      ); }} /></InfoContainer>
             </MatchingOption>
         </MatchingOptionContainer>
       </MobileContainer>

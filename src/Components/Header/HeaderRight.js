@@ -72,6 +72,7 @@ height: 86.19px;
   position: absolute;
   width : 100%;
   height : 40px;
+  margin-top: 0px;
   top : 46.45%;
   align-items: center;
   justify-content: center;

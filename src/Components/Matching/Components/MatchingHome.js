@@ -118,7 +118,7 @@ function MatchingHome() {
           누군가의 소울메이트🥹?!
           <br />
           <text className="highlight">‘맛집 뿌실 단짝 어디 없나?’</text>
-          <br />
+          <br />ㅈ
           <span>
             <span className="highlight">애매하게 서성이지</span>말고
           </span>
@@ -134,7 +134,11 @@ function MatchingHome() {
         </MatchingContainer>
         <ButtonContainer>
         <EachButtonContainer>{theme === season ? <EachButton onClick={()=> {navigate("/MatchingProgress", { state: { theme: theme } });}} className="activate"><text className="enter">신청하기</text></EachButton> : <EachButton className="deactivate"><text className="enter">지금은 신청 기간이 아니에요</text></EachButton> }</EachButtonContainer>
-        <EachButtonContainer><EachButton><text>내 정보 수정하기</text></EachButton></EachButtonContainer>
+        <EachButtonContainer><EachButton onClick={() => {
+                window.ReactNativeWebView?.postMessage(
+                  JSON.stringify({ type: "modify", data: "" })
+                );
+              }}><text>내 정보 수정하기</text></EachButton></EachButtonContainer>
         <EachButtonContainer>{true ? <EachButton><text>학생 인증하기</text></EachButton> :<EachButton className="guide"><text className="guide">단짠 가이드</text></EachButton>}</EachButtonContainer>
         </ButtonContainer>
       </MobileContainer>
@@ -164,7 +168,7 @@ position: absolute;
 width: 66.66%;
 height: 100%;
 background: #FFFFFF;
-${props=> props.theme === 1 ? "box-shadow: 0px 0px 5px #0094FF, 0px 9px 6px rgba(0, 0, 0, 0.1)" : "{box-shadow: 0px 0px 5px #FF477E, 0px 9px 6px rgba(0, 0, 0, 0.1)" }; 
+border: 0.5px solid ${props=> props.theme === 1 ? "#0094FF" : "#FF477E" }; 
 border-radius: 20px;
 `;
 
@@ -245,6 +249,7 @@ export const CardTag = styled.div`
   background: #ffffff;
   /* dzz_pink */
   border: 1px solid ${props=> props.theme === 1 ? "#0094FF" : "#FF477E" }; 
+  
   border-radius: 19px;
 
   > text {
@@ -351,7 +356,7 @@ flex-grow: 0;
   font-family: var(--font-OpenSans);
 font-style: normal;
 font-weight: 400;
-font-size: 14px;
+font-size: 13px;
 line-height: 150%;
 /* identical to box height, or 21px */
 
