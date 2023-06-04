@@ -287,7 +287,6 @@ color: #000000;
 
 export const MobileContainer = styled.div`
   flex : 1;
-
 `;
 
 export const HeaderContainer = styled.div`

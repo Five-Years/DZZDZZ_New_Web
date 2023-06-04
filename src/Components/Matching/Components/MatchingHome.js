@@ -160,19 +160,20 @@ justify-content : center;
 
 const MatchingCardContainer = styled.div`
 display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
+position: relative;
+flex-direction: column;
 gap: 10px;
-position: absolute;
 width: 66.66%;
 height: 100%;
 background: #FFFFFF;
 border: 1px solid ${props=> props.theme === 1 ? "#0094FF" : "#FF477E" }; 
+justify-content: center;
+align-items: center;
 border-radius: 20px;
 `;
 
 const TextField = styled.div`
+  width : 100%;
 > text {
   font-family: var(--font-OpenSans);
   font-style: normal;
@@ -180,6 +181,7 @@ const TextField = styled.div`
   font-size: 16px;
   line-height: 26px;
   /* or 160% */
+
   text-align: center;
   /* Text Black */
   color: #000000;
@@ -211,9 +213,10 @@ text-align: center;
 
 const CardContainer = styled.div`
 display: flex;
-flex-direction: column;
+flex-direction: row;
 justify-content: center;
 align-items: center;
+text-align : center;
 padding: 0px;
 
 width: 100%;
@@ -246,9 +249,9 @@ export const CardTag = styled.div`
   min-width : 113px;
   min-height : 32px;
   /* white */
-  background: #ffffff;
+  background: ${props=> props.theme === 1 ? "#0094FF" : "#FF477E" }; 
   /* dzz_pink */
-  border: 1px solid ${props=> props.theme === 1 ? "#0094FF" : "#FF477E" }; 
+  border: 0.5px solid #FFFFFF; 
   
   border-radius: 19px;
 
@@ -265,11 +268,11 @@ export const CardTag = styled.div`
     text-align: center;
 
     /* dzz_pink */
-    color : #000000
+    color : #FFFFFF
   }
 
   > text > span {
-    color : ${props=> props.theme === 1 ? "#0094FF" : "#FF477E" };
+    color : #FFFFFF;
 
   }
 `;
@@ -335,7 +338,7 @@ height: 84.62%;
 /* white */
 background: #FFFFFF;
 /* button */
-box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
+border: 0.5px solid #BEBFBF;
 border-radius: 30px;
 /* Inside auto layout */
 flex: none;
