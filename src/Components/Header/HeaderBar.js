@@ -116,6 +116,7 @@ const MenuLeft = styled.div`
     width: 37.91%;
     min-width : 420px;
     height: 100%;
+  
 
     > text {
         font-family: 'Inter';
@@ -127,14 +128,28 @@ const MenuLeft = styled.div`
         align-items: center;
         text-align: center;
         /* FY_black */
-        color: #231815;    }
+        color: #231815;    
+        cursor: default;
+
+      :hover {
+        text-decoration-line : underline;
+        text-decoration-color: red;
+        text-decoration-thickness: 3px;
+        text-underline-offset : 7px;
+        opacity: 0.5;
+
+      }
+      }
+    
+
 `;
 const MenuRight = styled.div`
     width: 4.47%;
     min-width : 48px;
     height: 100%;
 
-    font-family: 'Inter';
+    >text {
+      font-family: 'Inter';
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
@@ -146,4 +161,15 @@ const MenuRight = styled.div`
     text-align: center;
     /* FY_black */
     color: #231815;
+    cursor: default;
+
+    :hover {
+        text-decoration-line : underline;
+        text-decoration-color: red;
+        text-decoration-thickness: 3px;
+        text-underline-offset : 7px;
+
+      }
+    }
+
 `;

@@ -13,7 +13,7 @@ function HeaderRight() {
 
   useEffect(() => {
     setInterval(() => {
-      const Dday = new Date("2023-06-05T00:00:00+0900");
+      const Dday = new Date("2023-06-07T00:00:00+0900");
       const now = new Date();
       const dis = Dday.getTime() - now.getTime(); // 잔여시간(ms단위)
       const min = 1000 * 60; //1000ms => 1s , 1s*60 = 1m
@@ -26,14 +26,14 @@ function HeaderRight() {
 
   return (
     <ContentContainer>
-      <Logo />
       <Title>
         <span>SEASON 2</span>
         <span className="text">마감까지</span>
       </Title>
       <Description>
         <Timer>
-          [<span>{Day}</span>:<span>{Hour}</span>:<span>{Minute}</span>:<span>{Second}</span>]
+        {/* 1일이상 남았다면 일 시간 분, 1일 이하라면 시간 분 초 */}
+          {Day >= 1 ?  <>[<span>{Day}</span>:<span>{Hour}</span>:<span>{Minute}</span>]</> : <>[<span>{Hour}</span>:<span>{Minute}</span>:<span>{Second}</span>]</> }
         </Timer>
         {/* 타이머 구현필요 */}
         <DownButton>
@@ -42,11 +42,11 @@ function HeaderRight() {
         <Sns>
         <span>단짠단짠 앱 다운로드</span>         
           <div>
-            <div><Appstore /></div>
-            <div><Androidstore /></div>
+            <div><Appstore width="100%" height="auto" /></div>
+            <div><Androidstore width="100%" height="auto" /></div>
           </div>
         </Sns>
-        <MobileSns><SnsContainer><img src={require("../../assets/insta.png")} alt="이미지" /><img src={require("../../assets/kakao.png")} alt="이미지" /></SnsContainer></MobileSns>
+        <MobileSns><SnsContainer><img onClick={()=>{window.open("https://www.instagram.com/dzzdzz_official/")}} src={require("../../assets/insta.png")} alt="이미지" /><img onClick={()=>{window.open("http://pf.kakao.com/_Wgxgxmb")}} src={require("../../assets/kakao.png")} alt="이미지" /></SnsContainer></MobileSns>
       </Description>
     </ContentContainer>
   );
@@ -54,8 +54,18 @@ function HeaderRight() {
 
 export default HeaderRight;
 
+
 const MobileSns = styled.div`
-display: none;
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+gap: 30px;
+margin-top: 20px;
+
+width: 100%;
+height: 86.19px;
+
 
 @media screen and (max-width: 800px) {
   display: flex;
@@ -75,8 +85,6 @@ const SnsContainer = styled.div`
   justify-content: center;
   gap: 30px;
 
-  width: 38.46%;
-  height: 100%;
 
   > img {
     width : 34px;
@@ -90,8 +98,10 @@ const ContentContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 8px;
-  width: 468px;
-  height: 238px;
+  width: 39.72%;
+  height: 32.52%;
+  min-width : 572px;
+  min-height : 333px;
 
   > img {
     visibility: hidden;
@@ -126,6 +136,7 @@ const Title = styled.div`
     display: flex;
     align-items: flex-end;
     color: #ff477e;
+
   }
 
   > span.text {
@@ -175,9 +186,11 @@ const Description = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-  width: 408px;
+  align-items: center;
+  width : 31.39%;
+  min-width: 452px;
   height: 194px;
+  margin-top: 20px;
   border-radius: 10px;
 
   @media screen and (max-width: 800px) {
@@ -190,7 +203,7 @@ const Description = styled.div`
 `;
 
 const Timer = styled.div`
-  width: 408px;
+  width: 100%;
   height: 80px;
   font-family: 'NanumSquare';
   font-style: normal;
@@ -198,6 +211,8 @@ const Timer = styled.div`
   font-size: 80px;
   line-height: 80px;
   color: #ff477e;
+  text-align: start;
+  letter-spacing: 0.05em;
 
   > span {
     color: black;
@@ -219,19 +234,20 @@ const Sns = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  width: 408px;
+  align-items: start; 
+  text-align: start;
+  width: 100%;
   margin-top: 20px;
 
   > span {
-    width : 100%;
     font-family: 'Noto Sans';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 16px;
-  letter-spacing: 0.05em;
-  text-transform: capitalize;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.05em;
+    text-transform: capitalize;
+    font-weight: bold;
+
   }
 
   > div {
@@ -239,17 +255,19 @@ const Sns = styled.div`
     width : 100%;
     margin-top: 10px;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
 
     gap : 10px;
+  }
+  > div > div{
+    width : 45%;
   }
   > img {
     :active {
       opacity: 0.5;
     }
 
-    width: 50px;
-    height: 50px;
   }
 
   @media screen and (max-width: 800px) {

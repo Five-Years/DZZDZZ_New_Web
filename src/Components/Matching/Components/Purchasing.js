@@ -115,7 +115,7 @@ function Purchasing() {
                   <TicketButton
                     onClick={() => {
                       window.ReactNativeWebView?.postMessage(
-                        JSON.stringify({ type: "buy", data: "1" })
+                        JSON.stringify({ type: "buy", data: 1 })
                       );
                       dispatch(StateSlice.actions.Ticket());
                     }}
@@ -138,7 +138,7 @@ function Purchasing() {
                   <TicketButton
                     onClick={() => {
                       window.ReactNativeWebView?.postMessage(
-                        JSON.stringify({ type: "buy", data: "4" })
+                        JSON.stringify({ type: "buy", data: 4 })
                       );
                     }}
                   >
@@ -160,7 +160,7 @@ function Purchasing() {
                   <TicketButton
                     onClick={() => {
                       window.ReactNativeWebView?.postMessage(
-                        JSON.stringify({ type: "buy", data: "10" })
+                        JSON.stringify({ type: "buy", data: 10 })
                       );
                     }}
                   >
@@ -182,7 +182,7 @@ function Purchasing() {
                   <TicketButton
                     onClick={() => {
                       window.ReactNativeWebView?.postMessage(
-                        JSON.stringify({ type: "buy", data: "30" })
+                        JSON.stringify({ type: "buy", data: 30 })
                       );
                     }}
                   >

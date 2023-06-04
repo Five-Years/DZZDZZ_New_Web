@@ -2,10 +2,11 @@ import React from "react";
 import StateSlice from "../../features/State/StateSlice";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 function Links() {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   return (
     <MobileWrapper>
       <Link>
@@ -27,13 +28,19 @@ function Links() {
         >
           광고문의
         </a>
-        <a href="http://www.naver.com">이용약관</a>
-        <a className="pc" href="http://www.naver.com">
+        <a href="#" onClick={()=> {
+          navigate("/Terms")
+        }}>이용약관</a>
+        <a className="pc" href="#" onClick={()=> {
+          navigate("/Privacy")
+        }}>
           개인정보 처리방침
         </a>
       </Link>
       <Link className="Mobile">
-        <a href="http://www.naver.com">개인정보 처리방침</a>
+        <a href="#" onClick={()=> {
+          navigate("/Privacy")
+        }}>개인정보 처리방침</a>
       </Link>
     </MobileWrapper>
   );

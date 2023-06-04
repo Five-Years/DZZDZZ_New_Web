@@ -461,11 +461,10 @@ const Selection = styled.div`
 
     width: 100%;
     height: 50%;
-
+    
     :hover {
         background: ${props=> props.theme === 1 ? "#EFF6FC" : "#FEF1F5"}
     }
-
 `;
 
 

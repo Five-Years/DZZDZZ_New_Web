@@ -22,7 +22,7 @@ function MobileMenu() {
             <Horizontal></Horizontal>
             <Content><ContentContainer><text>제휴문의</text></ContentContainer></Content>
             <Content><ContentContainer><text>광고문의</text></ContentContainer></Content>
-            <Content><ContentContainer><text>이용약관</text></ContentContainer></Content>
+            <Content><ContentContainer onClick={()=>{navigate("/Terms")}}><text>이용약관</text></ContentContainer></Content>
             <Content><ContentContainer><text>개인정보 처리방침</text></ContentContainer></Content>
         </MenuMain>
         <LogoContainer><Logo /></LogoContainer>

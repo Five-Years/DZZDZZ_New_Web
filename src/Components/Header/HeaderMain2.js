@@ -20,7 +20,7 @@ function HeaderMain2() {
     >
       <HeaderContainer>
         <HeaderContentContainer>
-          <HeaderLeft />
+          {/* <HeaderLeft /> */}
           <HeaderRight />
         </HeaderContentContainer>
       </HeaderContainer>
@@ -61,13 +61,13 @@ const HeaderContainer = styled.div`
 const HeaderContentContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 0px;
   gap: 44px;
 
-  width: 776px;
-  height: 301px;
+  width: 100%;
+  height: 100%;
 
   @media screen and (max-width: 800px) {
     width: 100%;

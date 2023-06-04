@@ -1,6 +1,10 @@
 import React from 'react'
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import MenuIcon from '@mui/icons-material/Menu';
+
 function DzzDzzIntrodue() {
+  const navigate = useNavigate()
   return (
     <DzzDzzContainer>
               <MobileHeaderBar>
@@ -36,4 +40,25 @@ letter-spacing: 0.5px;
 
 color: #000000;
 }
+`;
+
+const MobileHeaderBar = styled.div`
+display: none;
+
+@media screen and (max-width: 800px) {
+  display: flex;
+  width : 100%;
+  height : 100%;
+  align-items: center;
+  justify-content: center;
+}
+`;
+
+
+const MobileMenuBar = styled.div`
+display: flex;
+position: absolute;
+width : 8%;
+height : 50%;
+left : 10px;
 `;
