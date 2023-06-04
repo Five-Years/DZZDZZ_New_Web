@@ -15,7 +15,6 @@ function Homepage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
 
@@ -463,9 +462,8 @@ const Selection = styled.div`
 
     width: 100%;
     height: 50%;
-    background : #FFFFFF;
 
-    :hover {
+    :active {
         background: ${props=> props.theme === 1 ? "#EFF6FC" : "#FEF1F5"};
     }
 `;
