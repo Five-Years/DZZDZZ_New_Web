@@ -32,7 +32,7 @@ function Matching2() {
   const [detail, setDetail] = useState(false);
   const navigate = useNavigate();
   return (
-    <MatchingContainers>
+    <MatchingContainers detail={detail}>
       <ContentContainers>
         <ContentLeft>
           <ArrowBackIosIcon
@@ -55,8 +55,14 @@ function Matching2() {
         <img src={require("../../../assets/mango.jpg")} alt="이미지" />
         <Frame6887></Frame6887>
       </ProfileImageContainer>
-      <IntroduceContainer>
-        {detail ? (
+      <IntroduceContainer onClick={() => {setDetail(!detail);}}>
+        <DetailTextView detail={detail}>
+        </DetailTextView>
+        <TextContainer detail={detail}>
+              <text>학교에서 과제만 하기엔 너무 아쉽지 않아?학교에서 과제만 하기엔 너무 아쉽지 않아?학교에서 과제만 하기엔 너무 아쉽지 않아?학교에서 과제만 하기엔 너무 아쉽지 않아?학교에서 과제만 하기엔 너무 아쉽지 않아?</text>
+      </TextContainer>
+      <KeyboardArrowDownIcon style={{ color : detail ? "#FFFFFF" : "#888888", zIndex : 2, transform: detail ? "rotate(180deg)" : ""}}/>
+        {/* {detail ? (
           <DetailTextView
             onClick={() => {
               setDetail(false);
@@ -80,7 +86,7 @@ function Matching2() {
             </TextContainer>
             <KeyboardArrowDownIcon style={{ color: "#888888" }} />
           </>
-        )}
+        )} */}
       </IntroduceContainer>
       <ProfileNameContainer>
         <ProfileName>
@@ -118,10 +124,10 @@ function Matching2() {
           </Option>
         </Selection>
       </SelectionContainer>
-      <DetailContainer>
+      <DetailContainer onClick={()=> {navigate("/detail")}}>
         <KeyboardDoubleArrowUpIcon color="disabled" fontSize="large" />
         <DetailView>
-          <MatchingLink to="/detail">
+          <MatchingLink >
             <text>자세히 보기</text>
           </MatchingLink>
         </DetailView>

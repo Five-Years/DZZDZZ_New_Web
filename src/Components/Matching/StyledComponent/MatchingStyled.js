@@ -643,12 +643,12 @@ export const TextContainer = styled.div`
   width: 53.33%;
   min-width: 208px;
   height: 20px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
+  overflow: ${props=> props.detail? "visible" : "hidden"};
+  /* background-color: ${props=> props.detail? "#888888" : "#FFFFFF"}; */
+  z-index: 2;
+  
   > text {
-    overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: hidden;
     font-family: var(--font-OpenSans);
     font-style: normal;
     font-weight: 300;
@@ -656,7 +656,8 @@ export const TextContainer = styled.div`
     line-height: 22px;
     display: flex;
     align-items: center;
-    color: #888888;
+    /* background-color: ${props=> props.detail? "#888888" : "#FFFFFF"}; */
+    color: ${props=> props.detail? "#FFFFFF" : "#888888"};
   }
 
   > img {
@@ -677,7 +678,8 @@ export const ProfileNameContainer = styled.div`
 `;
 
 export const DetailTextView = styled.div`
-  display: flex;
+  
+  display: ${props=>props.detail? "flex" : "none"};
   position: fixed;
   left: 0px;
   top: 0px;
@@ -685,7 +687,7 @@ export const DetailTextView = styled.div`
   height: 100%;
   background-color: #888888;
   opacity: 80%;
-
+  z-index: 1;
   align-items: center;
   justify-content: center;
 `;
