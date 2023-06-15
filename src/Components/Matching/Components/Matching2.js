@@ -29,6 +29,25 @@ import {
 } from "../StyledComponent/MatchingStyled";
 
 function Matching2() {
+  const accept = ()=> {
+    if (window.confirm("선택하시겠습니까?")) {
+
+      alert("선택하셨습니다");
+      navigate("/Choice", { state: "accept" })
+
+    } 
+  };
+
+  const reject = ()=> {
+    if (window.confirm("거절하시겠습니까?")) {
+
+      alert("거절하셨습니다");
+      navigate("/Choice", { state: "reject" })
+
+
+    } 
+  };
+  
   const [detail, setDetail] = useState(false);
   const navigate = useNavigate();
   return (
@@ -101,22 +120,14 @@ function Matching2() {
         {/* 선택시 확인작업 거치고 진행 */}
         <Selection>
           <Option
-            onClick={() => {
-              if (!detail) {
-                alert("선택하셨습니다");
-              }
-            }}
-          >
+            onClick={() => {accept()}}>
             <img src={require("../../../assets/Like.png")} alt="이미지" />
             <text className="select">선택하기</text>
           </Option>
         </Selection>
         <Selection>
           <Option
-            onClick={() => {
-              if (!detail) {
-                alert("거절하셨습니다");
-              }
+            onClick={() => {reject()
             }}
           >
             <img src={require("../../../assets/Close.png")} alt="이미지" />

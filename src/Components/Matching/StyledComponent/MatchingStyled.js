@@ -646,6 +646,9 @@ export const TextContainer = styled.div`
   overflow: ${props=> props.detail? "visible" : "hidden"};
   /* background-color: ${props=> props.detail? "#888888" : "#FFFFFF"}; */
   z-index: 2;
+  text-align: center;
+  margin-left : 20px;
+ 
   
   > text {
     text-overflow: hidden;

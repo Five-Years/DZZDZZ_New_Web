@@ -22,9 +22,12 @@ import MobileMenu from './Components/Matching/Components/MobileMenu';
 import DzzDzzIntrodue from './Components/Matching/Components/DzzDzzIntrodue';
 import Terms from './Components/Matching/Components/Terms';
 import Privacy from './Components/Matching/Components/Privacy';
+import ChoicePage from './Components/Matching/Components/ChoicePage';
+import ChoiceResult from './Components/Matching/Components/ChoiceResult';
 
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+
 const container = document.getElementById('root');
 const root = createRoot(container);
 
@@ -56,6 +59,9 @@ root.render(
           <Route path="DzzIntroduce" element={<DzzDzzIntrodue />}></Route>
           <Route path="Terms" element={<Terms />}></Route>
           <Route path="Privacy" element={<Privacy />}></Route>
+          <Route path="Choice" element={<ChoicePage />}></Route>
+          <Route path="ChoiceResult" element={<ChoiceResult />}></Route>
+
         </Routes>
       </BrowserRouter>
     </Provider>
