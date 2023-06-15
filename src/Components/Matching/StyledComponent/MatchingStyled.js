@@ -903,8 +903,7 @@ export const ProfileImageContainer = styled.div`
 `;
 
 export const PurchasePageContainer = styled(MatchingContainer)`
-background-color: ${props=> props.theme === 1 ? "#E3F1FF" : "#FFE9EF" }
-
+background: white;
 `
 
 export const PurchasingHeaderContainer = styled.div`
@@ -920,11 +919,11 @@ top: 3.57%;
 export const PurchasingHeader = styled.div`
 display: flex;
 flex-direction: column;
-align-items: flex-end;
+align-items: start;
 
 padding: 0px;
 gap: 4px;
-margin-left : 39.23%;
+margin-left : 16.67%;
 
 width: 44.1%;
 height: 100%;
@@ -938,7 +937,7 @@ min-width : 190px;
   line-height: 16px;
   text-align: right;
   /* dzz_pink */
-  color: #FF477E;
+  color: #0094FF;
 }
 `;
 
@@ -947,9 +946,8 @@ export const HeaderContentContainer = styled.div`
 display: flex;
 flex-direction: column;
 justify-content: flex-end;
-align-items: center;
+align-items: start;
 gap: 20px;
-left : 17.44%;
 width: 82.56%;
 min-width : 151px;
 height: 100%;
@@ -1052,7 +1050,7 @@ export const HeaderContents = styled.div`
 display: flex;
 flex-direction: column;
 justify-content: flex-start;
-align-items: flex-end;
+align-items: start;
 padding: 0px;
 
 width: 100%;
@@ -1117,6 +1115,7 @@ height: 100%;
 
 background: #FFFFFF;
 box-shadow: 0px 0px 4px rgba(255, 71, 126, 0.6), 0px 13px 12px rgba(0, 0, 0, 0.1);
+border : ${props=>props.theme===0 ? "1px solid #FF477E" : "1px solid #0094FF" };
 border-radius: 20px;
 `;
 

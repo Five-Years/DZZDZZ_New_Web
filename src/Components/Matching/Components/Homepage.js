@@ -86,7 +86,7 @@ function Homepage() {
                 <Tickets/>
                 <Ticketviewer><text>현재 보유 티켓 : {Ticket}</text></Ticketviewer>
             </Confirmation>
-                <PurchaserButton onClick={()=>{navigate("/purchasing")}}><text>충전하기</text></PurchaserButton>
+                <PurchaserButton  onClick={()=>{navigate("/purchasing", {theme : theme})}}><text>충전하기</text></PurchaserButton>
           </CardTicket>
           </HeaderBottom>
         </HeaderContainer>

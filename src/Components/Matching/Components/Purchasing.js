@@ -40,12 +40,13 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import StateSlice from "../../../features/State/StateSlice";
+import { useLocation } from "react-router-dom";
 function Purchasing() {
   const Ticket = useSelector((state) => {
     return state.Popup.ticket;
   });
   const dispatch = useDispatch();
-  const [theme, setTheme] = useState(1);
+  const {theme} = useLocation();
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
     switch (type) {
@@ -78,7 +79,7 @@ function Purchasing() {
   }, []);
   return (
     <>
-      <PurchasePageContainer theme={theme}>
+      <PurchasePageContainer>
         <PurchasingHeaderContainer>
           <PurchasingHeader>
             <HeaderContentContainer>
@@ -91,7 +92,7 @@ function Purchasing() {
           </PurchasingHeader>
         </PurchasingHeaderContainer>
         <PurchasingBoxContainer>
-          <PurchasingBox>
+          <PurchasingBox theme={theme}>
             <BoxContent>
               <MyTicket>
                 <PurchasingCardTicket>
@@ -198,9 +199,6 @@ function Purchasing() {
             </BoxContent>
           </PurchasingBox>
         </PurchasingBoxContainer>
-        <HeaderImg>
-          <img src={require("../../../assets/gift.png")} alt="이미지" />
-        </HeaderImg>
         <BottomImg onClick={() => {}}>
         </BottomImg>
       </PurchasePageContainer>
