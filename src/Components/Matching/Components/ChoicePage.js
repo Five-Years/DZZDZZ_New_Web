@@ -37,6 +37,7 @@ function ChoicePage() {
   const [detail, setDetail] = useState(false);
   const navigate = useNavigate();
   const { state } = useLocation();
+  const [theme,setTheme] = useState(0);
 
   return (
     <MatchingContainers detail={detail}>
@@ -74,7 +75,7 @@ function ChoicePage() {
       </ProfileNameContainer>
       <SelectionContainer>
         <ResultBox>{state ==="accept" ? <><Smile /><text><span>단짠지기임당</span>님을 선택하셨습니다</text></> : <><Tear /><text><span>단짠지기임당</span>님을 거절하셨습니다</text><text onClick={()=>{navigate("/")}} className="reject">메인으로 돌아가기기</text></>}</ResultBox>
-        {isStart ? <WaitingBox state={state}><SuggentionButton onClick={()=>{navigate("/ChoiceResult")}}><text>결과 확인하기</text></SuggentionButton></WaitingBox>: <WaitingBox state={state}><text>선택시간이<span>22<span>시간</span></span><span>41<span>분</span></span> 남았어요.</text><text>상대방이 선택하면 결과가 나와요.</text></WaitingBox>}
+        {isStart ? <WaitingBox state={state}><SuggentionButton onClick={()=>{navigate("/ChoiceLoading", {state : {theme : 1}})}}><text>결과 확인하기</text></SuggentionButton></WaitingBox>: <WaitingBox state={state}><text>선택시간이<span>22<span>시간</span></span><span>41<span>분</span></span> 남았어요.</text><text>상대방이 선택하면 결과가 나와요.</text></WaitingBox>}
         <ChanceBox state={state}>{state ==="accept" ? <text onClick={()=>{navigate("/")}}>메인으로 돌아가기</text> : <><text>이대로 끝내기 아쉽다면?</text><SuggentionButton><text>이건 어때요?</text></SuggentionButton></>}</ChanceBox>
       </SelectionContainer>
 

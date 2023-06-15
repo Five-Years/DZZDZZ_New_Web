@@ -24,6 +24,7 @@ import Terms from './Components/Matching/Components/Terms';
 import Privacy from './Components/Matching/Components/Privacy';
 import ChoicePage from './Components/Matching/Components/ChoicePage';
 import ChoiceResult from './Components/Matching/Components/ChoiceResult';
+import ChoiceLoading from './Components/Matching/Components/ChoiceLoading';
 
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -61,6 +62,7 @@ root.render(
           <Route path="Privacy" element={<Privacy />}></Route>
           <Route path="Choice" element={<ChoicePage />}></Route>
           <Route path="ChoiceResult" element={<ChoiceResult />}></Route>
+          <Route path="ChoiceLoading" element={<ChoiceLoading />}></Route>
 
         </Routes>
       </BrowserRouter>

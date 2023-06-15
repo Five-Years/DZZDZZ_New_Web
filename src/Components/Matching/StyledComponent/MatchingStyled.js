@@ -550,7 +550,7 @@ export const ContentContainer = styled.div`
 
 export const ConfirmContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 0px;
@@ -562,8 +562,6 @@ export const ConfirmContainer = styled.div`
   top: 68.88%;
 
   > text {
-    width: 127px;
-    height: 50px;
 
     font-family: "Open Sans";
     font-style: normal;
