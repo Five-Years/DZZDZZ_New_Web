@@ -74,7 +74,7 @@ function ChoiceResult() {
       <SelectionContainer>
         <ResultBox>{isSuccess ? <><Smile /><text>축하합니다!</text><text><span>단짠지기임당</span>님과매칭이 성공했어요!</text></> : <><Tear /><text>아쉽게도<span>단짠지기임당</span>님은</text><text>인연이 아닌가봐요</text></>}</ResultBox>
         {/* <WaitingBox state={state}><text>선택시간이<span>22<span>시간</span></span><span>41<span>분</span></span> 남았어요.</text><text>상대방이 선택하면 결과가 나와요.</text></WaitingBox> */}
-        <ChanceBox state={state}>{state ==="accept" ? <><SuggentionButton><text>오픈 카톡 URL <br/>열기</text></SuggentionButton></> : <text onClick={()=>{navigate("/")}} className="result">메인으로 돌아가기</text>}</ChanceBox>
+        <ChanceBox state={state}>{isSuccess  ? <><SuggentionButton><text>오픈 카톡 URL <br/>열기</text></SuggentionButton></> : <text onClick={()=>{navigate("/")}} className="result">메인으로 돌아가기</text>}</ChanceBox>
       </SelectionContainer>
 
     </MatchingContainers>
