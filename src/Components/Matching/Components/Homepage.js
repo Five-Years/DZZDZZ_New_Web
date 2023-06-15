@@ -110,7 +110,7 @@ function Homepage() {
         </SelectionContainer>
         <MatchingOptionContainer>
             <MatchingOption>
-                <input type="checkbox" checked={checked} onChange={({ target: { checked } }) => setChecked(checked)}/>
+                <input type="checkbox" disabled onClick={()=>{alert("준비중입니다")}} checked={checked} onChange={({ target: { checked } }) => setChecked(checked)} />
                 <text>같은 학교끼리 만나기</text>
                 <InfoContainer><Info onClick={()=>{window.ReactNativeWebView?.postMessage(
                         JSON.stringify({ type: "same", data: 0 })
@@ -148,6 +148,7 @@ flex: none;
 order: 0;
 align-self: stretch;
 flex-grow: 0;
+margin-top: 20px;
 >input {
     width :20px;
     height : 20px;
@@ -461,6 +462,7 @@ const Selection = styled.div`
     gap: 15px;
 
     width: 100%;
+
     height: 50%;
 
     :active {

@@ -35,7 +35,7 @@ import {
 function ChoiceResult() {
   const [detail, setDetail] = useState(false);
   const navigate = useNavigate();
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(true);
   const {state} = useLocation();
   return (
     <MatchingContainers detail={detail}>
