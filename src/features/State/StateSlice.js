@@ -4,7 +4,7 @@ const initialState = {
   value: false,
   query : 1,
   ticket : 0,
-  name : "미쥬미쥬",
+  name : "",
   season : 1,
   seasonNumber : 2,
 
