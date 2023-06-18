@@ -4,6 +4,10 @@ const initialState = {
   value: false,
   query : 1,
   ticket : 0,
+  name : "미쥬미쥬",
+  season : 1,
+  seasonNumber : 2,
+
 };
 
  const StateSlice = createSlice({
@@ -19,6 +23,15 @@ const initialState = {
     },
     Ticket : (state,action) => {
       state.ticket = state.ticket + 1
+    },
+    Name : (state,action) => {
+      state.name = action.payload 
+    },
+    Season : (state,action) => {
+      state.season = action.payload 
+    },
+    SeasonNumber : (state,action)=>{
+      state.seasonNumber = action.payload
     }
   },
  

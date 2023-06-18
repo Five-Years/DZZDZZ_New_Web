@@ -11,11 +11,25 @@ import { ReactComponent as Tickets } from "../../../../assets/ticket.svg";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { ReactComponent as Info } from "../../../../assets/Info.svg";
 
+
+
+
 function MatchingHeader(props) {
     // 유저티켓 보유 갯수 확인, 추후 서버 연동 필요
     const Ticket = useSelector((state) => {
       return state.Popup.ticket;
     });
+
+    const Name = useSelector((state)=>{
+      return state.Popup.name;
+    });
+    const Season = useSelector((state)=>{
+      return state.Popup.season;
+    });
+    const SeasonNumber = useSelector((state)=>{
+      return state.Popup.seasonNumber;
+    })
+
     const dispatch = useDispatch();
     const seasonlist = ["이성", "혼성", "정리중"];
     const navigate = useNavigate();
@@ -26,15 +40,15 @@ function MatchingHeader(props) {
       <HeaderBox>
         <HeaderProfile>
           <HeaderName>
-            <text className="name">{props.name}님</text>
+            <text className="name">{Name}님</text>
             <text>안녕하세요!</text>
           </HeaderName>
         </HeaderProfile>
-        <HeaderSeason theme={props.season}>
+        <HeaderSeason theme={Season}>
           <text>
             지금은{" "}
             <span>
-              시즌{props.seasonnumber} {seasonlist[props.season]}
+              시즌{SeasonNumber} {seasonlist[Season]}
             </span>{" "}
             접수기간입니다!
           </text>
@@ -54,7 +68,7 @@ function MatchingHeader(props) {
         </Confirmation>
         <PurchaserButton
           onClick={() => {
-            navigate("/purchasing", { state : {theme : props.season, name : props.name}});
+            navigate("/purchasing", { state : {theme : Season, name : Name}});
           }}
         >
           <text>충전하기</text>

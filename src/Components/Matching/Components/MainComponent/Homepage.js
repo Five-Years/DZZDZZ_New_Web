@@ -6,13 +6,26 @@ import styled from "styled-components";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { ReactComponent as Info } from "../../../../assets/Info.svg";
 import MatchingHeader from "../Header/MatchingHeader";
+import StateSlice from "../../../../features/State/StateSlice";
 
 function Homepage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
-  const [season, setSeason] = useState(1); //현재 시즌 정보,  0 : 이성매칭 1 : 혼성매칭 2 : 준비중
-  const [seasonNumber, setSeasonNumber] = useState(2);
+  
+  const Ticket = useSelector((state) => {
+    return state.Popup.ticket;
+  });
+
+  const Name = useSelector((state)=>{
+    return state.Popup.name;
+  });
+  const Season = useSelector((state)=>{
+    return state.Popup.Season;
+  });
+  const SeasonNumber = useSelector((state)=>{
+    return state.Popup.SeasonNumber;
+  })
+
 
   // 유저인증여부 확인, 추후 서버 연동 필요
   const authentification = true;
@@ -22,8 +35,8 @@ function Homepage() {
 
     switch (type) {
       case "accessToken":
-        if (name === "")
-          setName(data);
+        if (Name === "")
+          dispatch(StateSlice.actions.Name(data));
         break;
 
       case "onBlur":
@@ -31,8 +44,8 @@ function Homepage() {
         break;
 
       case "season":
-        setSeasonNumber(data.seasonnumber)
-        setSeason(data.season)
+        dispatch(StateSlice.actions.Season(data.season));
+        dispatch(StateSlice.actions.SeasonNumber(data.seasonnumber));
 
       case "back":
         navigate("/");
@@ -55,13 +68,13 @@ function Homepage() {
   return (
     <>
       <MobileContainer>
-        <MatchingHeader name={name} season={season} seasonnumber={seasonNumber}/>
+        <MatchingHeader/>
         <SelectionContainer>
           <Selection
             theme={0}
             onClick={() => {
               navigate("/MatchingHome", {
-                state: { theme: 0, season: season, seasonnumber: seasonNumber, name : name },
+                state: { theme: 0, season: Season, seasonnumber: SeasonNumber, name : Name },
               });
             }}
           >
@@ -70,7 +83,7 @@ function Homepage() {
                 <span>#</span> 소개팅을 원해요
               </text>
             </SelectionTitle>
-            {season === 0 ? (
+            {Season === 0 ? (
               <Highlight>
                 <text>NOW!</text>
               </Highlight>
@@ -85,7 +98,7 @@ function Homepage() {
             theme={1}
             onClick={() => {
               navigate("/MatchingHome", {
-                state: { theme: 1, season: season, seasonnumber: seasonNumber, name : name },
+                state: { theme: 1, season: Season, seasonnumber: SeasonNumber, name : Name },
               });
             }}
           >
@@ -95,7 +108,7 @@ function Homepage() {
                 <span className="friend">#</span> 친구를 원해요
               </text>
             </SelectionTitle>
-            {season === 1 ? (
+            {Season === 1 ? (
               <Highlight>
                 <text>NOW!</text>
               </Highlight>
