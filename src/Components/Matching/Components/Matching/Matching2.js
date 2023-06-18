@@ -105,12 +105,12 @@ function Matching2() {
           </Option>
         </Selection>
       </SelectionContainer>
-      <DetailContainer>
-        <KeyboardDoubleArrowUpIcon color="disabled" fontSize="large" />
-        <DetailView onClick={()=>{window.scrollTo({
+      <DetailContainer onClick={()=>{window.scrollTo({
         top: offset,
         behavior: 'smooth'
    	});  }}>
+        <KeyboardDoubleArrowUpIcon color="disabled" fontSize="large" />
+        <DetailView>
           <MatchingLink>
             <text>자세히 보기</text>
           </MatchingLink>
