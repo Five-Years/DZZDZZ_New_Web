@@ -10,7 +10,7 @@ import MatchingHeader from "../Header/MatchingHeader";
 function Homepage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [name, setName] = useState("미쥬미쥬");
+  const [name, setName] = useState("");
   const [season, setSeason] = useState(1); //현재 시즌 정보,  0 : 이성매칭 1 : 혼성매칭 2 : 준비중
   const [seasonNumber, setSeasonNumber] = useState(2);
 
@@ -22,7 +22,8 @@ function Homepage() {
 
     switch (type) {
       case "accessToken":
-        setName(data);
+        if (name === "")
+          setName(data);
         break;
 
       case "onBlur":
