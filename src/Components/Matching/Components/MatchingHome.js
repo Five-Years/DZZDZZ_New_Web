@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import styled from "styled-components";
 import MatchingHeader from "./Header/MatchingHeader";
 import MatchingProgressHeader from "./Header/MatchingProgressHeader";
@@ -18,11 +19,6 @@ function MatchingHome() {
   // 유저인증여부 확인, 추후 서버 연동 필요
   const authentification = true;
   useEffect(() => {
-    //android
-    document.addEventListener("message", (e) => listener(e.data));
-    //ios
-    window.addEventListener("message", (e) => listener(e.data));
-
     window.ReactNativeWebView?.postMessage(
       JSON.stringify({ type: "notfirst", data: "" }),
     );

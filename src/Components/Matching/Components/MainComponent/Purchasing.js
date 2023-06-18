@@ -6,7 +6,6 @@ import { ReactComponent as Ticket1 } from "../../../../assets/ticket1.svg";
 import { ReactComponent as Ticket2 } from "../../../../assets/ticket2.svg";
 import { ReactComponent as Ticket3 } from "../../../../assets/ticekt3.svg";
 import { ReactComponent as Ticket4 } from "../../../../assets/ticket4.svg";
-
 import {
   PurchasePageContainer,
   PurchasingHeaderContainer,
