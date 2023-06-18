@@ -894,7 +894,7 @@ export const ProfileImageContainer = styled.div`
   position: absolute;
   top: 6.5%;
   width: 100%;
-  height: 46.74%;
+  height: 49%;
 
   > img {
     width: 100%;

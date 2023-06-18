@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import MatchingHeader from "./Header/MatchingHeader";
+import MatchingProgressHeader from "./Header/MatchingProgressHeader";
 
 function MatchingHome() {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ function MatchingHome() {
   return (
     <>
       <MobileContainer>
+        <MatchingProgressHeader></MatchingProgressHeader>
         <MatchingHeader
           name={name}
           season={season}
@@ -111,15 +113,13 @@ function MatchingHome() {
             </EachButton>
           </EachButtonContainer>
           <EachButtonContainer>
-            {true ? (
-              <EachButton>
+              <EachButton  onClick={() => {
+                window.ReactNativeWebView?.postMessage(
+                  JSON.stringify({ type: "student", data: "" })
+                );
+              }}>
                 <text>학생 인증하기</text>
               </EachButton>
-            ) : (
-              <EachButton className="guide">
-                <text className="guide">단짠 가이드</text>
-              </EachButton>
-            )}
           </EachButtonContainer>
         </ButtonContainer>
       </MobileContainer>

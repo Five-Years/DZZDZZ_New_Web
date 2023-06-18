@@ -88,8 +88,12 @@ function Purchasing() {
                 <text className="name">{location.state.name}님</text>
                 <text>안녕하세요!</text>
               </HeaderContents>
-            </HeaderContentContainer>
-            <text>[친구초대 이벤트로 무료코드 얻기]</text>
+            </HeaderContentContainer >
+            <text onClick={() => {
+                window.ReactNativeWebView?.postMessage(
+                  JSON.stringify({ type: "invite", data: "" })
+                );
+              }}>[친구초대 이벤트로 무료코드 얻기]</text>
           </PurchasingHeader>
         </PurchasingHeaderContainer>
         <PurchasingBoxContainer>
@@ -130,11 +134,11 @@ function Purchasing() {
                     <Ticket2 />
                   </TicketImage>
                   <TicketCount>
-                    <text>티켓 5개</text>
-                    <text className="bonus">4개 + 보너스 1개</text>
+                    <text>티켓 4개</text>
+                    <text className="bonus">3개 + 보너스 1개</text>
                   </TicketCount>
                   <TicketPrice>
-                    <text>7,600 </text>
+                    <text>5,700 </text>
                     <Won />
                   </TicketPrice>
                   <TicketButton
@@ -152,11 +156,11 @@ function Purchasing() {
                     <Ticket3 />
                   </TicketImage>
                   <TicketCount>
-                    <text>티켓 12개</text>
-                    <text className="bonus">10개 + 보너스 2개</text>
+                    <text>티켓 8개</text>
+                    <text className="bonus">6개 + 보너스 2개</text>
                   </TicketCount>
                   <TicketPrice>
-                    <text>19,000 </text>
+                    <text>11,400 </text>
                     <Won />
                   </TicketPrice>
                   <TicketButton
@@ -174,11 +178,11 @@ function Purchasing() {
                     <Ticket4 />
                   </TicketImage>
                   <TicketCount>
-                    <text>티켓 35개</text>
-                    <text className="bonus">30개 + 보너스 5개</text>
+                    <text>티켓 15개</text>
+                    <text className="bonus">11개 + 보너스 4개</text>
                   </TicketCount>
                   <TicketPrice>
-                    <text>57,000 </text>
+                    <text>21,800 </text>
                     <Won />
                   </TicketPrice>
                   <TicketButton

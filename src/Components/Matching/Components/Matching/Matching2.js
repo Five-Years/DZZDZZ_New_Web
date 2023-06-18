@@ -44,14 +44,16 @@ function Matching2() {
   };
 
   const [detail, setDetail] = useState(false);
+  const [isPrevious,setIsPrevious] = useState(true);
+  const [isSelected, setIsSelected] = useState(0);
   const navigate = useNavigate();
 
   return (
     <MatchingContainers detail={detail}>
       <MatchingProgressHeader />
       <ProfileImageContainer>
-        <ExtraMatching><DoubleMatching><text>현재매칭</text></DoubleMatching><DoubleMatching><text>이전매칭</text></DoubleMatching></ExtraMatching>
-        <img src={require("../../../../assets/mango.jpg")} alt="이미지"/>
+        {true ? <ExtraMatching><DoubleMatching value={0} select = {isSelected}onClick={()=>{setIsSelected(0)}}><text>현재매칭</text></DoubleMatching><DoubleMatching  select={isSelected} value={1} onClick={()=>{setIsSelected(1)}}><text>이전매칭</text></DoubleMatching></ExtraMatching> :<></>}
+        <img src={require("../../../../assets/ProfileSample.png")} alt="이미지"/>
         {/* <Frame6887></Frame6887> */}
       </ProfileImageContainer>
       <IntroduceContainer
@@ -150,8 +152,7 @@ display: flex;
 flex-direction: row;
 align-items: flex-start;
 width : 100%;
-height : 8%;
-display: flex;
+height : 7.6%;
 position: absolute;
 top : 0px;
 `;
@@ -164,9 +165,8 @@ align-items: center;
 gap: 10px;
 width : 50%;
 height : 100%;
-:hover {
-  border-bottom: 3px solid #FF477E;
-}
+border-bottom: ${props => props.value === props.select ? "3px solid #FF477E" : <></> };
+
 > text {
   font-family: 'Noto Sans';
 font-style: normal;
@@ -180,8 +180,8 @@ letter-spacing: 0.5px;
 
 /* Text Black */
 
-color: #000000;}
-
+color:  ${props => props.value === props.select ? "000000" : "#AEAEB2" };
+}
 
 `;
 
