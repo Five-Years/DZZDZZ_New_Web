@@ -595,7 +595,6 @@ export const MatchingContainers = styled.div`
   width: 100%;
   height: 100%;
   background: white;
-  min-height : 798px;
 `;
 
 export const Option = styled.div`
@@ -743,7 +742,7 @@ export const SelectionContainer = styled.div`
   justify-content: center;
   position: absolute;
   width: 100%;
-  height: 100px;
+  height: 14.29%;
   left: 0px;
   top: 65.91%;
 `;

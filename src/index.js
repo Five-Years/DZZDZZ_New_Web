@@ -38,7 +38,7 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Homepage />}></Route>
+          <Route path="/homepage" element={<Homepage />}></Route>
           <Route path="/purchasing" element={<Purchasing />}></Route>
           <Route path="/MatchingHome" element={<MatchingHome />}></Route>
           <Route path="/MatchingProgress" element={<MatchingProgress />}></Route>
@@ -48,7 +48,7 @@ root.render(
           <Route path="ChoiceResult" element={<ChoiceResult />}></Route>
           <Route path="ChoiceLoading" element={<ChoiceLoading />}></Route>
 
-          <Route path="/pchome" element={<PCHome />}></Route>
+          <Route path="/" element={<PCHome />}></Route>
           <Route path="/pc" element={<App />}></Route>
           <Route path="MobileMenu" element={<MobileMenu />}></Route>
           <Route path="DzzIntroduce" element={<DzzDzzIntrodue />}></Route>
