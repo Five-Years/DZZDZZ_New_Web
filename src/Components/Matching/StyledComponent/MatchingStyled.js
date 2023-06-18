@@ -686,8 +686,8 @@ export const DetailTextView = styled.div`
   top: 0px;
   width: 100%;
   height: 100%;
-  background-color: #888888;
-  opacity: 80%;
+  background-color: #000000;
+  opacity: 70%;
   z-index: 1;
   align-items: center;
   justify-content: center;

@@ -24,8 +24,8 @@ function Coupon() {
       <ConfirmButton
         onClick={() => {
             window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "coupon", data: "" }))
-        }}
+                JSON.stringify({ type: "coupon", data: "" })); alert("쿠폰 등록")
+        }} 
       >
         <text>확 인</text>
       </ConfirmButton>
@@ -123,7 +123,7 @@ const InputContainer = styled.div`
 
   > input {
     margin-left: 5.15%;
-    height: 90%;
+    height: 85%;
     border: none;
     border-right: 0px;
     font-family: "SF Pro";
