@@ -29,6 +29,7 @@ import DetailProfile from "./DetailProfile";
 import ChoicePage from "./Components/Matching/Components/Matching/ChoicePage";
 import ChoiceResult from "./Components/Matching/Components/Matching/ChoiceResult";
 import ChoiceLoading from "./Components/Matching/Components/Matching/ChoiceResult";
+import Coupon from "./Components/Matching/Components/MainComponent/Coupon";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -44,9 +45,11 @@ root.render(
           <Route path="/MatchingProgress" element={<MatchingProgress />}></Route>
           <Route path="/matching2" element={<Matching2 />}></Route>
           <Route path="/detail" element={<DetailProfile />}></Route>
-          <Route path="Choice" element={<ChoicePage />}></Route>
-          <Route path="ChoiceResult" element={<ChoiceResult />}></Route>
-          <Route path="ChoiceLoading" element={<ChoiceLoading />}></Route>
+          <Route path="/Choice" element={<ChoicePage />}></Route>
+          <Route path="/ChoiceResult" element={<ChoiceResult />}></Route>
+          <Route path="/ChoiceLoading" element={<ChoiceLoading />}></Route>
+          <Route path="/Coupon" element={<Coupon />}></Route>
+
 
           <Route path="/pchome" element={<PCHome />}></Route>
           <Route path="/pc" element={<App />}></Route>

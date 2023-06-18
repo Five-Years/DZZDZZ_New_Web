@@ -53,10 +53,10 @@ function Matching2() {
       <MatchingProgressHeader />
       <ProfileImageContainer>
         {true ? <ExtraMatching><DoubleMatching value={0} select = {isSelected}onClick={()=>{setIsSelected(0)}}><text>현재매칭</text></DoubleMatching><DoubleMatching  select={isSelected} value={1} onClick={()=>{setIsSelected(1)}}><text>이전매칭</text></DoubleMatching></ExtraMatching> :<></>}
-        <img src={require("../../../../assets/ProfileSample.png")} alt="이미지"/>
+        {isSelected===0 ? <img src={require("../../../../assets/ProfileSample.png")} alt="이미지"/> : <img src={require("../../../../assets/mango.jpg")} alt="이미지"/>}
         {/* <Frame6887></Frame6887> */}
       </ProfileImageContainer>
-      <IntroduceContainer
+      {isSelected===0 ? <><IntroduceContainer
         onClick={() => {
           setDetail(!detail);
         }}
@@ -83,7 +83,35 @@ function Matching2() {
           />
           <text>단짠지기임당</text>
         </ProfileName>
-      </ProfileNameContainer>
+      </ProfileNameContainer></> : <><IntroduceContainer
+        onClick={() => {
+          setDetail(!detail);
+        }}
+      >
+        <DetailTextView detail={detail}></DetailTextView>
+        <TextContainer detail={detail}>
+          <text>
+            츄르좀 주면 덧나나? 스크래쳐도 좋아합니다
+          </text>
+        </TextContainer>
+        <KeyboardArrowDownIcon
+          style={{
+            color: detail ? "#FFFFFF" : "#888888",
+            zIndex: 2,
+            transform: detail ? "rotate(180deg)" : "",
+          }}
+        />
+      </IntroduceContainer>
+      <ProfileNameContainer>
+        <ProfileName>
+          <img
+            src={require("../../../../assets/CircleWavyCheck.png")}
+            alt="이미지"
+          />
+          <text>망고임당</text>
+        </ProfileName>
+      </ProfileNameContainer></>}
+      
       <SelectionContainer>
         {/* 선택시 확인작업 거치고 진행 */}
         <Selection>

@@ -10,10 +10,21 @@ import MatchingProgressHeader from "./Header/MatchingProgressHeader";
 function MatchingHome() {
   const navigate = useNavigate();
   const location = useLocation();
-  const name = location.state.name
-  const theme = location.state.theme
-  const season = location.state.season
-  const seasonNumber = location.state.seasonnumber
+  const theme = location.state.theme;
+
+  const Ticket = useSelector((state) => {
+    return state.Popup.ticket;
+  });
+
+  const Name = useSelector((state)=>{
+    return state.Popup.name;
+  });
+  const Season = useSelector((state)=>{
+    return state.Popup.season;
+  });
+  const SeasonNumber = useSelector((state)=>{
+    return state.Popup.seasonNumber;
+  })
   const dispatch = useDispatch();
 
   // 유저인증여부 확인, 추후 서버 연동 필요
@@ -28,9 +39,9 @@ function MatchingHome() {
       <MobileContainer>
         <MatchingProgressHeader></MatchingProgressHeader>
         <MatchingHeader
-          name={name}
-          season={season}
-          seasonnumber={seasonNumber}
+          name={Name}
+          season={Season}
+          seasonnumber={SeasonNumber}
         />
         <MatchingContainer>
           <MatchingCardContainer theme={theme}>
@@ -91,7 +102,7 @@ function MatchingHome() {
         </MatchingContainer>
         <ButtonContainer>
           <EachButtonContainer>
-            {theme === season ? (
+            {theme === Season ? (
               <EachButton
                 onClick={() => {
                   navigate("/MatchingProgress", { state: { theme: theme } });

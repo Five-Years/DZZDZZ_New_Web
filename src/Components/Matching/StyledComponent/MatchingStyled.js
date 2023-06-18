@@ -564,7 +564,7 @@ export const ConfirmContainer = styled.div`
 
   > text {
 
-    font-family: "Open Sans";
+    font-family: var(--font-OpenSans);
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -842,6 +842,22 @@ export const ContentTitle = styled.div`
 
   width: 130px;
   height: 32px;
+
+  > text {
+    font-family: var(--font-OpenSans);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 22px;
+  /* identical to box height, or 116% */
+
+  text-align: center;
+  letter-spacing: -0.408px;
+
+  /* Text Black */
+
+  color: #000000;
+  }
 `;
 
 export const Frame6887 = styled.div`

@@ -68,7 +68,7 @@ function MatchingHeader(props) {
         </Confirmation>
         <PurchaserButton
           onClick={() => {
-            navigate("/purchasing", { state : {theme : Season, name : Name}});
+            navigate("/purchasing", { state : {theme : Season, title : "충전하기"}});
           }}
         >
           <text>충전하기</text>
