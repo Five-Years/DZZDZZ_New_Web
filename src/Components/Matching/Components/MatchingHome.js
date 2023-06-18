@@ -17,9 +17,16 @@ function MatchingHome() {
 
   // 유저인증여부 확인, 추후 서버 연동 필요
   const authentification = true;
-  useEffect(()=>{  window.ReactNativeWebView?.postMessage(
-    JSON.stringify({ type: "notfirst", data: "" }),
-  );},[])
+  useEffect(() => {
+    //android
+    document.addEventListener("message", (e) => listener(e.data));
+    //ios
+    window.addEventListener("message", (e) => listener(e.data));
+
+    window.ReactNativeWebView?.postMessage(
+      JSON.stringify({ type: "notfirst", data: "" }),
+    );
+  }, []);
   return (
     <>
       <MobileContainer>
