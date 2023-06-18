@@ -68,7 +68,7 @@ function Purchasing() {
     //ios
     window.addEventListener("message", (e) => listener(e.data));
     window.ReactNativeWebView?.postMessage(
-      JSON.stringify({ type: "onLoad", data: "" })
+      JSON.stringify({ type: "notfirst", data: "" })
     );
     return () => {
       //android
