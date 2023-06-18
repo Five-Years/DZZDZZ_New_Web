@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 import { useState, useRef } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -23,11 +23,11 @@ import {
   Frame6887,
 } from "../../StyledComponent/MatchingStyled";
 
-
-
-
-
 function Matching2() {
+  const myRef = useRef();
+  const [offset,setOffset] = useState(0);
+  useEffect(()=>{setOffset(myRef.current.offsetTop)},[myRef])
+
 
   const accept = () => {
     if (window.confirm("선택하시겠습니까?")) {
@@ -45,9 +45,6 @@ function Matching2() {
 
   const [detail, setDetail] = useState(false);
   const navigate = useNavigate();
-  const myRef = useRef();
-  const y = myRef.current.offsetTop;
-
 
   return (
     <MatchingContainers detail={detail}>
@@ -110,11 +107,10 @@ function Matching2() {
       </SelectionContainer>
       <DetailContainer>
         <KeyboardDoubleArrowUpIcon color="disabled" fontSize="large" />
-        <DetailView onClick={()=>{   window.scrollTo({
-        top: y,
+        <DetailView onClick={()=>{window.scrollTo({
+        top: offset,
         behavior: 'smooth'
-   	});
-   }}>
+   	});  }}>
           <MatchingLink>
             <text>자세히 보기</text>
           </MatchingLink>
