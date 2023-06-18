@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
 import styled from "styled-components";
-import HeaderMain from "./Components/Header/HeaderMain";
-import Footer from "./Components/Footer/Footer";
-import Inquiry from "./Components/Inquiry/Inquiry";
-import HeaderBar from "./Components/Header/HeaderBar";
-import HeaderMain2 from "./Components/Header/HeaderMain2";
+import HeaderMain from "./Header/HeaderMain";
+import Footer from "./Footer/Footer";
+import Inquiry from "./Inquiry/Inquiry";
+import HeaderBar from "./Header/HeaderBar";
+import HeaderMain2 from "./Header/HeaderMain2";
 import { AnimatePresence } from "framer-motion";
 
 function App() {

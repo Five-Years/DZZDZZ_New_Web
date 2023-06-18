@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ReactComponent as Logo } from "../../assets/dzzdzzNew.svg";
+import { ReactComponent as Logo } from "../../../assets/dzzdzzNew.svg";
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from "react-router-dom";
 
@@ -15,7 +15,7 @@ function HeaderBar() {
       </MobileHeaderBar>
       <HeaderBarContents>
         <LogoContainer><Logo /></LogoContainer>
-<MenuContainer><MenuLeft><text onClick={()=>{navigate("/DzzIntroduce")}}>단짠단짠</text><text onClick={()=>{navigate("/DzzIntroduce")}}>단짠 가이드</text><text onClick={()=>{window.open("https://stib.ee/m2o7")}}>공지사항</text><text onClick={()=>{window.open("https://dzzdzz-reprot.stibee.com/")}}>통계리포트</text></MenuLeft><MenuRight><text>로그인</text></MenuRight></MenuContainer>
+<MenuContainer><MenuLeft><text onClick={()=>{navigate("/DzzIntroduce")}}>단짠단짠</text><text onClick={()=>{navigate("/DzzIntroduce")}}>단짠 가이드</text><text onClick={()=>{window.open("https://stib.ee/m2o7")}}>공지사항</text><text onClick={()=>{window.open("https://dzzdzz-reprot.stibee.com/")}}>통계리포트</text></MenuLeft>{/*<MenuRight onClick={()=>{navigate("/login")}}><text>로그인</text></MenuRight>*/}</MenuContainer>
       </HeaderBarContents>
     </HeaderBarContainer>
   )

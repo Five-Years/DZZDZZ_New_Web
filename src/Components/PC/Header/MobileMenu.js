@@ -12,18 +12,17 @@ function MobileMenu() {
             <MenuTopRight onClick={()=>{navigate("/pc")}}><CloseIcon /></MenuTopRight>
         </MenuTop>
         <MenuMain>
-            <Content><ContentContainer><text>로그인</text></ContentContainer></Content>
-            <Content><ContentContainer><text>메인으로 돌아가기</text></ContentContainer></Content>
+            <Content><ContentContainer onClick={()=>{navigate("/pc")}}><text>메인으로 돌아가기</text></ContentContainer></Content>
             <Horizontal></Horizontal>
             <Content><ContentContainer onClick={()=>{navigate("/DzzIntroduce")}}><text>단짠단짠</text></ContentContainer></Content>
             <Content><ContentContainer onClick={()=>{navigate("/DzzIntroduce")}}><text>단짠 가이드</text></ContentContainer></Content>
-            <Content><ContentContainer onClick={()=>{navigate("/DzzIntroduce")}}><text>공지사항</text></ContentContainer></Content>
-            <Content><ContentContainer onClick={()=>{navigate("/DzzIntroduce")}}><text>통계리포트</text></ContentContainer></Content>
+            <Content><ContentContainer onClick={()=>{window.open("https://stib.ee/m2o7")}}><text>공지사항</text></ContentContainer></Content>
+            <Content><ContentContainer onClick={()=>{window.open("https://dzzdzz-reprot.stibee.com/")}}><text>통계리포트</text></ContentContainer></Content>
             <Horizontal></Horizontal>
-            <Content><ContentContainer><text>제휴문의</text></ContentContainer></Content>
-            <Content><ContentContainer><text>광고문의</text></ContentContainer></Content>
+            {/* <Content><ContentContainer><text>제휴문의</text></ContentContainer></Content>
+            <Content><ContentContainer><text>광고문의</text></ContentContainer></Content> */}
             <Content><ContentContainer onClick={()=>{navigate("/Terms")}}><text>이용약관</text></ContentContainer></Content>
-            <Content><ContentContainer><text>개인정보 처리방침</text></ContentContainer></Content>
+            <Content><ContentContainer onClick={()=>{navigate("/Privacy")}}><text>개인정보 처리방침</text></ContentContainer></Content>
         </MenuMain>
         <LogoContainer><Logo /></LogoContainer>
     </MobileContainer>

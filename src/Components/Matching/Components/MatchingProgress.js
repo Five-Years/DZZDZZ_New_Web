@@ -1,18 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import styled from "styled-components";
 var Spinner = require("react-spinkit");
 
 function MatchingProgress() {
-  const {state} = useLocation();
+  const { state } = useLocation();
   const [loading, setLoading] = useState(true);
   setInterval(() => {
     setLoading(false);
   }, 5000);
   const navigate = useNavigate();
-  
 
   return (
     <MatchingContainer>
@@ -24,28 +22,37 @@ function MatchingProgress() {
         <></>
       )}
       <CardContainer>
-        <CardContents theme = {state.theme}>
-        {state.theme === 1 ? <img
-                src={require("../../../assets/dzzdzz_logo.png")}
-                alt="이미지"
-              />       : <img
+        <CardContents theme={state.theme}>
+          {state.theme === 1 ? (
+            <img
+              src={require("../../../assets/dzzdzz_logo.png")}
+              alt="이미지"
+            />
+          ) : (
+            <img
               src={require("../../../assets/dzzdzz_logo2.png")}
               alt="이미지"
-            />       }  
-                    <text>
-              지금부터<br></br>
-              <span>매칭</span>이<br />
-              시작됩니다!
-            </text>
+            />
+          )}
+          <text>
+            지금부터<br></br>
+            <span>매칭</span>이<br />
+            시작됩니다!
+          </text>
         </CardContents>
       </CardContainer>
-      <MatchingConfirmContainer theme = {state.theme}>
+      <MatchingConfirmContainer theme={state.theme}>
         {loading ? (
           <text>
             곧 매칭된 상대방을<br></br> 볼 수 있어요!
           </text>
         ) : (
-          <ConfirmButton onClick={()=>{navigate("/matching2")}} theme = {state.theme}>
+          <ConfirmButton
+            onClick={() => {
+              navigate("/matching2");
+            }}
+            theme={state.theme}
+          >
             <text>확인하기</text>
           </ConfirmButton>
         )}
@@ -114,8 +121,7 @@ const CardContents = styled.div`
   }
 
   > text > span {
-    
-    color: ${props=> props.theme === 1 ? "#0094FF" : "#FF477E" };  
+    color: ${(props) => (props.theme === 1 ? "#0094FF" : "#FF477E")};
   }
 
   > img {
@@ -145,7 +151,7 @@ const MatchingConfirmContainer = styled.div`
     /* or 156% */
     text-align: center;
     /* dzz_pink */
-    color: ${props=> props.theme === 1 ? "#0094FF" : "#FF477E" };  
+    color: ${(props) => (props.theme === 1 ? "#0094FF" : "#FF477E")};
   }
 `;
 
@@ -162,7 +168,7 @@ const ConfirmButton = styled.div`
   width: 66.66%;
   height: 100%;
   /* dzz_pink */
-  background: ${props=> props.theme === 1 ? "#0094FF" : "#FF477E" };  
+  background: ${(props) => (props.theme === 1 ? "#0094FF" : "#FF477E")};
   border-radius: 13px;
 
   > text {

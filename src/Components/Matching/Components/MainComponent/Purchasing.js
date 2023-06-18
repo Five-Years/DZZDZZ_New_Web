@@ -1,24 +1,17 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { ReactComponent as Won } from "../../../assets/won.svg";
-import { ReactComponent as Return } from "../../../assets/return.svg";
-import { ReactComponent as Ticket1 } from "../../../assets/ticket1.svg";
-import { ReactComponent as Ticket2 } from "../../../assets/ticket2.svg";
-import { ReactComponent as Ticket3 } from "../../../assets/ticekt3.svg";
-import { ReactComponent as Ticket4 } from "../../../assets/ticket4.svg";
+import { ReactComponent as Won } from "../../../../assets/won.svg";
+import { ReactComponent as Return } from "../../../../assets/return.svg";
+import { ReactComponent as Ticket1 } from "../../../../assets/ticket1.svg";
+import { ReactComponent as Ticket2 } from "../../../../assets/ticket2.svg";
+import { ReactComponent as Ticket3 } from "../../../../assets/ticekt3.svg";
+import { ReactComponent as Ticket4 } from "../../../../assets/ticket4.svg";
 
 import {
   PurchasePageContainer,
   PurchasingHeaderContainer,
-  BackgroundCards,
-  HeaderContainer,
   HeaderContentContainer,
-  HeaderLeft,
-  HeaderProfile,
-  HeaderRight,
-  StageContainer,
   PurchasingHeader,
-  CardTicket,
   Confirmation,
   PurchasingCardTicket,
   TicketButton,
@@ -30,25 +23,32 @@ import {
   MyTicket,
   BuyTicket,
   BackHome,
-  HeaderImg,
   BottomImg,
   TicketImage,
   TicketCount,
   TicketPrice,
-} from "../StyledComponent/MatchingStyled";
+} from "../../StyledComponent/MatchingStyled";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import StateSlice from "../../../features/State/StateSlice";
+import StateSlice from "../../../../features/State/StateSlice";
+import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+
 function Purchasing() {
+  const navigate = useNavigate();
   const Ticket = useSelector((state) => {
     return state.Popup.ticket;
   });
   const dispatch = useDispatch();
-  const {theme} = useLocation();
+
+  const location = useLocation();
+  const name = location.state.name
+
+  
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
+
     switch (type) {
       case "buyComplete": {
         alert("구매 성공");
@@ -77,6 +77,7 @@ function Purchasing() {
       document.removeEventListener("message", (e) => listener(e.data));
     };
   }, []);
+
   return (
     <>
       <PurchasePageContainer>
@@ -84,7 +85,7 @@ function Purchasing() {
           <PurchasingHeader>
             <HeaderContentContainer>
               <HeaderContents>
-                <text className="name">미쥬미쥬미쥬님</text>
+                <text className="name">{location.state.name}님</text>
                 <text>안녕하세요!</text>
               </HeaderContents>
             </HeaderContentContainer>
@@ -92,7 +93,7 @@ function Purchasing() {
           </PurchasingHeader>
         </PurchasingHeaderContainer>
         <PurchasingBoxContainer>
-          <PurchasingBox theme={theme}>
+          <PurchasingBox theme={location.state.theme}>
             <BoxContent>
               <MyTicket>
                 <PurchasingCardTicket>
@@ -110,7 +111,7 @@ function Purchasing() {
                     <text>티켓 1개</text>
                   </TicketCount>
                   <TicketPrice>
-                    <text>1,500 </text>
+                    <text>1,900 </text>
                     <Won />
                   </TicketPrice>
                   <TicketButton
@@ -133,7 +134,7 @@ function Purchasing() {
                     <text className="bonus">4개 + 보너스 1개</text>
                   </TicketCount>
                   <TicketPrice>
-                    <text>6,000 </text>
+                    <text>7,600 </text>
                     <Won />
                   </TicketPrice>
                   <TicketButton
@@ -155,7 +156,7 @@ function Purchasing() {
                     <text className="bonus">10개 + 보너스 2개</text>
                   </TicketCount>
                   <TicketPrice>
-                    <text>15,000 </text>
+                    <text>19,000 </text>
                     <Won />
                   </TicketPrice>
                   <TicketButton
@@ -177,7 +178,7 @@ function Purchasing() {
                     <text className="bonus">30개 + 보너스 5개</text>
                   </TicketCount>
                   <TicketPrice>
-                    <text>52,500 </text>
+                    <text>57,000 </text>
                     <Won />
                   </TicketPrice>
                   <TicketButton
@@ -191,16 +192,14 @@ function Purchasing() {
                   </TicketButton>
                 </TicketContainer>
               </BuyTicket>
-              <BackHome>
-                <Link to="/">
+              <BackHome onClick={()=>{navigate('/')}}>
+                <Link >
                   <Return />
                 </Link>
               </BackHome>
             </BoxContent>
           </PurchasingBox>
         </PurchasingBoxContainer>
-        <BottomImg onClick={() => {}}>
-        </BottomImg>
       </PurchasePageContainer>
     </>
   );

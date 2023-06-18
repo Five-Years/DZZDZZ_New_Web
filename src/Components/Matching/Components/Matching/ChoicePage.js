@@ -8,8 +8,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
 import styled from "styled-components";
-import { ReactComponent as Smile } from "../../../assets/smile.svg";
-import { ReactComponent as Tear } from "../../../assets/tear.svg";
+import { ReactComponent as Smile } from "../../../../assets/smile.svg";
+import { ReactComponent as Tear } from "../../../../assets/tear.svg";
 
 import {
   MatchingContainers,
@@ -30,13 +30,15 @@ import {
   ContentTitle,
   IntroduceContainer,
   Frame6887,
-} from "../StyledComponent/MatchingStyled";
+} from "../../StyledComponent/MatchingStyled";
 
-function ChoiceResult() {
+function ChoicePage() {
+  const [isStart,setIsStart] = useState(true);
   const [detail, setDetail] = useState(false);
   const navigate = useNavigate();
-  const [isSuccess, setIsSuccess] = useState(true);
-  const {state} = useLocation();
+  const { state } = useLocation();
+  const [theme,setTheme] = useState(0);
+
   return (
     <MatchingContainers detail={detail}>
       <ContentContainers>
@@ -58,30 +60,30 @@ function ChoiceResult() {
         </ContentRight>
       </ContentContainers>
       <ProfileImageContainer>
-        <img src={require("../../../assets/mango.jpg")} alt="이미지" />
+        <img src={require("../../../../assets/mango.jpg")} alt="이미지" />
         <Frame6887></Frame6887>
       </ProfileImageContainer>
 
       <ProfileNameContainer>
         <ProfileName>
           <img
-            src={require("../../../assets/CircleWavyCheck.png")}
+            src={require("../../../../assets/CircleWavyCheck.png")}
             alt="이미지"
           />
           <text>단짠지기임당</text>
         </ProfileName>
       </ProfileNameContainer>
       <SelectionContainer>
-        <ResultBox>{isSuccess ? <><Smile /><text>축하합니다!</text><text><span>단짠지기임당</span>님과매칭이 성공했어요!</text></> : <><Tear /><text>아쉽게도<span>단짠지기임당</span>님은</text><text>인연이 아닌가봐요</text></>}</ResultBox>
-        {/* <WaitingBox state={state}><text>선택시간이<span>22<span>시간</span></span><span>41<span>분</span></span> 남았어요.</text><text>상대방이 선택하면 결과가 나와요.</text></WaitingBox> */}
-        <ChanceBox state={state}>{isSuccess  ? <><SuggentionButton><text>오픈 카톡 URL <br/>열기</text></SuggentionButton></> : <text onClick={()=>{navigate("/")}} className="result">메인으로 돌아가기</text>}</ChanceBox>
+        <ResultBox>{state ==="accept" ? <><Smile /><text><span>단짠지기임당</span>님을 선택하셨습니다</text></> : <><Tear /><text><span>단짠지기임당</span>님을 거절하셨습니다</text><text onClick={()=>{navigate("/")}} className="reject">메인으로 돌아가기기</text></>}</ResultBox>
+        {isStart ? <WaitingBox state={state}><SuggentionButton onClick={()=>{navigate("/ChoiceLoading", {state : {theme : 1}})}}><text>결과 확인하기</text></SuggentionButton></WaitingBox>: <WaitingBox state={state}><text>선택시간이<span>22<span>시간</span></span><span>41<span>분</span></span> 남았어요.</text><text>상대방이 선택하면 결과가 나와요.</text></WaitingBox>}
+        <ChanceBox state={state}>{state ==="accept" ? <text onClick={()=>{navigate("/")}}>메인으로 돌아가기</text> : <><text>이대로 끝내기 아쉽다면?</text><SuggentionButton><text>이건 어때요?</text></SuggentionButton></>}</ChanceBox>
       </SelectionContainer>
 
     </MatchingContainers>
   );
 }
 
-export default ChoiceResult;
+export default ChoicePage;
 
 const SuggentionButton =styled.div`
 display: flex;
@@ -152,11 +154,11 @@ const ResultBox = styled.div`
   padding: 0px;
   gap: 7px;
 
-
-  height: 120px;
+  width: 280px;
+  height: 100px;
 
   > text {
-    font-family: 'Open Sans';
+    font-family: var(--font-OpenSans);
     font-style: normal;
     font-weight: 300;
     font-size: 18px;
@@ -172,7 +174,7 @@ const ResultBox = styled.div`
   }
 
   > text.reject {
-    font-family: 'Open Sans';
+    font-family: var(--font-OpenSans);
 font-style: normal;
 font-weight: 400;
 font-size: 16px;
@@ -198,7 +200,7 @@ const WaitingBox = styled.div`
   width: 280px;
   height: 49px;
   >text {
-  font-family: 'Open Sans';
+    font-family: var(--font-OpenSans);
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -233,7 +235,7 @@ width: 180px;
 height: 80px;
 
 > text {
-  font-family: 'Open Sans';
+  font-family: var(--font-OpenSans);
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -246,9 +248,5 @@ height: 80px;
   /* system_blue */
 
   color: ${props=> props.state==="accept" ? "#0094FF" : "#888888"};
-}
-
-> text.result {
-  color : #0094FF;
 }
 `;

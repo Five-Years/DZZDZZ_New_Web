@@ -1,5 +1,5 @@
 import React from "react";
-import StateSlice from "../../features/State/StateSlice";
+import StateSlice from "../../../features/State/StateSlice";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ function Links() {
   return (
     <MobileWrapper>
       <Link>
-        <a
+        {/* <a
           href="#"
           onClick={() => {
             dispatch(StateSlice.actions.Popup());
@@ -27,7 +27,7 @@ function Links() {
           }}
         >
           광고문의
-        </a>
+        </a> */}
         <a href="#" onClick={()=> {
           navigate("/Terms")
         }}>이용약관</a>
@@ -73,7 +73,7 @@ const Link = styled.div`
   align-items: flex-start;
   color: white;
   gap: 24px;
-
+  text-underline-offset : 3px;
   > a {
     :active {
       opacity: 0.5;

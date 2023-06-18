@@ -25,7 +25,7 @@ import {
   MatchingCardContainer,
   MatchingCard,
   HeaderAvatar,
-} from "../StyledComponent/MatchingStyled";
+} from "../../../StyledComponent/MatchingStyled";
 
 function Homes() {
   const navigate = useNavigate();
@@ -136,7 +136,7 @@ function Homes() {
       <MobileContainer>
         <HeaderContainer>
           <HeaderAvatar>
-            <img src={require("../../../assets/donut.png")} alt="이미지" />
+            <img src={require("../../../../assets/donut.png")} alt="이미지" />
           </HeaderAvatar>
           <HeaderLeft>
             {/* 사용자 프로필 사진 가져오기 */}
@@ -225,7 +225,7 @@ function Homes() {
                 <>
                   <text className="authentification">학생 인증 완료 </text>
                   <img
-                    src={require("../../../assets/CircleWavyCheck.png")}
+                    src={require("../../../../assets/CircleWavyCheck.png")}
                     alt="이미지"
                   />
                 </>

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ReactComponent as Appstore } from "../../assets/appstore.svg";
-import { ReactComponent as Androidstore } from "../../assets/androidstore.svg";
-import { ReactComponent as Logo } from "../../assets/webLogo.svg";
+import { ReactComponent as Appstore } from "../../../assets/appstore.svg";
+import { ReactComponent as Androidstore } from "../../../assets/androidstore.svg";
+import { ReactComponent as Logo } from "../../../assets/webLogo.svg";
 
 
 function HeaderRight() {
@@ -13,7 +13,7 @@ function HeaderRight() {
 
   useEffect(() => {
     setInterval(() => {
-      const Dday = new Date("2023-06-07T00:00:00+0900");
+      const Dday = new Date("2023-06-25T00:00:00+0900");
       const now = new Date();
       const dis = Dday.getTime() - now.getTime(); // 잔여시간(ms단위)
       const min = 1000 * 60; //1000ms => 1s , 1s*60 = 1m
@@ -46,7 +46,7 @@ function HeaderRight() {
             <div><Androidstore width="100%" height="auto" /></div>
           </div>
         </Sns>
-        <MobileSns><SnsContainer><img onClick={()=>{window.open("https://www.instagram.com/dzzdzz_official/")}} src={require("../../assets/insta.png")} alt="이미지" /><img onClick={()=>{window.open("http://pf.kakao.com/_Wgxgxmb")}} src={require("../../assets/kakao.png")} alt="이미지" /></SnsContainer></MobileSns>
+        <MobileSns><SnsContainer><img onClick={()=>{window.open("https://www.instagram.com/dzzdzz_official/")}} src={require("../../../assets/insta.png")} alt="이미지" /><img onClick={()=>{window.open("http://pf.kakao.com/_Wgxgxmb")}} src={require("../../../assets/kakao.png")} alt="이미지" /></SnsContainer></MobileSns>
       </Description>
     </ContentContainer>
   );

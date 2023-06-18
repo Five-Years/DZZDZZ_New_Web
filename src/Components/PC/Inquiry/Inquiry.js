@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
-import StateSlice from "../../features/State/StateSlice";
+import StateSlice from "../../../features/State/StateSlice";
 import { useDispatch, useSelector } from "react-redux";
 import emailjs from "@emailjs/browser";
 import axios from "axios";

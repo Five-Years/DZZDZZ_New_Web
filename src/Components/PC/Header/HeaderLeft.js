@@ -13,7 +13,7 @@ function HeaderLeft() {
         <PopupImage>
           <img
             className="team"
-            src={require("../../assets/dz.jpg")}
+            src={require("../../../assets/dz.jpg")}
             alt="이미지"
           />
         </PopupImage>
@@ -25,12 +25,12 @@ function HeaderLeft() {
       <PopupDivder></PopupDivder>
       <ButtonContainer>
         <AppButton className="Android">
-          <img src={require("../../assets/GooglePlayLogo.png")} alt="" />
-          <img src={require("../../assets/AndroidLogo2.png")} alt="" />
+          <img src={require("../../../assets/GooglePlayLogo.png")} alt="" />
+          <img src={require("../../../assets/AndroidLogo2.png")} alt="" />
         </AppButton>
         <AppButton className="Ios">
-          <img src={require("../../assets/AppStoreLogo.png")} alt="" />
-          <img src={require("../../assets/AppleLogo.png")} alt="" />
+          <img src={require("../../../assets/AppStoreLogo.png")} alt="" />
+          <img src={require("../../../assets/AppleLogo.png")} alt="" />
         </AppButton>
       </ButtonContainer>
     </PopupContainer>

@@ -3,10 +3,10 @@ import styled from "styled-components";
 import HeaderLeft from "./HeaderLeft";
 import HeaderRight from "./HeaderRight";
 import { useSelector, useDispatch } from "react-redux";
-import StateSlice from "../../features/State/StateSlice";
+import StateSlice from "../../../features/State/StateSlice";
 
 
-function HeaderMain2() {
+function HeaderMain() {
   const Popup = useSelector((state) => {
     return state.Popup.value;
   });
@@ -20,7 +20,7 @@ function HeaderMain2() {
     >
       <HeaderContainer>
         <HeaderContentContainer>
-          {/* <HeaderLeft /> */}
+          <HeaderLeft />
           <HeaderRight />
         </HeaderContentContainer>
       </HeaderContainer>
@@ -28,7 +28,7 @@ function HeaderMain2() {
   );
 }
 
-export default HeaderMain2;
+export default HeaderMain;
 
 //전체 헤더부분
 const HeaderBackground = styled.div`
@@ -61,13 +61,13 @@ const HeaderContainer = styled.div`
 const HeaderContentContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding: 0px;
   gap: 44px;
 
-  width: 100%;
-  height: 100%;
+  width: 776px;
+  height: 301px;
 
   @media screen and (max-width: 800px) {
     width: 100%;

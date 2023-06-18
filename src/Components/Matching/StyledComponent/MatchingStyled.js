@@ -819,7 +819,7 @@ export const ContentContainers = styled.div`
   width: 100%;
   height: 6%;
 
-  border-bottom: 0.3px solid #888888;
+  /* border-bottom: 0.3px solid #888888; */
 `;
 
 export const ContentLeft = styled.div`
@@ -888,17 +888,17 @@ export const ProfileImageContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  align-items: center;
+  align-items: start;
   gap: 10px;
 
   position: absolute;
-  top: 6%;
+  top: 6.5%;
   width: 100%;
   height: 46.74%;
 
   > img {
     width: 100%;
-    height: 100%;
+    height: 92%;
   }
 `;
 

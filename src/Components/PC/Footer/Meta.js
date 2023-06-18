@@ -4,7 +4,7 @@ function Meta() {
   return (
     <>
       <ContentLogo>
-        <img src={require("../../assets/5Years.png")} alt="" />
+        <img src={require("../../../assets/5Years.png")} alt="" />
       </ContentLogo>
       <ContentInformation>
         <Information>
@@ -12,7 +12,7 @@ function Meta() {
             <span>사업자번호</span>
           </InformationTopic>
           <InformationTopicDetail>
-            <span>123-456-78910</span>
+            <span>295-40-01132</span>
           </InformationTopicDetail>
         </Information>
         <Information>
@@ -20,7 +20,7 @@ function Meta() {
             <span>대표번호</span>
           </InformationTopic>
           <InformationTopicDetail>
-            <span>010-8646-8516</span>
+            <span>010-5929-6831</span>
           </InformationTopicDetail>
         </Information>
         <Information>
@@ -35,13 +35,13 @@ function Meta() {
         </Information>
       </ContentInformation>
       <ContentSns>
-        <img src={require("../../assets/facebook.png")} onClick={() => {
+        <img src={require("../../../assets/facebook.png")} onClick={() => {
               window.open("https://www.facebook.com/");
             }} alt="" />
-        <img src={require("../../assets/Instagram.png")} onClick={() => {
+        <img src={require("../../../assets/Instagram.png")} onClick={() => {
               window.open("https://instagram.com/dzzdzz_official?igshid=YmMyMTA2M2Y=");
             }} alt="" />
-        <img src={require("../../assets/Github.png")} onClick={() => {
+        <img src={require("../../../assets/Github.png")} onClick={() => {
               window.open("https://github.com/orgs/Five-Years");
             }} alt="" />
       </ContentSns>

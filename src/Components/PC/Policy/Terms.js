@@ -1,13 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-import HeaderBar from '../../Header/HeaderBar'
+import HeaderBar from '../Header/HeaderBar'
+import { Scrollbars } from 'react-custom-scrollbars';
+
 function Terms() {
   return (
     <TermsContainer>
         <HeaderBar />
         <TermContents>
           <ContentsTitle><text>이용약관</text></ContentsTitle>
-          <ContentsDetail><text><br /><br />제1조(목적) 이 약관은 ㈜파이브이얼즈(이하 "회사"라 합니다)가 제공하는 서비스 ‘단짠단짠’(이하 "서비스"라 합니다) 이용과 관련하여 회사와 이용자 간의 권리∙의무 및 필요한 제반사항을 정함을 목적으로 합니다. 
+          <ContentsDetail><Scrollbars><text><br /><br />제1조(목적) 이 약관은 ㈜파이브이얼즈(이하 "회사"라 합니다)가 제공하는 서비스 ‘단짠단짠’(이하 "서비스"라 합니다) 이용과 관련하여 회사와 이용자 간의 권리∙의무 및 필요한 제반사항을 정함을 목적으로 합니다. 
           
           
 
@@ -74,7 +76,7 @@ function Terms() {
 <br /><br />제23조(재판권 및 준거법) <br/>① 서비스 이용과 관련하여 회사와 이용자간에 발생한 분쟁에 관한 소송은 민사소송법 등 관련법령에서 정한 절차에 따른 법원을 관할법원으로 합니다. <br/>② 회사와 이용자간에 제기된 소송에는 대한민국 법을 적용합니다.
 
 
-<br /><br />[부칙] (시행일) 이 약관은 2022년 5월 04일부터 적용됩니다.</text></ContentsDetail>
+<br /><br />[부칙] (시행일) 이 약관은 2022년 5월 04일부터 적용됩니다.</text></Scrollbars></ContentsDetail>
         </TermContents>
     </TermsContainer>
   )

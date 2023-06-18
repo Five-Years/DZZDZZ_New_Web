@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Links from "../Footer/Links"  
-import Meta from "../Footer/Meta"
+import Links from "./Links"  
+import Meta from "./Meta"
 
 function Footer() {
 

@@ -11,7 +11,7 @@ import {
   ContentContainer,
   ConfirmContainer,
   Spinners,
-} from "../StyledComponent/MatchingStyled";
+} from "../../StyledComponent/MatchingStyled";
 
 function Matching() {
   const location = useLocation();
