@@ -1,6 +1,6 @@
 import React from "react";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MatchingProgressHeader from "../Header/MatchingProgressHeader";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +23,12 @@ import {
   Frame6887,
 } from "../../StyledComponent/MatchingStyled";
 
+
+
+
+
 function Matching2() {
+
   const accept = () => {
     if (window.confirm("선택하시겠습니까?")) {
       alert("선택하셨습니다");
@@ -40,12 +45,16 @@ function Matching2() {
 
   const [detail, setDetail] = useState(false);
   const navigate = useNavigate();
+  const myRef = useRef();
+  const y = myRef.current.offsetTop;
+
+
   return (
     <MatchingContainers detail={detail}>
       <MatchingProgressHeader />
       <ProfileImageContainer>
         <ExtraMatching><DoubleMatching><text>현재매칭</text></DoubleMatching><DoubleMatching><text>이전매칭</text></DoubleMatching></ExtraMatching>
-        <img src={require("../../../../assets/mango.jpg")} alt="이미지" />
+        <img src={require("../../../../assets/mango.jpg")} alt="이미지"/>
         {/* <Frame6887></Frame6887> */}
       </ProfileImageContainer>
       <IntroduceContainer
@@ -101,7 +110,11 @@ function Matching2() {
       </SelectionContainer>
       <DetailContainer>
         <KeyboardDoubleArrowUpIcon color="disabled" fontSize="large" />
-        <DetailView>
+        <DetailView onClick={()=>{   window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+   	});
+   }}>
           <MatchingLink>
             <text>자세히 보기</text>
           </MatchingLink>
@@ -110,7 +123,7 @@ function Matching2() {
       <DetailProfileContainer>
       {/* <DetailHeader><HeaderLeft onClick={()=>{navigate(-1)}}><KeyboardArrowDownIcon style={{transform : "rotate(90deg)", marginLeft : "30px", width:"32px", height : "32px"}}/></HeaderLeft><HeaderName><Authen/><text>단짠지기임당</text></HeaderName><HeaderRight><MoreHorizIcon style={{marginRight : "30px"}}/></HeaderRight></DetailHeader> */}
     </DetailProfileContainer>
-    <ContentsContainer>
+    <ContentsContainer ref={myRef}>
         <ContentsName><text><span>단짠지기임당</span>님의 정보</text></ContentsName>
         <ContentsSection><Contents><ContentsTitle><text>학교</text></ContentsTitle><ContentsWindow className='fixed'><text>단국대학교(죽전)</text></ContentsWindow></Contents></ContentsSection>
         <ContentsSection><Contents><ContentsTitle><text>성별</text></ContentsTitle><ContentsWindow className='fixed'><text>여자</text></ContentsWindow></Contents></ContentsSection>
@@ -505,6 +518,7 @@ width: 100%;
 height : 1550px;
 left: 0px;
 top : 0%;
+
 `;
 
 const ContentsSection = styled.div`

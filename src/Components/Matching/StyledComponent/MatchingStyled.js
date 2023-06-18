@@ -2,6 +2,7 @@ import styled from "styled-components"
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import Carousel from "react-material-ui-carousel";
 import { Link } from "react-router-dom";
+
 var Spinner = require("react-spinkit");
 
 // Homes
