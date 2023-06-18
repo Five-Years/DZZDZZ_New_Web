@@ -32,6 +32,10 @@ function Homepage() {
       case "season":
         setSeasonNumber(data.seasonnumber)
         setSeason(data.season)
+
+      case "back":
+        navigate("/");
+        break;
     }
   };
 
