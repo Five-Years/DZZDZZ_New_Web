@@ -18,7 +18,7 @@ function MatchingHome() {
   // 유저인증여부 확인, 추후 서버 연동 필요
   const authentification = true;
   useEffect(()=>{  window.ReactNativeWebView?.postMessage(
-    JSON.stringify({ type: "notfirst", data: "" })
+    JSON.stringify({ type: "notfirst", data: "" }),
   );},[])
   return (
     <>
