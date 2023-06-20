@@ -155,7 +155,6 @@ const MatchingConfirmContainer = styled.div`
   }
 `;
 
-const MatchingConfirm = styled.div``;
 
 const ConfirmButton = styled.div`
   display: flex;

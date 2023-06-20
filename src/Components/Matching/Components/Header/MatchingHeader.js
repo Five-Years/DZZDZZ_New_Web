@@ -1,15 +1,8 @@
 import React, { useEffect } from "react";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Paper } from "@mui/material";
+import {  useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Carousel from "react-material-ui-carousel";
-import { Navigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Tickets } from "../../../../assets/ticket.svg";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import { ReactComponent as Info } from "../../../../assets/Info.svg";
 
 
 

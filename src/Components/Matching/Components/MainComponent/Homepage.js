@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { ReactComponent as Info } from "../../../../assets/Info.svg";
+
 import MatchingHeader from "../Header/MatchingHeader";
 import StateSlice from "../../../../features/State/StateSlice";
 
@@ -35,7 +36,7 @@ function Homepage() {
 
     switch (type) {
       case "accessToken":
-        if (Name === "")
+        if (Name === "anonymous")
           dispatch(StateSlice.actions.Name(data));
         break;
 

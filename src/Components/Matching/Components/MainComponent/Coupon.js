@@ -3,9 +3,6 @@ import PurchasingHeader from "../Header/PurchasingHeader";
 import styled from "styled-components";
 import {
   PurchasePageContainer,
-  TicketButton,
-  TicketContainer,
-  TicketCount,
 } from "../../StyledComponent/MatchingStyled";
 
 function Coupon() {
@@ -23,9 +20,11 @@ function Coupon() {
       </CouponContainer>
       <ConfirmButton
         onClick={() => {
-            window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "coupon", data: "" })); alert("쿠폰 등록")
-        }} 
+          window.ReactNativeWebView?.postMessage(
+            JSON.stringify({ type: "coupon", data: "" })
+          );
+          alert("쿠폰 등록");
+        }}
       >
         <text>확 인</text>
       </ConfirmButton>
@@ -74,13 +73,13 @@ const CouponContainer = styled.div`
   justify-content: center;
   align-items: start;
   gap: 8px;
-  position: relative;
+  position: absolute;
   top: 8.43%;
   width: 100%;
-  height: 11.86%;
-  margin-left: 7.69%;
+  height: 13.43%;
 
   > text {
+    margin-left: 7.69%;
     font-family: "Open Sans";
     font-style: normal;
     font-weight: 400;
@@ -100,7 +99,7 @@ const InputTitle = styled.div`
   align-items: flex-start;
   padding: 0px;
   gap: 5px;
-
+  margin-left: 7.69%;
   width: 84.62%;
   height: 27.63%;
   background-color: white;
@@ -112,6 +111,7 @@ const InputContainer = styled.div`
   align-items: center;
   width: 84.62%;
   height: 61.84%;
+  margin-left: 7.69%;
 
   /* white */
 

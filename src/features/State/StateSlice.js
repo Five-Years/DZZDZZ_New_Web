@@ -4,7 +4,7 @@ const initialState = {
   value: false,
   query : 1,
   ticket : 0,
-  name : "",
+  name : "anonymous",
   season : 1,
   seasonNumber : 2,
 

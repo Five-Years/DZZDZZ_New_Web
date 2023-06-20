@@ -20,7 +20,6 @@ import {
   DetailContainer,
   DetailView,
   IntroduceContainer,
-  Frame6887,
 } from "../../StyledComponent/MatchingStyled";
 
 function Matching2() {
@@ -44,7 +43,6 @@ function Matching2() {
   };
 
   const [detail, setDetail] = useState(false);
-  const [isPrevious,setIsPrevious] = useState(true);
   const [isSelected, setIsSelected] = useState(0);
   const navigate = useNavigate();
 
@@ -52,7 +50,7 @@ function Matching2() {
     <MatchingContainers detail={detail}>
       <MatchingProgressHeader />
       <ProfileImageContainer>
-        {true ? <ExtraMatching><DoubleMatching value={0} select = {isSelected}onClick={()=>{setIsSelected(0)}}><text>현재매칭</text></DoubleMatching><DoubleMatching  select={isSelected} value={1} onClick={()=>{setIsSelected(1)}}><text>이전매칭</text></DoubleMatching></ExtraMatching> :<></>}
+        {true ? <ExtraMatching><DoubleMatching value={0} select = {isSelected} onClick={()=>{setIsSelected(0)}}><text>현재매칭</text></DoubleMatching><DoubleMatching  select={isSelected} value={1} onClick={()=>{setIsSelected(1)}}><text>이전매칭</text></DoubleMatching></ExtraMatching> :<></>}
         {isSelected===0 ? <img src={require("../../../../assets/ProfileSample.png")} alt="이미지"/> : <img src={require("../../../../assets/mango.jpg")} alt="이미지"/>}
         {/* <Frame6887></Frame6887> */}
       </ProfileImageContainer>
@@ -213,7 +211,6 @@ color:  ${props => props.value === props.select ? "000000" : "#AEAEB2" };
 
 `;
 
-const PreviousMatching = styled.div``;
 
 
 const Button = styled.div`
@@ -466,70 +463,6 @@ text-underline-offset : 5px; //밑줄과 텍스트와의 간격
 }
 `;
 
-const DetailHeader = styled.div`
-display: flex;
-position: relative;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-padding: 0px;
-
-width: 100%;
-height: 48px;
-left: 0px;
-`;
-
-const HeaderLeft = styled.div`
-display: flex;
-position: relative;
-flex-direction: row;
-align-items: center;
-gap: 5px;
-
-width: 33.33%;
-height: 100%;
-`;
-
-const HeaderRight = styled.div`
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: end;
-padding: 0px;
-gap: 10px;
-
-width: 33.33%;
-height: 66.66%;
-`;
-
-const HeaderName = styled.div`
-display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-padding: 0px;
-gap: 10px;
-
-width: 33.33%;
-min-width : 150px;
-height: 50%;
-
->text {
-  font-family: 'SF Pro Text';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 19px;
-  line-height: 22px;
-  /* identical to box height, or 116% */
-
-  text-align: center;
-  letter-spacing: -0.408px;
-
-  /* Text Black */
-
-  color: #000000;
-}
-`;
 
 
 const ContentsContainer = styled.div`
