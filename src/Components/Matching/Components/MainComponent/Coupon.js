@@ -1,5 +1,5 @@
 import React from "react";
-import PurchasingHeader from "../Header/PurchasingHeader";
+import MenuHeader from "../Header/MenuHeader";
 import styled from "styled-components";
 import {
   PurchasePageContainer,
@@ -8,15 +8,12 @@ import {
 function Coupon() {
   return (
     <PurchasePageContainer>
-      <PurchasingHeader title={"쿠폰등록"}></PurchasingHeader>
+      <HeaderContainer><MenuHeader title={"쿠폰등록"}></MenuHeader>
+</HeaderContainer>
       <CouponContainer>
-        <InputTitle>
-          <text>쿠폰번호 입력하기</text>
-        </InputTitle>
-        <InputContainer>
-          <input maxLength={10} />
-        </InputContainer>
-        <text>유효하지 않은 번호입니다.</text>
+        <TextContainer><InputTitle><text>쿠폰번호 입력하기</text></InputTitle></TextContainer>
+        <InputContainer maxLength={10}/>
+        <ErrorContainer><text>유효하지 않은 번호입니다.</text></ErrorContainer>
       </CouponContainer>
       <ConfirmButton
         onClick={() => {
@@ -34,6 +31,33 @@ function Coupon() {
 
 export default Coupon;
 
+const ErrorContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 84.62%;
+  height : 15%;
+
+  > text {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 15px;
+    /* identical to box height */
+
+    /* dzz_pink */
+
+    color: #ff477e;
+  }
+`;
+
+const HeaderContainer = styled.div`
+  display: flex;
+  position: absolute;
+  width : 100%;
+  height : 6.85%;
+`;
 const ConfirmButton = styled.div`
   display: flex;
   position: absolute;
@@ -70,27 +94,13 @@ const ConfirmButton = styled.div`
 const CouponContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: start;
-  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
   position: absolute;
   top: 8.43%;
   width: 100%;
   height: 13.43%;
-
-  > text {
-    margin-left: 7.69%;
-    font-family: "Open Sans";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 11px;
-    line-height: 15px;
-    /* identical to box height */
-
-    /* dzz_pink */
-
-    color: #ff477e;
-  }
 `;
 
 const InputTitle = styled.div`
@@ -99,47 +109,28 @@ const InputTitle = styled.div`
   align-items: flex-start;
   padding: 0px;
   gap: 5px;
-  margin-left: 7.69%;
   width: 84.62%;
-  height: 27.63%;
-  background-color: white;
+  height: 100%;
 `;
 
-const InputContainer = styled.div`
+const TextContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 84.62%;
+  height : 20%;
+`;
+const InputContainer = styled.input`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 82.62%;
   height: 61.84%;
-  margin-left: 7.69%;
-
+  padding-left: 5.15%;
   /* white */
-
   background: #ffffff;
   /* SystemGray/400 */
-
   border: 0.5px solid #bcbcc0;
   border-radius: 10px;
-
-  > input {
-    margin-left: 5.15%;
-    height: 85%;
-    border: none;
-    border-right: 0px;
-    font-family: "SF Pro";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 150%;
-    /* identical to box height, or 21px */
-
-    letter-spacing: 0.5px;
-
-    /* FY_black */
-
-    color: #231815;
-    :focus {
-      outline: none;
-    }
-  }
+  
 `;

@@ -52,8 +52,6 @@ root.render(
           <Route path="/Coupon" element={<Coupon />}></Route>
           <Route path="/History" element={<HistoryPage />}></Route>
 
-
-
           <Route path="/pchome" element={<PCHome />}></Route>
           <Route path="/pc" element={<App />}></Route>
           <Route path="MobileMenu" element={<MobileMenu />}></Route>

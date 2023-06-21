@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "@emotion/styled";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import TicketPage from "./Purchasing/TicketPage";
 import { ReactComponent as Mile } from "../../../../assets/mile.svg";
 import { ReactComponent as DisabledTicket } from "../../../../assets/disabledTicket.svg";
@@ -19,8 +18,9 @@ import { useDispatch, useSelector } from "react-redux";
 import StateSlice from "../../../../features/State/StateSlice";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import PurchasingHeader from "../Header/PurchasingHeader";
+import PurchasingHeader from "../Header/MenuHeader";
 import MilePage from "./Purchasing/MilePage";
+import InviteEventButton from "../../ReusableComponents/InviteEventButton";
 
 function Purchasing() {
   const navigate = useNavigate();
@@ -28,7 +28,6 @@ function Purchasing() {
   const Season = useSelector((state) => {
     return state.Popup.Season;
   });
-
 
   const dispatch = useDispatch();
 
@@ -66,18 +65,20 @@ function Purchasing() {
   return (
     <>
       <PurchasePageContainer>
-        <PurchasingHeader title={location.state.title} />
+        <HeaderContainer>
+          <PurchasingHeader title={location.state.title} />
+        </HeaderContainer>
         <TicketMileChangeContainer>
-          <MileSection 
+          <MileSection
             value={0}
             selected={isSelected}
             onClick={() => {
               setIsSelected(0);
             }}
           >
-            <ItemContainer>      
-            {isSelected ? <DisabledMile/> : <Mile/>}      
-            <text>1</text>
+            <ItemContainer>
+              {isSelected ? <DisabledMile /> : <Mile />}
+              <text>1</text>
             </ItemContainer>
           </MileSection>
           <TicketSection
@@ -87,21 +88,14 @@ function Purchasing() {
               setIsSelected(1);
             }}
           >
-            <ItemContainer>            
-            {isSelected ? <Ticket/> : <DisabledTicket/>}
-            <text>1</text></ItemContainer>          </TicketSection>
+            <ItemContainer>
+              {isSelected ? <Ticket /> : <DisabledTicket />}
+              <text>1</text>
+            </ItemContainer>{" "}
+          </TicketSection>
         </TicketMileChangeContainer>
         <HeaderBottom>
-          <InviteContainer>
-            <InviteTextBox>
-              <text>
-                친구 초대하고 <span>무료티켓 받기</span>
-              </text>
-            </InviteTextBox>
-            <InviteToggleButton>
-              <KeyboardArrowRightIcon></KeyboardArrowRightIcon>
-            </InviteToggleButton>
-          </InviteContainer>
+          <InviteEventButton />
         </HeaderBottom>
         <TicketBoxContainer>
           {isSelected === 1 ? <TicketPage /> : <MilePage />}
@@ -114,10 +108,12 @@ function Purchasing() {
           >
             <text>돌아가기</text>
           </Button>
-        </ReturnButton>        <ReturnButton className="history">
-          <Button className="history"
+        </ReturnButton>{" "}
+        <ReturnButton className="history">
+          <Button
+            className="history"
             onClick={() => {
-              navigate("/History", {state : {title: "이용내역"}});
+              navigate("/History", { state: { title: "이용내역" } });
             }}
           >
             <text>이용내역</text>
@@ -139,19 +135,23 @@ function Purchasing() {
 
 export default Purchasing;
 
-
-
-const ItemContainer = styled.div`
-display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-gap: 15px;
-
-width: 46.15%;
-height: 66.66%;
+const HeaderContainer = styled.div`
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 6.85%;
 `;
 
+const ItemContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+
+  width: 46.15%;
+  height: 66.66%;
+`;
 
 const MileSection = styled.div`
   display: flex;
@@ -214,8 +214,7 @@ const ReturnButton = styled.div`
   top: 71.57%;
 
   &.history {
-    top : 83%;
-
+    top: 83%;
   }
 `;
 
@@ -269,7 +268,6 @@ const Button = styled.div`
   background: #ff477e;
   border-radius: 13px;
 
-
   > text {
     font-family: "Poppins";
     font-style: normal;
@@ -287,12 +285,12 @@ const Button = styled.div`
   }
 
   &.history {
-    border: 1px solid #FF477E;
+    border: 1px solid #ff477e;
     border-radius: 13px;
     background: white;
 
     > text {
-      color: #FF477E;
+      color: #ff477e;
     }
   }
 `;

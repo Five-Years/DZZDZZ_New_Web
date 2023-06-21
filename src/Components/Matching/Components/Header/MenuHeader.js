@@ -1,32 +1,32 @@
-import React from "react";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom/dist";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import styled from "styled-components";
 
 
-function PurchasingHeader(props) {
-  const locate = useLocation();
+function MenuHeader(props) {
+
   const navigate = useNavigate();
   return (
+    <>
       <ContentContainers>
         <ContentLeft>
           <ArrowBackIosIcon
             style={{ marginLeft: "15.4%", width: "50%", height: "50%" }}
-            onClick={() => {
-              navigate(-1);
-            }}
-          />
+            onClick={() => {navigate(-1);}} />
         </ContentLeft>
         <ContentTitle>
           <text>{props.title}</text>
         </ContentTitle>
-        <ContentRight></ContentRight>
+        <ContentRight>
+        </ContentRight>
       </ContentContainers>
+    </>
   );
 }
 
-export default PurchasingHeader;
+export default MenuHeader;
 
 
 export const ContentContainers = styled.div`
@@ -36,8 +36,7 @@ export const ContentContainers = styled.div`
   align-items: center;
   position: relative;
   width: 100%;
-  height: 6.85%;
-
+  height: 100%;
   /* border-bottom: 0.3px solid #888888; */
 `;
 
@@ -60,8 +59,8 @@ export const ContentTitle = styled.div`
   padding: 0px;
   gap: 10px;
 
-  width: 130px;
-  height: 32px;
+  width: 33.33%;
+  height: 100%;
 
   > text {
     font-family: var(--font-OpenSans);
@@ -91,13 +90,3 @@ export const ContentRight = styled.div`
   height: 100%;
 `;
 
-const TicketselectContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  position: relative;
-  align-items: flex-start;
-  padding: 0px;
-  width: 100%;
-  height: 22.5%;
-  background-color: yellow;
-`;

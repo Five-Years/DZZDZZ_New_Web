@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "@emotion/styled";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import TicketPage from "./Purchasing/TicketPage";
 import { ReactComponent as Mile } from "../../../../assets/mile.svg";
 import { ReactComponent as DisabledTicket } from "../../../../assets/disabledTicket.svg";
 import { ReactComponent as DisabledMile } from "../../../../assets/disabledMile.svg";
@@ -13,22 +11,15 @@ import { useDispatch, useSelector } from "react-redux";
 import StateSlice from "../../../../features/State/StateSlice";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import PurchasingHeader from "../Header/PurchasingHeader";
+import MenuHeader from "../Header/MenuHeader";
 import HistoryTicket from "./HistoryTicket";
 import HistoryMile from "./HistoryMile";
 
 function HistoryPage() {
   const navigate = useNavigate();
 
-  const Season = useSelector((state) => {
-    return state.Popup.Season;
-  });
-
-
   const dispatch = useDispatch();
-
   const location = useLocation();
-
   const [isSelected, setIsSelected] = useState(0);
 
   const listener = (event) => {
@@ -47,6 +38,8 @@ function HistoryPage() {
     }
   };
 
+
+
   useEffect(() => {
     //android
     document.addEventListener("message", (e) => listener(e.data));
@@ -61,18 +54,20 @@ function HistoryPage() {
   return (
     <>
       <PurchasePageContainer>
-        <PurchasingHeader title={location.state.title} />
+        <HeaderContainer>
+          <MenuHeader title={location.state.title} />
+        </HeaderContainer>
         <TicketMileChangeContainer>
-          <MileSection 
+          <MileSection
             value={0}
             selected={isSelected}
             onClick={() => {
               setIsSelected(0);
             }}
           >
-            <ItemContainer>      
-            {isSelected ? <DisabledMile/> : <Mile/>}      
-            <text>1</text>
+            <ItemContainer>
+              {isSelected ? <DisabledMile /> : <Mile />}
+              <text>1</text>
             </ItemContainer>
           </MileSection>
           <TicketSection
@@ -82,15 +77,15 @@ function HistoryPage() {
               setIsSelected(1);
             }}
           >
-            <ItemContainer>            
-            {isSelected ? <Ticket/> : <DisabledTicket/>}
-            <text>1</text></ItemContainer>          </TicketSection>
+            <ItemContainer>
+              {isSelected ? <Ticket /> : <DisabledTicket />}
+              <text>1</text>
+            </ItemContainer>{" "}
+          </TicketSection>
         </TicketMileChangeContainer>
-            <ListContainer>
-              {/* map함수로 가변적으로 들어갈듯 */}
-              {isSelected ?            <HistoryMile/>    : <HistoryTicket />}
-          </ListContainer>
-            
+        <ListContainer>
+          {isSelected ? <HistoryMile /> : <HistoryTicket />}
+        </ListContainer>
       </PurchasePageContainer>
     </>
   );
@@ -98,144 +93,23 @@ function HistoryPage() {
 
 export default HistoryPage;
 
-const ListContainer =styled.div`
-display: flex;
-position: absolute;
-flex-direction: column;
-top : 12%;
-width : 100%;
-`;
-
-const ListItemContainer = styled.div`
+const HeaderContainer = styled.div`
   display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  position: absolute;
   width: 100%;
-  height: 60px;
-  left: 0px;
-  border-bottom: 0.7px solid #EEEEEE;
+  height: 6.85%;
 `;
 
-const ItemLeft = styled.div`
+const ListContainer = styled.div`
   display: flex;
+  position: absolute;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 0px;
-
-  width: 30%;
-  min-width: 120px;
-  height: 100%;
-  margin-left : 4.57%;
-
-  > text {
-    font-family: 'Noto Sans';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 150%;
-/* identical to box height, or 21px */
-
-text-align: center;
-letter-spacing: 0.05em;
-text-transform: capitalize;
-
-/* Text Black */
-
-color: #000000;
-}
-
-  > text.time {
-    font-family: 'Noto Sans';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 150%;
-/* identical to box height, or 21px */
-
-text-align: center;
-letter-spacing: 0.05em;
-text-transform: capitalize;
-
-/* Text Gray */
-
-color: #888888;
-  }
-
-
+  top: 13.43%;
+  width: 100%;
+  height: 86.57%;
+  overflow-y: scroll;
 `;
 
-const ItemRight = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  padding: 0px;
-  margin-right : 4.57%;
-
-  width: 23.6%;
-  min-width : 72px;
-  height: 100%;
-  
-> text {
-  font-family: 'Noto Sans';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 19px;
-  /* identical to box height */
-
-  text-align: center;
-  letter-spacing: 0.05em;
-  text-transform: capitalize;
-
-  /* SystemRed/Light */
-
-  color: #FF3B30;
-}
-
-  > text.title {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 150%;
-  /* identical to box height, or 21px */
-
-
-  color: #888888;
-  }
-
-
-
-  > text > span {
-    font-family: 'Noto Sans';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 12px;
-    line-height: 16px;
-    text-align: center;
-    letter-spacing: 0.05em;
-    text-transform: capitalize;
-
-    /* SystemRed/Light */
-
-    color: #FF3B30;
-  }
-`;
-
-const ItemBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px;
-  gap: 4px;
-
-  width: 89.74%;
-  height: 70%;
-`;
 
 const PurchasePageContainer = styled.div`
   display: flex;
@@ -246,16 +120,15 @@ const PurchasePageContainer = styled.div`
 `;
 
 const ItemContainer = styled.div`
-display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-gap: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
 
-width: 46.15%;
-height: 66.66%;
+  width: 46.15%;
+  height: 66.66%;
 `;
-
 
 const MileSection = styled.div`
   display: flex;

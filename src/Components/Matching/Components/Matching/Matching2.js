@@ -23,9 +23,12 @@ import {
 } from "../../StyledComponent/MatchingStyled";
 
 function Matching2() {
-  const myRef = useRef();
+  const DetailDownRef = useRef();
+  const DetailUpRef = useRef();
+
   const [offset,setOffset] = useState(0);
-  useEffect(()=>{setOffset(myRef.current.offsetTop)},[myRef])
+  useEffect(()=>{setOffset(DetailDownRef.current.offsetTop)},[DetailDownRef])
+
 
 
   const accept = () => {
@@ -139,7 +142,7 @@ function Matching2() {
    	});  }}>
         <KeyboardDoubleArrowUpIcon color="disabled" fontSize="large" />
         <DetailView>
-          <MatchingLink>
+          <MatchingLink ref ={DetailUpRef}>
             <text>자세히 보기</text>
           </MatchingLink>
         </DetailView>
@@ -147,7 +150,7 @@ function Matching2() {
       <DetailProfileContainer>
       {/* <DetailHeader><HeaderLeft onClick={()=>{navigate(-1)}}><KeyboardArrowDownIcon style={{transform : "rotate(90deg)", marginLeft : "30px", width:"32px", height : "32px"}}/></HeaderLeft><HeaderName><Authen/><text>단짠지기임당</text></HeaderName><HeaderRight><MoreHorizIcon style={{marginRight : "30px"}}/></HeaderRight></DetailHeader> */}
     </DetailProfileContainer>
-    <ContentsContainer ref={myRef}>
+    <ContentsContainer ref={DetailDownRef}>
         <ContentsName><text><span>단짠지기임당</span>님의 정보</text></ContentsName>
         <ContentsSection><Contents><ContentsTitle><text>학교</text></ContentsTitle><ContentsWindow className='fixed'><text>단국대학교(죽전)</text></ContentsWindow></Contents></ContentsSection>
         <ContentsSection><Contents><ContentsTitle><text>성별</text></ContentsTitle><ContentsWindow className='fixed'><text>여자</text></ContentsWindow></Contents></ContentsSection>
