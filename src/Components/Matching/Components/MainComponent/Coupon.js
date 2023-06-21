@@ -130,7 +130,7 @@ const InputContainer = styled.input`
   /* white */
   background: #ffffff;
   /* SystemGray/400 */
-  border: 0.5px solid #bcbcc0;
-  border-radius: 10px;
+border: 1px solid #BCBCC0;
+border-radius: 10px;
   
 `;
