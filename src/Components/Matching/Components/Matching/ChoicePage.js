@@ -45,25 +45,6 @@ function ChoicePage() {
       <ContentContainer>              <MatchingProgressHeader isReport={true}/>
 </ContentContainer>
 
-      {/* <ContentContainers>
-        <MatchingProgressHeader isReport={true}/>
-        <ContentLeft>
-          <ArrowBackIosIcon
-            style={{ marginLeft: "15.4%", width: "50%", height: "50%" }}
-            onClick={() => {
-              navigate("/");
-            }}
-          />
-        </ContentLeft>
-        <ContentTitle>
-          <text></text>
-        </ContentTitle>
-        <ContentRight>
-          <MoreHorizIcon
-            style={{ width: "50%", height: "50%", marginRight: "15.4%" }}
-          />
-        </ContentRight>
-      </ContentContainers> */}
       <ProfileImageContainer>
         <img src={require("../../../../assets/mango.jpg")} alt="이미지" />
         <Frame6887></Frame6887>

@@ -1,11 +1,13 @@
 import React from "react";
 import MenuHeader from "../Header/MenuHeader";
 import styled from "styled-components";
+import { useState } from "react";
 import {
   PurchasePageContainer,
 } from "../../StyledComponent/MatchingStyled";
 
 function Coupon() {
+    const [isError, setIsError] = useState(false)
   return (
     <PurchasePageContainer>
       <HeaderContainer><MenuHeader title={"쿠폰등록"}></MenuHeader>
@@ -13,14 +15,14 @@ function Coupon() {
       <CouponContainer>
         <TextContainer><InputTitle><text>쿠폰번호 입력하기</text></InputTitle></TextContainer>
         <InputContainer maxLength={10}/>
-        <ErrorContainer><text>유효하지 않은 번호입니다.</text></ErrorContainer>
+        {isError ? <><ErrorContainer><text>유효하지 않은 번호입니다.</text></ErrorContainer></>:<></>}
       </CouponContainer>
       <ConfirmButton
         onClick={() => {
           window.ReactNativeWebView?.postMessage(
             JSON.stringify({ type: "coupon", data: "" })
           );
-          alert("쿠폰 등록");
+          setIsError(true);
         }}
       >
         <text>확 인</text>

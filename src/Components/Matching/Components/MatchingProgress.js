@@ -2,6 +2,8 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import styled from "styled-components";
+import { ReactComponent as DzzDate } from "../../../assets/dzzdzz_datelogo.svg";
+
 var Spinner = require("react-spinkit");
 
 function MatchingProgress() {
@@ -29,10 +31,7 @@ function MatchingProgress() {
               alt="이미지"
             />
           ) : (
-            <img
-              src={require("../../../assets/dzzdzz_logo2.png")}
-              alt="이미지"
-            />
+            <DzzDate />
           )}
           <text>
             지금부터<br></br>
