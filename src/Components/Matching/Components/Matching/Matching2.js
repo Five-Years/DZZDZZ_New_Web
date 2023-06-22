@@ -51,7 +51,7 @@ function Matching2() {
 
   return (
     <MatchingContainers detail={detail}>
-      <MatchingProgressHeader />
+      <ContentContainer><MatchingProgressHeader isReport={true}/></ContentContainer>
       <ProfileImageContainer>
         {true ? <ExtraMatching><DoubleMatching value={0} select = {isSelected} onClick={()=>{setIsSelected(0)}}><text>현재매칭</text></DoubleMatching><DoubleMatching  select={isSelected} value={1} onClick={()=>{setIsSelected(1)}}><text>이전매칭</text></DoubleMatching></ExtraMatching> :<></>}
         {isSelected===0 ? <img src={require("../../../../assets/ProfileSample.png")} alt="이미지"/> : <img src={require("../../../../assets/mango.jpg")} alt="이미지"/>}
@@ -175,6 +175,17 @@ function Matching2() {
 }
 
 export default Matching2;
+
+const ContentContainer = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 6%;
+`;
 
 const ExtraMatching = styled.div`
 display: flex;

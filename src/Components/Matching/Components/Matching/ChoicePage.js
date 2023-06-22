@@ -31,6 +31,7 @@ import {
   IntroduceContainer,
   Frame6887,
 } from "../../StyledComponent/MatchingStyled";
+import MatchingProgressHeader from "../Header/MatchingProgressHeader";
 
 function ChoicePage() {
   const [isStart,setIsStart] = useState(true);
@@ -41,7 +42,11 @@ function ChoicePage() {
 
   return (
     <MatchingContainers detail={detail}>
-      <ContentContainers>
+      <ContentContainer>              <MatchingProgressHeader isReport={true}/>
+</ContentContainer>
+
+      {/* <ContentContainers>
+        <MatchingProgressHeader isReport={true}/>
         <ContentLeft>
           <ArrowBackIosIcon
             style={{ marginLeft: "15.4%", width: "50%", height: "50%" }}
@@ -58,7 +63,7 @@ function ChoicePage() {
             style={{ width: "50%", height: "50%", marginRight: "15.4%" }}
           />
         </ContentRight>
-      </ContentContainers>
+      </ContentContainers> */}
       <ProfileImageContainer>
         <img src={require("../../../../assets/mango.jpg")} alt="이미지" />
         <Frame6887></Frame6887>
@@ -84,6 +89,17 @@ function ChoicePage() {
 }
 
 export default ChoicePage;
+
+const ContentContainer = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 6%;
+`;
 
 const SuggentionButton =styled.div`
 display: flex;

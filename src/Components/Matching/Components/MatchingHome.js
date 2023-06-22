@@ -31,7 +31,7 @@ function MatchingHome() {
   return (
     <>
       <MobileContainer>
-        <MatchingProgressHeader></MatchingProgressHeader>
+        <ContentContainer><MatchingProgressHeader /></ContentContainer>
         <MatchingHeader
           name={Name}
           season={Season}
@@ -266,6 +266,16 @@ export const CardTag = styled.div`
     color: #ffffff;
   }
 `;
+const ContentContainer = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 6%;
+`;
 
 export const CardTitle = styled.div`
   display: flex;
@@ -322,15 +332,15 @@ const EachButton = styled.div`
   gap: 10px;
   width: 53.85%;
   height: 84.62%;
-  /* white */
   background: #ffffff;
-  /* button */
   border: 0.5px solid #bebfbf;
   border-radius: 30px;
-  /* Inside auto layout */
-  flex: none;
-  order: 0;
-  flex-grow: 0;
+
+  :active {
+    opacity : 50%;
+  }
+
+  
 
   &.guide {
     background: #0094ff;
