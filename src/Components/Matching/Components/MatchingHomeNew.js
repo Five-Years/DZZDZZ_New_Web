@@ -13,31 +13,36 @@ function MatchingHomeNew() {
   const location = useLocation();
   const theme = location.state.theme;
 
-
-  const Name = useSelector((state)=>{
+  const Name = useSelector((state) => {
     return state.Popup.name;
   });
-  const Season = useSelector((state)=>{
+  const Season = useSelector((state) => {
     return state.Popup.season;
   });
-  const SeasonNumber = useSelector((state)=>{
+  const SeasonNumber = useSelector((state) => {
     return state.Popup.seasonNumber;
-  })
+  });
 
   useEffect(() => {
     window.ReactNativeWebView?.postMessage(
-      JSON.stringify({ type: "notfirst", data: "" }),
+      JSON.stringify({ type: "notfirst", data: "" })
     );
   }, []);
   return (
     <>
       <MobileContainer>
-      <HeaderContainer>
-          <ToggleContainer><MatchingProgressHeader /></ToggleContainer>
-          <ProfileContainer><MatchingHeaderNew/></ProfileContainer>
+        <HeaderContainer>
+          <ToggleContainer>
+            <MatchingProgressHeader />
+          </ToggleContainer>
+          <ProfileContainer>
+            <MatchingHeaderNew />
+          </ProfileContainer>
         </HeaderContainer>
-        <CouponContainer><MyTicket/></CouponContainer>
-      {/* theme={location.state.theme} */}
+        <CouponContainer>
+          <MyTicket />
+        </CouponContainer>
+        {/* theme={location.state.theme} */}
         <MatchingContainer>
           <MatchingCardContainer theme={theme}>
             <CardContainer>
@@ -103,12 +108,12 @@ function MatchingHomeNew() {
                   navigate("/MatchingProgress", { state: { theme: theme } });
                 }}
                 className="activate"
-                theme={location.state.theme}
+                theme={theme}
               >
                 <text className="enter">신청하기</text>
               </EachButton>
             ) : (
-              <EachButton className="deactivate">
+              <EachButton className="deactivate" theme={theme}>
                 <text className="enter">지금은 신청 기간이 아니에요</text>
               </EachButton>
             )}
@@ -125,15 +130,17 @@ function MatchingHomeNew() {
             </EachButton>
           </EachButtonContainer>
           <EachButtonContainer>
-              <EachButton  onClick={() => {
+            <EachButton
+              onClick={() => {
                 window.ReactNativeWebView?.postMessage(
                   JSON.stringify({ type: "student", data: "" })
                 );
-              }}>
-                <text>학생 인증하기</text>
-              </EachButton>
+              }}
+            >
+              <text>학생 인증하기</text>
+            </EachButton>
           </EachButtonContainer>
-        </ButtonContainer> 
+        </ButtonContainer>
       </MobileContainer>
     </>
   );
@@ -141,38 +148,36 @@ function MatchingHomeNew() {
 
 export default MatchingHomeNew;
 
-
 export const MobileContainer = styled.div`
-  display: flex;  
+  display: flex;
   flex-direction: column;
-  width : 100%;
-  height : 100%;
+  width: 100%;
+  height: 100%;
   position: absolute;
 `;
 
 const HeaderContainer = styled.div`
   display: flex;
-  width : 100%;
-  height : 25.86%;
+  width: 100%;
+  height: 25.86%;
 `;
 
-
 const ToggleContainer = styled.div`
-display: flex;
-position: absolute;
-width: 100%;
-height: 5.143%;
-top: 3px;
-gap: 8px;
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 5.143%;
+  top: 3px;
+  gap: 8px;
 `;
 
 const ProfileContainer = styled.div`
-display : flex;
-position : absolute;
-width: 100%;
-height: 15.43%;
-gap: 15px;
-top : 7.857%;
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 15.43%;
+  gap: 15px;
+  top: 7.857%;
 `;
 
 const CouponContainer = styled.div`
@@ -181,8 +186,6 @@ const CouponContainer = styled.div`
   height: 6.14%;
   gap: 10px;
 `;
-
-
 
 const MatchingContainer = styled.div`
   display: flex;
@@ -320,8 +323,7 @@ const ContentContainer = styled.div`
   position: absolute;
   width: 100%;
   height: 6%;
-  background-color: ${props => props.theme === 1 ? "#EDFAFF" : "#FFF4F4"};
-
+  background-color: ${(props) => (props.theme === 1 ? "#EDFAFF" : "#FFF4F4")};
 `;
 
 export const CardTitle = styled.div`
@@ -379,26 +381,23 @@ const EachButton = styled.div`
   gap: 10px;
   width: 53.85%;
   height: 84.62%;
-  background: #DFE1E4;
-  border: 0.5px solid #bebfbf;
+  background: #dfe1e4;
   border-radius: 30px;
 
   :active {
-    opacity : 50%;
+    opacity: 50%;
   }
-
-  
 
   &.guide {
     background: #0094ff;
   }
 
   &.activate {
-    background: ${props => props.theme === 1 ? "#0094FF" : "#FF477E" }
+    background: ${(props) => (props.theme === 0 ? "#FF477E" : "#0094FF")};
   }
 
   &.deactivate {
-    background: #bebfbf;
+    background: ${(props) => (props.theme === 0 ? "#A6DAFF" : "#FEC7D7")};
   }
   > text {
     font-family: var(--font-OpenSans);
@@ -427,10 +426,6 @@ const EachButton = styled.div`
   }
 `;
 
-
-
-
-
 // export const HeaderContainer = styled.div`
 //   display: flex;
 //   flex-direction: column;
@@ -443,9 +438,7 @@ const EachButton = styled.div`
 //   top: 4.29%;
 // `;
 
-
 export const HeaderBoarder = styled.div`
   width: 100%;
   height: 22.35%;
 `;
-

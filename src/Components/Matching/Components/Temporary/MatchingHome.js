@@ -13,32 +13,33 @@ function MatchingHome() {
   const location = useLocation();
   const theme = location.state.theme;
 
-
-  const Name = useSelector((state)=>{
+  const Name = useSelector((state) => {
     return state.Popup.name;
   });
-  const Season = useSelector((state)=>{
+  const Season = useSelector((state) => {
     return state.Popup.season;
   });
-  const SeasonNumber = useSelector((state)=>{
+  const SeasonNumber = useSelector((state) => {
     return state.Popup.seasonNumber;
-  })
+  });
 
   useEffect(() => {
     window.ReactNativeWebView?.postMessage(
-      JSON.stringify({ type: "notfirst", data: "" }),
+      JSON.stringify({ type: "notfirst", data: "" })
     );
   }, []);
   return (
     <>
       <MobileContainer>
-      {/* theme={location.state.theme} */}
-        <ContentContainer theme = {theme}><MatchingProgressHeader /></ContentContainer>
+        {/* theme={location.state.theme} */}
+        <ContentContainer theme={theme}>
+          <MatchingProgressHeader />
+        </ContentContainer>
         <MatchingHeaderNew
           name={Name}
           season={Season}
           seasonnumber={SeasonNumber}
-          theme = {theme}
+          theme={theme}
         />
         <MatchingContainer>
           <MatchingCardContainer theme={theme}>
@@ -126,13 +127,15 @@ function MatchingHome() {
             </EachButton>
           </EachButtonContainer>
           <EachButtonContainer>
-              <EachButton  onClick={() => {
+            <EachButton
+              onClick={() => {
                 window.ReactNativeWebView?.postMessage(
                   JSON.stringify({ type: "student", data: "" })
                 );
-              }}>
-                <text>학생 인증하기</text>
-              </EachButton>
+              }}
+            >
+              <text>학생 인증하기</text>
+            </EachButton>
           </EachButtonContainer>
         </ButtonContainer>
       </MobileContainer>
@@ -278,8 +281,7 @@ const ContentContainer = styled.div`
   position: absolute;
   width: 100%;
   height: 6%;
-  background-color: ${props => props.theme === 1 ? "#EDFAFF" : "#FFF4F4"};
-
+  background-color: ${(props) => (props.theme === 1 ? "#EDFAFF" : "#FFF4F4")};
 `;
 
 export const CardTitle = styled.div`
@@ -337,25 +339,23 @@ const EachButton = styled.div`
   gap: 10px;
   width: 53.85%;
   height: 84.62%;
-  background: #ffffff;
-  border: 0.5px solid #bebfbf;
+  background: #dfe1e4;
   border-radius: 30px;
 
   :active {
-    opacity : 50%;
+    opacity: 50%;
   }
-
-  
 
   &.guide {
     background: #0094ff;
   }
 
   &.activate {
-    background: #231815;
+    background-color: ${(props) => (props.theme === 1 ? "#FF477E" : "#0094FF")};
+    /* #231815; */
   }
   &.deactivate {
-    background: #bebfbf;
+    background-color: ${(props) => (props.theme === 1 ? "#FEC7D7" : "#A6DAFF")};
   }
   > text {
     font-family: var(--font-OpenSans);
@@ -384,8 +384,6 @@ const EachButton = styled.div`
   }
 `;
 
-
-
 export const MobileContainer = styled.div`
   position: absolute;
   width: 100vw;
@@ -404,9 +402,7 @@ export const HeaderContainer = styled.div`
   top: 4.29%;
 `;
 
-
 export const HeaderBoarder = styled.div`
   width: 100%;
   height: 22.35%;
 `;
-
