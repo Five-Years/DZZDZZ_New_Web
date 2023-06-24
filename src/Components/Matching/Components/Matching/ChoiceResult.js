@@ -36,7 +36,7 @@ function ChoiceResult() {
   const [detail, setDetail] = useState(false);
   const navigate = useNavigate();
   const [isSuccess, setIsSuccess] = useState(true);
-  const {state} = useLocation();
+  const { state } = useLocation();
   return (
     <MatchingContainers detail={detail}>
       <ContentContainers>
@@ -44,7 +44,7 @@ function ChoiceResult() {
           <ArrowBackIosIcon
             style={{ marginLeft: "15.4%", width: "50%", height: "50%" }}
             onClick={() => {
-              navigate("/");
+              navigate("/Matching");
             }}
           />
         </ContentLeft>
@@ -72,55 +72,97 @@ function ChoiceResult() {
         </ProfileName>
       </ProfileNameContainer>
       <SelectionContainer>
-        <ResultBox>{isSuccess ? <><img src={Smile} alt="loading..." />
-<text>축하합니다!</text><text><span>단짠지기임당</span>님과매칭이 성공했어요!</text></> : <><img src={Tear} alt="loading..." /><text>아쉽게도<span>단짠지기임당</span>님은</text><text>인연이 아닌가봐요</text></>}</ResultBox>
+        <ResultBox>
+          {isSuccess ? (
+            <>
+              <img src={Smile} alt="loading..." />
+              <text>축하합니다!</text>
+              <text>
+                <span>단짠지기임당</span>님과매칭이 성공했어요!
+              </text>
+            </>
+          ) : (
+            <>
+              <img src={Tear} alt="loading..." />
+              <text>
+                아쉽게도<span>단짠지기임당</span>님은
+              </text>
+              <text>인연이 아닌가봐요</text>
+            </>
+          )}
+        </ResultBox>
         {/* <WaitingBox state={state}><text>선택시간이<span>22<span>시간</span></span><span>41<span>분</span></span> 남았어요.</text><text>상대방이 선택하면 결과가 나와요.</text></WaitingBox> */}
-        <ChanceBox state={state}>{isSuccess  ? <><SuggentionButton onClick={()=>{
-           window.ReactNativeWebView?.postMessage(
-            JSON.stringify({ type: "openchat", data: "https://open.kakao.com/o/gZ5Purqf" }))
-        }} ><text>오픈 카톡 URL <br/>열기</text></SuggentionButton></> : <text onClick={()=>{navigate("/")}} className="result">메인으로 돌아가기</text>}</ChanceBox>
-      {/* onClick={()=>{   window.open("https://open.kakao.com/o/gZ5Purqf")}} */}
+        <ChanceBox state={state}>
+          {isSuccess ? (
+            <>
+              <SuggentionButton
+                onClick={() => {
+                  window.ReactNativeWebView?.postMessage(
+                    JSON.stringify({
+                      type: "openchat",
+                      data: "https://open.kakao.com/o/gZ5Purqf",
+                    })
+                  );
+                }}
+              >
+                <text>
+                  오픈 카톡 URL <br />
+                  열기
+                </text>
+              </SuggentionButton>
+            </>
+          ) : (
+            <text
+              onClick={() => {
+                navigate("/");
+              }}
+              className="result"
+            >
+              메인으로 돌아가기
+            </text>
+          )}
+        </ChanceBox>
+        {/* onClick={()=>{   window.open("https://open.kakao.com/o/gZ5Purqf")}} */}
       </SelectionContainer>
-
     </MatchingContainers>
   );
 }
 
 export default ChoiceResult;
 
-const SuggentionButton =styled.div`
-display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-padding: 8px 24px;
-gap: 4px;
+const SuggentionButton = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 24px;
+  gap: 4px;
 
-width: 142px;
-height: 40px;
+  width: 142px;
+  height: 40px;
 
-/* dzz_pink */
+  /* dzz_pink */
 
-background: #FF477E;
-border-radius: 31px;
+  background: #ff477e;
+  border-radius: 31px;
 
-> text {
-  font-family: 'Inter';
-font-style: normal;
-font-weight: 700;
-font-size: 16px;
-line-height: 24px;
-/* identical to box height, or 150% */
+  > text {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
 
-display: flex;
-align-items: center;
-text-align: center;
-letter-spacing: 0.1px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.1px;
 
-/* white */
+    /* white */
 
-color: #FFFFFF;
-}
+    color: #ffffff;
+  }
 `;
 
 const SelectionBox = styled.div`
@@ -133,8 +175,7 @@ const SelectionBox = styled.div`
 
   width: 66.15%;
   height: 240px;
-  background-color : gray;
-
+  background-color: gray;
 `;
 
 export const SelectionContainer = styled.div`
@@ -159,9 +200,9 @@ const ResultBox = styled.div`
   height: 120px;
 
   > img {
-      width : 50px;
-      height : 50px;
-    }
+    width: 50px;
+    height: 50px;
+  }
   > text {
     font-family: var(--font-OpenSans);
     font-style: normal;
@@ -176,28 +217,27 @@ const ResultBox = styled.div`
     > span {
       font-weight: 700;
     }
-
   }
 
   > text.reject {
     font-family: var(--font-OpenSans);
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 22px;
-/* identical to box height */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    /* identical to box height */
 
-display: flex;
-align-items: center;
+    display: flex;
+    align-items: center;
 
-/* system_blue */
+    /* system_blue */
 
-color: #0094FF;
+    color: #0094ff;
   }
 `;
 
 const WaitingBox = styled.div`
-  display: ${props => props.state === "accept" ? "flex" : "none"};
+  display: ${(props) => (props.state === "accept" ? "flex" : "none")};
   flex-direction: column;
   align-items: center;
   padding: 0px;
@@ -205,58 +245,58 @@ const WaitingBox = styled.div`
 
   width: 280px;
   height: 49px;
-  >text {
+  > text {
     font-family: var(--font-OpenSans);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 22px;
-  /* identical to box height */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    /* identical to box height */
 
-  display: flex;
-  align-items: center;
-  text-align: center;
+    display: flex;
+    align-items: center;
+    text-align: center;
 
-  /* Text Black */
+    /* Text Black */
 
-  color: #000000;
-  >span{
-    color : #FF477E;
+    color: #000000;
     > span {
-      font-weight: 600;
-      color: #000000;
+      color: #ff477e;
+      > span {
+        font-weight: 600;
+        color: #000000;
+      }
     }
-  }
   }
 `;
 
 const ChanceBox = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-padding: 0px;
-gap: 5px;
-
-width: 180px;
-height: 80px;
-
-> text {
-  font-family: var(--font-OpenSans);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 22px;
-  /* identical to box height */
-
   display: flex;
+  flex-direction: column;
   align-items: center;
+  padding: 0px;
+  gap: 5px;
 
-  /* system_blue */
+  width: 180px;
+  height: 80px;
 
-  color: ${props=> props.state==="accept" ? "#0094FF" : "#888888"};
-}
+  > text {
+    font-family: var(--font-OpenSans);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    /* identical to box height */
 
-> text.result {
-  color : #0094FF;
-}
+    display: flex;
+    align-items: center;
+
+    /* system_blue */
+
+    color: ${(props) => (props.state === "accept" ? "#0094FF" : "#888888")};
+  }
+
+  > text.result {
+    color: #0094ff;
+  }
 `;

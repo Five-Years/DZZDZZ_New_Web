@@ -162,8 +162,7 @@ const Title = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  text-align: center;
-  width: 79%;
+  width: 60%;
   height: 26.67%;
 
   > span {

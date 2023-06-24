@@ -30,7 +30,7 @@ function HistoryMatch() {
               onClick={
                 prop.isLink
                   ? () => {
-                      navigate("/");
+                      navigate("/Matching");
                     }
                   : null
               }

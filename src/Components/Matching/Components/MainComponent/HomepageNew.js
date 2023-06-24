@@ -15,47 +15,59 @@ function HomepageNew() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const Description = (props)=>{
-    if (props===0) {
+  const Description = (props) => {
+    if (props === 0) {
       return (
-        <EventTextContainer>        <EventText><text>아직 신청하지 않으셨네요!</text></EventText>
-        <EventTextTime><text>1일 2시간 25분 뒤에 접수가 끝나요.</text></EventTextTime>
-       </EventTextContainer>
-      )
+        <EventTextContainer>
+          {" "}
+          <EventText>
+            <text>아직 신청하지 않으셨네요!</text>
+          </EventText>
+          <EventTextTime>
+            <text>1일 2시간 25분 뒤에 접수가 끝나요.</text>
+          </EventTextTime>
+        </EventTextContainer>
+      );
+    } else if (props === 1) {
+      return (
+        <EventTextContainer>
+          {" "}
+          <EventText>
+            <text>잠시 후 매칭이 시작됩니다!</text>
+          </EventText>
+          <EventTextTime>
+            <text>1일 2시간 25분 뒤에 상대방을 확인할 수 있어요.</text>
+          </EventTextTime>
+        </EventTextContainer>
+      );
+    } else if (props === 2) {
+      return (
+        <EventTextContainer>
+          {" "}
+          <EventText>
+            <text>과연 결과는?</text>
+          </EventText>
+          <EventTextTime>
+            <text>2시간 25분 뒤에 결과가 나와요.</text>
+          </EventTextTime>
+        </EventTextContainer>
+      );
     }
-    else if (props===1)
-    {
-      return (
-        <EventTextContainer>        <EventText><text>잠시 후 매칭이 시작됩니다!</text></EventText>
-        <EventTextTime><text>1일 2시간 25분 뒤에 상대방을 확인할 수 있어요.</text></EventTextTime>
-       </EventTextContainer>
-      )
-    }
-    else if (props===2)
-    {
-      return (
-        <EventTextContainer>        <EventText><text>과연 결과는?</text></EventText>
-        <EventTextTime><text>2시간 25분 뒤에 결과가 나와요.</text></EventTextTime>
-       </EventTextContainer>
-      )
+  };
 
-    }
-  }
-  
   const Ticket = useSelector((state) => {
     return state.Popup.ticket;
   });
 
-  const Name = useSelector((state)=>{
+  const Name = useSelector((state) => {
     return state.Popup.name;
   });
-  const Season = useSelector((state)=>{
+  const Season = useSelector((state) => {
     return state.Popup.Season;
   });
-  const SeasonNumber = useSelector((state)=>{
+  const SeasonNumber = useSelector((state) => {
     return state.Popup.SeasonNumber;
-  })
-
+  });
 
   // 유저인증여부 확인, 추후 서버 연동 필요
   const authentification = true;
@@ -67,11 +79,11 @@ function HomepageNew() {
       case "loginToken":
         if (Name === "anonymous" && data.accessToken !== undefined)
           dispatch(StateSlice.actions.Name("토큰도착"));
-          alert(data.accessToken)
+        alert(data.accessToken);
         break;
 
       case "onBlur":
-        navigate("/");
+        navigate("/Matching");
         break;
 
       case "season":
@@ -79,7 +91,7 @@ function HomepageNew() {
         dispatch(StateSlice.actions.SeasonNumber(data.seasonnumber));
 
       case "back":
-        navigate("/");
+        navigate("/Matching");
         break;
     }
   };
@@ -91,25 +103,35 @@ function HomepageNew() {
     window.addEventListener("message", (e) => listener(e.data));
 
     window.ReactNativeWebView?.postMessage(
-      JSON.stringify({ type: "onLoad", data: "" }),
+      JSON.stringify({ type: "onLoad", data: "" })
     );
   }, []);
 
-  
   return (
     <>
       <MobileContainer>
         <HeaderContainer>
-          <ToggleContainer><MatchingProgressHeader isFirst={true}/></ToggleContainer>
-          <ProfileContainer><MatchingHeaderNew/></ProfileContainer>
+          <ToggleContainer>
+            <MatchingProgressHeader isFirst={true} />
+          </ToggleContainer>
+          <ProfileContainer>
+            <MatchingHeaderNew />
+          </ProfileContainer>
         </HeaderContainer>
-        <CouponContainer><MyTicket/></CouponContainer>
+        <CouponContainer>
+          <MyTicket />
+        </CouponContainer>
         <SelectionContainer>
           <Selection
             theme={0}
             onClick={() => {
               navigate("/MatchingHome", {
-                state: { theme: 0, season: Season, seasonnumber: SeasonNumber, name : Name },
+                state: {
+                  theme: 0,
+                  season: Season,
+                  seasonnumber: SeasonNumber,
+                  name: Name,
+                },
               });
             }}
           >
@@ -133,7 +155,12 @@ function HomepageNew() {
             theme={1}
             onClick={() => {
               navigate("/MatchingHome", {
-                state: { theme: 1, season: Season, seasonnumber: SeasonNumber, name : Name },
+                state: {
+                  theme: 1,
+                  season: Season,
+                  seasonnumber: SeasonNumber,
+                  name: Name,
+                },
               });
             }}
           >
@@ -158,10 +185,7 @@ function HomepageNew() {
         </SelectionContainer>
         <MatchingOptionContainer>
           <MatchingOption>
-            <input
-              type="checkbox"
-              disabled
-            />
+            <input type="checkbox" disabled />
             <text>같은 학교끼리 만나기</text>
             <InfoContainer>
               <Info
@@ -172,16 +196,18 @@ function HomepageNew() {
                 }}
               />
             </InfoContainer>
-          </MatchingOption> 
+          </MatchingOption>
         </MatchingOptionContainer>
         <HistoryContainer>
-          <HistoryButton onClick={()=>{ navigate("/MatchHistory", { state: { title: "히스토리" } });
-}}><text>히스토리 보기</text></HistoryButton>  
-        </HistoryContainer>        
-        <EventContainer>
-          {Description(1)}
-  </EventContainer>
-
+          <HistoryButton
+            onClick={() => {
+              navigate("/MatchHistory", { state: { title: "히스토리" } });
+            }}
+          >
+            <text>히스토리 보기</text>
+          </HistoryButton>
+        </HistoryContainer>
+        <EventContainer>{Description(1)}</EventContainer>
       </MobileContainer>
     </>
   );
@@ -198,112 +224,108 @@ const HistoryContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 4px;
-  top : 73.71%;
+  top: 73.71%;
   flex-shrink: 0;
 `;
 const HistoryButton = styled.div`
-display: flex;
-width: 66.66%;
-height : 100%;
-justify-content: center;
-align-items: center;
-gap: 10px;
-border-radius: 13px;
-background: var(--system-gray-100, #EBEBF0);
+  display: flex;
+  width: 66.66%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 13px;
+  background: var(--system-gray-100, #ebebf0);
 
-> text {
-  color: var(--system-gray-800, #48484A);
-  text-align: center;
-  font-size: 16px;
-  font-family: Open Sans;
-  line-height: 150%;
-  letter-spacing: 0.8px;
-  text-transform: capitalize;
-}
+  > text {
+    color: var(--system-gray-800, #48484a);
+    text-align: center;
+    font-size: 16px;
+    font-family: Open Sans;
+    line-height: 150%;
+    letter-spacing: 0.8px;
+    text-transform: capitalize;
+  }
 `;
 
 const EventTextContainer = styled.div`
-display: flex;
-flex-direction: column;
-position: relative;
-justify-content: center;
-width : 80%;
-height : 60.98%;
-left : 7.43%;
-top : 23%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  justify-content: center;
+  width: 80%;
+  height: 60.98%;
+  left: 7.43%;
+  top: 23%;
 `;
 
 const ToggleContainer = styled.div`
-display: flex;
-position: absolute;
-width: 100%;
-height: 5.143%;
-top: 3px;
-gap: 8px;
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 5.143%;
+  top: 3px;
+  gap: 8px;
 `;
 
 const ProfileContainer = styled.div`
-display : flex;
-position : absolute;
-width: 100%;
-height: 15.43%;
-gap: 15px;
-top : 7.857%;
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 15.43%;
+  gap: 15px;
+  top: 7.857%;
 `;
 
 const EventContainer = styled.div`
   width: 100%;
   height: 11.71%;
-  position : absolute;
+  position: absolute;
   top: 87.57%;
   border-radius: 20px 20px 0px 0px;
   box-shadow: 0px -4px 23px -3px rgba(0, 0, 0, 0.15);
 `;
 
 const EventText = styled.div`
-
-display: flex;
-position: relative;
-> text {
-  font-family: var(--font-Poppins);
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 20px;
-  letter-spacing: 0em;
-  text-align: left;
-  color : #888888;
-}
-
-
+  display: flex;
+  position: relative;
+  > text {
+    font-family: var(--font-Poppins);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #888888;
+  }
 `;
 const EventTextTime = styled.div`
-display: flex;
-position: relative;
+  display: flex;
+  position: relative;
 
-> text {
-  color: var(--text-black, #000);
-  font-family: var(--font-Poppins);
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 24px;
-  letter-spacing: 0em;
-  text-align: left;
-}
-
+  > text {
+    color: var(--text-black, #000);
+    font-family: var(--font-Poppins);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
 `;
 
 export const MobileContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width : 100%;
-  height : 100%;
+  width: 100%;
+  height: 100%;
   position: absolute;
 `;
 
 const HeaderContainer = styled.div`
   display: flex;
-  width : 100%;
-  height : 25.86%;
+  width: 100%;
+  height: 25.86%;
 `;
 
 const CouponContainer = styled.div`
@@ -314,23 +336,14 @@ const CouponContainer = styled.div`
 `;
 
 const MatchingContainer = styled.div`
-display: flex;
-position: absolute;
-width: 100%;
-height: 26.14%;
-gap: 3px;
-top : 36.29%;
-background-color: blue;
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 26.14%;
+  gap: 3px;
+  top: 36.29%;
+  background-color: blue;
 `;
-
-
-
-
-
-
-
-
-
 
 const ContentContainer = styled.div`
   box-sizing: border-box;
@@ -498,8 +511,6 @@ const Ticketviewer = styled.div`
     color: #000000;
   }
 `;
-
-
 
 // export const HeaderContainer = styled.div`
 //   display: flex;

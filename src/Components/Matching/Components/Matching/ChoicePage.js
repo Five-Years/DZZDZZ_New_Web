@@ -34,16 +34,18 @@ import {
 import MatchingProgressHeader from "../Header/MatchingProgressHeader";
 
 function ChoicePage() {
-  const [isStart,setIsStart] = useState(true);
+  const [isStart, setIsStart] = useState(true);
   const [detail, setDetail] = useState(false);
   const navigate = useNavigate();
   const { state } = useLocation();
-  const [theme,setTheme] = useState(0);
+  const [theme, setTheme] = useState(0);
 
   return (
     <MatchingContainers detail={detail}>
-      <ContentContainer>              <MatchingProgressHeader isReport={true}/>
-</ContentContainer>
+      <ContentContainer>
+        {" "}
+        <MatchingProgressHeader isReport={true} />
+      </ContentContainer>
 
       <ProfileImageContainer>
         <img src={require("../../../../assets/mango.jpg")} alt="이미지" />
@@ -60,11 +62,75 @@ function ChoicePage() {
         </ProfileName>
       </ProfileNameContainer>
       <SelectionContainer>
-        <ResultBox>{state ==="accept" ? <><Smile /><text><span>단짠지기임당</span>님을 선택하셨습니다</text></> : <><Tear /><text><span>단짠지기임당</span>님을 거절하셨습니다</text><text onClick={()=>{navigate("/")}} className="reject">메인으로 돌아가기기</text></>}</ResultBox>
-        {isStart ? <WaitingBox state={state}><SuggentionButton onClick={()=>{navigate("/ChoiceLoading", {state : {theme : 1}})}}><text>결과 확인하기</text></SuggentionButton></WaitingBox>: <WaitingBox state={state}><text>선택시간이<span>22<span>시간</span></span><span>41<span>분</span></span> 남았어요.</text><text>상대방이 선택하면 결과가 나와요.</text></WaitingBox>}
-        <ChanceBox state={state}>{state ==="accept" ? <text onClick={()=>{navigate("/")}}>메인으로 돌아가기</text> : <><text>이대로 끝내기 아쉽다면?</text><SuggentionButton><text>이건 어때요?</text></SuggentionButton></>}</ChanceBox>
+        <ResultBox>
+          {state === "accept" ? (
+            <>
+              <Smile />
+              <text>
+                <span>단짠지기임당</span>님을 선택하셨습니다
+              </text>
+            </>
+          ) : (
+            <>
+              <Tear />
+              <text>
+                <span>단짠지기임당</span>님을 거절하셨습니다
+              </text>
+              <text
+                onClick={() => {
+                  navigate("/");
+                }}
+                className="reject"
+              >
+                메인으로 돌아가기기
+              </text>
+            </>
+          )}
+        </ResultBox>
+        {isStart ? (
+          <WaitingBox state={state}>
+            <SuggentionButton
+              onClick={() => {
+                navigate("/ChoiceLoading", { state: { theme: 1 } });
+              }}
+            >
+              <text>결과 확인하기</text>
+            </SuggentionButton>
+          </WaitingBox>
+        ) : (
+          <WaitingBox state={state}>
+            <text>
+              선택시간이
+              <span>
+                22<span>시간</span>
+              </span>
+              <span>
+                41<span>분</span>
+              </span>{" "}
+              남았어요.
+            </text>
+            <text>상대방이 선택하면 결과가 나와요.</text>
+          </WaitingBox>
+        )}
+        <ChanceBox state={state}>
+          {state === "accept" ? (
+            <text
+              onClick={() => {
+                navigate("/Matching");
+              }}
+            >
+              메인으로 돌아가기
+            </text>
+          ) : (
+            <>
+              <text>이대로 끝내기 아쉽다면?</text>
+              <SuggentionButton>
+                <text>이건 어때요?</text>
+              </SuggentionButton>
+            </>
+          )}
+        </ChanceBox>
       </SelectionContainer>
-
     </MatchingContainers>
   );
 }
@@ -82,39 +148,39 @@ const ContentContainer = styled.div`
   height: 6%;
 `;
 
-const SuggentionButton =styled.div`
-display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-padding: 8px 24px;
-gap: 4px;
+const SuggentionButton = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 24px;
+  gap: 4px;
 
-width: 142px;
-height: 40px;
+  width: 142px;
+  height: 40px;
 
-/* dzz_pink */
+  /* dzz_pink */
 
-background: #FF477E;
-border-radius: 31px;
+  background: #ff477e;
+  border-radius: 31px;
 
-> text {
-  font-family: 'Inter';
-font-style: normal;
-font-weight: 700;
-font-size: 16px;
-line-height: 24px;
-/* identical to box height, or 150% */
+  > text {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
 
-display: flex;
-align-items: center;
-text-align: center;
-letter-spacing: 0.1px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.1px;
 
-/* white */
+    /* white */
 
-color: #FFFFFF;
-}
+    color: #ffffff;
+  }
 `;
 
 const SelectionBox = styled.div`
@@ -127,8 +193,7 @@ const SelectionBox = styled.div`
 
   width: 66.15%;
   height: 240px;
-  background-color : gray;
-
+  background-color: gray;
 `;
 
 export const SelectionContainer = styled.div`
@@ -172,23 +237,23 @@ const ResultBox = styled.div`
 
   > text.reject {
     font-family: var(--font-OpenSans);
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 22px;
-/* identical to box height */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    /* identical to box height */
 
-display: flex;
-align-items: center;
+    display: flex;
+    align-items: center;
 
-/* system_blue */
+    /* system_blue */
 
-color: #0094FF;
+    color: #0094ff;
   }
 `;
 
 const WaitingBox = styled.div`
-  display: ${props => props.state === "accept" ? "flex" : "none"};
+  display: ${(props) => (props.state === "accept" ? "flex" : "none")};
   flex-direction: column;
   align-items: center;
   padding: 0px;
@@ -196,54 +261,54 @@ const WaitingBox = styled.div`
 
   width: 280px;
   height: 49px;
-  >text {
+  > text {
     font-family: var(--font-OpenSans);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 22px;
-  /* identical to box height */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    /* identical to box height */
 
-  display: flex;
-  align-items: center;
-  text-align: center;
+    display: flex;
+    align-items: center;
+    text-align: center;
 
-  /* Text Black */
+    /* Text Black */
 
-  color: #000000;
-  >span{
-    color : #FF477E;
+    color: #000000;
     > span {
-      font-weight: 600;
-      color: #000000;
+      color: #ff477e;
+      > span {
+        font-weight: 600;
+        color: #000000;
+      }
     }
-  }
   }
 `;
 
 const ChanceBox = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-padding: 0px;
-gap: 5px;
-
-width: 180px;
-height: 80px;
-
-> text {
-  font-family: var(--font-OpenSans);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 22px;
-  /* identical to box height */
-
   display: flex;
+  flex-direction: column;
   align-items: center;
+  padding: 0px;
+  gap: 5px;
 
-  /* system_blue */
+  width: 180px;
+  height: 80px;
 
-  color: ${props=> props.state==="accept" ? "#0094FF" : "#888888"};
-}
+  > text {
+    font-family: var(--font-OpenSans);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    /* identical to box height */
+
+    display: flex;
+    align-items: center;
+
+    /* system_blue */
+
+    color: ${(props) => (props.state === "accept" ? "#0094FF" : "#888888")};
+  }
 `;
