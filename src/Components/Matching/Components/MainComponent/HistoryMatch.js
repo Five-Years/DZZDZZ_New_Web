@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 function HistoryMatch() {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
   const matching = ["이성매칭", "친구매칭"];
   const data = [
     { time: "23.05.14 12:44", season: 0, isSuccess: true, isLink: true },
@@ -23,10 +23,18 @@ function HistoryMatch() {
   ];
   return (
     <>
-      {data.map((prop,idx) => {
+      {data.map((prop, idx) => {
         return (
           <ListItemContainer season={prop.season} link={prop.isLink}>
-            <ItemBox onClick={prop.isLink?()=>{navigate("/")}:null}>
+            <ItemBox
+              onClick={
+                prop.isLink
+                  ? () => {
+                      navigate("/");
+                    }
+                  : null
+              }
+            >
               <ItemLeft link={prop.isLink}>
                 <text className="time">{prop.time}</text>
                 <text>{matching[prop.season]}</text>
@@ -82,7 +90,7 @@ const ItemLeft = styled.div`
   margin-left: 4.57%;
 
   > text {
-    color : ${props=>props.link ? "black" : "grey"};
+    color: ${(props) => (props.link ? "black" : "grey")};
     text-align: center;
     font-size: 14px;
     font-family: Noto Sans;
@@ -143,11 +151,11 @@ const ItemRight = styled.div`
   }
 
   > text.success {
-    color: ${props => props.link ? "#0094ff" : "#7AC4FA"}
+    color: ${(props) => (props.link ? "#0094ff" : "#7AC4FA")};
   }
 
   > text.failure {
-    color: ${props => props.link ? "#ff3d00" : "#FA997A"}
+    color: ${(props) => (props.link ? "#ff3d00" : "#FA997A")};
   }
 
   > text.title {

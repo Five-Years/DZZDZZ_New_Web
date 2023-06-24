@@ -13,21 +13,20 @@ import StateSlice from "../../../../features/State/StateSlice";
 function Homepage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const Ticket = useSelector((state) => {
     return state.Popup.ticket;
   });
 
-  const Name = useSelector((state)=>{
+  const Name = useSelector((state) => {
     return state.Popup.name;
   });
-  const Season = useSelector((state)=>{
+  const Season = useSelector((state) => {
     return state.Popup.Season;
   });
-  const SeasonNumber = useSelector((state)=>{
+  const SeasonNumber = useSelector((state) => {
     return state.Popup.SeasonNumber;
-  })
-
+  });
 
   // 유저인증여부 확인, 추후 서버 연동 필요
   const authentification = true;
@@ -37,8 +36,7 @@ function Homepage() {
 
     switch (type) {
       case "accessToken":
-        if (Name === "anonymous")
-          dispatch(StateSlice.actions.Name(data));
+        if (Name === "anonymous") dispatch(StateSlice.actions.Name(data));
         break;
 
       case "onBlur":
@@ -62,22 +60,28 @@ function Homepage() {
     window.addEventListener("message", (e) => listener(e.data));
 
     window.ReactNativeWebView?.postMessage(
-      JSON.stringify({ type: "onLoad", data: "" }),
+      JSON.stringify({ type: "onLoad", data: "" })
     );
   }, []);
 
-  
   return (
     <>
       <MobileContainer>
-        <ContentContainer><MatchingProgressHeader isFirst={true} isMile={true}/></ContentContainer>
-        <MatchingHeader/>
+        <ContentContainer>
+          <MatchingProgressHeader isFirst={true} isMile={true} />
+        </ContentContainer>
+        <MatchingHeader />
         <SelectionContainer>
           <Selection
             theme={0}
             onClick={() => {
               navigate("/MatchingHome", {
-                state: { theme: 0, season: Season, seasonnumber: SeasonNumber, name : Name },
+                state: {
+                  theme: 0,
+                  season: Season,
+                  seasonnumber: SeasonNumber,
+                  name: Name,
+                },
               });
             }}
           >
@@ -101,7 +105,12 @@ function Homepage() {
             theme={1}
             onClick={() => {
               navigate("/MatchingHome", {
-                state: { theme: 1, season: Season, seasonnumber: SeasonNumber, name : Name },
+                state: {
+                  theme: 1,
+                  season: Season,
+                  seasonnumber: SeasonNumber,
+                  name: Name,
+                },
               });
             }}
           >
@@ -126,10 +135,7 @@ function Homepage() {
         </SelectionContainer>
         <MatchingOptionContainer>
           <MatchingOption>
-            <input
-              type="checkbox"
-              disabled
-            />
+            <input type="checkbox" disabled />
             <text>같은 학교끼리 만나기</text>
             <InfoContainer>
               <Info

@@ -65,7 +65,7 @@ function HomepageNew() {
 
     switch (type) {
       case "loginToken":
-        if (Name === "anonymous" && data.accessToken != "")
+        if (Name === "anonymous" && data.accessToken !== undefined)
           dispatch(StateSlice.actions.Name("토큰도착"));
           alert(data.accessToken)
         break;

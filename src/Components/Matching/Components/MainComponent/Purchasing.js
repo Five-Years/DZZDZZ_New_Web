@@ -95,7 +95,13 @@ function Purchasing() {
           </TicketSection>
         </TicketMileChangeContainer>
         <HeaderBottom>
-          <InviteEventButton />
+          <InviteEventButton
+            onClick={() => {
+              window.ReactNativeWebView?.postMessage(
+                JSON.stringify({ type: "invite", data: "" })
+              );
+            }}
+          />
         </HeaderBottom>
         <TicketBoxContainer>
           {isSelected === 1 ? <TicketPage /> : <MilePage />}

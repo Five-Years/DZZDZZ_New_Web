@@ -54,7 +54,6 @@ function MatchHistory() {
         <HeaderContainer>
           <MenuHeader title={location.state.title} />
         </HeaderContainer>
-    
         <ListContainer>
             <HistoryMatch />
         </ListContainer>
