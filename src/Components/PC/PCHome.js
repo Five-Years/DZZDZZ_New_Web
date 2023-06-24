@@ -12,7 +12,7 @@ function PCHome() {
 
   useEffect(() => {
     setInterval(() => {
-      const Dday = new Date("2023-06-25T00:00:00+0900");
+      const Dday = new Date("2023-06-28T00:00:00+0900");
       const now = new Date();
       const dis = Dday.getTime() - now.getTime(); // 잔여시간(ms단위)
       const min = 1000 * 60; //1000ms => 1s , 1s*60 = 1m
