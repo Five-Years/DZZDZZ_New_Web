@@ -80,6 +80,7 @@ const ListContainer = styled.div`
   width: 100%;
   height: 93.15%;
   overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 
@@ -89,6 +90,8 @@ const PurchasePageContainer = styled.div`
   width: 100%;
   height: 100%;
   justify-content: center;
+  overflow: hidden;
+
 `;
 
 const ItemContainer = styled.div`
