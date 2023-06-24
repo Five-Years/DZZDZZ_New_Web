@@ -14,7 +14,7 @@ function MatchingProgressHeader(props) {
       <>
         <ContentLeft>
           {props.isFirst? <></> : <><ArrowBackIosIcon
-            style={{ marginLeft: "15.4%", width: "50%", height: "50%" }}
+            style={{ marginLeft: "15.4%", width: "60%", height: "60%" }}
             onClick={() => {navigate("/");
             }}
           /></> }

@@ -20,9 +20,9 @@ import Terms from "./Components/PC/Policy/Terms";
 import Privacy from "./Components/PC/Policy/Privacy";
 
 //matching페이지
-import Homepage from "./Components/Matching/Components/MainComponent/Homepage";
+import HomepageNew from "./Components/Matching/Components/MainComponent/HomepageNew";
 import Purchasing from "./Components/Matching/Components/MainComponent/Purchasing";
-import MatchingHome from "./Components/Matching/Components/MatchingHome";
+import MatchingHomeNew from "./Components/Matching/Components/MatchingHomeNew";
 import MatchingProgress from "./Components/Matching/Components/MatchingProgress";
 import Matching2 from "./Components/Matching/Components/Matching/Matching2";
 import DetailProfile from "./DetailProfile";
@@ -31,6 +31,7 @@ import ChoiceResult from "./Components/Matching/Components/Matching/ChoiceResult
 import ChoiceLoading from "./Components/Matching/Components/Matching/ChoiceResult";
 import Coupon from "./Components/Matching/Components/MainComponent/Coupon";
 import HistoryPage from "./Components/Matching/Components/MainComponent/HistoryPage";
+import MatchHistory from "./Components/Matching/Components/MainComponent/MatchHistory"
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -40,9 +41,9 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Homepage />}></Route>
+          <Route path="/" element={<HomepageNew />}></Route>
           <Route path="/purchasing" element={<Purchasing />}></Route>
-          <Route path="/MatchingHome" element={<MatchingHome />}></Route>
+          <Route path="/MatchingHome" element={<MatchingHomeNew />}></Route>
           <Route path="/MatchingProgress" element={<MatchingProgress />}></Route>
           <Route path="/matching2" element={<Matching2 />}></Route>
           <Route path="/detail" element={<DetailProfile />}></Route>
@@ -51,6 +52,7 @@ root.render(
           <Route path="/ChoiceLoading" element={<ChoiceLoading />}></Route>
           <Route path="/Coupon" element={<Coupon />}></Route>
           <Route path="/History" element={<HistoryPage />}></Route>
+          <Route path="/MatchHistory" element={<MatchHistory />}></Route>
 
           <Route path="/pchome" element={<PCHome />}></Route>
           <Route path="/pc" element={<App />}></Route>

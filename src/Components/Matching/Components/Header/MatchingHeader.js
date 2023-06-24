@@ -274,6 +274,10 @@ const PurchaserButton = styled.div`
     text-transform: capitalize;
 
     color: #ffffff;
+    :active {
+      color : #FF477E;
+    }
+    
   }
 `;
 

@@ -8,8 +8,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
 import styled from "styled-components";
-import { ReactComponent as Smile } from "../../../../assets/smile.svg";
-import { ReactComponent as Tear } from "../../../../assets/tear.svg";
+import Smile from "../../../../assets/SmileHeartEye.gif";
+import Tear from "../../../../assets/SweatFace.gif";
 
 import {
   MatchingContainers,
@@ -72,7 +72,8 @@ function ChoiceResult() {
         </ProfileName>
       </ProfileNameContainer>
       <SelectionContainer>
-        <ResultBox>{isSuccess ? <><Smile /><text>축하합니다!</text><text><span>단짠지기임당</span>님과매칭이 성공했어요!</text></> : <><Tear /><text>아쉽게도<span>단짠지기임당</span>님은</text><text>인연이 아닌가봐요</text></>}</ResultBox>
+        <ResultBox>{isSuccess ? <><img src={Smile} alt="loading..." />
+<text>축하합니다!</text><text><span>단짠지기임당</span>님과매칭이 성공했어요!</text></> : <><img src={Tear} alt="loading..." /><text>아쉽게도<span>단짠지기임당</span>님은</text><text>인연이 아닌가봐요</text></>}</ResultBox>
         {/* <WaitingBox state={state}><text>선택시간이<span>22<span>시간</span></span><span>41<span>분</span></span> 남았어요.</text><text>상대방이 선택하면 결과가 나와요.</text></WaitingBox> */}
         <ChanceBox state={state}>{isSuccess  ? <><SuggentionButton onClick={()=>{
            window.ReactNativeWebView?.postMessage(
@@ -155,10 +156,12 @@ const ResultBox = styled.div`
   justify-content: space-between;
   padding: 0px;
   gap: 7px;
-
-
   height: 120px;
 
+  > img {
+      width : 50px;
+      height : 50px;
+    }
   > text {
     font-family: var(--font-OpenSans);
     font-style: normal;
@@ -173,6 +176,7 @@ const ResultBox = styled.div`
     > span {
       font-weight: 700;
     }
+
   }
 
   > text.reject {
