@@ -5,7 +5,6 @@ import HeaderRight from "./HeaderRight";
 import { useSelector, useDispatch } from "react-redux";
 import StateSlice from "../../../features/State/StateSlice";
 
-
 function HeaderMain2() {
   const Popup = useSelector((state) => {
     return state.Popup.value;
@@ -33,9 +32,10 @@ export default HeaderMain2;
 //전체 헤더부분
 const HeaderBackground = styled.div`
   width: 100vw;
-  height: 57.5vh;
+  height: 66.89vh;
   display: flex;
   justify-content: center;
+  background-color: skyblue;
 
   @media screen and (max-width: 800px) {
     /* 전체 가로 390 세로 844px 중 헤더부분은 가로 390 세로 중 */

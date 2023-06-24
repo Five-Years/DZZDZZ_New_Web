@@ -21,9 +21,9 @@ function App() {
         <HeaderMain2 />
         <Footer />
       </MainFrame>
-      <AnimatePresence>
+      {/* <AnimatePresence>
         <Inquiry />
-      </AnimatePresence>
+      </AnimatePresence> */}
     </div>
   );
 }

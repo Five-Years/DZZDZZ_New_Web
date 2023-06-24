@@ -17,7 +17,12 @@ function PCHome() {
       const dis = Dday.getTime() - now.getTime(); // 잔여시간(ms단위)
       const min = 1000 * 60; //1000ms => 1s , 1s*60 = 1m
       setDay(String(Math.floor(dis / (min * 60 * 24))).padStart(2, "0"));
-      setHour(String(Math.floor((dis % (min * 60 * 24)) / (min * 60))).padStart(2, "0"));
+      setHour(
+        String(Math.floor((dis % (min * 60 * 24)) / (min * 60))).padStart(
+          2,
+          "0"
+        )
+      );
       setMinute(String(Math.floor((dis % (min * 60)) / min)).padStart(2, "0"));
       setSecond(String(Math.floor((dis % min) / 1000)).padStart(2, "0"));
     }, 1000);
@@ -143,6 +148,10 @@ const ButtonContainer = styled.div`
 
   background: #f2f3f6;
   border-radius: 8px;
+  :hover {
+    opacity: 50%;
+    cursor: pointer;
+  }
 
   > text {
     font-family: "Noto Sans";

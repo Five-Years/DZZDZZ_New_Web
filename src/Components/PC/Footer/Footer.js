@@ -1,17 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import Links from "./Links"  
-import Meta from "./Meta"
+import Links from "./Links";
+import Meta from "./Meta";
 
 function Footer() {
-
   return (
     <FooterContainer>
       <FooterContentContainer>
         <ContentContainer>
           <Content>
             <ContentLink>
-            <Links />
+              <Links />
             </ContentLink>
             <Meta />
           </Content>
@@ -25,7 +24,7 @@ export default Footer;
 
 const FooterContainer = styled.div`
   width: 100vw;
-  height: 42.5vh;
+  height: 33.11vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -102,7 +101,3 @@ const ContentLink = styled.div`
     height: 49%;
   }
 `;
-
-
-
-

@@ -35,7 +35,7 @@ const InviteContainer = styled.div`
   gap: 10px;
 
   width: 89.74%;
-  height: 73.68%;
+  height: 50%;
 
   background: #ffe8e8;
   border-radius: 13px;

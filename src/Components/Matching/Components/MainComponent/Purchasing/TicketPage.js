@@ -31,8 +31,8 @@ function TicketPage() {
         <TicketPurchaseContainer>
           {" "}
           <TicketPrice>
-            <Mile1dis/>
-            <Mile1pri/>
+            <Mile1dis />
+            <Mile1pri />
           </TicketPrice>
           <TicketButton
             onClick={() => {
@@ -58,8 +58,8 @@ function TicketPage() {
         <TicketPurchaseContainer>
           {" "}
           <TicketPrice>
-          <Mile2dis/>
-            <Mile2pri/>
+            <Mile2dis />
+            <Mile2pri />
           </TicketPrice>
           <TicketButton
             onClick={() => {
@@ -85,8 +85,8 @@ function TicketPage() {
         <TicketPurchaseContainer>
           {" "}
           <TicketPrice>
-          <Mile3dis/>
-            <Mile3pri/>           
+            <Mile3dis />
+            <Mile3pri />
           </TicketPrice>
           <TicketButton
             onClick={() => {
@@ -99,7 +99,8 @@ function TicketPage() {
             <text>구매</text>
           </TicketButton>
         </TicketPurchaseContainer>
-      </ProductContainer>      <ProductContainer>
+      </ProductContainer>{" "}
+      <ProductContainer>
         <TicketProduct>
           <TicketImage>
             <Ticket4 />
@@ -111,8 +112,8 @@ function TicketPage() {
         <TicketPurchaseContainer>
           {" "}
           <TicketPrice>
-          <Mile4dis/>
-            <Mile4pri/>      
+            <Mile4dis />
+            <Mile4pri />
           </TicketPrice>
           <TicketButton
             onClick={() => {
@@ -198,7 +199,7 @@ const ProductContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 6px;
 
   width: 100%;
   height: 18.89%;
