@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import styled from "styled-components";
 import MatchingHeader from "./Header/MatchingHeader";
+import MatchingHeaderNew from "./Header/MatchingHeaderNew";
 import MatchingProgressHeader from "./Header/MatchingProgressHeader";
 
 function MatchingHome() {
@@ -31,11 +32,13 @@ function MatchingHome() {
   return (
     <>
       <MobileContainer>
-        <ContentContainer><MatchingProgressHeader /></ContentContainer>
-        <MatchingHeader
+      {/* theme={location.state.theme} */}
+        <ContentContainer theme = {theme}><MatchingProgressHeader /></ContentContainer>
+        <MatchingHeaderNew
           name={Name}
           season={Season}
           seasonnumber={SeasonNumber}
+          theme = {theme}
         />
         <MatchingContainer>
           <MatchingCardContainer theme={theme}>
@@ -143,8 +146,8 @@ const MatchingContainer = styled.div`
   display: flex;
   position: absolute;
   width: 100%;
-  height: 36.57%;
-  top: 32.43%;
+  height: 32.43%;
+  top: 36.57%;
   align-items: center;
   justify-content: center;
 `;
@@ -275,6 +278,8 @@ const ContentContainer = styled.div`
   position: absolute;
   width: 100%;
   height: 6%;
+  background-color: ${props => props.theme === 1 ? "#EDFAFF" : "#FFF4F4"};
+
 `;
 
 export const CardTitle = styled.div`

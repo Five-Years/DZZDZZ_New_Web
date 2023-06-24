@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import MatchingProgressHeader from "../Header/MatchingProgressHeader";
 import { ReactComponent as Info } from "../../../../assets/Info.svg";
 
 import MatchingHeader from "../Header/MatchingHeader";
@@ -69,6 +70,7 @@ function Homepage() {
   return (
     <>
       <MobileContainer>
+        <ContentContainer><MatchingProgressHeader isFirst={true} isMile={true}/></ContentContainer>
         <MatchingHeader/>
         <SelectionContainer>
           <Selection
@@ -146,6 +148,17 @@ function Homepage() {
 }
 
 export default Homepage;
+
+const ContentContainer = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 6%;
+`;
 
 const MatchingOptionContainer = styled.div`
   display: flex;

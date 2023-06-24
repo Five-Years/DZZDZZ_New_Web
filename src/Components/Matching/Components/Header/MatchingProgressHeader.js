@@ -3,7 +3,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
+import { ReactComponent as Mile } from "../../../../assets/mile.svg";
 
 
 function MatchingProgressHeader(props) {
@@ -13,11 +13,11 @@ function MatchingProgressHeader(props) {
 
       <>
         <ContentLeft>
-          <ArrowBackIosIcon
+          {props.isFirst? <></> : <><ArrowBackIosIcon
             style={{ marginLeft: "15.4%", width: "50%", height: "50%" }}
             onClick={() => {navigate("/");
             }}
-          />
+          /></> }
         </ContentLeft>
         <ContentTitle>
           <text></text>
@@ -27,8 +27,7 @@ function MatchingProgressHeader(props) {
                   JSON.stringify({ type: "report", data: "" })
                 ); alert("신고")}}
             style={{ width: "50%", height: "50%", marginRight: "15.4%" }}
-          /></> : <></>}
-
+          /></> : <><MileHeader><Mile /><text>1</text></MileHeader></>}
         </ContentRight>
         </>
   )
@@ -36,6 +35,26 @@ function MatchingProgressHeader(props) {
 
 export default MatchingProgressHeader
 
+
+const MileHeader = styled.div`
+display: flex;
+width: 50%;
+height: 100%;
+margin-right : 15.4%;
+align-items: center;
+justify-content: space-evenly;
+z-index: 1;
+
+> text {
+  font-family: var(--font-OpenSans);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+
+}
+`;
 
 export const ContentContainers = styled.div`
   box-sizing: border-box;

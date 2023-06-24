@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import {  useNavigate } from "react-router-dom";
+import {  useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { ReactComponent as Tickets } from "../../../../assets/ticket.svg";
@@ -8,8 +8,11 @@ import { ReactComponent as Mile } from "../../../../assets/mile.svg";
 
 
 
-function MatchingHeader(props) {
+function MatchingHeaderNew(props) {
     // 유저티켓 보유 갯수 확인, 추후 서버 연동 필요
+    const location = useLocation();
+    const color = props.theme;
+
     const Ticket = useSelector((state) => {
       return state.Popup.ticket;
     });
@@ -30,7 +33,7 @@ function MatchingHeader(props) {
 
   return (
     <>
-    <HeaderContainer>
+    <HeaderContainer theme={color}>
     <HeaderTop>
       <HeaderBox>
         <HeaderProfile>
@@ -51,7 +54,7 @@ function MatchingHeader(props) {
       </HeaderBox>
     </HeaderTop>
     <HeaderBoarder>
-      <Boarder></Boarder>
+      {/* <Boarder></Boarder> */}
     </HeaderBoarder>
     <HeaderBottom>
       <CardTicket>
@@ -75,20 +78,21 @@ function MatchingHeader(props) {
   )
 }
 
-export default MatchingHeader
+export default MatchingHeaderNew
 
 
 
 export const HeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 
   position: absolute;
   width: 100%;
   height: 24.29%;
   left: 0px;
   top: 4.29%;
+  align-items: center;
+  background-color: ${props => props.theme === 1 ? "#EDFAFF" : "#FFF4F4"};
 `;
 
 const HeaderMileContainer = styled.div`
@@ -116,14 +120,17 @@ justify-content: space-between;
 const HeaderTop = styled.div`
   width: 100%;
   height: 51.76%;
+  display: flex;
 `;
 
 const HeaderBox = styled.div`
+  
   position: relative;
   width: 60.36%;
   min-width: 230px;
   height: 100%;
   left: 16.67%;
+
 `;
 
 const HeaderProfile = styled.div`
@@ -210,6 +217,7 @@ const HeaderBottom = styled.div`
 
   width: 100%;
   height: 25.88%;
+  background-color: white;
 `;
 
 
