@@ -65,8 +65,8 @@ function HomepageNew() {
 
     switch (type) {
       case "loginToken":
-        if (Name === "anonymous")
-          dispatch(StateSlice.actions.Name(accessToken));
+        if (Name === "anonymous" && data.accessToken != "")
+          dispatch(StateSlice.actions.Name(data.accessToken));
         break;
 
       case "onBlur":
