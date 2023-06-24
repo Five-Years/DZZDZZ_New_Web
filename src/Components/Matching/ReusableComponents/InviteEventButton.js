@@ -5,7 +5,13 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 function InviteEventButton() {
   return (
     <>
-      <InviteContainer>
+      <InviteContainer
+        onClick={() => {
+          window.ReactNativeWebView?.postMessage(
+            JSON.stringify({ type: "invite", data: "" })
+          );
+        }}
+      >
         <InviteTextBox>
           <text>
             친구 초대하고 <span>무료티켓 받기</span>
