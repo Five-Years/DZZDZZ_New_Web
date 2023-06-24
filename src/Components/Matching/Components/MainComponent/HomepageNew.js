@@ -64,9 +64,9 @@ function HomepageNew() {
     const { data, type } = JSON.parse(event);
 
     switch (type) {
-      case "accessToken":
+      case "loginToken":
         if (Name === "anonymous")
-          dispatch(StateSlice.actions.Name(data));
+          dispatch(StateSlice.actions.Name(accessToken));
         break;
 
       case "onBlur":
