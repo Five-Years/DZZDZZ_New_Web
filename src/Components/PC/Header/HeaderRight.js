@@ -32,7 +32,7 @@ function HeaderRight() {
     <ContentContainer>
       <TitleContainer>
         <Title>
-          <span>SEASON 2</span>
+          <span>이성매칭</span>
           <span className="text">마감까지</span>
         </Title>
         <Timer>
@@ -161,12 +161,12 @@ const ContentContainer = styled.div`
 const Title = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
+  align-items: center;
+  text-align: center;
   width: 79%;
   height: 26.67%;
 
   > span {
-    width: 150px;
     height: 36px;
     font-family: "SF Pro";
     font-style: normal;
@@ -179,7 +179,6 @@ const Title = styled.div`
   }
 
   > span.text {
-    width: 70px;
     height: 23px;
     font-family: "SF Pro";
     font-style: normal;
@@ -199,7 +198,6 @@ const Title = styled.div`
     height: 29px;
 
     > span {
-      width: 125px;
       height: 29px;
       font-size: 24px;
       line-height: 29px;
@@ -210,7 +208,6 @@ const Title = styled.div`
     }
 
     > span.text {
-      width: 65px;
       height: 23px;
       font-family: "SF Pro";
       font-style: normal;
