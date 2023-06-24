@@ -31,7 +31,7 @@ import ChoiceResult from "./Components/Matching/Components/Matching/ChoiceResult
 import ChoiceLoading from "./Components/Matching/Components/Matching/ChoiceResult";
 import Coupon from "./Components/Matching/Components/MainComponent/Coupon";
 import HistoryPage from "./Components/Matching/Components/MainComponent/HistoryPage";
-import MatchHistory from "./Components/Matching/Components/MainComponent/MatchHistory"
+import MatchHistory from "./Components/Matching/Components/MainComponent/MatchHistory";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -41,10 +41,13 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomepageNew />}></Route>
+          <Route path="/Matching" element={<HomepageNew />}></Route>
           <Route path="/purchasing" element={<Purchasing />}></Route>
           <Route path="/MatchingHome" element={<MatchingHomeNew />}></Route>
-          <Route path="/MatchingProgress" element={<MatchingProgress />}></Route>
+          <Route
+            path="/MatchingProgress"
+            element={<MatchingProgress />}
+          ></Route>
           <Route path="/matching2" element={<Matching2 />}></Route>
           <Route path="/detail" element={<DetailProfile />}></Route>
           <Route path="/Choice" element={<ChoicePage />}></Route>
@@ -54,7 +57,7 @@ root.render(
           <Route path="/History" element={<HistoryPage />}></Route>
           <Route path="/MatchHistory" element={<MatchHistory />}></Route>
 
-          <Route path="/pchome" element={<PCHome />}></Route>
+          <Route path="/" element={<PCHome />}></Route>
           <Route path="/pc" element={<App />}></Route>
           <Route path="MobileMenu" element={<MobileMenu />}></Route>
           <Route path="DzzIntroduce" element={<DzzDzzIntrodue />}></Route>
