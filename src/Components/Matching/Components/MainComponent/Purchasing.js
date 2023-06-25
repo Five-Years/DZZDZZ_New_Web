@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import StateSlice from "../../../../features/State/StateSlice";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import PurchasingHeader from "../Header/MenuHeader";
+import MenuHeader from "../Header/MenuHeader";
 import MilePage from "./Purchasing/MilePage";
 import InviteEventButton from "../../ReusableComponents/InviteEventButton";
 import JellyButtonContainer from "../../ReusableComponents/JellyButtonContainer";
@@ -35,6 +35,7 @@ function Purchasing() {
   const location = useLocation();
 
   const [isSelected, setIsSelected] = useState(0);
+  const title = "충전하기";
 
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
@@ -67,7 +68,7 @@ function Purchasing() {
     <>
       <PurchasePageContainer>
         <HeaderContainer>
-          <PurchasingHeader title={location.state.title} />
+          <MenuHeader title={title} />
         </HeaderContainer>
         <TicketMileChangeContainer>
           <MileSection
