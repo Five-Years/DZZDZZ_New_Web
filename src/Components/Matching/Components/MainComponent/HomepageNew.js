@@ -52,6 +52,7 @@ function HomepageNew() {
           // getData(data);
           dispatch(StateSlice.actions.Name("미쥬미쥬미쥬"));
         }
+
         break;
 
       case "onBlur":
@@ -59,7 +60,7 @@ function HomepageNew() {
         break;
 
       case "store":
-        navigate("/purchasing");
+        navigate("/purchasing", { state: { title: "충전하기" } });
         break;
 
       case "season":
