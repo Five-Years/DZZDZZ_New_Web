@@ -2,30 +2,21 @@ import React from "react";
 import styled from "styled-components";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-function InviteEventButton() {
+function JellyButtonContainer() {
   return (
     <>
-      <InviteContainer
-        onClick={() => {
-          window.ReactNativeWebView?.postMessage(
-            JSON.stringify({ type: "invite", data: "" })
-          );
-        }}
-      >
+      <InviteContainer>
         <InviteTextBox>
           <text>
-            친구 초대하고 <span>무료티켓 받기</span>
+            <span>젤리</span>를 이용한 서비스는 더 추가될 예정이에요.
           </text>
         </InviteTextBox>
-        <InviteToggleButton>
-          <KeyboardArrowRightIcon></KeyboardArrowRightIcon>
-        </InviteToggleButton>
       </InviteContainer>
     </>
   );
 }
 
-export default InviteEventButton;
+export default JellyButtonContainer;
 
 const InviteContainer = styled.div`
   display: flex;
@@ -37,7 +28,8 @@ const InviteContainer = styled.div`
   width: 89.74%;
   height: 50%;
 
-  background: #ffe8e8;
+  background: #ebebf0;
+
   border-radius: 13px;
 `;
 
@@ -45,29 +37,18 @@ const InviteTextBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0px;
-
-  width: 50.57%;
+  justify-content: center;
+  width: 100%;
   min-width: 195px;
   height: 55.26%;
-  min-height: 21px;
-  margin-left: 7%;
 
   > text {
-    font-family: "SF Pro";
-    font-style: normal;
-    font-weight: 400;
+    font-family: Noto Sans KR;
     font-size: 12px;
-    line-height: 150%;
-    /* identical to box height, or 21px */
-
-    text-align: center;
+    font-weight: 500;
+    line-height: 21px;
     letter-spacing: 0.05em;
-    text-transform: capitalize;
-
-    /* dzz_grey */
-
-    color: #49516f;
+    text-align: center;
 
     > span {
       color: #ff477e;
@@ -78,5 +59,5 @@ const InviteTextBox = styled.div`
 const InviteToggleButton = styled.div`
   width: 22px;
   height: 22px;
-  margin-right: 7%;
+  margin-right: 20px;
 `;

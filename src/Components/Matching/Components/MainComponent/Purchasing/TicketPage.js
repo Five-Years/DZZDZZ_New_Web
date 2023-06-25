@@ -2,19 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import StateSlice from "../../../../../features/State/StateSlice";
+import Ticket1 from "../../../../../assets/package1.png";
+import Ticket2 from "../../../../../assets/package2.png";
+import Ticket3 from "../../../../../assets/package3.png";
+import Ticket4 from "../../../../../assets/package4.png";
 
-import { ReactComponent as Ticket1 } from "../../../../../assets/ticket1.svg";
-import { ReactComponent as Ticket2 } from "../../../../../assets/2Ticket.svg";
-import { ReactComponent as Ticket3 } from "../../../../../assets/3Ticket.svg";
-import { ReactComponent as Ticket4 } from "../../../../../assets/4Ticket.svg";
-import { ReactComponent as Mile1dis } from "../../../../../assets/mile33.svg";
 import { ReactComponent as Mile1pri } from "../../../../../assets/mile20.svg";
-import { ReactComponent as Mile2dis } from "../../../../../assets/mile48.svg";
-import { ReactComponent as Mile2pri } from "../../../../../assets/mile60.svg";
-import { ReactComponent as Mile3dis } from "../../../../../assets/mile51.svg";
-import { ReactComponent as Mile3pri } from "../../../../../assets/mile120.svg";
-import { ReactComponent as Mile4dis } from "../../../../../assets/mile53.svg";
-import { ReactComponent as Mile4pri } from "../../../../../assets/mile220.svg";
+import { ReactComponent as Mile2pri } from "../../../../../assets/ticekt64.svg";
+import { ReactComponent as Mile3pri } from "../../../../../assets/ticket110.svg";
+import { ReactComponent as Mile4pri } from "../../../../../assets/ticket190.svg";
 function TicketPage() {
   const dispatch = useDispatch();
   return (
@@ -22,7 +18,7 @@ function TicketPage() {
       <ProductContainer>
         <TicketProduct>
           <TicketImage>
-            <Ticket1 />
+            <img src={Ticket1} />
           </TicketImage>
           <TicketCount>
             <text>티켓 1개</text>
@@ -31,7 +27,6 @@ function TicketPage() {
         <TicketPurchaseContainer>
           {" "}
           <TicketPrice>
-            <Mile1dis />
             <Mile1pri />
           </TicketPrice>
           <TicketButton
@@ -49,7 +44,7 @@ function TicketPage() {
       <ProductContainer>
         <TicketProduct>
           <TicketImage>
-            <Ticket2 />
+            <img src={Ticket2} />
           </TicketImage>
           <TicketCount>
             <text>티켓 4개</text>
@@ -58,7 +53,6 @@ function TicketPage() {
         <TicketPurchaseContainer>
           {" "}
           <TicketPrice>
-            <Mile2dis />
             <Mile2pri />
           </TicketPrice>
           <TicketButton
@@ -76,7 +70,7 @@ function TicketPage() {
       <ProductContainer>
         <TicketProduct>
           <TicketImage>
-            <Ticket3 />
+            <img src={Ticket3} />
           </TicketImage>
           <TicketCount>
             <text>티켓 8개</text>
@@ -85,7 +79,6 @@ function TicketPage() {
         <TicketPurchaseContainer>
           {" "}
           <TicketPrice>
-            <Mile3dis />
             <Mile3pri />
           </TicketPrice>
           <TicketButton
@@ -103,7 +96,7 @@ function TicketPage() {
       <ProductContainer>
         <TicketProduct>
           <TicketImage>
-            <Ticket4 />
+            <img src={Ticket4} />
           </TicketImage>
           <TicketCount>
             <text>티켓 15개</text>
@@ -112,7 +105,6 @@ function TicketPage() {
         <TicketPurchaseContainer>
           {" "}
           <TicketPrice>
-            <Mile4dis />
             <Mile4pri />
           </TicketPrice>
           <TicketButton

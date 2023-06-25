@@ -32,8 +32,8 @@ function HeaderRight() {
     <ContentContainer>
       <TitleContainer>
         <Title>
-          <span>이성매칭</span>
-          <span className="text">마감까지</span>
+          <span>매칭진행중 </span>
+          <span className="text"> 마감까지</span>
         </Title>
         <Timer>
           {/* 1일이상 남았다면 일 시간 분, 1일 이하라면 시간 분 초 */}
@@ -56,10 +56,22 @@ function HeaderRight() {
           <span>단짠단짠 앱 다운로드</span>
           <div>
             <div>
-              <Appstore width="100%" height="auto" />
+              <Appstore
+                width="100%"
+                height="auto"
+                onClick={() => {
+                  alert("배포 준비중입니다!");
+                }}
+              />
             </div>
             <div>
-              <Androidstore width="100%" height="auto" />
+              <Androidstore
+                width="100%"
+                height="auto"
+                onClick={() => {
+                  alert("배포 준비중입니다!");
+                }}
+              />
             </div>
           </div>
         </Sns>
@@ -132,6 +144,7 @@ const SnsContainer = styled.div`
   > img {
     width: 34px;
     height: 34px;
+    cursor: pointer;
   }
 `;
 
@@ -302,6 +315,7 @@ const Sns = styled.div`
   }
   > div > div {
     width: 45%;
+    cursor: pointer;
   }
   > img {
     :active {

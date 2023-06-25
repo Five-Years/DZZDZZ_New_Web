@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
 import TicketPage from "./Purchasing/TicketPage";
-import { ReactComponent as Mile } from "../../../../assets/mile.svg";
+import { ReactComponent as Jelly } from "../../../../assets/jelly.svg";
 import { ReactComponent as DisabledTicket } from "../../../../assets/disabledTicket.svg";
-import { ReactComponent as DisabledMile } from "../../../../assets/disabledMile.svg";
+import { ReactComponent as DisabledJelly } from "../../../../assets/DisabledJelly.svg";
 import { ReactComponent as Ticket } from "../../../../assets/ticket.svg";
 
 import {
@@ -21,6 +21,7 @@ import { useLocation } from "react-router-dom";
 import PurchasingHeader from "../Header/MenuHeader";
 import MilePage from "./Purchasing/MilePage";
 import InviteEventButton from "../../ReusableComponents/InviteEventButton";
+import JellyButtonContainer from "../../ReusableComponents/JellyButtonContainer";
 
 function Purchasing() {
   const navigate = useNavigate();
@@ -77,7 +78,7 @@ function Purchasing() {
             }}
           >
             <ItemContainer>
-              {isSelected ? <DisabledMile /> : <Mile />}
+              {isSelected ? <DisabledJelly /> : <Jelly />}
               <text>1</text>
             </ItemContainer>
           </MileSection>
@@ -95,45 +96,59 @@ function Purchasing() {
           </TicketSection>
         </TicketMileChangeContainer>
         <HeaderBottom>
-          <InviteEventButton />
+          {isSelected ? <InviteEventButton /> : <JellyButtonContainer />}
         </HeaderBottom>
         <TicketBoxContainer>
-          {isSelected === 1 ? <TicketPage /> : <MilePage />}
+          <ItemContainers>
+            {isSelected === 1 ? <TicketPage /> : <MilePage />}
+          </ItemContainers>
+          <BottomContainer>
+            <ReturnButton className="history">
+              <Button
+                className="history"
+                onClick={() => {
+                  navigate("/History", { state: { title: "이용내역" } });
+                }}
+              >
+                <text>이용내역</text>
+              </Button>
+            </ReturnButton>
+            <CouponContainer
+              onClick={() => {
+                navigate("/Coupon", {
+                  state: { title: "쿠폰등록" },
+                });
+              }}
+            >
+              <text>쿠폰 등록하기</text>
+            </CouponContainer>
+          </BottomContainer>
         </TicketBoxContainer>
-        <ReturnButton>
-          <Button
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            <text>돌아가기</text>
-          </Button>
-        </ReturnButton>{" "}
-        <ReturnButton className="history">
-          <Button
-            className="history"
-            onClick={() => {
-              navigate("/History", { state: { title: "이용내역" } });
-            }}
-          >
-            <text>이용내역</text>
-          </Button>
-        </ReturnButton>
-        <CouponContainer
-          onClick={() => {
-            navigate("/Coupon", {
-              state: { title: "쿠폰등록" },
-            });
-          }}
-        >
-          <text>쿠폰 등록하기</text>
-        </CouponContainer>
       </PurchasePageContainer>
     </>
   );
 }
 
 export default Purchasing;
+
+const BottomContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+
+  width: 100%;
+  height: 19.53%;
+`;
+
+const ItemContainers = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 89.74%;
+  height: 78.11%;
+`;
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -196,7 +211,7 @@ const TicketBoxContainer = styled.div`
 
   position: absolute;
   width: 100%;
-  height: 48.14%;
+  height: 72.43%;
   top: 23%;
 `;
 
@@ -207,15 +222,9 @@ const ReturnButton = styled.div`
   align-items: center;
   gap: 4px;
 
-  position: absolute;
   width: 100%;
-  height: 10%;
+  height: 70.7%;
   left: 0px;
-  top: 71.57%;
-
-  &.history {
-    top: 83%;
-  }
 `;
 
 const CouponContainer = styled.div`
@@ -239,7 +248,7 @@ const CouponContainer = styled.div`
     font-family: var(--font-OpenSans);
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 150%;
     /* identical to box height, or 24px */
 

@@ -35,15 +35,29 @@ function Meta() {
         </Information>
       </ContentInformation>
       <ContentSns>
-        <img src={require("../../../assets/facebook.png")} onClick={() => {
-              window.open("https://www.facebook.com/");
-            }} alt="" />
-        <img src={require("../../../assets/Instagram.png")} onClick={() => {
-              window.open("https://instagram.com/dzzdzz_official?igshid=YmMyMTA2M2Y=");
-            }} alt="" />
-        <img src={require("../../../assets/Github.png")} onClick={() => {
-              window.open("https://github.com/orgs/Five-Years");
-            }} alt="" />
+        <img
+          src={require("../../../assets/facebook.png")}
+          onClick={() => {
+            window.open("https://www.facebook.com/");
+          }}
+          alt=""
+        />
+        <img
+          src={require("../../../assets/Instagram.png")}
+          onClick={() => {
+            window.open(
+              "https://instagram.com/dzzdzz_official?igshid=YmMyMTA2M2Y="
+            );
+          }}
+          alt=""
+        />
+        <img
+          src={require("../../../assets/Github.png")}
+          onClick={() => {
+            window.open("https://github.com/orgs/Five-Years");
+          }}
+          alt=""
+        />
       </ContentSns>
     </>
   );
@@ -119,8 +133,9 @@ const ContentSns = styled.div`
 
   > img {
     :active {
-      opacity : 0.5;
+      opacity: 0.5;
     }
+    cursor: pointer;
   }
 
   @media screen and (max-width: 800px) {

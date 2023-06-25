@@ -4,7 +4,10 @@ import { useDispatch } from "react-redux";
 import StateSlice from "../../../../../features/State/StateSlice";
 import { ReactComponent as Won } from "../../../../../assets/won.svg";
 
-import { ReactComponent as Mile } from "../../../../../assets/mile.svg";
+import { ReactComponent as Jelly } from "../../../../../assets/jelly.svg";
+import { ReactComponent as Jelly2 } from "../../../../../assets/Jelly2.svg";
+import { ReactComponent as Jelly3 } from "../../../../../assets/Jelly3.svg";
+import { ReactComponent as Jelly4 } from "../../../../../assets/Jelly4.svg";
 
 function MilePage(props) {
   const dispatch = useDispatch();
@@ -13,10 +16,10 @@ function MilePage(props) {
       <ProductContainer>
         <TicketProduct>
           <TicketImage>
-            <Mile />
+            <Jelly />
           </TicketImage>
           <TicketCount>
-            <text>8 하트</text>
+            <text>8 젤리</text>
           </TicketCount>
         </TicketProduct>
         <TicketPurchaseContainer>
@@ -39,10 +42,10 @@ function MilePage(props) {
       <ProductContainer>
         <TicketProduct>
           <TicketImage>
-            <Mile />
+            <Jelly2 />
           </TicketImage>
           <TicketCount>
-            <text>25 하트</text>
+            <text>25 젤리</text>
           </TicketCount>
         </TicketProduct>
         <TicketPurchaseContainer>
@@ -66,10 +69,10 @@ function MilePage(props) {
       <ProductContainer>
         <TicketProduct>
           <TicketImage>
-            <Mile />
+            <Jelly2 />
           </TicketImage>
           <TicketCount>
-            <text>56 하트</text>
+            <text>56 젤리</text>
           </TicketCount>
         </TicketProduct>
         <TicketPurchaseContainer>
@@ -93,10 +96,10 @@ function MilePage(props) {
       <ProductContainer>
         <TicketProduct>
           <TicketImage>
-            <Mile />
+            <Jelly3 />
           </TicketImage>
           <TicketCount>
-            <text>77 하트</text>
+            <text>77 젤리</text>
           </TicketCount>
         </TicketProduct>
         <TicketPurchaseContainer>
@@ -120,16 +123,43 @@ function MilePage(props) {
       <ProductContainer>
         <TicketProduct>
           <TicketImage>
-            <Mile />
+            <Jelly3 />
           </TicketImage>
           <TicketCount>
-            <text>100 하트</text>
+            <text>100 젤리</text>
           </TicketCount>
         </TicketProduct>
         <TicketPurchaseContainer>
           {" "}
           <TicketPrice>
             <text>12,600 </text>
+            <Won />
+          </TicketPrice>
+          <TicketButton
+            onClick={() => {
+              window.ReactNativeWebView?.postMessage(
+                JSON.stringify({ type: "buy", data: 1 })
+              );
+              dispatch(StateSlice.actions.Ticket());
+            }}
+          >
+            <text>구매</text>
+          </TicketButton>
+        </TicketPurchaseContainer>
+      </ProductContainer>
+      <ProductContainer>
+        <TicketProduct>
+          <TicketImage>
+            <Jelly4 />
+          </TicketImage>
+          <TicketCount>
+            <text>130 젤리</text>
+          </TicketCount>
+        </TicketProduct>
+        <TicketPurchaseContainer>
+          {" "}
+          <TicketPrice>
+            <text>15,000 </text>
             <Won />
           </TicketPrice>
           <TicketButton

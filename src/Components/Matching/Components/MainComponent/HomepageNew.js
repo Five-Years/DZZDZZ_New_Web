@@ -10,10 +10,35 @@ import { ReactComponent as Info } from "../../../../assets/Info.svg";
 import MatchingHeaderNew from "../Header/MatchingHeaderNew";
 import StateSlice from "../../../../features/State/StateSlice";
 import MyTicket from "../../ReusableComponents/MyTicket";
+import axios from "axios";
 
 function HomepageNew() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const accessToken =
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2RAbmF2ZXIuY29tIiwiYXV0aCI6Ik5PUk1BTF9VU0VSIiwiZXhwIjoxNjg3Njk3NTU0fQ.AOaxp0J03frQGLI_5ln9qgFer1oxToytVLmtt5lR89E";
+  const refreshToken =
+    "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODc2OTc1NTR9.-dNZCl5CXNeBHKaOFWipgIykoZRiZBgnvegJerRBFHk";
+
+  useEffect(() => {
+    axios
+      .get(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/login/token`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "x-refresh-token": `Bearer ${refreshToken}`,
+            "content-type": "application/json",
+          },
+        }
+      )
+      .then((response) => console.log(response.data));
+  }, []);
 
   const Description = (props) => {
     if (props === 0) {
@@ -140,13 +165,6 @@ function HomepageNew() {
                 <span>#</span> 소개팅을 원해요
               </text>
             </SelectionTitle>
-            {Season === 0 ? (
-              <Highlight>
-                <text>NOW!</text>
-              </Highlight>
-            ) : (
-              <></>
-            )}
             <MoveContainer>
               <KeyboardArrowRightIcon />
             </MoveContainer>
@@ -170,13 +188,6 @@ function HomepageNew() {
                 <span className="friend">#</span> 친구를 원해요
               </text>
             </SelectionTitle>
-            {Season === 1 ? (
-              <Highlight>
-                <text>NOW!</text>
-              </Highlight>
-            ) : (
-              <></>
-            )}
             <MoveContainer>
               <KeyboardArrowRightIcon />
             </MoveContainer>

@@ -5,8 +5,7 @@ const initialState = {
   query: 1,
   ticket: 0,
   name: "anonymous",
-  season: 1,
-  seasonNumber: 2,
+  season: 0,
 };
 
 const StateSlice = createSlice({
@@ -28,9 +27,6 @@ const StateSlice = createSlice({
     },
     Season: (state, action) => {
       state.season = action.payload;
-    },
-    SeasonNumber: (state, action) => {
-      state.seasonNumber = action.payload;
     },
   },
 });

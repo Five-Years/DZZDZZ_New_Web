@@ -1,83 +1,76 @@
 import React, { useEffect } from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { ReactComponent as Tickets } from "../../../../assets/ticket.svg";
 import { ReactComponent as Mile } from "../../../../assets/mile.svg";
 
-
-
-
 function MatchingHeader(props) {
-    // 유저티켓 보유 갯수 확인, 추후 서버 연동 필요
-    const Ticket = useSelector((state) => {
-      return state.Popup.ticket;
-    });
+  // 유저티켓 보유 갯수 확인, 추후 서버 연동 필요
+  const Ticket = useSelector((state) => {
+    return state.Popup.ticket;
+  });
 
-    const Name = useSelector((state)=>{
-      return state.Popup.name;
-    });
-    const Season = useSelector((state)=>{
-      return state.Popup.season;
-    });
-    const SeasonNumber = useSelector((state)=>{
-      return state.Popup.seasonNumber;
-    })
+  const Name = useSelector((state) => {
+    return state.Popup.name;
+  });
+  const Season = useSelector((state) => {
+    return state.Popup.season;
+  });
+  const SeasonNumber = useSelector((state) => {
+    return state.Popup.seasonNumber;
+  });
 
-    const dispatch = useDispatch();
-    const seasonlist = ["이성매칭", "혼성매칭", "정리중"];
-    const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const seasonlist = ["매칭", "정리중"];
+  const navigate = useNavigate();
 
   return (
     <>
-    <HeaderContainer>
-    <HeaderTop>
-      <HeaderBox>
-        <HeaderProfile>
-          <HeaderName>
-            <text className="name">{Name}님</text>
-            <text>안녕하세요!</text>
-          </HeaderName>
-        </HeaderProfile>
-        <HeaderSeason theme={Season}>
-          <text>
-            지금은{" "}
-            <span>
-              {seasonlist[Season]}
-            </span>{" "}
-            접수기간입니다!
-          </text>
-        </HeaderSeason>
-      </HeaderBox>
-    </HeaderTop>
-    <HeaderBoarder>
-      <Boarder></Boarder>
-    </HeaderBoarder>
-    <HeaderBottom>
-      <CardTicket>
-        <Confirmation>
-          <Tickets />
-          <Ticketviewer>
-            <text>현재 보유 티켓 : {Ticket}</text>
-          </Ticketviewer>
-        </Confirmation>
-        <PurchaserButton
-          onClick={() => {
-            navigate("/purchasing", { state : {theme : Season, title : "충전하기"}});
-          }}
-        >
-          <text>충전하기</text>
-        </PurchaserButton>
-      </CardTicket>
-    </HeaderBottom>
-  </HeaderContainer>
-  </>
-  )
+      <HeaderContainer>
+        <HeaderTop>
+          <HeaderBox>
+            <HeaderProfile>
+              <HeaderName>
+                <text className="name">{Name}님</text>
+                <text>안녕하세요!</text>
+              </HeaderName>
+            </HeaderProfile>
+            <HeaderSeason theme={Season}>
+              <text>
+                지금은 <span>{seasonlist[Season]}</span> 접수기간입니다!
+              </text>
+            </HeaderSeason>
+          </HeaderBox>
+        </HeaderTop>
+        <HeaderBoarder>
+          <Boarder></Boarder>
+        </HeaderBoarder>
+        <HeaderBottom>
+          <CardTicket>
+            <Confirmation>
+              <Tickets />
+              <Ticketviewer>
+                <text>현재 보유 티켓 : {Ticket}</text>
+              </Ticketviewer>
+            </Confirmation>
+            <PurchaserButton
+              onClick={() => {
+                navigate("/purchasing", {
+                  state: { theme: Season, title: "충전하기" },
+                });
+              }}
+            >
+              <text>충전하기</text>
+            </PurchaserButton>
+          </CardTicket>
+        </HeaderBottom>
+      </HeaderContainer>
+    </>
+  );
 }
 
-export default MatchingHeader
-
-
+export default MatchingHeader;
 
 export const HeaderContainer = styled.div`
   display: flex;
@@ -92,26 +85,24 @@ export const HeaderContainer = styled.div`
 `;
 
 const HeaderMileContainer = styled.div`
-display: flex;
-position: absolute;
-justify-content: flex-end;
-align-items: center;
-width : 100%;
-height : 2.86%;
-top : 3px;
+  display: flex;
+  position: absolute;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 2.86%;
+  top: 3px;
 `;
 
 const HeaderMile = styled.div`
-display: flex;
-width: 10.77%;
-height: 100%;
-border-radius: 8px;
-margin-right : 5.13%;
-align-items: center;
-justify-content: space-between;
+  display: flex;
+  width: 10.77%;
+  height: 100%;
+  border-radius: 8px;
+  margin-right: 5.13%;
+  align-items: center;
+  justify-content: space-between;
 `;
-
-
 
 const HeaderTop = styled.div`
   width: 100%;
@@ -188,7 +179,6 @@ const HeaderSeason = styled.div`
   }
 `;
 
-
 export const HeaderBoarder = styled.div`
   width: 100%;
   height: 22.35%;
@@ -199,7 +189,6 @@ const Boarder = styled.div`
   top: 50%;
   box-sizing: border-box;
   border-bottom: 0.3px solid #888888;
-
 `;
 
 const HeaderBottom = styled.div`
@@ -211,7 +200,6 @@ const HeaderBottom = styled.div`
   width: 100%;
   height: 25.88%;
 `;
-
 
 const CardTicket = styled.div`
   display: flex;
@@ -275,9 +263,8 @@ const PurchaserButton = styled.div`
 
     color: #ffffff;
     :active {
-      color : #FF477E;
+      color: #ff477e;
     }
-    
   }
 `;
 
