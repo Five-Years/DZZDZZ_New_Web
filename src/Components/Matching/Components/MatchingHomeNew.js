@@ -28,6 +28,21 @@ function MatchingHomeNew() {
       JSON.stringify({ type: "notfirst", data: "" })
     );
   }, []);
+
+  const listener = (event) => {
+    const { data, type } = JSON.parse(event);
+
+    switch (type) {
+      case "back":
+        if (this.props.navigation.isFirstRouteInParent()) {
+          navigate("/Matching");
+        } else {
+          navigate(-1);
+        }
+        break;
+    }
+  };
+
   return (
     <>
       <MobileContainer>

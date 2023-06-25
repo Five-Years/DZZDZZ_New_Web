@@ -67,7 +67,11 @@ function HomepageNew() {
         dispatch(StateSlice.actions.SeasonNumber(data.seasonnumber));
 
       case "back":
-        navigate("/Matching");
+        if (this.props.navigation.isFirstRouteInParent()) {
+          navigate("/Matching");
+        } else {
+          navigate(-1);
+        }
         break;
     }
   };

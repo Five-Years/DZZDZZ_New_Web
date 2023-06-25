@@ -50,6 +50,14 @@ function Purchasing() {
         alert("구매 실패");
         break;
       }
+
+      case "back":
+        if (this.props.navigation.isFirstRouteInParent()) {
+          navigate("/Matching");
+        } else {
+          navigate(-1);
+        }
+        break;
     }
   };
 
