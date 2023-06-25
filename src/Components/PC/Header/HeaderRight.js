@@ -128,7 +128,7 @@ const MobileSns = styled.div`
     width: 100%;
     height: 40px;
     margin-top: 0px;
-    top: 43.45%;
+    top: 49.45%;
     align-items: center;
     justify-content: center;
   }

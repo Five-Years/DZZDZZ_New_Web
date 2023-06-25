@@ -18,6 +18,7 @@ function App() {
       {/* user-scalable=no, 모바일 화면에서 input창 확대되는것 방지 */}
       <MainFrame>
         <HeaderBar />
+
         <HeaderMain2 />
         <Footer />
       </MainFrame>
