@@ -145,6 +145,8 @@ const BottomContainer = styled.div`
 const ItemContainers = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   position: relative;
   width: 89.74%;
   height: 78.11%;

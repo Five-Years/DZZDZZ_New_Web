@@ -3,7 +3,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { ReactComponent as Mile } from "../../../../assets/mile.svg";
+import { ReactComponent as Jelly } from "../../../../assets/jelly.svg";
 
 function MatchingProgressHeader(props) {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ function MatchingProgressHeader(props) {
         ) : (
           <>
             <MileHeader>
-              <Mile />
+              <Jelly />
               <text>1</text>
             </MileHeader>
           </>

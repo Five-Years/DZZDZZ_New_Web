@@ -15,30 +15,98 @@ import axios from "axios";
 function HomepageNew() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [userData, setUserData] = useState();
+  // const accessToken =
+  //   "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2RAbmF2ZXIuY29tIiwiYXV0aCI6Ik5PUk1BTF9VU0VSIiwiZXhwIjoxNjg3Njk3NTU0fQ.AOaxp0J03frQGLI_5ln9qgFer1oxToytVLmtt5lR89E";
+  // const refreshToken =
+  //   "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODc2OTc1NTR9.-dNZCl5CXNeBHKaOFWipgIykoZRiZBgnvegJerRBFHk";
 
-  const accessToken =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2RAbmF2ZXIuY29tIiwiYXV0aCI6Ik5PUk1BTF9VU0VSIiwiZXhwIjoxNjg3Njk3NTU0fQ.AOaxp0J03frQGLI_5ln9qgFer1oxToytVLmtt5lR89E";
-  const refreshToken =
-    "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODc2OTc1NTR9.-dNZCl5CXNeBHKaOFWipgIykoZRiZBgnvegJerRBFHk";
+  // const getData = async () => {
+  //   const Response = await axios.get(
+  //     `${
+  //       process.env.NODE_ENV === "development"
+  //         ? ""
+  //         : "https://dev.fiveyears.click"
+  //     }/login/token`,
+  //     {
+  //       headers: {
+  //         Authorization: accessToken,
+  //         "x-refresh-token": refreshToken,
+  //         "content-type": "application/json",
+  //       },
+  //     }
+  //   );
+  //   setUserData(Response.data);
+  // };
 
-  useEffect(() => {
-    axios
-      .get(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/login/token`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "x-refresh-token": `Bearer ${refreshToken}`,
-            "content-type": "application/json",
-          },
+  // useEffect(() => {
+  //   dispatch(StateSlice.actions.Name("미쥬미쥬미쥬"));
+  // }, []);
+
+  const listener = (event) => {
+    const { data, type } = JSON.parse(event);
+
+    switch (type) {
+      case "loginToken":
+        if (Name === "anonymous") {
+          // getData(data);
+          dispatch(StateSlice.actions.Name("미쥬미쥬미쥬"));
         }
-      )
-      .then((response) => console.log(response.data));
-  }, []);
+        break;
+
+      case "onBlur":
+        navigate("/Matching");
+        break;
+
+      case "store":
+        navigate("/purchasing");
+        break;
+
+      case "season":
+        dispatch(StateSlice.actions.Season(data.season));
+        dispatch(StateSlice.actions.SeasonNumber(data.seasonnumber));
+
+      case "back":
+        navigate("/Matching");
+        break;
+    }
+  };
+
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       `${
+  //         process.env.NODE_ENV === "development"
+  //           ? ""
+  //           : "https://dev.fiveyears.click"
+  //       }/login/token`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //           "x-refresh-token": `Bearer ${refreshToken}`,
+  //           "content-type": "application/json",
+  //         },
+  //       }
+  //     )
+  //     .then((response) => console.log(response.data));
+  // }, []);
+
+  const Ticket = useSelector((state) => {
+    return state.Popup.ticket;
+  });
+
+  const Name = useSelector((state) => {
+    return state.Popup.name;
+  });
+  const Season = useSelector((state) => {
+    return state.Popup.Season;
+  });
+  const SeasonNumber = useSelector((state) => {
+    return state.Popup.SeasonNumber;
+  });
+
+  // 유저인증여부 확인, 추후 서버 연동 필요
+  const authentification = true;
 
   const Description = (props) => {
     if (props === 0) {
@@ -77,47 +145,6 @@ function HomepageNew() {
           </EventTextTime>
         </EventTextContainer>
       );
-    }
-  };
-
-  const Ticket = useSelector((state) => {
-    return state.Popup.ticket;
-  });
-
-  const Name = useSelector((state) => {
-    return state.Popup.name;
-  });
-  const Season = useSelector((state) => {
-    return state.Popup.Season;
-  });
-  const SeasonNumber = useSelector((state) => {
-    return state.Popup.SeasonNumber;
-  });
-
-  // 유저인증여부 확인, 추후 서버 연동 필요
-  const authentification = true;
-
-  const listener = (event) => {
-    const { data, type } = JSON.parse(event);
-
-    switch (type) {
-      case "loginToken":
-        if (Name === "anonymous" && data.accessToken !== undefined) {
-          dispatch(StateSlice.actions.Name("토큰도착"));
-        }
-        break;
-
-      case "onBlur":
-        navigate("/Matching");
-        break;
-
-      case "season":
-        dispatch(StateSlice.actions.Season(data.season));
-        dispatch(StateSlice.actions.SeasonNumber(data.seasonnumber));
-
-      case "back":
-        navigate("/Matching");
-        break;
     }
   };
 

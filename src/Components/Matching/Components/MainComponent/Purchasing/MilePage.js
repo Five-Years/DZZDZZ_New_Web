@@ -13,172 +13,220 @@ function MilePage(props) {
   const dispatch = useDispatch();
   return (
     <>
-      <ProductContainer>
-        <TicketProduct>
-          <TicketImage>
-            <Jelly />
-          </TicketImage>
-          <TicketCount>
-            <text>8 젤리</text>
-          </TicketCount>
-        </TicketProduct>
-        <TicketPurchaseContainer>
-          <TicketPrice>
-            <text>1,600 </text>
-            <Won />
-          </TicketPrice>
-          <TicketButton
-            onClick={() => {
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "buy", data: 1 })
-              );
-              dispatch(StateSlice.actions.Ticket());
-            }}
-          >
-            <text>구매</text>
-          </TicketButton>
-        </TicketPurchaseContainer>
-      </ProductContainer>
-      <ProductContainer>
-        <TicketProduct>
-          <TicketImage>
-            <Jelly2 />
-          </TicketImage>
-          <TicketCount>
-            <text>25 젤리</text>
-          </TicketCount>
-        </TicketProduct>
-        <TicketPurchaseContainer>
-          {" "}
-          <TicketPrice>
-            <text>4,200 </text>
-            <Won />
-          </TicketPrice>
-          <TicketButton
-            onClick={() => {
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "buy", data: 1 })
-              );
-              dispatch(StateSlice.actions.Ticket());
-            }}
-          >
-            <text>구매</text>
-          </TicketButton>
-        </TicketPurchaseContainer>
-      </ProductContainer>
-      <ProductContainer>
-        <TicketProduct>
-          <TicketImage>
-            <Jelly2 />
-          </TicketImage>
-          <TicketCount>
-            <text>56 젤리</text>
-          </TicketCount>
-        </TicketProduct>
-        <TicketPurchaseContainer>
-          {" "}
-          <TicketPrice>
-            <text>8,400 </text>
-            <Won />
-          </TicketPrice>
-          <TicketButton
-            onClick={() => {
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "buy", data: 1 })
-              );
-              dispatch(StateSlice.actions.Ticket());
-            }}
-          >
-            <text>구매</text>
-          </TicketButton>
-        </TicketPurchaseContainer>
-      </ProductContainer>
-      <ProductContainer>
-        <TicketProduct>
-          <TicketImage>
-            <Jelly3 />
-          </TicketImage>
-          <TicketCount>
-            <text>77 젤리</text>
-          </TicketCount>
-        </TicketProduct>
-        <TicketPurchaseContainer>
-          {" "}
-          <TicketPrice>
-            <text>10,500 </text>
-            <Won />
-          </TicketPrice>
-          <TicketButton
-            onClick={() => {
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "buy", data: 1 })
-              );
-              dispatch(StateSlice.actions.Ticket());
-            }}
-          >
-            <text>구매</text>
-          </TicketButton>
-        </TicketPurchaseContainer>
-      </ProductContainer>
-      <ProductContainer>
-        <TicketProduct>
-          <TicketImage>
-            <Jelly3 />
-          </TicketImage>
-          <TicketCount>
-            <text>100 젤리</text>
-          </TicketCount>
-        </TicketProduct>
-        <TicketPurchaseContainer>
-          {" "}
-          <TicketPrice>
-            <text>12,600 </text>
-            <Won />
-          </TicketPrice>
-          <TicketButton
-            onClick={() => {
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "buy", data: 1 })
-              );
-              dispatch(StateSlice.actions.Ticket());
-            }}
-          >
-            <text>구매</text>
-          </TicketButton>
-        </TicketPurchaseContainer>
-      </ProductContainer>
-      <ProductContainer>
-        <TicketProduct>
-          <TicketImage>
-            <Jelly4 />
-          </TicketImage>
-          <TicketCount>
-            <text>130 젤리</text>
-          </TicketCount>
-        </TicketProduct>
-        <TicketPurchaseContainer>
-          {" "}
-          <TicketPrice>
-            <text>15,000 </text>
-            <Won />
-          </TicketPrice>
-          <TicketButton
-            onClick={() => {
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "buy", data: 1 })
-              );
-              dispatch(StateSlice.actions.Ticket());
-            }}
-          >
-            <text>구매</text>
-          </TicketButton>
-        </TicketPurchaseContainer>
-      </ProductContainer>
+      <TemporaryContainer>
+        <ProductContainer className="section">
+          <TicketProduct>
+            <TicketImage>
+              <Jelly />
+            </TicketImage>
+            <TicketCount>
+              <text>8 젤리</text>
+            </TicketCount>
+          </TicketProduct>
+          <TicketPurchaseContainer>
+            <TicketPrice>
+              <text>1,600 </text>
+              <Won />
+            </TicketPrice>
+            <TicketButton
+              onClick={() => {
+                window.ReactNativeWebView?.postMessage(
+                  JSON.stringify({ type: "buy", data: 1 })
+                );
+                dispatch(StateSlice.actions.Ticket());
+              }}
+            >
+              <text>구매</text>
+            </TicketButton>
+          </TicketPurchaseContainer>
+        </ProductContainer>
+        <ProductContainer className="section">
+          <TicketProduct>
+            <TicketImage>
+              <Jelly2 />
+            </TicketImage>
+            <TicketCount>
+              <text>25 젤리</text>
+            </TicketCount>
+          </TicketProduct>
+          <TicketPurchaseContainer>
+            {" "}
+            <TicketPrice>
+              <text>4,200 </text>
+              <Won />
+            </TicketPrice>
+            <TicketButton
+              onClick={() => {
+                window.ReactNativeWebView?.postMessage(
+                  JSON.stringify({ type: "buy", data: 1 })
+                );
+                dispatch(StateSlice.actions.Ticket());
+              }}
+            >
+              <text>구매</text>
+            </TicketButton>
+          </TicketPurchaseContainer>
+        </ProductContainer>
+        <ProductContainer className="section">
+          <TicketProduct>
+            <TicketImage>
+              <Jelly2 />
+            </TicketImage>
+            <TicketCount>
+              <text>56 젤리</text>
+            </TicketCount>
+          </TicketProduct>
+          <TicketPurchaseContainer>
+            {" "}
+            <TicketPrice>
+              <text>8,400 </text>
+              <Won />
+            </TicketPrice>
+            <TicketButton
+              onClick={() => {
+                window.ReactNativeWebView?.postMessage(
+                  JSON.stringify({ type: "buy", data: 1 })
+                );
+                dispatch(StateSlice.actions.Ticket());
+              }}
+            >
+              <text>구매</text>
+            </TicketButton>
+          </TicketPurchaseContainer>
+        </ProductContainer>
+      </TemporaryContainer>
+      <RecommendContainer className="popular">
+        <text className="popular">가장 인기가 많아요</text>
+        <ProductContainer className="popular">
+          <TicketProduct>
+            <TicketImage>
+              <Jelly3 />
+            </TicketImage>
+            <TicketCount>
+              <text>77 젤리</text>
+            </TicketCount>
+          </TicketProduct>
+          <TicketPurchaseContainer>
+            {" "}
+            <TicketPrice>
+              <text>10,500 </text>
+              <Won />
+            </TicketPrice>
+            <TicketButton
+              onClick={() => {
+                window.ReactNativeWebView?.postMessage(
+                  JSON.stringify({ type: "buy", data: 1 })
+                );
+                dispatch(StateSlice.actions.Ticket());
+              }}
+            >
+              <text>구매</text>
+            </TicketButton>
+          </TicketPurchaseContainer>
+        </ProductContainer>
+      </RecommendContainer>
+      <RecommendContainer>
+        <ProductContainer>
+          <TicketProduct>
+            <TicketImage>
+              <Jelly3 />
+            </TicketImage>
+            <TicketCount>
+              <text>100 젤리</text>
+            </TicketCount>
+          </TicketProduct>
+          <TicketPurchaseContainer>
+            {" "}
+            <TicketPrice>
+              <text>12,600 </text>
+              <Won />
+            </TicketPrice>
+            <TicketButton
+              onClick={() => {
+                window.ReactNativeWebView?.postMessage(
+                  JSON.stringify({ type: "buy", data: 1 })
+                );
+                dispatch(StateSlice.actions.Ticket());
+              }}
+            >
+              <text>구매</text>
+            </TicketButton>
+          </TicketPurchaseContainer>
+        </ProductContainer>
+      </RecommendContainer>
+      <RecommendContainer className="cheap">
+        <text className="cheap">가장 가성비가 좋아요</text>
+        <ProductContainer className="cheap">
+          <TicketProduct>
+            <TicketImage>
+              <Jelly4 />
+            </TicketImage>
+            <TicketCount>
+              <text>130 젤리</text>
+            </TicketCount>
+          </TicketProduct>
+          <TicketPurchaseContainer>
+            {" "}
+            <TicketPrice>
+              <text>15,000 </text>
+              <Won />
+            </TicketPrice>
+            <TicketButton
+              onClick={() => {
+                window.ReactNativeWebView?.postMessage(
+                  JSON.stringify({ type: "buy", data: 1 })
+                );
+                dispatch(StateSlice.actions.Ticket());
+              }}
+            >
+              <text>구매</text>
+            </TicketButton>
+          </TicketPurchaseContainer>
+        </ProductContainer>
+      </RecommendContainer>
     </>
   );
 }
 
 export default MilePage;
+
+const TemporaryContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 47.73%;
+`;
+
+const RecommendContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+
+  width: 100%;
+  height: 17.42%;
+  > text {
+    text-align: center;
+    font-size: 12px;
+    font-family: Noto Sans KR;
+    font-weight: 500;
+    line-height: 150%;
+    letter-spacing: 0.6px;
+    text-transform: capitalize;
+
+    &.cheap {
+      color: #0094ff;
+    }
+
+    &.popular {
+      color: #ff477e;
+    }
+  }
+
+  border-radius: 8px;
+`;
 
 export const TicketButton = styled.div`
   display: flex;
@@ -246,12 +294,35 @@ const ProductContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 9px;
 
   width: 100%;
-  height: 18.89%;
+  height: 14.39%;
 
   border-radius: 8px;
+
+  &.section {
+    width: 100%;
+    height: 33.33%;
+  }
+
+  &.popular {
+    /* flex-direction: column;
+    align-items: start;
+    justify-content: space-between; */
+    height: 71.91%;
+    background-color: #ffe4e4;
+    border-radius: 30px;
+  }
+
+  &.cheap {
+    /* flex-direction: column;
+    align-items: start;
+    justify-content: space-between; */
+    height: 71.91%;
+    background-color: #ebeff2;
+    border-radius: 30px;
+  }
 `;
 
 const Confirmation = styled.div`
