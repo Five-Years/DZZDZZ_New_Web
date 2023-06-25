@@ -66,10 +66,6 @@ function Purchasing() {
     document.addEventListener("message", (e) => listener(e.data));
     //ios
     window.addEventListener("message", (e) => listener(e.data));
-
-    window.ReactNativeWebView?.postMessage(
-      JSON.stringify({ type: "notfirst", data: "" })
-    );
   }, []);
 
   return (
