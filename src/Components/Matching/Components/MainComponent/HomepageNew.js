@@ -52,7 +52,6 @@ function HomepageNew() {
           // getData(data);
           dispatch(StateSlice.actions.Name("미쥬미쥬미쥬"));
         }
-
         break;
 
       case "onBlur":

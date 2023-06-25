@@ -1,12 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import styled from "styled-components";
 
-
 function MenuHeader(props) {
-
   const navigate = useNavigate();
   return (
     <>
@@ -14,20 +12,21 @@ function MenuHeader(props) {
         <ContentLeft>
           <ArrowBackIosIcon
             style={{ marginLeft: "15.4%", width: "50%", height: "50%" }}
-            onClick={() => {navigate(-1);}} />
+            onClick={() => {
+              navigate("/Matching");
+            }}
+          />
         </ContentLeft>
         <ContentTitle>
           <text>{props.title}</text>
         </ContentTitle>
-        <ContentRight>
-        </ContentRight>
+        <ContentRight></ContentRight>
       </ContentContainers>
     </>
   );
 }
 
 export default MenuHeader;
-
 
 export const ContentContainers = styled.div`
   display: flex;
@@ -39,7 +38,6 @@ export const ContentContainers = styled.div`
   height: 100%;
   /* border-bottom: 0.3px solid #888888; */
 `;
-
 
 export const ContentLeft = styled.div`
   display: flex;
@@ -64,18 +62,18 @@ export const ContentTitle = styled.div`
 
   > text {
     font-family: var(--font-OpenSans);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 19px;
-  line-height: 22px;
-  /* identical to box height, or 116% */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 22px;
+    /* identical to box height, or 116% */
 
-  text-align: center;
-  letter-spacing: -0.408px;
+    text-align: center;
+    letter-spacing: -0.408px;
 
-  /* Text Black */
+    /* Text Black */
 
-  color: #000000;
+    color: #000000;
   }
 `;
 
@@ -89,4 +87,3 @@ export const ContentRight = styled.div`
   width: 33.33%;
   height: 100%;
 `;
-
