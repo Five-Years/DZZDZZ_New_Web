@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 import StateSlice from "../../../features/State/StateSlice";
 
 function MyTicket() {
-  const navigate= useNavigate();
-  const Season = useSelector((state)=>{
+  const navigate = useNavigate();
+  const Season = useSelector((state) => {
     return state.Popup.Season;
   });
   return (
@@ -17,9 +17,13 @@ function MyTicket() {
           <Tickets />
           <text>1</text>
         </Ticket>
-        <Charge           onClick={() => {
-            navigate("/purchasing", { state : {theme : Season, title : "충전하기"}});
-          }}>
+        <Charge
+          onClick={() => {
+            navigate("/purchasing", {
+              state: { theme: Season, title: "충전하기" },
+            });
+          }}
+        >
           <text>충전하기</text>
         </Charge>
       </TicketButton>
@@ -75,6 +79,7 @@ const Charge = styled.div`
   height: 100%;
   gap: 10px;
   margin-right: 7.69%;
+  cursor: pointer;
 
   > text {
     font-family: var(--font-OpenSans);

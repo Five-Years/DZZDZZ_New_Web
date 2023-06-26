@@ -5,7 +5,7 @@ const initialState = {
   query: 1,
   ticket: 0,
   name: "anonymous",
-  season: 0,
+  season: true,
 };
 
 const StateSlice = createSlice({

@@ -117,7 +117,7 @@ function MatchingHomeNew() {
         </MatchingContainer>
         <ButtonContainer>
           <EachButtonContainer>
-            {theme === Season ? (
+            {Season ? (
               <EachButton
                 onClick={() => {
                   navigate("/MatchingProgress", { state: { theme: theme } });

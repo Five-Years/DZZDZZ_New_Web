@@ -16,32 +16,33 @@ function HomepageNew() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userData, setUserData] = useState();
-  // const accessToken =
-  //   "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2RAbmF2ZXIuY29tIiwiYXV0aCI6Ik5PUk1BTF9VU0VSIiwiZXhwIjoxNjg3Njk3NTU0fQ.AOaxp0J03frQGLI_5ln9qgFer1oxToytVLmtt5lR89E";
-  // const refreshToken =
-  //   "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODc2OTc1NTR9.-dNZCl5CXNeBHKaOFWipgIykoZRiZBgnvegJerRBFHk";
 
-  // const getData = async () => {
-  //   const Response = await axios.get(
-  //     `${
-  //       process.env.NODE_ENV === "development"
-  //         ? ""
-  //         : "https://dev.fiveyears.click"
-  //     }/login/token`,
-  //     {
-  //       headers: {
-  //         Authorization: accessToken,
-  //         "x-refresh-token": refreshToken,
-  //         "content-type": "application/json",
-  //       },
-  //     }
-  //   );
-  //   setUserData(Response.data);
-  // };
+  const accessToken =
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2RAbmF2ZXIuY29tIiwiYXV0aCI6Ik5PUk1BTF9VU0VSIiwiZXhwIjoxNjg3Njk3NTU0fQ.AOaxp0J03frQGLI_5ln9qgFer1oxToytVLmtt5lR89E";
+  const refreshToken =
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODc2OTc1NTR9.-dNZCl5CXNeBHKaOFWipgIykoZRiZBgnvegJerRBFHk";
 
-  // useEffect(() => {
-  //   dispatch(StateSlice.actions.Name("미쥬미쥬미쥬"));
-  // }, []);
+  const getData = async () => {
+    const Response = await axios.get(
+      `${
+        process.env.NODE_ENV === "development"
+          ? ""
+          : "https://dev.fiveyears.click"
+      }/login/token`,
+      {
+        headers: {
+          Authorization: accessToken,
+          "x-refresh-token": refreshToken,
+          "content-type": "application/json",
+        },
+      }
+    );
+    setUserData(JSON.parse(Response.data.data));
+    dispatch(StateSlice.actions.Name(userData.nickname));
+  };
+  useEffect(() => {
+    getData();
+  }, []);
 
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
@@ -49,7 +50,7 @@ function HomepageNew() {
     switch (type) {
       case "loginToken":
         if (Name === "anonymous") {
-          // getData(data);
+          getData(data);
           dispatch(StateSlice.actions.Name("미쥬미쥬미쥬"));
         }
         break;

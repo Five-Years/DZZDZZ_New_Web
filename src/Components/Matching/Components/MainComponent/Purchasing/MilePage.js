@@ -125,7 +125,7 @@ function MilePage(props) {
           </TicketPurchaseContainer>
         </ProductContainer>
       </RecommendContainer>
-      <RecommendContainer>
+      <RecommendContainer className="hundred">
         <ProductContainer>
           <TicketProduct>
             <TicketImage>
@@ -207,6 +207,11 @@ const RecommendContainer = styled.div`
 
   width: 100%;
   height: 17.42%;
+
+  &.hundred {
+    margin-top: 10px;
+  }
+
   > text {
     text-align: center;
     font-size: 12px;
@@ -222,6 +227,9 @@ const RecommendContainer = styled.div`
 
     &.popular {
       color: #ff477e;
+    }
+
+    &.hundred {
     }
   }
 
