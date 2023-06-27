@@ -68,7 +68,7 @@ function HomepageNew() {
         break;
 
       case "store":
-        navigate("/purchasing", { state: { title: "충전하기" } });
+        navigate("/purchasing", { state: { title: "충전하기", direct : true } });
         break;
 
       case "season":
@@ -293,7 +293,7 @@ const HistoryButton = styled.div`
     color: var(--system-gray-800, #48484a);
     text-align: center;
     font-size: 16px;
-    font-family: Open Sans;
+    font-family: var(--font-Pretendard);
     line-height: 150%;
     letter-spacing: 0.8px;
     text-transform: capitalize;
@@ -342,7 +342,7 @@ const EventText = styled.div`
   display: flex;
   position: relative;
   > text {
-    font-family: var(--font-Poppins);
+    font-family: var(--font-Pretendard);
     font-size: 13px;
     font-weight: 400;
     line-height: 20px;
@@ -357,7 +357,7 @@ const EventTextTime = styled.div`
 
   > text {
     color: var(--text-black, #000);
-    font-family: var(--font-Poppins);
+    font-family: var(--font-Pretendard);
     font-size: 14px;
     font-weight: 400;
     line-height: 24px;
@@ -440,7 +440,7 @@ const MatchingOption = styled.div`
   > text {
     width: 74.9%;
     height: 100%;
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -487,7 +487,7 @@ const Highlight = styled.div`
   text-transform: capitalize;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 600;
     font-size: 12px;
@@ -510,7 +510,7 @@ const PurchaserButton = styled.div`
   border-radius: 30px;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 600;
     font-size: 12px;
@@ -555,7 +555,7 @@ const Ticketviewer = styled.div`
   min-width: 119px;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 500;
     font-size: 15px;
@@ -587,7 +587,7 @@ const HeaderName = styled.div`
   height: 73.91%;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -632,7 +632,7 @@ const HeaderSeason = styled.div`
   background-color: white;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -689,7 +689,7 @@ const SelectionTitle = styled.div`
 
   > text > span {
     margin-right: 10px;
-    font-family: var(--font-Poppins);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -705,7 +705,7 @@ const SelectionTitle = styled.div`
   }
 
   > text {
-    font-family: var(--font-Poppins);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 16px;

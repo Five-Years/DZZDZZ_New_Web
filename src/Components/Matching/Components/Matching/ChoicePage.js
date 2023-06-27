@@ -214,7 +214,7 @@ const SuggentionButton = styled.div`
   border-radius: 31px;
 
   > text {
-    font-family: "Inter";
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -269,7 +269,7 @@ const ResultBox = styled.div`
   height: 100px;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 300;
     font-size: 18px;
@@ -290,7 +290,7 @@ const ResultBox = styled.div`
   }
 
   > text.reject {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -316,7 +316,7 @@ const WaitingBox = styled.div`
   width: 100%;
   height: 49px;
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -352,7 +352,7 @@ const ChanceBox = styled.div`
   height: 60px;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 16px;

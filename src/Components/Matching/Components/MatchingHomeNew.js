@@ -247,7 +247,7 @@ font-family: var(--font-Pretendard);    font-style: normal;
   }
 
   > text > span {
-    font-family: var(--font-Poppins);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 300;
     font-size: 16px;
@@ -308,7 +308,7 @@ export const CardTag = styled.div`
   border-radius: 19px;
 
   > text {
-    font-family: var(--font-Poppins);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 300;
     font-size: 12px;
@@ -349,7 +349,7 @@ export const CardTitle = styled.div`
   text-align: center;
   bottom: 5.051%;
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 300;
     font-size: 16px;
@@ -413,7 +413,7 @@ const EachButton = styled.div`
     background: ${(props) => (props.theme === 0 ? "#A6DAFF" : "#FEC7D7")};
   }
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 13px;

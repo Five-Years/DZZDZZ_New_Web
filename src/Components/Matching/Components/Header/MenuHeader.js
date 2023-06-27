@@ -13,8 +13,14 @@ function MenuHeader(props) {
           <ArrowBackIosIcon
             style={{ marginLeft: "15.4%", width: "50%", height: "50%" }}
             onClick={() => {
-              navigate("/Matching");
-            }}
+              if (props.direct)
+              {
+                navigate("/Matching");
+              }
+              else 
+              {
+                navigate(-1);
+              }}}
           />
         </ContentLeft>
         <ContentTitle>

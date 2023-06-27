@@ -89,12 +89,11 @@ const MileHeader = styled.div`
   z-index: 1;
 
   > text {
-    font-family: var(--font-OpenSans);
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 24px;
-    letter-spacing: 0em;
-    text-align: left;
+    color: #333333;
+font-size: 16px;
+font-family: var(--font-Pretendard);
+font-weight: 600;
+line-height: 24px;
   }
 `;
 
@@ -133,7 +132,7 @@ export const ContentTitle = styled.div`
   height: 100%;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family : var(--font-Pretendard);    
     font-style: normal;
     font-weight: 400;
     font-size: 19px;

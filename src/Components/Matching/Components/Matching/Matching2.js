@@ -210,7 +210,7 @@ height : 100%;
 border-bottom: ${props => props.value === props.select ? "3px solid #FF477E" : <></> };
 
 > text {
-  font-family: 'Noto Sans';
+  font-family: var(--font-Pretendard);
 font-style: normal;
 font-weight: 700;
 font-size: 14px;
@@ -248,7 +248,7 @@ border-radius: 13px;
   background : #EBEBF0;
 
   > text {
-    font-family: 'Open Sans';
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -266,7 +266,7 @@ border-radius: 13px;
 }
 
 > text {
-  font-family: 'Open Sans';
+  font-family: var(--font-Pretendard);
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -341,7 +341,7 @@ const ContentsTitle = styled.div`
 
   > text{
     margin-left: 20px;
-    font-family: 'SF Pro';
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
@@ -354,7 +354,7 @@ const ContentsTitle = styled.div`
 
   > span {
     margin-left: 20px;
-    font-family: 'SF Pro';
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
@@ -394,7 +394,7 @@ const ContentsWindow = styled.div`
 
   > text {
     margin-left: 14px;
-    font-family: 'SF Pro';
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -426,7 +426,7 @@ const TagContainer = styled.div`
 
   > text {
     overflow: hidden;
-    font-family: 'SF Pro';
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -463,7 +463,7 @@ text-underline-offset : 5px; //밑줄과 텍스트와의 간격
 
 > text {
   margin-left: 20px;
-  font-family: 'SF Pro';
+  font-family: var(--font-Pretendard);
   font-style: normal;
   font-weight: 510;
   font-size: 17px;

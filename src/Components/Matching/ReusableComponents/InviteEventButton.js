@@ -54,7 +54,7 @@ const InviteTextBox = styled.div`
   margin-left: 7%;
 
   > text {
-    font-family: "SF Pro";
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 12px;

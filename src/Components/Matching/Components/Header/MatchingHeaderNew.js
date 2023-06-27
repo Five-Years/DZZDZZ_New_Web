@@ -100,7 +100,7 @@ const HeaderName = styled.div`
   height: 81%;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 27px;
@@ -122,7 +122,7 @@ const HeaderSeason = styled.div`
   height: 20%;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-size: 14px;
     font-weight: 400;
     line-height: 19px;

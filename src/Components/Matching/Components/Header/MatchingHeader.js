@@ -137,7 +137,7 @@ const HeaderName = styled.div`
   height: 73.91%;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -159,7 +159,7 @@ const HeaderSeason = styled.div`
   min-height: 19px;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -225,7 +225,7 @@ const Highlight = styled.div`
   text-transform: capitalize;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 600;
     font-size: 12px;
@@ -248,7 +248,7 @@ const PurchaserButton = styled.div`
   border-radius: 30px;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 600;
     font-size: 12px;
@@ -296,7 +296,7 @@ const Ticketviewer = styled.div`
   min-width: 119px;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 500;
     font-size: 15px;

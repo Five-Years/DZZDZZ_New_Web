@@ -93,14 +93,14 @@ const ItemLeft = styled.div`
     color: ${(props) => (props.link ? "black" : "grey")};
     text-align: center;
     font-size: 14px;
-    font-family: Noto Sans;
+    font-family: var(--font-Pretendard);
     line-height: 150%;
     letter-spacing: 0.7px;
     text-transform: capitalize;
   }
 
   > text.time {
-    font-family: "Noto Sans";
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -130,7 +130,7 @@ const ItemRight = styled.div`
   height: 100%;
 
   > text {
-    font-family: "Noto Sans";
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
@@ -169,7 +169,7 @@ const ItemRight = styled.div`
   }
 
   > text > span {
-    font-family: "Noto Sans";
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 300;
     font-size: 12px;

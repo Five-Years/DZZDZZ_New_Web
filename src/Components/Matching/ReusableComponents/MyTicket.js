@@ -62,7 +62,7 @@ const Ticket = styled.div`
   justify-content: space-between;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
@@ -82,7 +82,7 @@ const Charge = styled.div`
   cursor: pointer;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-size: 12px;
     font-weight: 400;
     line-height: 18px;

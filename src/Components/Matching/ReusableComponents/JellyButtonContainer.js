@@ -43,7 +43,7 @@ const InviteTextBox = styled.div`
   height: 55.26%;
 
   > text {
-    font-family: Noto Sans KR;
+    font-family: var(--font-Pretendard);
     font-size: 12px;
     font-weight: 500;
     line-height: 21px;

@@ -285,7 +285,7 @@ const Button = styled.div`
   border-radius: 13px;
 
   > text {
-    font-family: "Poppins";
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 800;
     font-size: 16px;
@@ -361,7 +361,7 @@ const InviteTextBox = styled.div`
   margin-left: 4.57%;
 
   > text {
-    font-family: "SF Pro";
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 13px;
@@ -417,7 +417,7 @@ const HeaderTopRight = styled.div`
   border-bottom: 1px solid #888888;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -439,7 +439,7 @@ const Ticketviewer = styled.div`
   min-width: 119px;
 
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 500;
     font-size: 15px;

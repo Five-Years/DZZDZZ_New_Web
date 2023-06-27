@@ -5,6 +5,9 @@ import { useState } from "react";
 
 function Coupon() {
   const [isError, setIsError] = useState(false);
+
+
+  
   return (
     <PurchasePageContainer>
       <HeaderContainer>
@@ -69,7 +72,7 @@ const ErrorContainer = styled.div`
   height: 15px;
 
   > text {
-    font-family: "Open Sans";
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 11px;
@@ -109,7 +112,7 @@ const ConfirmButton = styled.div`
   justify-content: center;
 
   > text {
-    font-family: "Poppins";
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 800;
     font-size: 16px;
