@@ -8,7 +8,7 @@ function HistoryMatch() {
     { time: "23.05.14 12:44", season: 0, isSuccess: true, isLink: true },
     { time: "23.05.14 12:44", season: 1, isSuccess: true, isLink: true },
     { time: "23.05.14 12:44", season: 0, isSuccess: true, isLink: true },
-    { time: "23.05.14 12:44", season: 1, isSuccess: false, isLink: true },
+    { time: "23.05.14 12:44", season: 1, isSuccess: false, isLink: false },
     { time: "23.05.14 12:44", season: 0, isSuccess: true, isLink: false },
     { time: "23.05.14 12:44", season: 1, isSuccess: false, isLink: false },
     { time: "23.05.14 12:44", season: 0, isSuccess: true, isLink: false },
@@ -30,7 +30,7 @@ function HistoryMatch() {
               onClick={
                 prop.isLink
                   ? () => {
-                      navigate("/Matching");
+                      navigate("/matching2");
                     }
                   : null
               }

@@ -31,7 +31,7 @@ function MilePage(props) {
             <TicketButton
               onClick={() => {
                 window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "buy", data: 1 })
+                  JSON.stringify({ type: "buy", data: 8 })
                 );
                 dispatch(StateSlice.actions.Ticket());
               }}
@@ -58,7 +58,7 @@ function MilePage(props) {
             <TicketButton
               onClick={() => {
                 window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "buy", data: 1 })
+                  JSON.stringify({ type: "buy", data: 25 })
                 );
                 dispatch(StateSlice.actions.Ticket());
               }}
@@ -85,7 +85,7 @@ function MilePage(props) {
             <TicketButton
               onClick={() => {
                 window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "buy", data: 1 })
+                  JSON.stringify({ type: "buy", data: 56 })
                 );
                 dispatch(StateSlice.actions.Ticket());
               }}
@@ -115,7 +115,7 @@ function MilePage(props) {
             <TicketButton
               onClick={() => {
                 window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "buy", data: 1 })
+                  JSON.stringify({ type: "buy", data: 77 })
                 );
                 dispatch(StateSlice.actions.Ticket());
               }}
@@ -144,7 +144,7 @@ function MilePage(props) {
             <TicketButton
               onClick={() => {
                 window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "buy", data: 1 })
+                  JSON.stringify({ type: "buy", data: 100 })
                 );
                 dispatch(StateSlice.actions.Ticket());
               }}
@@ -174,7 +174,7 @@ function MilePage(props) {
             <TicketButton
               onClick={() => {
                 window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "buy", data: 1 })
+                  JSON.stringify({ type: "buy", data: 130 })
                 );
                 dispatch(StateSlice.actions.Ticket());
               }}
@@ -249,8 +249,7 @@ export const TicketButton = styled.div`
   border-radius: 30px;
 
   > text {
-    font-family: var(--font-OpenSans);
-    font-style: normal;
+    font-family: var(--font-Pretendard);    font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 150%;
@@ -351,8 +350,7 @@ const TicketProduct = styled.div`
   left: 5.71%;
 
   > text {
-    font-family: var(--font-OpenSans);
-    font-style: normal;
+    font-family: var(--font-Pretendard);    font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 24px;
@@ -389,8 +387,7 @@ const TicketPrice = styled.div`
   height: 100%;
 
   > text {
-    font-family: var(--font-OpenSans);
-    font-style: normal;
+    font-family: var(--font-Pretendard);    font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 24px;
@@ -426,8 +423,7 @@ export const TicketCount = styled.div`
   text-align: center;
 
   > text {
-    font-family: var(--font-OpenSans);
-    font-style: normal;
+    font-family: var(--font-Pretendard);    font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 24px;

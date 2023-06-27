@@ -1,12 +1,35 @@
 import React from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useState } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Jelly } from "../../../../assets/jelly.svg";
+import { useEffect } from "react";
+import StateSlice from "../../../../features/State/StateSlice";
+import { useDispatch } from "react-redux";
 
 function MatchingProgressHeader(props) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+  const listener = (event) => {
+    const { data, type } = JSON.parse(event);
+
+    switch (type) {
+      case "report":
+        dispatch(StateSlice.actions.ReportData(data));
+        navigate("/ChoicePage", { state: "reject" });
+      }
+  };
+
+
+
+  useEffect(() => {
+    //android
+    document.addEventListener("message", (e) => listener(e.data));
+    //ios
+    window.addEventListener("message", (e) => listener(e.data));
+  }, []);
   return (
     // <ContentContainers>      </ContentContainers>
 

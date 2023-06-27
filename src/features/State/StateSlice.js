@@ -6,6 +6,8 @@ const initialState = {
   ticket: 0,
   name: "anonymous",
   season: true,
+  ReportData : {reporter : "인성", reported : "희주", reportNum : 0},
+  ReportCase : ["낚시/놀람/도배","상업적 광고 및 판매","불건전한 만남 및 대화유도", "음란성 게시물 공유 및 게시", "정당/정치인 비하 및 선거운동","욕설/모욕/비하","유출/사칭/사기","닉네임 신고"]
 };
 
 const StateSlice = createSlice({
@@ -28,6 +30,12 @@ const StateSlice = createSlice({
     Season: (state, action) => {
       state.season = action.payload;
     },
+    userData : (state,action) => {
+      state.userData = action.payload;
+    },
+    ReportData : (state,action) => {
+      state.ReportData = action.payload;
+    }
   },
 });
 

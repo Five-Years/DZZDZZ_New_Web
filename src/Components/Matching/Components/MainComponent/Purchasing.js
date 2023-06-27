@@ -252,7 +252,7 @@ const CouponContainer = styled.div`
 
   border-bottom: 1px solid #888888;
   > text {
-    font-family: var(--font-OpenSans);
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 14px;

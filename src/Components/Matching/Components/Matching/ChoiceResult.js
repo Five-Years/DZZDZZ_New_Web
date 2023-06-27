@@ -35,8 +35,9 @@ import {
 function ChoiceResult() {
   const [detail, setDetail] = useState(false);
   const navigate = useNavigate();
-  const [isSuccess, setIsSuccess] = useState(true);
+  const [isSuccess, setIsSuccess] = useState(false);
   const { state } = useLocation();
+
   return (
     <MatchingContainers detail={detail}>
       <ContentContainers>
@@ -106,8 +107,7 @@ function ChoiceResult() {
                 }}
               >
                 <text>
-                  오픈 카톡 URL <br />
-                  열기
+                  오픈 카톡 URL 열기
                 </text>
               </SuggentionButton>
             </>
@@ -135,16 +135,15 @@ const SuggentionButton = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 8px 24px;
   gap: 4px;
 
-  width: 142px;
-  height: 40px;
+  width: 56.41%;
+  height: 52px;
 
   /* dzz_pink */
 
   background: #ff477e;
-  border-radius: 31px;
+  border-radius: 13px;
 
   > text {
     font-family: "Inter";
@@ -182,7 +181,7 @@ export const SelectionContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   position: absolute;
   width: 100%;
   height: 35.85%;
@@ -274,10 +273,11 @@ const ChanceBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 0px;
   gap: 5px;
 
-  width: 180px;
+  width: 100%;
   height: 80px;
 
   > text {

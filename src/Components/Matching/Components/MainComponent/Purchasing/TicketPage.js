@@ -7,10 +7,10 @@ import Ticket2 from "../../../../../assets/package2.png";
 import Ticket3 from "../../../../../assets/package3.png";
 import Ticket4 from "../../../../../assets/package4.png";
 
-import { ReactComponent as Mile1pri } from "../../../../../assets/mile20.svg";
-import { ReactComponent as Mile2pri } from "../../../../../assets/ticekt64.svg";
-import { ReactComponent as Mile3pri } from "../../../../../assets/ticket110.svg";
-import { ReactComponent as Mile4pri } from "../../../../../assets/ticket190.svg";
+import { ReactComponent as Mile1pri } from "../../../../../assets/TicketProduct1.svg";
+import { ReactComponent as Mile2pri } from "../../../../../assets/TicketProduct2.svg";
+import { ReactComponent as Mile3pri } from "../../../../../assets/TicketProduct3.svg";
+import { ReactComponent as Mile4pri } from "../../../../../assets/TicketProduct4.svg";
 function TicketPage() {
   const dispatch = useDispatch();
   return (
@@ -138,8 +138,7 @@ export const TicketButton = styled.div`
   border-radius: 30px;
 
   > text {
-    font-family: var(--font-OpenSans);
-    font-style: normal;
+    font-family: var(--font-Pretendard);    font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 150%;
@@ -217,8 +216,7 @@ const TicketProduct = styled.div`
   left: 5.71%;
 
   > text {
-    font-family: var(--font-OpenSans);
-    font-style: normal;
+    font-family: var(--font-Pretendard);    font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 24px;
@@ -255,8 +253,7 @@ const TicketPrice = styled.div`
   height: 100%;
 
   > text {
-    font-family: var(--font-OpenSans);
-    font-style: normal;
+    font-family: var(--font-Pretendard);    font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 24px;
@@ -292,8 +289,7 @@ export const TicketCount = styled.div`
   text-align: center;
 
   > text {
-    font-family: var(--font-OpenSans);
-    font-style: normal;
+    font-family: var(--font-Pretendard);    font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 24px;

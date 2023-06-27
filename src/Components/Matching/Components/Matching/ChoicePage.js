@@ -8,8 +8,9 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
 import styled from "styled-components";
-import { ReactComponent as Smile } from "../../../../assets/smile.svg";
-import { ReactComponent as Tear } from "../../../../assets/tear.svg";
+import Smile from "../../../../assets/SmileHeartEye.gif";
+import Tear from "../../../../assets/SweatFace.gif";
+import { useSelector } from "react-redux";
 
 import {
   MatchingContainers,
@@ -39,7 +40,12 @@ function ChoicePage() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [theme, setTheme] = useState(0);
-
+  const ReportedData = useSelector((state) => {
+    return state.Popup.ReportData;
+  });
+  const ReportCase = useSelector((state) => {
+    return state.Popup.ReportCase;
+  });  
   return (
     <MatchingContainers detail={detail}>
       <ContentContainer>
@@ -65,17 +71,19 @@ function ChoicePage() {
         <ResultBox>
           {state === "accept" ? (
             <>
-              <Smile />
+              <img src={Smile} alt="loading..." />
               <text>
                 <span>단짠지기임당</span>님을 선택하셨습니다
               </text>
             </>
           ) : (
             <>
-              <Tear />
+              <img src={Tear} alt="loading..." />
               <text>
                 <span>단짠지기임당</span>님을 거절하셨습니다
               </text>
+
+              {ReportedData? <><ReportContainer><ReportCard><text>'{ReportCase[ReportedData.reportNum]}'의 항목으로 신고가 접수되었습니다.</text></ReportCard></ReportContainer></> : <></>}
               <text
                 onClick={() => {
                   navigate("/");
@@ -124,7 +132,16 @@ function ChoicePage() {
           ) : (
             <>
               <text>이대로 끝내기 아쉽다면?</text>
-              <SuggentionButton>
+              <SuggentionButton
+                onClick={() => {
+                  window.ReactNativeWebView?.postMessage(
+                    JSON.stringify({
+                      type: "rematch",
+                      data: { applicant: "miju", target: 'target' },
+                    })
+                  );
+                }}
+              >
                 <text>이건 어때요?</text>
               </SuggentionButton>
             </>
@@ -136,6 +153,38 @@ function ChoicePage() {
 }
 
 export default ChoicePage;
+
+const ReportContainer = styled.div`
+display: flex;
+width: 100%;
+height: 70px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 4px;
+flex-shrink: 0;
+`;
+
+const ReportCard = styled.div`
+  display: flex;
+  width : 89.74%;
+  height : 72%;
+  border-radius: 7px;
+  background: #48484A;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  > text {
+    color: var(--white, #FFF);
+    text-align: center;
+    font-size: 12px;
+    font-family: var(--font-Pretendard);
+    line-height: 150%;
+    letter-spacing: 0.6px;
+    text-transform: capitalize;
+  }
+`;
 
 const ContentContainer = styled.div`
   box-sizing: border-box;
@@ -200,7 +249,7 @@ export const SelectionContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   position: absolute;
   width: 100%;
   height: 35.85%;
@@ -212,11 +261,11 @@ const ResultBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 0px;
   gap: 7px;
 
-  width: 280px;
+  width: 100%;
   height: 100px;
 
   > text {
@@ -233,6 +282,11 @@ const ResultBox = styled.div`
     > span {
       font-weight: 700;
     }
+  }
+
+  > img {
+    width: 50px;
+    height: 50px;
   }
 
   > text.reject {
@@ -259,7 +313,7 @@ const WaitingBox = styled.div`
   padding: 0px;
   gap: 5px;
 
-  width: 280px;
+  width: 100%;
   height: 49px;
   > text {
     font-family: var(--font-OpenSans);
@@ -290,11 +344,12 @@ const ChanceBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 0px;
   gap: 5px;
 
   width: 180px;
-  height: 80px;
+  height: 60px;
 
   > text {
     font-family: var(--font-OpenSans);

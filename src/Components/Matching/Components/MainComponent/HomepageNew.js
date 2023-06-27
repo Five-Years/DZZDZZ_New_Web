@@ -18,31 +18,39 @@ function HomepageNew() {
   const [userData, setUserData] = useState();
 
   const accessToken =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2RAbmF2ZXIuY29tIiwiYXV0aCI6Ik5PUk1BTF9VU0VSIiwiZXhwIjoxNjg3Njk3NTU0fQ.AOaxp0J03frQGLI_5ln9qgFer1oxToytVLmtt5lR89E";
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwcm9AbmF2ZXIuY29tIiwiYXV0aCI6Ik5PUk1BTF9VU0VSIiwiZXhwIjoxNjg3ODUyMDI1fQ.nHYURcTW93rZFCWhz5b_JsCz91AymhGdbcFkQVFplKM";
   const refreshToken =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODc2OTc1NTR9.-dNZCl5CXNeBHKaOFWipgIykoZRiZBgnvegJerRBFHk";
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODc4NTIwMjV9.xavy7sCNrxbaq43kQFV1t_t4ZIuuJcrNE59lFhlL8Co";
+    const getData = async () => {
+      try {
+        const Response = await axios.get(
+          `${
+            process.env.NODE_ENV === "development"
+              ? ""
+              : "https://dev.fiveyears.click"
+          }/login/token`,
+          {
+            headers: {
+              Authorization: accessToken,
+              "x-refresh-token": refreshToken,
+              "content-type": "application/json",
+            },
+          }
+        )
+        setUserData(JSON.parse(Response.data.data)); 
+        console.log(userData);         
+        dispatch(StateSlice.actions.Name(userData.nickname));
 
-  const getData = async () => {
-    const Response = await axios.get(
-      `${
-        process.env.NODE_ENV === "development"
-          ? ""
-          : "https://dev.fiveyears.click"
-      }/login/token`,
-      {
-        headers: {
-          Authorization: accessToken,
-          "x-refresh-token": refreshToken,
-          "content-type": "application/json",
-        },
+      } catch (error) {
+        console.log(error);
       }
-    );
-    setUserData(JSON.parse(Response.data.data));
-    dispatch(StateSlice.actions.Name(userData.nickname));
-  };
-  useEffect(() => {
+    }
+
+  useEffect(()=>{
     getData();
-  }, []);
+},[])
+    
+    
 
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
@@ -50,7 +58,7 @@ function HomepageNew() {
     switch (type) {
       case "loginToken":
         if (Name === "anonymous") {
-          getData(data);
+          // getData(data);
           dispatch(StateSlice.actions.Name("미쥬미쥬미쥬"));
         }
         break;
@@ -74,6 +82,8 @@ function HomepageNew() {
           navigate(-1);
         }
         break;
+      case "report":
+        navigate("/")
     }
   };
 
@@ -100,6 +110,9 @@ function HomepageNew() {
     return state.Popup.ticket;
   });
 
+  const UserData = useSelector((state) => {
+    return state.Popup.userData;
+  });
   const Name = useSelector((state) => {
     return state.Popup.name;
   });
@@ -186,8 +199,6 @@ function HomepageNew() {
                 state: {
                   theme: 0,
                   season: Season,
-                  seasonnumber: SeasonNumber,
-                  name: Name,
                 },
               });
             }}
@@ -208,8 +219,6 @@ function HomepageNew() {
                 state: {
                   theme: 1,
                   season: Season,
-                  seasonnumber: SeasonNumber,
-                  name: Name,
                 },
               });
             }}

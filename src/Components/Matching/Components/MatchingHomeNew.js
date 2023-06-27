@@ -8,20 +8,19 @@ import MatchingHeaderNew from "./Header/MatchingHeaderNew";
 import MatchingProgressHeader from "./Header/MatchingProgressHeader";
 import MyTicket from "../ReusableComponents/MyTicket";
 
+
 function MatchingHomeNew() {
   const navigate = useNavigate();
   const location = useLocation();
-  const theme = location.state.theme;
+  const seasonTheme = location.state.theme;
 
-  const Name = useSelector((state) => {
-    return state.Popup.name;
-  });
+  // const Name = useSelector((state) => {
+  //   return state.Popup.name;
+  // });
   const Season = useSelector((state) => {
     return state.Popup.season;
   });
-  const SeasonNumber = useSelector((state) => {
-    return state.Popup.seasonNumber;
-  });
+
 
   useEffect(() => {
     window.ReactNativeWebView?.postMessage(
@@ -59,11 +58,11 @@ function MatchingHomeNew() {
         </CouponContainer>
         {/* theme={location.state.theme} */}
         <MatchingContainer>
-          <MatchingCardContainer theme={theme}>
+          <MatchingCardContainer theme={seasonTheme}>
             <CardContainer>
               <CardTitleContainer>
-                <CardTag theme={theme}>
-                  {theme === 0 ? (
+                <CardTag theme={seasonTheme}>
+                  {seasonTheme === 0 ? (
                     <text>
                       <span>#</span>소개팅을 원해요
                     </text>
@@ -75,7 +74,7 @@ function MatchingHomeNew() {
                 </CardTag>
                 <CardTitle>
                   <TextField>
-                    {theme === 0 ? (
+                    {seasonTheme === 0 ? (
                       <text>
                         매칭의 정석 소개팅♥
                         <br />
@@ -120,15 +119,15 @@ function MatchingHomeNew() {
             {Season ? (
               <EachButton
                 onClick={() => {
-                  navigate("/MatchingProgress", { state: { theme: theme } });
+                  navigate("/MatchingProgress", { state: { theme: seasonTheme } });
                 }}
                 className="activate"
-                theme={theme}
+                theme={seasonTheme}
               >
                 <text className="enter">신청하기</text>
               </EachButton>
             ) : (
-              <EachButton className="deactivate" theme={theme}>
+              <EachButton className="deactivate" theme={seasonTheme}>
                 <text className="enter">지금은 신청 기간이 아니에요</text>
               </EachButton>
             )}
@@ -144,7 +143,7 @@ function MatchingHomeNew() {
               <text>내 정보 수정하기</text>
             </EachButton>
           </EachButtonContainer>
-          <EachButtonContainer>
+          {/* <EachButtonContainer>
             <EachButton
               onClick={() => {
                 window.ReactNativeWebView?.postMessage(
@@ -154,7 +153,7 @@ function MatchingHomeNew() {
             >
               <text>학생 인증하기</text>
             </EachButton>
-          </EachButtonContainer>
+          </EachButtonContainer> */}
         </ButtonContainer>
       </MobileContainer>
     </>
@@ -229,8 +228,7 @@ const MatchingCardContainer = styled.div`
 const TextField = styled.div`
   width: 100%;
   > text {
-    font-family: var(--font-OpenSans);
-    font-style: normal;
+font-family: var(--font-Pretendard);    font-style: normal;
     font-weight: 300;
     font-size: 16px;
     line-height: 26px;

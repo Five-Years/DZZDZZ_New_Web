@@ -61,8 +61,7 @@ export const ContentTitle = styled.div`
   height: 100%;
 
   > text {
-    font-family: var(--font-OpenSans);
-    font-style: normal;
+    font-family: var(--font-Pretendard);    font-style: normal;
     font-weight: 400;
     font-size: 19px;
     line-height: 22px;
