@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import StateSlice from "../../../../../features/State/StateSlice";
-import { ReactComponent as Won } from "../../../../../assets/won.svg";
+import { ReactComponent as Won } from "../../../../../assets/GreyWon.svg";
 
 import { ReactComponent as Jelly } from "../../../../../assets/jelly.svg";
 import { ReactComponent as Jelly2 } from "../../../../../assets/Jelly2.svg";
@@ -215,7 +215,7 @@ const RecommendContainer = styled.div`
   > text {
     text-align: center;
     font-size: 12px;
-    font-family: Noto Sans KR;
+    font-family: var(--font-Pretendard);    
     font-weight: 500;
     line-height: 150%;
     letter-spacing: 0.6px;
@@ -387,14 +387,11 @@ const TicketPrice = styled.div`
   height: 100%;
 
   > text {
-    font-family: var(--font-Pretendard);    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 24px;
-    /* identical to box height, or 171% */
-    text-align: right;
-    /* Text Black */
-    color: #000000;
+    color: var(--system-gray-700, #6C6C70);
+text-align: right;
+font-size: 14px;
+font-family: var(--font-Pretendard);    font-style: normal;
+line-height: 24px;
   }
 `;
 
