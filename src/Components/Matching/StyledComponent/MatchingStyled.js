@@ -591,6 +591,9 @@ export const Spinners = styled(Spinner)`
 
 // Mating2
 
+
+
+
 export const MatchingContainers = styled.div`
   position: absolute;
   width: 100%;
@@ -787,6 +790,7 @@ export const DetailView = styled.div`
   height: 22px;
 `;
 
+
 export const MatchingLink = styled(Link)`
   text-decoration-line: none;
   > text {
@@ -900,21 +904,22 @@ export const ContentRight = styled.div`
   height: 100%;
 `;
 
+
+
 export const ProfileImageContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: start;
   gap: 10px;
-
   position: absolute;
   top: 6.5%;
   width: 100%;
-  height: 49%;
+  height: 53.286%;
 
   > img {
     width: 100%;
-    height: 92%;
+    height: 100%;
   }
 `;
 

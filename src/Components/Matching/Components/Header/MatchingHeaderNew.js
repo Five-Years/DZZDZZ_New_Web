@@ -37,9 +37,12 @@ function MatchingHeaderNew(props) {
             <text>안녕하세요!</text>
           </HeaderName>
           <HeaderSeason theme={Season}>
-            <text>
-              지금은 <span>{seasonlist[Season]}</span> 접수기간입니다!
-            </text>
+            {Season? <>            <text>
+              지금은 <span className="season">매칭</span> 접수기간입니다!
+            </text></> :             <text>
+              지금은 <span className="ready">준비중</span> 입니다!
+            </text>}
+
           </HeaderSeason>
         </HeaderTop>
       </HeaderContainer>
@@ -132,14 +135,19 @@ const HeaderSeason = styled.div`
   }
 
   > text > span {
-    color: ${(props) =>
+    /* color: ${(props) =>
       props.theme === 1
         ? "#0094FF"
         : props.theme === 2
         ? "#888888"
-        : "#FF477E"};
+        : "#FF477E"}; */
+    color : #FF477E;
     font-weight: 600;
     font-size: 14px;
+
+    &.ready {
+      color : black;
+    }
   }
 `;
 

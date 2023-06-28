@@ -197,8 +197,10 @@ function HomepageNew() {
             onClick={() => {
               navigate("/MatchingHome", {
                 state: {
-                  theme: 0,
+                  theme: 0, 
+                  // 이성매칭으로 들어갔는지, 혼성매칭으로 들어갔는지에대한 정보 theme
                   season: Season,
+                  // 현재 시즌이 진행중인지 아닌지에 대한 정보 season
                 },
               });
             }}
@@ -217,8 +219,10 @@ function HomepageNew() {
             onClick={() => {
               navigate("/MatchingHome", {
                 state: {
-                  theme: 1,
+                  theme: 1, 
+                  // 이성매칭으로 들어갔는지, 혼성매칭으로 들어갔는지에대한 정보 theme
                   season: Season,
+                  // 현재 시즌이 진행중인지 아닌지에 대한 정보 season
                 },
               });
             }}

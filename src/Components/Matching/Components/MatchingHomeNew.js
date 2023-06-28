@@ -12,7 +12,8 @@ import MyTicket from "../ReusableComponents/MyTicket";
 function MatchingHomeNew() {
   const navigate = useNavigate();
   const location = useLocation();
-  const seasonTheme = location.state.theme;
+  const Theme = location.state.theme;
+  console.log(Theme);
 
   // const Name = useSelector((state) => {
   //   return state.Popup.name;
@@ -58,11 +59,11 @@ function MatchingHomeNew() {
         </CouponContainer>
         {/* theme={location.state.theme} */}
         <MatchingContainer>
-          <MatchingCardContainer theme={seasonTheme}>
+          <MatchingCardContainer theme={Theme}>
             <CardContainer>
               <CardTitleContainer>
-                <CardTag theme={seasonTheme}>
-                  {seasonTheme === 0 ? (
+                <CardTag theme={Theme}>
+                  {Theme === 0 ? (
                     <text>
                       <span>#</span>소개팅을 원해요
                     </text>
@@ -74,7 +75,7 @@ function MatchingHomeNew() {
                 </CardTag>
                 <CardTitle>
                   <TextField>
-                    {seasonTheme === 0 ? (
+                    {Theme === 0 ? (
                       <text>
                         매칭의 정석 소개팅♥
                         <br />
@@ -118,16 +119,16 @@ function MatchingHomeNew() {
           <EachButtonContainer>
             {Season ? (
               <EachButton
-                onClick={() => {
-                  navigate("/MatchingProgress", { state: { theme: seasonTheme } });
-                }}
                 className="activate"
-                theme={seasonTheme}
+                onClick={() => {
+                  navigate("/MatchingProgress", { state: { theme: Theme } });
+                }}
+                matching={Theme}
               >
                 <text className="enter">신청하기</text>
               </EachButton>
             ) : (
-              <EachButton className="deactivate" theme={seasonTheme}>
+              <EachButton className="deactivate" theme={Theme}>
                 <text className="enter">지금은 신청 기간이 아니에요</text>
               </EachButton>
             )}
@@ -406,11 +407,11 @@ const EachButton = styled.div`
   }
 
   &.activate {
-    background: ${(props) => (props.theme === 0 ? "#FF477E" : "#0094FF")};
+    background: ${(props) => (props.matching === 0 ? "#FF477E" : "#0094FF")};
   }
 
   &.deactivate {
-    background: ${(props) => (props.theme === 0 ? "#A6DAFF" : "#FEC7D7")};
+    background: ${(props) => (props.matching === 0 ? "#A6DAFF" : "#FEC7D7")};
   }
   > text {
     font-family: var(--font-Pretendard);

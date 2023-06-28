@@ -48,6 +48,7 @@ function TicketPage() {
           </TicketImage>
           <TicketCount>
             <text>티켓 4개</text>
+            <text className="bonus">3개+보너스1개</text>
           </TicketCount>
         </TicketProduct>
         <TicketPurchaseContainer>
@@ -74,6 +75,7 @@ function TicketPage() {
           </TicketImage>
           <TicketCount>
             <text>티켓 8개</text>
+            <text className="bonus">6개+보너스2개</text>
           </TicketCount>
         </TicketProduct>
         <TicketPurchaseContainer>
@@ -100,6 +102,7 @@ function TicketPage() {
           </TicketImage>
           <TicketCount>
             <text>티켓 15개</text>
+            <text className="bonus">11개+보너스4개</text>
           </TicketCount>
         </TicketProduct>
         <TicketPurchaseContainer>

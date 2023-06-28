@@ -12,26 +12,6 @@ import Smile from "../../../../assets/SmileHeartEye.gif";
 import Tear from "../../../../assets/SweatFace.gif";
 import { useSelector } from "react-redux";
 
-import {
-  MatchingContainers,
-  ContentContainers,
-  Option,
-  MatchingLink,
-  ProfileImageContainer,
-  ContentRight,
-  TextContainer,
-  ProfileNameContainer,
-  DetailTextView,
-  DetailText,
-  ProfileName,
-  Selection,
-  DetailContainer,
-  DetailView,
-  ContentLeft,
-  ContentTitle,
-  IntroduceContainer,
-  Frame6887,
-} from "../../StyledComponent/MatchingStyled";
 import MatchingProgressHeader from "../Header/MatchingProgressHeader";
 
 function ChoicePage() {
@@ -49,13 +29,11 @@ function ChoicePage() {
   return (
     <MatchingContainers detail={detail}>
       <ContentContainer>
-        {" "}
         <MatchingProgressHeader isReport={true} />
       </ContentContainer>
 
       <ProfileImageContainer>
         <img src={require("../../../../assets/mango.jpg")} alt="이미지" />
-        <Frame6887></Frame6887>
       </ProfileImageContainer>
 
       <ProfileNameContainer>
@@ -67,7 +45,8 @@ function ChoicePage() {
           <text>단짠지기임당</text>
         </ProfileName>
       </ProfileNameContainer>
-      <SelectionContainer>
+      <ContentsContainer>
+        <ContentsBox>
         <ResultBox>
           {state === "accept" ? (
             <>
@@ -85,12 +64,10 @@ function ChoicePage() {
 
               {ReportedData? <><ReportContainer><ReportCard><text>'{ReportCase[ReportedData.reportNum]}'의 항목으로 신고가 접수되었습니다.</text></ReportCard></ReportContainer></> : <></>}
               <text
-                onClick={() => {
-                  navigate("/");
-                }}
+                onClick={()=>{navigate("/Matching")}}
                 className="reject"
               >
-                메인으로 돌아가기기
+                메인으로 돌아가기
               </text>
             </>
           )}
@@ -129,7 +106,7 @@ function ChoicePage() {
             >
               메인으로 돌아가기
             </text>
-          ) : (
+          ) : ReportedData ? <></> :
             <>
               <text>이대로 끝내기 아쉽다면?</text>
               <SuggentionButton
@@ -145,18 +122,118 @@ function ChoicePage() {
                 <text>이건 어때요?</text>
               </SuggentionButton>
             </>
-          )}
+          }
         </ChanceBox>
-      </SelectionContainer>
+        </ContentsBox>
+      </ContentsContainer>
     </MatchingContainers>
   );
 }
 
 export default ChoicePage;
 
+const ContentsBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width : 62.31%;
+  height : 100%;
+`;
+
+const ContentsContainer = styled.div`
+display: flex;
+position: absolute;
+flex-direction: column;
+align-items: center;
+width : 100%;
+height : 29.86%;
+top : 70.14%;
+`;
+
+
+export const MatchingContainers = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: white;
+`;
+
+export const ProfileImageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: start;
+  gap: 10px;
+  position: absolute;
+  top: 6.86%;
+  width: 100%;
+  height: 53.286%;
+
+  > img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+export const Frame6887 = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 131px;
+
+  width: 67px;
+  height: 7px;
+`;
+
+export const ProfileName = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 33.5%;
+  min-width: 340px;
+  height: 24px;
+
+  > img {
+    width: 24px;
+    height: 24px;
+  }
+
+  > text {
+    width: 130px;
+    height: 22px;
+
+    font-family: var(--font-Pretendard);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 22px;
+    text-align: center;
+    letter-spacing: -0.408px;
+    color: #000000;
+  }
+`;
+
+
+export const ProfileNameContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  width: 100%;
+  height: 3.43%;
+  top: 64.43%;
+`;
+
+
 const ReportContainer = styled.div`
 display: flex;
-width: 100%;
+width: 100vw;
 height: 70px;
 flex-direction: column;
 justify-content: center;
@@ -194,7 +271,7 @@ const ContentContainer = styled.div`
   align-items: center;
   position: absolute;
   width: 100%;
-  height: 6%;
+  height: 6.86%;
 `;
 
 const SuggentionButton = styled.div`
@@ -261,12 +338,13 @@ const ResultBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: 0px;
   gap: 7px;
 
   width: 100%;
   height: 100px;
+  z-index: 10;
 
   > text {
     font-family: var(--font-Pretendard);
@@ -352,6 +430,7 @@ const ChanceBox = styled.div`
   height: 60px;
 
   > text {
+    z-index: 10;
     font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;

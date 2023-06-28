@@ -250,7 +250,7 @@ const CouponContainer = styled.div`
 
   /* Text Gray */
 
-  border-bottom: 1px solid #888888;
+  
   > text {
     font-family: var(--font-Pretendard);
     font-style: normal;
@@ -266,6 +266,8 @@ const CouponContainer = styled.div`
     /* dzz_iconGrey */
 
     color: #a39ea3;
+    border-bottom: 1px solid #888888;
+
   }
 `;
 

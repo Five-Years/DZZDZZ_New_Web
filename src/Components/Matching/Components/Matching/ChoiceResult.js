@@ -10,54 +10,19 @@ import { useLocation } from "react-router";
 import styled from "styled-components";
 import Smile from "../../../../assets/SmileHeartEye.gif";
 import Tear from "../../../../assets/SweatFace.gif";
-
-import {
-  MatchingContainers,
-  ContentContainers,
-  Option,
-  MatchingLink,
-  ProfileImageContainer,
-  ContentRight,
-  TextContainer,
-  ProfileNameContainer,
-  DetailTextView,
-  DetailText,
-  ProfileName,
-  Selection,
-  DetailContainer,
-  DetailView,
-  ContentLeft,
-  ContentTitle,
-  IntroduceContainer,
-  Frame6887,
-} from "../../StyledComponent/MatchingStyled";
+import MatchingProgressHeader from "../Header/MatchingProgressHeader";
 
 function ChoiceResult() {
   const [detail, setDetail] = useState(false);
   const navigate = useNavigate();
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(true);
   const { state } = useLocation();
 
   return (
     <MatchingContainers detail={detail}>
-      <ContentContainers>
-        <ContentLeft>
-          <ArrowBackIosIcon
-            style={{ marginLeft: "15.4%", width: "50%", height: "50%" }}
-            onClick={() => {
-              navigate("/Matching");
-            }}
-          />
-        </ContentLeft>
-        <ContentTitle>
-          <text></text>
-        </ContentTitle>
-        <ContentRight>
-          <MoreHorizIcon
-            style={{ width: "50%", height: "50%", marginRight: "15.4%" }}
-          />
-        </ContentRight>
-      </ContentContainers>
+      <ContentContainer>
+        <MatchingProgressHeader isReport={true} />
+      </ContentContainer>
       <ProfileImageContainer>
         <img src={require("../../../../assets/mango.jpg")} alt="이미지" />
         <Frame6887></Frame6887>
@@ -72,63 +37,203 @@ function ChoiceResult() {
           <text>단짠지기임당</text>
         </ProfileName>
       </ProfileNameContainer>
-      <SelectionContainer>
-        <ResultBox>
-          {isSuccess ? (
-            <>
-              <img src={Smile} alt="loading..." />
-              <text>축하합니다!</text>
-              <text>
-                <span>단짠지기임당</span>님과매칭이 성공했어요!
-              </text>
-            </>
-          ) : (
-            <>
-              <img src={Tear} alt="loading..." />
-              <text>
-                아쉽게도<span>단짠지기임당</span>님은
-              </text>
-              <text>인연이 아닌가봐요</text>
-            </>
-          )}
-        </ResultBox>
-        {/* <WaitingBox state={state}><text>선택시간이<span>22<span>시간</span></span><span>41<span>분</span></span> 남았어요.</text><text>상대방이 선택하면 결과가 나와요.</text></WaitingBox> */}
-        <ChanceBox state={state}>
-          {isSuccess ? (
-            <>
-              <SuggentionButton
-                onClick={() => {
-                  window.ReactNativeWebView?.postMessage(
-                    JSON.stringify({
-                      type: "openchat",
-                      data: "https://open.kakao.com/o/gZ5Purqf",
-                    })
-                  );
-                }}
-              >
+      <ContentsContainer>
+        <ContentsBox>
+          {" "}
+          <ResultBox>
+            {isSuccess ? (
+              <>
+                <img src={Smile} alt="loading..." />
+                <text>축하합니다!</text>
                 <text>
-                  오픈 카톡 URL 열기
+                  <span>단짠지기임당</span>님과매칭이 성공했어요!
                 </text>
-              </SuggentionButton>
-            </>
-          ) : (
-            <text
-              onClick={() => {
-                navigate("/");
-              }}
-              className="result"
-            >
-              메인으로 돌아가기
-            </text>
-          )}
-        </ChanceBox>
-        {/* onClick={()=>{   window.open("https://open.kakao.com/o/gZ5Purqf")}} */}
-      </SelectionContainer>
+              </>
+            ) : (
+              <>
+                <img src={Tear} alt="loading..." />
+                <text>
+                  아쉽게도<span>단짠지기임당</span>님은
+                </text>
+                <text>인연이 아닌가봐요</text>
+              </>
+            )}
+          </ResultBox>
+          {/* <WaitingBox state={state}><text>선택시간이<span>22<span>시간</span></span><span>41<span>분</span></span> 남았어요.</text><text>상대방이 선택하면 결과가 나와요.</text></WaitingBox> */}
+          <ChanceBox state={state}>
+            {isSuccess ? (
+              <>
+                <SuggentionButton
+                  onClick={() => {
+                    window.ReactNativeWebView?.postMessage(
+                      JSON.stringify({
+                        type: "openchat",
+                        data: "https://open.kakao.com/o/gZ5Purqf",
+                      })
+                    );
+                  }}
+                >
+                  <text>오픈 카톡 URL 열기</text>
+                </SuggentionButton>
+              </>
+            ) : (
+              <text
+                onClick={() => {
+                  navigate("/");
+                }}
+                className="result"
+              >
+                메인으로 돌아가기
+              </text>
+            )}
+          </ChanceBox>
+          {/* onClick={()=>{   window.open("https://open.kakao.com/o/gZ5Purqf")}} */}
+        </ContentsBox>
+      </ContentsContainer>
     </MatchingContainers>
   );
 }
 
 export default ChoiceResult;
+
+const ContentsBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+`;
+
+const ContentsContainer = styled.div`
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 29.86%;
+  top: 70.14%;
+`;
+
+export const MatchingContainers = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: white;
+`;
+
+export const ProfileImageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: start;
+  gap: 10px;
+  position: absolute;
+  top: 6.86%;
+  width: 100%;
+  height: 53.286%;
+
+  > img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+export const Frame6887 = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 131px;
+
+  width: 67px;
+  height: 7px;
+`;
+
+export const ProfileName = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 33.5%;
+  min-width: 340px;
+  height: 24px;
+
+  > img {
+    width: 24px;
+    height: 24px;
+  }
+
+  > text {
+    width: 130px;
+    height: 22px;
+
+    font-family: var(--font-Pretendard);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 22px;
+    text-align: center;
+    letter-spacing: -0.408px;
+    color: #000000;
+  }
+`;
+
+export const ProfileNameContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  width: 100%;
+  height: 3.43%;
+  top: 64.43%;
+`;
+
+const ReportContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 70px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+`;
+
+const ReportCard = styled.div`
+  display: flex;
+  width: 89.74%;
+  height: 72%;
+  border-radius: 7px;
+  background: #48484a;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  > text {
+    color: var(--white, #fff);
+    text-align: center;
+    font-size: 12px;
+    font-family: var(--font-Pretendard);
+    line-height: 150%;
+    letter-spacing: 0.6px;
+    text-transform: capitalize;
+  }
+`;
+
+const ContentContainer = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 6.86%;
+`;
 
 const SuggentionButton = styled.div`
   display: flex;
@@ -196,6 +301,7 @@ const ResultBox = styled.div`
   justify-content: space-between;
   padding: 0px;
   gap: 7px;
+  width : 100%;
   height: 120px;
 
   > img {
@@ -209,9 +315,6 @@ const ResultBox = styled.div`
     font-size: 18px;
     line-height: 25px;
     /* identical to box height */
-
-    display: flex;
-    align-items: center;
 
     > span {
       font-weight: 700;
