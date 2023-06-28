@@ -16,8 +16,28 @@ function Matching2() {
   const [offset,setOffset] = useState(0);
   useEffect(()=>{setOffset(DetailDownRef.current.offsetTop)},[DetailDownRef])
 
+  useEffect(() => {
+    //android
+    document.addEventListener("message", (e) => listener(e.data));
+    //ios
+    window.addEventListener("message", (e) => listener(e.data));
+  }, []);
 
 
+  const listener = (event) => {
+    const { data, type } = JSON.parse(event);
+
+    switch (type) {
+      case "accept":
+        accept();
+        break
+      case "jeject":
+        reject();
+        break
+
+
+    }
+  };
 
   const accept = () => {
     if (window.confirm("선택하시겠습니까?")) {
@@ -77,7 +97,10 @@ function Matching2() {
         <Selection>
           <Option
             onClick={() => {
-              accept();
+              window.ReactNativeWebView?.postMessage(
+                JSON.stringify({ type: "accept" , data: "" })
+              );
+              // accept();
             }}
           >
             <img src={require("../../../../assets/Like.png")} alt="이미지" />
@@ -87,7 +110,10 @@ function Matching2() {
         <Selection>
           <Option
             onClick={() => {
-              reject();
+              window.ReactNativeWebView?.postMessage(
+                JSON.stringify({ type: "reject" , data: "" })
+              );
+              // reject();
             }}
           >
             <img src={require("../../../../assets/Close.png")} alt="이미지" />

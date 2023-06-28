@@ -82,6 +82,7 @@ function HomepageNew() {
           navigate(-1);
         }
         break;
+        
       case "report":
         navigate("/")
     }
