@@ -151,8 +151,15 @@ function Matching2() {
         <ContentsSection><Contents><ContentsTitle><text>음주</text></ContentsTitle><ContentsWindow><text>한 달에 1회 미만</text></ContentsWindow></Contents></ContentsSection>
         <ContentsSection><Contents><ContentsTitle><text>흡연</text></ContentsTitle><ContentsWindow><text>비 흡연자</text></ContentsWindow></Contents></ContentsSection>
         <SelectButtonContainer>
-          <SelectionButton><Button onClick={()=>{accept()}}><text>선택하기</text></Button></SelectionButton>
-          <SelectionButton><Button onClick={()=>{reject()}} className='reject'><text>거절하기</text></Button></SelectionButton>
+          <SelectionButton><Button onClick={()=>{   
+              window.ReactNativeWebView?.postMessage(
+                JSON.stringify({ type: "accept" , data: "" })
+              );}}
+            ><text>선택하기</text></Button></SelectionButton>
+          <SelectionButton><Button onClick={()=>{   
+              window.ReactNativeWebView?.postMessage(
+                JSON.stringify({ type: "reject" , data: "" })
+              );}} className='reject'><text>거절하기</text></Button></SelectionButton>
         </SelectButtonContainer>
       </ContentsContainer>
     </MatchingContainers>
