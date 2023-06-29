@@ -7,8 +7,9 @@ import Inquiry from "./Inquiry/Inquiry";
 import HeaderBar from "./Header/HeaderBar";
 import HeaderMain2 from "./Header/HeaderMain2";
 import { AnimatePresence } from "framer-motion";
-
+import { useState } from "react";
 function App() {
+  const [isFrame, setIsFrame] = useState(false);
   return (
     <div className="App">
       <meta
@@ -17,10 +18,17 @@ function App() {
       />
       {/* user-scalable=no, 모바일 화면에서 input창 확대되는것 방지 */}
       <MainFrame>
-        <HeaderBar />
-
-        <HeaderMain2 />
-        <Footer />
+        <HeaderContainer><HeaderBar /></HeaderContainer>
+        {isFrame ? (
+          <IFrame>
+            <iframe src="https://dzzdzz-reprot.stibee.com/"/>
+          </IFrame>
+        ) : (
+          <>
+            <HeaderMain2 />
+            <Footer />
+          </>
+        )}
       </MainFrame>
       {/* <AnimatePresence>
         <Inquiry />
@@ -34,6 +42,26 @@ function App() {
 export default App;
 
 const MainFrame = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+`;
+
+const IFrame = styled.div`
+  display: flex;
+  width: 100%;
+  height: 92%;
+
+  > iframe {
+    width : 100%;
+    height : 100%;    
+  }
+`;
+const HeaderContainer = styled.div`
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 8%;
 `;

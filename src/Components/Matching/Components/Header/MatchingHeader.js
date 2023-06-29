@@ -22,7 +22,7 @@ function MatchingHeader(props) {
   });
 
   const dispatch = useDispatch();
-  const seasonlist = ["매칭", "정리중"];
+  const seasonlist = ["1Round매칭", "정리중"];
   const navigate = useNavigate();
 
   return (

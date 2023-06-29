@@ -74,9 +74,9 @@ const HeaderBarContainer = styled.div`
   justify-content: center;
   padding: 0px;
 
-  position: absolute;
+  position: relative;
   width: 100%;
-  height: 80px;
+  height: 100%;
 
   @media screen and (max-width: 800px) {
     flex-direction: row;
