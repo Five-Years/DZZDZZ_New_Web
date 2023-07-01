@@ -167,6 +167,8 @@ function MatchingHomeNew() {
                   window.ReactNativeWebView?.postMessage(
                     JSON.stringify({ type: "application", data: datalist[Theme] })
                   );
+                  GotoMatching();
+
                   // window.ReactNativeWebView?.postMessage(
                   //   JSON.stringify({ type: "lackinfo", data: {photoauthen : bool, studentauthen : bool})
                   // );
