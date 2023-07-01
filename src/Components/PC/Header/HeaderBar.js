@@ -3,9 +3,13 @@ import styled from "styled-components";
 import { ReactComponent as Logo } from "../../../assets/dzzdzzNew.svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import StateSlice from "../../../features/State/StateSlice";
 
 function HeaderBar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   return (
     <HeaderBarContainer>
@@ -23,6 +27,8 @@ function HeaderBar() {
         <LogoContainer>
           <Logo
             onClick={() => {
+              dispatch(StateSlice.actions.URL(false));
+              dispatch(StateSlice.actions.isFrame(false));
               navigate("/pc");
             }}
           />
@@ -45,14 +51,16 @@ function HeaderBar() {
             </text>
             <text
               onClick={() => {
-                window.open("https://stib.ee/m2o7");
+                dispatch(StateSlice.actions.URL("https://stib.ee/m2o7"));
+                dispatch(StateSlice.actions.isFrame(true));
               }}
             >
               공지사항
             </text>
             <text
               onClick={() => {
-                window.open("https://dzzdzz-reprot.stibee.com/");
+                dispatch(StateSlice.actions.URL("https://dzzdzz-reprot.stibee.com/"));
+                dispatch(StateSlice.actions.isFrame(true));
               }}
             >
               통계리포트

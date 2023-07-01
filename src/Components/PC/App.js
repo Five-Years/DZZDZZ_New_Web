@@ -8,8 +8,16 @@ import HeaderBar from "./Header/HeaderBar";
 import HeaderMain2 from "./Header/HeaderMain2";
 import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 function App() {
-  const [isFrame, setIsFrame] = useState(false);
+
+  const URL = useSelector((state) => {
+    return state.Popup.URL;
+  });
+  const isFrame = useSelector((state) => {
+    return state.Popup.isFrame;
+  });
+
   return (
     <div className="App">
       <meta
@@ -21,7 +29,7 @@ function App() {
         <HeaderContainer><HeaderBar /></HeaderContainer>
         {isFrame ? (
           <IFrame>
-            <iframe src="https://dzzdzz-reprot.stibee.com/"/>
+            <iframe src={URL}/>
           </IFrame>
         ) : (
           <>

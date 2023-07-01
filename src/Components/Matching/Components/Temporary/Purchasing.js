@@ -26,7 +26,7 @@ import {
   TicketImage,
   TicketCount,
   TicketPrice,
-} from "../../StyledComponent/MatchingStyled";
+} from "../StyledComponent/MatchingStyled";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";

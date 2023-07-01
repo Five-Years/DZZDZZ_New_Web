@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import MatchingProgressHeader from "../Header/MatchingProgressHeader";
-import { ReactComponent as Info } from "../../../../assets/Info.svg";
 
+import { ReactComponent as Info } from "../../../../assets/Info.svg";
 import MatchingHeaderNew from "../Header/MatchingHeaderNew";
-import StateSlice from "../../../../features/State/StateSlice";
-import MyTicket from "../../ReusableComponents/MyTicket";
+import StateSlice from "features/State/StateSlice";
+// import MyTicket from "../ReusableComponents/MyTicket";
+import MyTicket from "Components/Matching/Components/ReusableComponents/MyTicket";
 import axios from "axios";
 
 function HomepageNew() {
@@ -82,7 +83,7 @@ function HomepageNew() {
           navigate(-1);
         }
         break;
-        
+
       case "report":
         navigate("/")
     }
@@ -186,7 +187,7 @@ function HomepageNew() {
             <MatchingProgressHeader isFirst={true} />
           </ToggleContainer>
           <ProfileContainer>
-            <MatchingHeaderNew />
+            <MatchingHeaderNew isFirst={true}/>
           </ProfileContainer>
         </HeaderContainer>
         <CouponContainer>

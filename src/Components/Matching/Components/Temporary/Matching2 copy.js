@@ -20,7 +20,7 @@ import {
   DetailContainer,
   DetailView,
   IntroduceContainer,
-} from "../../StyledComponent/MatchingStyled";
+} from "../StyledComponent/MatchingStyled";
 
 function Matching2() {
   const DetailDownRef = useRef();

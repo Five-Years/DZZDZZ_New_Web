@@ -11,7 +11,7 @@ import {
   TicketButton,
   TicketContainer,
   TicketCount,
-} from "../../StyledComponent/MatchingStyled";
+} from "../StyledComponent/MatchingStyled";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,8 +20,8 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import MenuHeader from "../Header/MenuHeader";
 import MilePage from "./Purchasing/MilePage";
-import InviteEventButton from "../../ReusableComponents/InviteEventButton";
-import JellyButtonContainer from "../../ReusableComponents/JellyButtonContainer";
+import InviteEventButton from "../ReusableComponents/InviteEventButton";
+import JellyButtonContainer from "../ReusableComponents/JellyButtonContainer";
 
 function Purchasing() {
   const navigate = useNavigate();

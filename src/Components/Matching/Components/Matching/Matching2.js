@@ -31,27 +31,27 @@ function Matching2() {
       case "accept":
         accept();
         break
-      case "jeject":
+      case "reject":
         reject();
         break
 
+      case "application":
+        if (data){
+          if (window.confirm("선택하시겠습니까?")) {
+            alert("선택하셨습니다");
+            navigate("/Choice", { state: "accept" });
+          }
+        }
 
     }
   };
 
   const accept = () => {
-    if (window.confirm("선택하시겠습니까?")) {
-      alert("선택하셨습니다");
-      navigate("/Choice", { state: "accept" });
-
-    }
+    navigate("/Choice", { state: "accept" })
   };
 
   const reject = () => {
-    if (window.confirm("거절하시겠습니까?")) {
-      alert("거절하셨습니다");
-      navigate("/Choice", { state: "reject" });
-    }
+    navigate("/Choice", { state: "reject" });
   };
 
   const [detail, setDetail] = useState(false);
@@ -93,7 +93,7 @@ function Matching2() {
         </ProfileName>
       </ProfileNameContainer>
       <SelectionContainer>
-        {/* 선택시 확인작업 거치고 진행 */}
+        {/* 선택시 서버에 사진인증, 학생인증, 1장이상의 쿠폰을 보유하고 있는지 확인  */}
         <Selection>
           <Option
             onClick={() => {

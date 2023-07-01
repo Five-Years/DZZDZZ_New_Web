@@ -6,8 +6,7 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import MatchingHeaderNew from "./Header/MatchingHeaderNew";
 import MatchingProgressHeader from "./Header/MatchingProgressHeader";
-import MyTicket from "../ReusableComponents/MyTicket";
-
+import MyTicket from "./ReusableComponents/MyTicket";
 
 function MatchingHomeNew() {
   const navigate = useNavigate();
@@ -22,17 +21,20 @@ function MatchingHomeNew() {
     return state.Popup.season;
   });
 
-
   useEffect(() => {
     window.ReactNativeWebView?.postMessage(
       JSON.stringify({ type: "notfirst", data: "" })
     );
   }, []);
 
+  const GotoMatching = ()=>{
+    navigate("/MatchingProgress", { state: { theme: Theme } });
+
+  }
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
 
-    switch (type) {
+  switch (type) {
       case "back":
         if (this.props.navigation.isFirstRouteInParent()) {
           navigate("/Matching");
@@ -51,7 +53,7 @@ function MatchingHomeNew() {
             <MatchingProgressHeader />
           </ToggleContainer>
           <ProfileContainer>
-            <MatchingHeaderNew />
+            <MatchingHeaderNew isFrist={false} theme={Theme} />
           </ProfileContainer>
         </HeaderContainer>
         <CouponContainer>
@@ -116,12 +118,38 @@ function MatchingHomeNew() {
           </MatchingCardContainer>
         </MatchingContainer>
         <ButtonContainer>
-          <EachButtonContainer>
+          <EachButtonContainer> 
+            {/* 
+            버튼 눌렀을때 정보 충분하지 서버와 통신 확인, 부족하다면 부족한 정보를 웹뷰 통신으로 팝업창 띄우기 요청하기,  
+              충분하다면 티켓수량이 충분한지 확인후 웹뷰통신으로 어떤매칭인지 정보와 확인요청 팝업 요청하기, 데이터가 true가 오면 서버에 매칭 신청
+            */}
+
+            {/*
+            Case1 
+            신청기간인 경우 => 신청하기 버튼
+
+            Case2
+            신청기간이 아닌경우 => 지금은 신청기간이 아니에요 버튼 (deactivate)
+
+            Case1-1 
+              매칭기간인 경우 => 지금은 매칭중 버튼
+            Case1-2
+              매칭당일인 경우 => 매칭상대 확인하기 버튼 => 매칭2로 이동 (선택, 거절 분기점 발생)
+
+            선택시 => 선택까지 남은시간 표시 (상대방까지 확정시 바로 결과 노출)
+            거절시 => 거절사유 팝업 요청, 프로필정보 거절상태로 변경, 이전매칭 권유뷰 노출
+
+            */}
+
+
             {Season ? (
               <EachButton
                 className="activate"
                 onClick={() => {
-                  navigate("/MatchingProgress", { state: { theme: Theme } });
+                  window.ReactNativeWebView?.postMessage(
+                    JSON.stringify({ type: "lackinfo", data: {photoauthen : false, studentauthen : true} })
+                  );
+                  GotoMatching()
                 }}
                 matching={Theme}
               >
@@ -132,6 +160,18 @@ function MatchingHomeNew() {
                 <text className="enter">지금은 신청 기간이 아니에요</text>
               </EachButton>
             )}
+
+            {/* 
+              <EachButton
+                className="activate"
+                onClick={() => {
+                  navigate("/MatchingProgress", { state: { theme: Theme } });
+                }}
+                matching={Theme}
+              >
+                <text className="enter">지금은 매칭중</text>
+              </EachButton>
+               */}
           </EachButtonContainer>
           <EachButtonContainer>
             <EachButton
@@ -229,7 +269,8 @@ const MatchingCardContainer = styled.div`
 const TextField = styled.div`
   width: 100%;
   > text {
-font-family: var(--font-Pretendard);    font-style: normal;
+    font-family: var(--font-Pretendard);
+    font-style: normal;
     font-weight: 300;
     font-size: 16px;
     line-height: 26px;

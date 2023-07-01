@@ -36,7 +36,7 @@ function MatchingHeader(props) {
                 <text>안녕하세요!</text>
               </HeaderName>
             </HeaderProfile>
-            <HeaderSeason theme={Season}>
+            <HeaderSeason theme={props.theme}>
               <text>
                 지금은 <span>{seasonlist[Season]}</span> 접수기간입니다!
               </text>
@@ -164,7 +164,7 @@ const HeaderSeason = styled.div`
     font-weight: 400;
     font-size: 14px;
     line-height: 19px;
-    color: #000000;
+    color: ${props => !props.theme ? "#000000" : "#FFFFFF"}
   }
 
   > text > span {

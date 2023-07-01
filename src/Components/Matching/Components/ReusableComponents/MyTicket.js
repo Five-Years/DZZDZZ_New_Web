@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as Tickets } from "../../../assets/ticket.svg";
+import { ReactComponent as Tickets } from "../../../../assets/ticket.svg";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import StateSlice from "../../../features/State/StateSlice";
+import StateSlice from "../../../../features/State/StateSlice";
 
 function MyTicket() {
   const navigate = useNavigate();

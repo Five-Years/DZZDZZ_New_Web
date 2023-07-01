@@ -8,7 +8,7 @@ import {
     ContentLeft,
     ContentTitle,
     ContentRight
-} from '../../StyledComponent/MatchingStyled';
+} from '../StyledComponent/MatchingStyled';
 
 
 function PurchasingHeader(props) {

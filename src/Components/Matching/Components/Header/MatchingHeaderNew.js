@@ -27,7 +27,6 @@ function MatchingHeaderNew(props) {
   const dispatch = useDispatch();
   const seasonlist = ["매칭", "정리중"];
   const navigate = useNavigate();
-
   return (
     <>
       <HeaderContainer theme={color}>
@@ -36,13 +35,20 @@ function MatchingHeaderNew(props) {
             <text className="name">{Name}님</text>
             <text>안녕하세요!</text>
           </HeaderName>
-          <HeaderSeason theme={Season}>
-            {Season? <>            <text>
-              지금은 <span className="season">매칭</span> 접수기간입니다!
-            </text></> :             <text>
-              지금은 <span className="ready">준비중</span> 입니다!
-            </text>}
-
+          <HeaderSeason isFirst={props.isFirst} color={props.theme}>
+            {Season ? (
+              <>
+                {" "}
+                <text>
+                  지금은  <span className="season">{"매칭 접수"}</span>{"  "}
+                  기간입니다.
+                </text>
+              </>
+            ) : (
+              <text>
+                지금은 <span className="ready">준비중</span> 입니다!
+              </text>
+            )}
           </HeaderSeason>
         </HeaderTop>
       </HeaderContainer>
@@ -135,18 +141,13 @@ const HeaderSeason = styled.div`
   }
 
   > text > span {
-    /* color: ${(props) =>
-      props.theme === 1
-        ? "#0094FF"
-        : props.theme === 2
-        ? "#888888"
-        : "#FF477E"}; */
-    color : #FF477E;
+    color: ${(props) => (props.isFirst ? "#000000" : "#FFFFFF")};
     font-weight: 600;
     font-size: 14px;
+    background: ${(props) => props.isFirst ? "#FFF100" : (props.color === 0 ? "#FF477E" : "#0094FF")};
 
     &.ready {
-      color : black;
+      color: black;
     }
   }
 `;
