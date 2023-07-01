@@ -51,7 +51,6 @@ function HomepageNew() {
     getData();
 },[])
     
-    
 
   const listener = (event) => {
     const { data, type } = JSON.parse(event);

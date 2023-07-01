@@ -27,23 +27,41 @@ function MatchingHomeNew() {
     );
   }, []);
 
+  // application 왔으면 GotoMatching()
+
+  const datalist = ["date","friend"]
   const GotoMatching = ()=>{
     navigate("/MatchingProgress", { state: { theme: Theme } });
-
   }
-  const listener = (event) => {
-    const { data, type } = JSON.parse(event);
 
-  switch (type) {
-      case "back":
-        if (this.props.navigation.isFirstRouteInParent()) {
-          navigate("/Matching");
-        } else {
-          navigate(-1);
+  useEffect(() => {
+    //android
+    document.addEventListener("message", (e) => listener(e.data));
+    //ios
+    window.addEventListener("message", (e) => listener(e.data));
+  }, []);
+  
+    const listener = (event) => {
+      const { data, type } = JSON.parse(event);
+      switch (type) {
+        case "back":
+          if (this.props.navigation.isFirstRouteInParent()) {
+            navigate("/Matching");
+          } else {
+            navigate(-1);
+          }
+          break;
+        case "application": {
+          GotoMatching();
         }
-        break;
-    }
-  };
+      }
+    };
+      
+    
+
+ 
+    console.log(datalist[Theme])
+
 
   return (
     <>
@@ -147,9 +165,11 @@ function MatchingHomeNew() {
                 className="activate"
                 onClick={() => {
                   window.ReactNativeWebView?.postMessage(
-                    JSON.stringify({ type: "lackinfo", data: {photoauthen : false, studentauthen : true} })
+                    JSON.stringify({ type: "application", data: datalist[Theme] })
                   );
-                  GotoMatching()
+                  // window.ReactNativeWebView?.postMessage(
+                  //   JSON.stringify({ type: "lackinfo", data: {photoauthen : bool, studentauthen : bool})
+                  // );
                 }}
                 matching={Theme}
               >
