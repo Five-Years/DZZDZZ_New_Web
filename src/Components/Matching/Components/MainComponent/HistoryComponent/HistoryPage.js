@@ -1,18 +1,20 @@
 import React from "react";
 import styled from "@emotion/styled";
-import HistoryMatch from "./HistoryMatch";
+import { ReactComponent as Mile } from "assets/mile.svg";
+import { ReactComponent as DisabledTicket } from "assets/disabledTicket.svg";
+import { ReactComponent as DisabledMile } from "assets/disabledMile.svg";
+import { ReactComponent as Ticket } from "assets/ticket.svg";
 
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import StateSlice from "../../../../features/State/StateSlice";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import MenuHeader from "../Header/MenuHeader";
+import StateSlice from "features/State/StateSlice";
+import { useNavigate, useLocation } from "react-router-dom";
+import MenuHeader from "../../HeaderComponent/MenuHeader";
 import HistoryTicket from "./HistoryTicket";
 import HistoryMile from "./HistoryMile";
 
-function MatchHistory() {
+function HistoryPage() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -35,8 +37,6 @@ function MatchHistory() {
     }
   };
 
-
-
   useEffect(() => {
     //android
     document.addEventListener("message", (e) => listener(e.data));
@@ -54,15 +54,41 @@ function MatchHistory() {
         <HeaderContainer>
           <MenuHeader title={location.state.title} />
         </HeaderContainer>
+        <TicketMileChangeContainer>
+          <MileSection
+            value={0}
+            selected={isSelected}
+            onClick={() => {
+              setIsSelected(0);
+            }}
+          >
+            <ItemContainer>
+              {isSelected ? <DisabledMile /> : <Mile />}
+              <text>1</text>
+            </ItemContainer>
+          </MileSection>
+          <TicketSection
+            value={1}
+            selected={isSelected}
+            onClick={() => {
+              setIsSelected(1);
+            }}
+          >
+            <ItemContainer>
+              {isSelected ? <Ticket /> : <DisabledTicket />}
+              <text>1</text>
+            </ItemContainer>{" "}
+          </TicketSection>
+        </TicketMileChangeContainer>
         <ListContainer>
-            <HistoryMatch />
+          {isSelected ? <HistoryMile /> : <HistoryTicket />}
         </ListContainer>
       </PurchasePageContainer>
     </>
   );
 }
 
-export default MatchHistory;
+export default HistoryPage;
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -75,13 +101,11 @@ const ListContainer = styled.div`
   display: flex;
   position: absolute;
   flex-direction: column;
-  top: 6.86%;
+  top: 13.43%;
   width: 100%;
-  height: 93.15%;
+  height: 86.57%;
   overflow-y: scroll;
-  overflow-x: hidden;
 `;
-
 
 const PurchasePageContainer = styled.div`
   display: flex;
@@ -89,8 +113,6 @@ const PurchasePageContainer = styled.div`
   width: 100%;
   height: 100%;
   justify-content: center;
-  overflow: hidden;
-
 `;
 
 const ItemContainer = styled.div`

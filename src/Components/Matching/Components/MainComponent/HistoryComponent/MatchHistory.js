@@ -1,21 +1,18 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { ReactComponent as Mile } from "../../../../assets/mile.svg";
-import { ReactComponent as DisabledTicket } from "../../../../assets/disabledTicket.svg";
-import { ReactComponent as DisabledMile } from "../../../../assets/disabledMile.svg";
-import { ReactComponent as Ticket } from "../../../../assets/ticket.svg";
+import HistoryMatch from "./HistoryMatch";
 
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import StateSlice from "../../../../features/State/StateSlice";
+import StateSlice from "../../../../../features/State/StateSlice";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import MenuHeader from "../Header/MenuHeader";
+import MenuHeader from "../../HeaderComponent/MenuHeader";
 import HistoryTicket from "./HistoryTicket";
 import HistoryMile from "./HistoryMile";
 
-function HistoryPage() {
+function MatchHistory() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -57,41 +54,15 @@ function HistoryPage() {
         <HeaderContainer>
           <MenuHeader title={location.state.title} />
         </HeaderContainer>
-        <TicketMileChangeContainer>
-          <MileSection
-            value={0}
-            selected={isSelected}
-            onClick={() => {
-              setIsSelected(0);
-            }}
-          >
-            <ItemContainer>
-              {isSelected ? <DisabledMile /> : <Mile />}
-              <text>1</text>
-            </ItemContainer>
-          </MileSection>
-          <TicketSection
-            value={1}
-            selected={isSelected}
-            onClick={() => {
-              setIsSelected(1);
-            }}
-          >
-            <ItemContainer>
-              {isSelected ? <Ticket /> : <DisabledTicket />}
-              <text>1</text>
-            </ItemContainer>{" "}
-          </TicketSection>
-        </TicketMileChangeContainer>
         <ListContainer>
-          {isSelected ? <HistoryMile /> : <HistoryTicket />}
+            <HistoryMatch />
         </ListContainer>
       </PurchasePageContainer>
     </>
   );
 }
 
-export default HistoryPage;
+export default MatchHistory;
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -104,10 +75,11 @@ const ListContainer = styled.div`
   display: flex;
   position: absolute;
   flex-direction: column;
-  top: 13.43%;
+  top: 6.86%;
   width: 100%;
-  height: 86.57%;
+  height: 93.15%;
   overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 
@@ -117,6 +89,8 @@ const PurchasePageContainer = styled.div`
   width: 100%;
   height: 100%;
   justify-content: center;
+  overflow: hidden;
+
 `;
 
 const ItemContainer = styled.div`

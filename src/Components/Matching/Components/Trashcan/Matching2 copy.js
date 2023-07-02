@@ -2,12 +2,25 @@ import React, { useEffect } from "react";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 import { useState, useRef } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import MatchingProgressHeader from "../Header/MatchingProgressHeader";
+import MatchingProgressHeader from "../HeaderComponent/MatchingProgressHeader";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 import styled from "styled-components";
-
+import {
+  MatchingContainers,
+  Option,
+  MatchingLink,
+  ProfileImageContainer,
+  TextContainer,
+  ProfileNameContainer,
+  DetailTextView,
+  ProfileName,
+  SelectionContainer,
+  Selection,
+  DetailContainer,
+  DetailView,
+  IntroduceContainer,
+} from "../StyledComponent/MatchingStyled";
 
 function Matching2() {
   const DetailDownRef = useRef();
@@ -16,42 +29,22 @@ function Matching2() {
   const [offset,setOffset] = useState(0);
   useEffect(()=>{setOffset(DetailDownRef.current.offsetTop)},[DetailDownRef])
 
-  useEffect(() => {
-    //android
-    document.addEventListener("message", (e) => listener(e.data));
-    //ios
-    window.addEventListener("message", (e) => listener(e.data));
-  }, []);
 
 
-  const listener = (event) => {
-    const { data, type } = JSON.parse(event);
 
-    switch (type) {
-      case "accept":
-        accept();
-        break
-      case "reject":
-        reject();
-        break
-
-      case "application":
-        if (data){
-          if (window.confirm("선택하시겠습니까?")) {
-            alert("선택하셨습니다");
-            navigate("/Choice", { state: "accept" });
-          }
-        }
+  const accept = () => {
+    if (window.confirm("선택하시겠습니까?")) {
+      alert("선택하셨습니다");
+      navigate("/Choice", { state: "accept" });
 
     }
   };
 
-  const accept = () => {
-    navigate("/Choice", { state: "accept" })
-  };
-
   const reject = () => {
-    navigate("/Choice", { state: "reject" });
+    if (window.confirm("거절하시겠습니까?")) {
+      alert("거절하셨습니다");
+      navigate("/Choice", { state: "reject" });
+    }
   };
 
   const [detail, setDetail] = useState(false);
@@ -62,9 +55,11 @@ function Matching2() {
     <MatchingContainers detail={detail}>
       <ContentContainer><MatchingProgressHeader isReport={true}/></ContentContainer>
       <ProfileImageContainer>
-        <img src={require("../../../../assets/ProfileSample.png")} alt="이미지"/>      
-        </ProfileImageContainer>
-        <IntroduceContainer
+        {true ? <ExtraMatching><DoubleMatching value={0} select = {isSelected} onClick={()=>{setIsSelected(0)}}><text>현재매칭</text></DoubleMatching><DoubleMatching  select={isSelected} value={1} onClick={()=>{setIsSelected(1)}}><text>이전매칭</text></DoubleMatching></ExtraMatching> :<></>}
+        {isSelected===0 ? <img src={require("../../../../assets/ProfileSample.png")} alt="이미지"/> : <img src={require("../../../../assets/mango.jpg")} alt="이미지"/>}
+        {/* <Frame6887></Frame6887> */}
+      </ProfileImageContainer>
+      {isSelected===0 ? <><IntroduceContainer
         onClick={() => {
           setDetail(!detail);
         }}
@@ -91,16 +86,41 @@ function Matching2() {
           />
           <text>단짠지기임당</text>
         </ProfileName>
-      </ProfileNameContainer>
+      </ProfileNameContainer></> : <><IntroduceContainer
+        onClick={() => {
+          setDetail(!detail);
+        }}
+      >
+        <DetailTextView detail={detail}></DetailTextView>
+        <TextContainer detail={detail}>
+          <text>
+            츄르좀 주면 덧나나? 스크래쳐도 좋아합니다
+          </text>
+        </TextContainer>
+        <KeyboardArrowDownIcon
+          style={{
+            color: detail ? "#FFFFFF" : "#888888",
+            zIndex: 2,
+            transform: detail ? "rotate(180deg)" : "",
+          }}
+        />
+      </IntroduceContainer>
+      <ProfileNameContainer>
+        <ProfileName>
+          <img
+            src={require("../../../../assets/CircleWavyCheck.png")}
+            alt="이미지"
+          />
+          <text>망고임당</text>
+        </ProfileName>
+      </ProfileNameContainer></>}
+      
       <SelectionContainer>
-        {/* 선택시 서버에 사진인증, 학생인증, 1장이상의 쿠폰을 보유하고 있는지 확인  */}
+        {/* 선택시 확인작업 거치고 진행 */}
         <Selection>
           <Option
             onClick={() => {
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "accept" , data: "" })
-              );
-              // accept();
+              accept();
             }}
           >
             <img src={require("../../../../assets/Like.png")} alt="이미지" />
@@ -110,10 +130,7 @@ function Matching2() {
         <Selection>
           <Option
             onClick={() => {
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "reject" , data: "" })
-              );
-              // reject();
+              reject();
             }}
           >
             <img src={require("../../../../assets/Close.png")} alt="이미지" />
@@ -151,15 +168,8 @@ function Matching2() {
         <ContentsSection><Contents><ContentsTitle><text>음주</text></ContentsTitle><ContentsWindow><text>한 달에 1회 미만</text></ContentsWindow></Contents></ContentsSection>
         <ContentsSection><Contents><ContentsTitle><text>흡연</text></ContentsTitle><ContentsWindow><text>비 흡연자</text></ContentsWindow></Contents></ContentsSection>
         <SelectButtonContainer>
-          <SelectionButton><Button onClick={()=>{   
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "accept" , data: "" })
-              );}}
-            ><text>선택하기</text></Button></SelectionButton>
-          <SelectionButton><Button onClick={()=>{   
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "reject" , data: "" })
-              );}} className='reject'><text>거절하기</text></Button></SelectionButton>
+          <SelectionButton><Button onClick={()=>{accept()}}><text>선택하기</text></Button></SelectionButton>
+          <SelectionButton><Button onClick={()=>{reject()}} className='reject'><text>거절하기</text></Button></SelectionButton>
         </SelectButtonContainer>
       </ContentsContainer>
     </MatchingContainers>
@@ -167,338 +177,6 @@ function Matching2() {
 }
 
 export default Matching2;
-
-
-
-export const ProfileImageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: start;
-  gap: 10px;
-  position: absolute;
-  top: 6.5%;
-  width: 100%;
-  height: 53.286%;
-
-  > img {
-    width: 100%;
-    height: 100%;
-  }
-`;
-
-export const MatchingContainers = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: white;
-`;
-
-export const Option = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
-  gap: 17px;
-  width: 37.95%;
-  top: 10%;
-  min-width: 74px;
-  height: 82px;
-  > img {
-    width: 35px;
-    height: 35px;
-  }
-
-  > text {
-    width: 80px;
-    height: 30px;
-
-    font-family: var(--font-Pretendard);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 30px;
-    /* identical to box height */
-
-    text-align: center;
-
-    /* dzz_pink */
-
-    color: #ff477e;
-  }
-
-  > text.reject {
-    color: #0094ff;
-  }
-`;
-
-export const TextContainer = styled.div`
-  width: 53.33%;
-  min-width: 208px;
-  height: 20px;
-  overflow: ${props=> props.detail? "visible" : "hidden"};
-  /* background-color: ${props=> props.detail? "#888888" : "#FFFFFF"}; */
-  z-index: 2;
-  text-align: center;
-  margin-left : 20px;
- 
-  
-  > text {
-    text-overflow: hidden;
-    font-family: var(--font-Pretendard);
-    font-style: normal;
-    font-weight: 300;
-    font-size: 16px;
-    line-height: 22px;
-    display: flex;
-    align-items: center;
-    /* background-color: ${props=> props.detail? "#888888" : "#FFFFFF"}; */
-    color: ${props=> props.detail? "#FFFFFF" : "#888888"};
-  }
-
-  > img {
-    width: 20px;
-    height: 20px;
-  }
-`;
-export const ProfileNameContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  position: absolute;
-  width: 100%;
-  height: 3.43%;
-  top: 64.43%;
-`;
-
-export const DetailTextView = styled.div`
-  
-  display: ${props=>props.detail? "flex" : "none"};
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  background-color: #000000;
-  opacity: 70%;
-  z-index: 1;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const DetailText = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 24px;
-  top: 62.8%;
-  text-align: center;
-
-  > text {
-    color: white;
-  }
-`;
-
-
-
-export const ProfileName = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-
-  width: 33.5%;
-  min-width: 340px;
-  height: 24px;
-
-  > img {
-    width: 24px;
-    height: 24px;
-  }
-
-  > text {
-    width: 130px;
-    height: 22px;
-
-    font-family: var(--font-Pretendard);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 19px;
-    line-height: 22px;
-    text-align: center;
-    letter-spacing: -0.408px;
-    color: #000000;
-  }
-`;
-
-// const Frame6887 = styled.div``;
-export const SelectionContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  width: 100%;
-  height: 14.29%;
-  left: 0px;
-  top: 75.14%;
-`;
-
-
-
-export const Selection = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-  height: 100%;
-`;
-
-export const DetailContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  position: absolute;
-  width: 100%;
-  height: 58px;
-  top: 88.22%;
-
-  > KeyboardDoubleArrowUpIcon {
-    width: 40px;
-    height: 40px;
-  }
-`;
-
-export const DetailView = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
-  gap: 4px;
-  width: 80px;
-  height: 22px;
-`;
-
-export const MatchingLink = styled(Link)`
-  text-decoration-line: none;
-  > text {
-    width: 80px;
-    height: 22px;
-
-    font-family: var(--font-Pretendard);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 22px;
-    /* identical to box height, or 147% */
-
-    text-align: center;
-    letter-spacing: -0.408px;
-
-    /* Text Gray */
-
-    color: #888888;
-  }
-`;
-
-export const ContentContainers = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  position: absolute;
-  width: 100%;
-  height: 6%;
-
-  /* border-bottom: 0.3px solid #888888; */
-`;
-
-export const ContentLeft = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 5px;
-
-  width: 33.33%;
-  height: 100%;
-`;
-
-export const ContentTitle = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
-  gap: 10px;
-
-  width: 130px;
-  height: 32px;
-
-  > text {
-    font-family: var(--font-Pretendard);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 19px;
-  line-height: 22px;
-  /* identical to box height, or 116% */
-
-  text-align: center;
-  letter-spacing: -0.408px;
-
-  /* Text Black */
-
-  color: #000000;
-  }
-`;
-
-
-export const Frame6887 = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0px;
-  gap: 131px;
-
-  width: 67px;
-  height: 7px;
-`;
-
-export const IntroduceContainer = styled.div`
-  display: flex;
-  position: absolute;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  height: 3.14%;
-  top: 69.14%;
-
-  > img {
-    width: 20px;
-    height: 20px;
-    transform: rotate(90deg);
-  }
-`;
-
-export const ContentRight = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
-
-  width: 33.33%;
-  height: 100%;
-`;
-
 
 const ContentContainer = styled.div`
   box-sizing: border-box;
@@ -509,6 +187,44 @@ const ContentContainer = styled.div`
   position: absolute;
   width: 100%;
   height: 6%;
+`;
+
+const ExtraMatching = styled.div`
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+width : 100%;
+height : 7.6%;
+position: absolute;
+top : 0px;
+`;
+
+const DoubleMatching = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+gap: 10px;
+width : 50%;
+height : 100%;
+border-bottom: ${props => props.value === props.select ? "3px solid #FF477E" : <></> };
+
+> text {
+  font-family: var(--font-Pretendard);
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 150%;
+/* identical to box height, or 21px */
+
+text-align: center;
+letter-spacing: 0.5px;
+
+/* Text Black */
+
+color:  ${props => props.value === props.select ? "000000" : "#AEAEB2" };
+}
+
 `;
 
 
@@ -747,7 +463,7 @@ text-underline-offset : 5px; //밑줄과 텍스트와의 간격
 
 > text {
   margin-left: 20px;
-    font-family: var(--font-Pretendard);
+  font-family: var(--font-Pretendard);
   font-style: normal;
   font-weight: 510;
   font-size: 17px;

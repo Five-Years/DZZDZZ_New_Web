@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import styled from "styled-components";
-import MatchingHeader from "../Header/MatchingHeader";
-import MatchingHeaderNew from "../Header/MatchingHeaderNew";
-import MatchingProgressHeader from "../Header/MatchingProgressHeader";
+import MatchingHeader from "../HeaderComponent/MatchingHeader";
+import MatchingHeaderNew from "../HeaderComponent/MatchingHeaderNew";
+import MatchingProgressHeader from "../HeaderComponent/MatchingProgressHeader";
 
 function MatchingHome() {
   const navigate = useNavigate();

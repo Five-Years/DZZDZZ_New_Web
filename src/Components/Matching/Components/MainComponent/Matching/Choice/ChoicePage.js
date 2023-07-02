@@ -8,30 +8,37 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
 import styled from "styled-components";
-import Smile from "../../../../assets/SmileHeartEye.gif";
-import Tear from "../../../../assets/SweatFace.gif";
-import MatchingProgressHeader from "../Header/MatchingProgressHeader";
+import Smile from "assets/SmileHeartEye.gif";
+import Tear from "assets/SweatFace.gif";
+import { useSelector } from "react-redux";
+import MatchingProgressHeader from "Components/Matching/Components/HeaderComponent/MatchingProgressHeader";
 
-function ChoiceResult() {
+function ChoicePage() {
+  const [isStart, setIsStart] = useState(true);
   const [detail, setDetail] = useState(false);
   const navigate = useNavigate();
-  const [isSuccess, setIsSuccess] = useState(true);
   const { state } = useLocation();
-
+  const [theme, setTheme] = useState(0);
+  const ReportedData = useSelector((state) => {
+    return state.Popup.ReportData;
+  });
+  const ReportCase = useSelector((state) => {
+    return state.Popup.ReportCase;
+  });  
   return (
     <MatchingContainers detail={detail}>
       <ContentContainer>
         <MatchingProgressHeader isReport={true} />
       </ContentContainer>
+
       <ProfileImageContainer>
-        <img src={require("../../../../assets/mango.jpg")} alt="이미지" />
-        <Frame6887></Frame6887>
+        <img src={require("assets/mango.jpg")} alt="이미지" />
       </ProfileImageContainer>
 
       <ProfileNameContainer>
         <ProfileName>
           <img
-            src={require("../../../../assets/CircleWavyCheck.png")}
+            src={require("assets/CircleWavyCheck.png")}
             alt="이미지"
           />
           <text>단짠지기임당</text>
@@ -39,81 +46,110 @@ function ChoiceResult() {
       </ProfileNameContainer>
       <ContentsContainer>
         <ContentsBox>
-          {" "}
-          <ResultBox>
-            {isSuccess ? (
-              <>
-                <img src={Smile} alt="loading..." />
-                <text>축하합니다!</text>
-                <text>
-                  <span>단짠지기임당</span>님과매칭이 성공했어요!
-                </text>
-              </>
-            ) : (
-              <>
-                <img src={Tear} alt="loading..." />
-                <text>
-                  아쉽게도<span>단짠지기임당</span>님은
-                </text>
-                <text>인연이 아닌가봐요</text>
-              </>
-            )}
-          </ResultBox>
-          {/* <WaitingBox state={state}><text>선택시간이<span>22<span>시간</span></span><span>41<span>분</span></span> 남았어요.</text><text>상대방이 선택하면 결과가 나와요.</text></WaitingBox> */}
-          <ChanceBox state={state}>
-            {isSuccess ? (
-              <>
-                <SuggentionButton
-                  onClick={() => {
-                    window.ReactNativeWebView?.postMessage(
-                      JSON.stringify({
-                        type: "openchat",
-                        data: "https://open.kakao.com/o/gZ5Purqf",
-                      })
-                    );
-                  }}
-                >
-                  <text>오픈 카톡 URL 열기</text>
-                </SuggentionButton>
-              </>
-            ) : (
+        <ResultBox>
+          {state === "accept" ? (
+            <>
+              <img src={Smile} alt="loading..." />
+              <text>
+                <span>단짠지기임당</span>님을 선택하셨습니다
+              </text>
+            </>
+          ) : (
+            <>
+              <img src={Tear} alt="loading..." />
+              <text>
+                <span>단짠지기임당</span>님을 거절하셨습니다
+              </text>
+
+              {ReportedData? <><ReportContainer><ReportCard><text>'{ReportCase[ReportedData.reportNum]}'의 항목으로 신고가 접수되었습니다.</text></ReportCard></ReportContainer></> : <></>}
               <text
-                onClick={() => {
-                  navigate("/");
-                }}
-                className="result"
+                onClick={()=>{navigate("/Matching")}}
+                className="reject"
               >
                 메인으로 돌아가기
               </text>
-            )}
-          </ChanceBox>
-          {/* onClick={()=>{   window.open("https://open.kakao.com/o/gZ5Purqf")}} */}
+            </>
+          )}
+        </ResultBox>
+        {isStart ? (
+          <WaitingBox state={state}>
+            <SuggentionButton
+              onClick={() => {
+                navigate("/ChoiceLoading", { state: { theme: 1 } });
+              }}
+            >
+              <text>결과 확인하기</text>
+            </SuggentionButton>
+          </WaitingBox>
+        ) : (
+          <WaitingBox state={state}>
+            <text>
+              선택시간이
+              <span>
+                22<span>시간</span>
+              </span>
+              <span>
+                41<span>분</span>
+              </span>{" "}
+              남았어요.
+            </text>
+            <text>상대방이 선택하면 결과가 나와요.</text>
+          </WaitingBox>
+        )}
+        <ChanceBox state={state}>
+          {state === "accept" ? (
+            <text
+              onClick={() => {
+                navigate("/Matching");
+              }}
+            >
+              메인으로 돌아가기
+            </text>
+          ) : ReportedData ? <></> :
+            <>
+              <text>이대로 끝내기 아쉽다면?</text>
+              <SuggentionButton
+                onClick={() => {
+                  window.ReactNativeWebView?.postMessage(
+                    JSON.stringify({
+                      type: "rematch",
+                      data: { applicant: "miju", target: 'target' },
+                    })
+                  );
+                }}
+              >
+                <text>이건 어때요?</text>
+              </SuggentionButton>
+            </>
+          }
+        </ChanceBox>
         </ContentsBox>
       </ContentsContainer>
     </MatchingContainers>
   );
 }
 
-export default ChoiceResult;
+export default ChoicePage;
 
 const ContentsBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  height: 100%;
+  width : 62.31%;
+  height : 100%;
 `;
 
 const ContentsContainer = styled.div`
-  display: flex;
-  position: absolute;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 29.86%;
-  top: 70.14%;
+display: flex;
+position: absolute;
+flex-direction: column;
+align-items: center;
+width : 100%;
+height : 29.86%;
+top : 70.14%;
 `;
+
 
 export const MatchingContainers = styled.div`
   position: absolute;
@@ -180,6 +216,7 @@ export const ProfileName = styled.div`
   }
 `;
 
+
 export const ProfileNameContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -192,29 +229,30 @@ export const ProfileNameContainer = styled.div`
   top: 64.43%;
 `;
 
+
 const ReportContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 70px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  flex-shrink: 0;
+display: flex;
+width: 100vw;
+height: 70px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 4px;
+flex-shrink: 0;
 `;
 
 const ReportCard = styled.div`
   display: flex;
-  width: 89.74%;
-  height: 72%;
+  width : 89.74%;
+  height : 72%;
   border-radius: 7px;
-  background: #48484a;
+  background: #48484A;
   align-items: center;
   justify-content: center;
   text-align: center;
 
   > text {
-    color: var(--white, #fff);
+    color: var(--white, #FFF);
     text-align: center;
     font-size: 12px;
     font-family: var(--font-Pretendard);
@@ -240,15 +278,16 @@ const SuggentionButton = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  padding: 8px 24px;
   gap: 4px;
 
-  width: 56.41%;
-  height: 52px;
+  width: 142px;
+  height: 40px;
 
   /* dzz_pink */
 
   background: #ff477e;
-  border-radius: 13px;
+  border-radius: 31px;
 
   > text {
     font-family: var(--font-Pretendard);
@@ -301,13 +340,11 @@ const ResultBox = styled.div`
   justify-content: space-between;
   padding: 0px;
   gap: 7px;
-  width : 100%;
-  height: 120px;
 
-  > img {
-    width: 50px;
-    height: 50px;
-  }
+  width: 100%;
+  height: 100px;
+  z-index: 10;
+
   > text {
     font-family: var(--font-Pretendard);
     font-style: normal;
@@ -316,9 +353,17 @@ const ResultBox = styled.div`
     line-height: 25px;
     /* identical to box height */
 
+    display: flex;
+    align-items: center;
+
     > span {
       font-weight: 700;
     }
+  }
+
+  > img {
+    width: 50px;
+    height: 50px;
   }
 
   > text.reject {
@@ -345,7 +390,7 @@ const WaitingBox = styled.div`
   padding: 0px;
   gap: 5px;
 
-  width: 280px;
+  width: 100%;
   height: 49px;
   > text {
     font-family: var(--font-Pretendard);
@@ -380,10 +425,11 @@ const ChanceBox = styled.div`
   padding: 0px;
   gap: 5px;
 
-  width: 100%;
-  height: 80px;
+  width: 180px;
+  height: 60px;
 
   > text {
+    z-index: 10;
     font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
@@ -397,9 +443,5 @@ const ChanceBox = styled.div`
     /* system_blue */
 
     color: ${(props) => (props.state === "accept" ? "#0094FF" : "#888888")};
-  }
-
-  > text.result {
-    color: #0094ff;
   }
 `;

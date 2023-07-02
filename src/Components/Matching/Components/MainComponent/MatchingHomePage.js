@@ -4,16 +4,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import MatchingProgressHeader from "../Header/MatchingProgressHeader";
+import MatchingProgressHeader from "../HeaderComponent/MatchingProgressHeader";
 
 import { ReactComponent as Info } from "../../../../assets/Info.svg";
-import MatchingHeaderNew from "../Header/MatchingHeaderNew";
+import MatchingHeaderNew from "../HeaderComponent/MatchingHeaderNew";
 import StateSlice from "features/State/StateSlice";
 // import MyTicket from "../ReusableComponents/MyTicket";
 import MyTicket from "Components/Matching/Components/ReusableComponents/MyTicket";
 import axios from "axios";
 
-function HomepageNew() {
+function MatchingHomePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userData, setUserData] = useState();
@@ -76,12 +76,15 @@ function HomepageNew() {
         dispatch(StateSlice.actions.SeasonNumber(data.seasonnumber));
 
       case "back":
-        if (this.props.navigation.isFirstRouteInParent()) {
-          navigate("/Matching");
-        } else {
+        {
           navigate(-1);
+          break;
         }
-        break;
+        // if (this.props.navigation.isFirstRouteInParent()) {
+        //   navigate("/Matching");
+        // } else {
+        //   navigate(-1);
+        // }
 
       case "report":
         navigate("/")
@@ -270,7 +273,7 @@ function HomepageNew() {
   );
 }
 
-export default HomepageNew;
+export default MatchingHomePage;
 
 const HistoryContainer = styled.div`
   display: flex;

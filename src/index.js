@@ -15,23 +15,23 @@ import "./index.css";
 import App from "./Components/PC/App";
 import PCHome from "./Components/PC/PCHome";
 import MobileMenu from "./Components/PC/Header/MobileMenu";
-import DzzDzzIntrodue from "./Components/Matching/Components/DzzDzzIntrodue";
+import DzzDzzIntrodue from "./Components/Matching/Components/MainComponent/Notice/DzzDzzIntrodue";
 import Terms from "./Components/PC/Policy/Terms";
 import Privacy from "./Components/PC/Policy/Privacy";
 
 //matching페이지
-import HomepageNew from "./Components/Matching/Components/MainComponent/HomepageNew";
-import Purchasing from "./Components/Matching/Components/MainComponent/Purchasing";
-import MatchingHomeNew from "./Components/Matching/Components/MatchingHomeNew";
-import MatchingProgress from "./Components/Matching/Components/MatchingProgress";
-import Matching2 from "./Components/Matching/Components/Matching/Matching2";
+import MatchingHomePage from "./Components/Matching/Components/MainComponent/MatchingHomePage";
+import Purchasing from "./Components/Matching/Components/MainComponent/PurchasingComponent/Purchasing";
+import MatchingPage from "./Components/Matching/Components/MainComponent/Matching/MatchingPage";
+import MatchingProgress from "./Components/Matching/Components/MainComponent/Matching/MatchingProgress";
+import Matching2 from "./Components/Matching/Components/MainComponent/Matching/Matching2";
 import DetailProfile from "./DetailProfile";
-import ChoicePage from "./Components/Matching/Components/Matching/ChoicePage";
-import ChoiceResult from "./Components/Matching/Components/Matching/ChoiceResult";
-import ChoiceLoading from "./Components/Matching/Components/Matching/ChoiceResult";
-import Coupon from "./Components/Matching/Components/MainComponent/Coupon";
-import HistoryPage from "./Components/Matching/Components/MainComponent/HistoryPage";
-import MatchHistory from "./Components/Matching/Components/MainComponent/MatchHistory";
+import ChoicePage from "Components/Matching/Components/MainComponent/Matching/Choice/ChoicePage";
+import ChoiceResult from "Components/Matching/Components/MainComponent/Matching/Choice/ChoiceResult";
+import ChoiceLoading from "Components/Matching/Components/MainComponent/Matching/Choice/ChoiceLoading";
+import Coupon from "Components/Matching/Components/MainComponent/CouponComponent/Coupon";
+import HistoryPage from "Components/Matching/Components/MainComponent/HistoryComponent/HistoryPage";
+import MatchHistory from "Components/Matching/Components/MainComponent/HistoryComponent/MatchHistory";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -41,21 +41,21 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/Matching" element={<HomepageNew />}></Route>
+          <Route path="/Matching" element={<MatchingHomePage />}></Route>
           <Route path="/purchasing" element={<Purchasing />}></Route>
-          <Route path="/MatchingHome" element={<MatchingHomeNew />}></Route>
+          <Route path="/matchingPage" element={<MatchingPage />}></Route>
           <Route
-            path="/MatchingProgress"
+            path="/matchingProgress"
             element={<MatchingProgress />}
           ></Route>
           <Route path="/matching2" element={<Matching2 />}></Route>
           <Route path="/detail" element={<DetailProfile />}></Route>
-          <Route path="/Choice" element={<ChoicePage />}></Route>
-          <Route path="/ChoiceResult" element={<ChoiceResult />}></Route>
-          <Route path="/ChoiceLoading" element={<ChoiceLoading />}></Route>
-          <Route path="/Coupon" element={<Coupon />}></Route>
-          <Route path="/History" element={<HistoryPage />}></Route>
-          <Route path="/MatchHistory" element={<MatchHistory />}></Route>
+          <Route path="/choice" element={<ChoicePage />}></Route>
+          <Route path="/choiceResult" element={<ChoiceResult />}></Route>
+          <Route path="/choiceLoading" element={<ChoiceLoading />}></Route>
+          <Route path="/coupon" element={<Coupon />}></Route>
+          <Route path="/history" element={<HistoryPage />}></Route>
+          <Route path="/matchhistory" element={<MatchHistory />}></Route>
 
           <Route path="/" element={<PCHome />}></Route>
           <Route path="/pc" element={<App />}></Route>

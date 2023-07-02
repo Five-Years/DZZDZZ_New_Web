@@ -4,10 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import MatchingProgressHeader from "../Header/MatchingProgressHeader";
+import MatchingProgressHeader from "../HeaderComponent/MatchingProgressHeader";
 import { ReactComponent as Info } from "../../../../assets/Info.svg";
 
-import MatchingHeader from "../Header/MatchingHeader";
+import MatchingHeader from "../HeaderComponent/MatchingHeader";
 import StateSlice from "../../../../features/State/StateSlice";
 
 function Homepage() {

@@ -1,5 +1,5 @@
 import React from "react";
-import MenuHeader from "../Header/MenuHeader";
+import MenuHeader from "../../HeaderComponent/MenuHeader";
 import styled from "styled-components";
 import { useState } from "react";
 

@@ -4,11 +4,11 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import styled from "styled-components";
-import MatchingHeaderNew from "./Header/MatchingHeaderNew";
-import MatchingProgressHeader from "./Header/MatchingProgressHeader";
-import MyTicket from "./ReusableComponents/MyTicket";
+import MatchingHeaderNew from "../../HeaderComponent/MatchingHeaderNew";
+import MatchingProgressHeader from "../../HeaderComponent/MatchingProgressHeader";
+import MyTicket from "../../ReusableComponents/MyTicket";
 
-function MatchingHomeNew() {
+function MatchingPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const Theme = location.state.theme;
@@ -223,7 +223,7 @@ function MatchingHomeNew() {
   );
 }
 
-export default MatchingHomeNew;
+export default MatchingPage;
 
 export const MobileContainer = styled.div`
   display: flex;

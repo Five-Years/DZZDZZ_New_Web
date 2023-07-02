@@ -1,27 +1,27 @@
 import React from "react";
 import styled from "@emotion/styled";
-import TicketPage from "./Purchasing/TicketPage";
-import { ReactComponent as Jelly } from "../../../../assets/jelly.svg";
-import { ReactComponent as DisabledTicket } from "../../../../assets/disabledTicket.svg";
-import { ReactComponent as DisabledJelly } from "../../../../assets/DisabledJelly.svg";
-import { ReactComponent as Ticket } from "../../../../assets/ticket.svg";
+import TicketPage from "./TicketPage";
+import { ReactComponent as Jelly } from "assets/jelly.svg";
+import { ReactComponent as DisabledTicket } from "assets/disabledTicket.svg";
+import { ReactComponent as DisabledJelly } from "assets/DisabledJelly.svg";
+import { ReactComponent as Ticket } from "assets/ticket.svg";
 
 import {
   PurchasePageContainer,
   TicketButton,
   TicketContainer,
   TicketCount,
-} from "../StyledComponent/MatchingStyled";
+} from "../../StyledComponent/MatchingStyled";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import StateSlice from "../../../../features/State/StateSlice";
+import StateSlice from "../../../../../features/State/StateSlice";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import MenuHeader from "../Header/MenuHeader";
-import MilePage from "./Purchasing/MilePage";
-import InviteEventButton from "../ReusableComponents/InviteEventButton";
-import JellyButtonContainer from "../ReusableComponents/JellyButtonContainer";
+import MenuHeader from "../../HeaderComponent/MenuHeader";
+import MilePage from "./MilePage";
+import InviteEventButton from "../../ReusableComponents/InviteEventButton";
+import JellyButtonContainer from "../../ReusableComponents/JellyButtonContainer";
 
 function Purchasing() {
   const navigate = useNavigate();
@@ -250,7 +250,6 @@ const CouponContainer = styled.div`
 
   /* Text Gray */
 
-  
   > text {
     font-family: var(--font-Pretendard);
     font-style: normal;
@@ -267,7 +266,6 @@ const CouponContainer = styled.div`
 
     color: #a39ea3;
     border-bottom: 1px solid #888888;
-
   }
 `;
 
