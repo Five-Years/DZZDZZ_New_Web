@@ -64,7 +64,7 @@ function MatchingHomePage() {
         break;
 
       case "onBlur":
-        navigate("/Matching");
+        navigate("/matching");
         break;
 
       case "store":
@@ -199,7 +199,7 @@ function MatchingHomePage() {
           <Selection
             theme={0}
             onClick={() => {
-              navigate("/MatchingHome", {
+              navigate("/matchingpage", {
                 state: {
                   theme: 0, 
                   // 이성매칭으로 들어갔는지, 혼성매칭으로 들어갔는지에대한 정보 theme
@@ -221,7 +221,7 @@ function MatchingHomePage() {
           <Selection
             theme={1}
             onClick={() => {
-              navigate("/MatchingHome", {
+              navigate("/matchingpage", {
                 state: {
                   theme: 1, 
                   // 이성매칭으로 들어갔는지, 혼성매칭으로 들어갔는지에대한 정보 theme
