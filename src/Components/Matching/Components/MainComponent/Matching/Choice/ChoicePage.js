@@ -12,6 +12,11 @@ import Smile from "assets/SmileHeartEye.gif";
 import Tear from "assets/SweatFace.gif";
 import { useSelector } from "react-redux";
 import MatchingProgressHeader from "Components/Matching/Components/HeaderComponent/MatchingProgressHeader";
+import Lottie from "lottie-react";
+import lovelykiss from "assets/lovelykiss.json";
+import pokerface from "assets/pokerface.json";
+import sadlook from "assets/sadlook.json";
+
 
 function ChoicePage() {
   const [isStart, setIsStart] = useState(true);
@@ -49,14 +54,17 @@ function ChoicePage() {
         <ResultBox>
           {state === "accept" ? (
             <>
-              <img src={Smile} alt="loading..." />
+              {/* <img src={Smile} alt="loading..." /> */}
+              {/* <Lottie animationData={lovelykiss} /> */}
+              <LottieContainer><Lottie animationData={lovelykiss} /></LottieContainer>
               <text>
                 <span>단짠지기임당</span>님을 선택하셨습니다
               </text>
             </>
           ) : (
             <>
-              <img src={Tear} alt="loading..." />
+              {/* <img src={Tear} alt="loading..." /> */}
+                            <LottieContainer><Lottie animationData={sadlook} /></LottieContainer>
               <text>
                 <span>단짠지기임당</span>님을 거절하셨습니다
               </text>
@@ -136,8 +144,8 @@ const ContentsBox = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  width : 62.31%;
-  height : 100%;
+  width : 65.31%;
+  height : 95%;
 `;
 
 const ContentsContainer = styled.div`
@@ -147,7 +155,7 @@ flex-direction: column;
 align-items: center;
 width : 100%;
 height : 29.86%;
-top : 70.14%;
+top : 69.14%;
 `;
 
 
@@ -337,7 +345,7 @@ const ResultBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: start;
   padding: 0px;
   gap: 7px;
 
@@ -381,6 +389,11 @@ const ResultBox = styled.div`
 
     color: #0094ff;
   }
+`;
+
+const LottieContainer = styled.div`
+width : 50px;
+height : 50px;
 `;
 
 const WaitingBox = styled.div`

@@ -63,7 +63,7 @@ function ChoiceResult() {
           <ChanceBox state={state}>
             {isSuccess ? (
               <>
-                <SuggentionButton
+                <SuggestionButton
                   onClick={() => {
                     window.ReactNativeWebView?.postMessage(
                       JSON.stringify({
@@ -74,7 +74,7 @@ function ChoiceResult() {
                   }}
                 >
                   <text>오픈 카톡 URL 열기</text>
-                </SuggentionButton>
+                </SuggestionButton>
               </>
             ) : (
               <text
@@ -235,7 +235,7 @@ const ContentContainer = styled.div`
   height: 6.86%;
 `;
 
-const SuggentionButton = styled.div`
+const SuggestionButton = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;

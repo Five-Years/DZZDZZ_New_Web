@@ -42,8 +42,14 @@ function MatchingProgressHeader(props) {
             <ArrowBackIosIcon
               style={{ marginLeft: "15.4%", width: "60%", height: "60%" }}
               onClick={() => {
-                navigate("/Matching");
-              }}
+                if (props.direct)
+                {
+                  navigate("/Matching");
+                }
+                else 
+                {
+                  navigate(-1);
+                }              }}
             />
           </>
         )}

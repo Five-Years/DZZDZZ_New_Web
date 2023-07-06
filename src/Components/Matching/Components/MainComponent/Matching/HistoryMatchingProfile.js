@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 
-function Matching2() {
+function HistoryMatchingProfile() {
   const DetailDownRef = useRef();
   const DetailUpRef = useRef();
 
@@ -93,33 +93,18 @@ function Matching2() {
         </ProfileName>
       </ProfileNameContainer>
       <SelectionContainer>
-        {/* 선택시 서버에 사진인증, 학생인증, 1장이상의 쿠폰을 보유하고 있는지 확인  */}
-        <Selection>
-          <Option
-            onClick={() => {
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "accept" , data: "" })
-              );
-              accept();
-            }}
-          >
-            <img src={require("assets/Like.png")} alt="이미지" />
-            <text className="select">선택하기</text>
-          </Option>
-        </Selection>
-        <Selection>
-          <Option
-            onClick={() => {
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "reject" , data: "" })
-              );
-              reject();
-            }}
-          >
-            <img src={require("assets/Close.png")} alt="이미지" />
-            <text className="reject">거절하기</text>
-          </Option>
-        </Selection>
+      <SuggestionButton
+                  onClick={() => {
+                    window.ReactNativeWebView?.postMessage(
+                      JSON.stringify({
+                        type: "openchat",
+                        data: "https://open.kakao.com/o/gZ5Purqf",
+                      })
+                    );
+                  }}
+                >
+                  <text>오픈 카톡 URL 열기</text>
+                </SuggestionButton>
       </SelectionContainer>
       <DetailContainer onClick={()=>{window.scrollTo({
         top: offset,
@@ -166,9 +151,41 @@ function Matching2() {
   );
 }
 
-export default Matching2;
+export default HistoryMatchingProfile;
 
+const SuggestionButton = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
 
+  width: 56.41%;
+  height: 52px;
+
+  /* dzz_pink */
+
+  background: #ff477e;
+  border-radius: 13px;
+
+  > text {
+    font-family: var(--font-Pretendard);
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.1px;
+
+    /* white */
+
+    color: #ffffff;
+  }
+`;
 
 export const ProfileImageContainer = styled.div`
   display: flex;
@@ -508,7 +525,7 @@ const ContentContainer = styled.div`
   align-items: center;
   position: absolute;
   width: 100%;
-  height: 6.86%;
+  height: 6%;
 `;
 
 

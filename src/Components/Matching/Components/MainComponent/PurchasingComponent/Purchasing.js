@@ -52,14 +52,16 @@ function Purchasing() {
       }
 
       case "back":
-        if (this.props.navigation.isFirstRouteInParent()) {
-          navigate("/Matching");
-        } else {
-          navigate(-1);
-        }
+        navigate(-1);
         break;
     }
   };
+
+  useEffect(() => {
+    window.ReactNativeWebView?.postMessage(
+      JSON.stringify({ type: "notfirst", data: "" })
+    );
+  }, []);
 
   useEffect(() => {
     //android

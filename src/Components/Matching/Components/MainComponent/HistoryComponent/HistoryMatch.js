@@ -30,7 +30,7 @@ function HistoryMatch() {
               onClick={
                 prop.isLink
                   ? () => {
-                      navigate("/matching2");
+                      navigate("/historymatchingprofile");
                     }
                   : null
               }
@@ -55,6 +55,7 @@ function HistoryMatch() {
 }
 
 export default HistoryMatch;
+
 
 const ListItemContainer = styled.div`
   display: flex;

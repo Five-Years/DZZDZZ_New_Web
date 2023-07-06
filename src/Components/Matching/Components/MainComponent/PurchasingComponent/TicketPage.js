@@ -11,6 +11,11 @@ import { ReactComponent as Mile1pri } from "../../../../../assets/TicketProduct1
 import { ReactComponent as Mile2pri } from "../../../../../assets/TicketProduct2.svg";
 import { ReactComponent as Mile3pri } from "../../../../../assets/TicketProduct3.svg";
 import { ReactComponent as Mile4pri } from "../../../../../assets/TicketProduct4.svg";
+import { ReactComponent as RematchInfo } from "../../../../../assets/RematchInfo.svg";
+import { ReactComponent as RematchPrice } from "../../../../../assets/RematchPrice.svg";
+import { ReactComponent as RematchUndo } from "../../../../../assets/undo 1.svg";
+
+
 function TicketPage() {
   const dispatch = useDispatch();
   return (
@@ -59,7 +64,7 @@ function TicketPage() {
           <TicketButton
             onClick={() => {
               window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "buy", data: 1 })
+                JSON.stringify({ type: "buy", data: 3 })
               );
               dispatch(StateSlice.actions.Ticket());
             }}
@@ -86,7 +91,7 @@ function TicketPage() {
           <TicketButton
             onClick={() => {
               window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "buy", data: 1 })
+                JSON.stringify({ type: "buy", data: 6 })
               );
               dispatch(StateSlice.actions.Ticket());
             }}
@@ -113,7 +118,7 @@ function TicketPage() {
           <TicketButton
             onClick={() => {
               window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "buy", data: 1 })
+                JSON.stringify({ type: "buy", data: 11 })
               );
               dispatch(StateSlice.actions.Ticket());
             }}
@@ -122,6 +127,36 @@ function TicketPage() {
           </TicketButton>
         </TicketPurchaseContainer>
       </ProductContainer>
+      <RematchHorizon />      
+      <RematchContainer>
+        <RematchText><text>이대로 끝내기가 아쉽다면?</text><RematchInfo /></RematchText>
+        <RematchTicket>
+        <TicketProduct>
+          <TicketImage>
+            <RematchUndo />
+          </TicketImage>
+          <TicketCount>
+            <text>재시도 티켓</text>
+          </TicketCount>
+        </TicketProduct>
+        <TicketPurchaseContainer>
+          {" "}
+          <TicketPrice>
+          <RematchPrice />
+          </TicketPrice>
+          <TicketButton
+            onClick={() => {
+              window.ReactNativeWebView?.postMessage(
+                JSON.stringify({ type: "buy", data: 0 })
+              );
+              dispatch(StateSlice.actions.Ticket());
+            }}
+          >
+            <text>구매</text>
+          </TicketButton>
+        </TicketPurchaseContainer>
+        </RematchTicket>
+      </RematchContainer>
     </>
   );
 }
@@ -145,6 +180,7 @@ export const TicketButton = styled.div`
     font-weight: 600;
     font-size: 14px;
     line-height: 150%;
+  
     /* identical to box height, or 21px */
     text-align: center;
     letter-spacing: 0.05em;
@@ -200,6 +236,73 @@ const ProductContainer = styled.div`
 
   border-radius: 8px;
 `;
+
+const RematchHorizon = styled.div`
+  display: flex;
+  z-index: 10;
+  width : 100%;
+  height: 5.05%;
+  border-top-style: solid;
+  border-color : #DFE1E4;
+  align-items: center;
+  flex-shrink: 0;
+  align-self: stretch;
+`;
+const RematchContainer = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;
+width : 100%;
+height : 17.67%;
+border-radius: 15px;
+`;
+
+const RematchText = styled.div`
+display: flex;
+align-items: center;
+gap: 10px;
+width : 100%;
+height : 25.71%;
+
+> text {
+  color: #20C64A;
+  text-align: center;
+  font-family: var(--font-Pretendard);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: 0.6px;
+  text-transform: capitalize;
+}
+`;
+const RematchTicket = styled.div`
+display: flex;
+width : 100%;
+height : 64.29%;
+align-items: center;
+gap: 12px;
+border-radius: 30px;
+background: #ECF8ED;
+flex-direction: row;
+align-items: center;
+justify-content: space-between;
+gap: 6px;
+
+  > text {
+    font-family: var(--font-Pretendard);    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px;
+    /* identical to box height, or 171% */
+
+    /* Text Black */
+
+    color: #000000;
+  }
+`;
+
 
 const Confirmation = styled.div`
   width: 100%;
