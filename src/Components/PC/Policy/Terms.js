@@ -6,7 +6,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 function Terms() {
   return (
     <TermsContainer>
-        <HeaderBar />
+        <HeaderContainer><HeaderBar /></HeaderContainer>
         <TermContents>
           <ContentsTitle><text>이용약관</text></ContentsTitle>
           <ContentsDetail><Scrollbars><text><br /><br />제1조(목적) 이 약관은 ㈜파이브이얼즈(이하 "회사"라 합니다)가 제공하는 서비스 ‘단짠단짠’(이하 "서비스"라 합니다) 이용과 관련하여 회사와 이용자 간의 권리∙의무 및 필요한 제반사항을 정함을 목적으로 합니다. 
@@ -84,13 +84,19 @@ function Terms() {
 
 export default Terms
 
+const HeaderContainer = styled.div`
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 8%;
+`;
+
 const TermsContainer = styled.div`
 display: flex;
 position: absolute;
 flex-direction: column;
 width : 100vw;
 height : 100vh;
-overflow-x: hidden;
 `;
 
 const TermContents = styled.div`

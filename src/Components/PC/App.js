@@ -51,14 +51,17 @@ export default App;
 
 const MainFrame = styled.div`
   display: flex;
+  position: absolute;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
 `;
 
 const IFrame = styled.div`
   display: flex;
+  position: absolute;
+  top : 8%;
   width: 100%;
   height: 92%;
 
@@ -69,7 +72,7 @@ const IFrame = styled.div`
 `;
 const HeaderContainer = styled.div`
   display: flex;
-  position: relative;
+  position: absolute;
   width: 100%;
   height: 8%;
 `;
