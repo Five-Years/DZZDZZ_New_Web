@@ -51,7 +51,7 @@ function HeaderBar() {
             </text>
             <text
               onClick={() => {
-                dispatch(StateSlice.actions.URL("https://stib.ee/m2o7"));
+                dispatch(StateSlice.actions.URL("https://dzzdzz-notice.stibee.com/"));
                 dispatch(StateSlice.actions.isFrame(true));
               }}
             >
@@ -59,8 +59,8 @@ function HeaderBar() {
             </text>
             <text
               onClick={() => {
-                dispatch(StateSlice.actions.URL("https://dzzdzz-reprot.stibee.com/"));
-                dispatch(StateSlice.actions.isFrame(true));
+                dispatch(StateSlice.actions.isStatic((e)=>!e));
+                dispatch(StateSlice.actions.isFrame(false));
               }}
             >
               통계리포트

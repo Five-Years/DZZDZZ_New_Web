@@ -5,8 +5,11 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MatchingProgressHeader from "../../HeaderComponent/MatchingProgressHeader";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Lottie from "lottie-react";
 
 import styled from "styled-components";
+import heartHand from "assets/heartHand.json";
+import search from "assets/search.json";
 
 
 function Matching2() {
@@ -95,7 +98,7 @@ function Matching2() {
       <SelectionContainer>
         {/* 선택시 서버에 사진인증, 학생인증, 1장이상의 쿠폰을 보유하고 있는지 확인  */}
         <Selection>
-          <Option
+          <Option 
             onClick={() => {
               window.ReactNativeWebView?.postMessage(
                 JSON.stringify({ type: "accept" , data: "" })
@@ -103,12 +106,13 @@ function Matching2() {
               accept();
             }}
           >
-            <img src={require("assets/Like.png")} alt="이미지" />
-            <text className="select">선택하기</text>
+            {/* <img src={require("assets/Like.png")} alt="이미지" /> */}
+            <LottieContainer><Lottie animationData={heartHand} /></LottieContainer>
+            <text className="select">단짠메이트를 찾았어요!</text>
           </Option>
         </Selection>
         <Selection>
-          <Option
+          <Option className="reject"
             onClick={() => {
               window.ReactNativeWebView?.postMessage(
                 JSON.stringify({ type: "reject" , data: "" })
@@ -116,8 +120,8 @@ function Matching2() {
               reject();
             }}
           >
-            <img src={require("assets/Close.png")} alt="이미지" />
-            <text className="reject">거절하기</text>
+            <LottieContainer><Lottie animationData={search} /></LottieContainer>
+            <text className="reject">다른 메이트를 찾아볼게요</text>
           </Option>
         </Selection>
       </SelectionContainer>
@@ -151,15 +155,42 @@ function Matching2() {
         <ContentsSection><Contents><ContentsTitle><text>음주</text></ContentsTitle><ContentsWindow><text>한 달에 1회 미만</text></ContentsWindow></Contents></ContentsSection>
         <ContentsSection><Contents><ContentsTitle><text>흡연</text></ContentsTitle><ContentsWindow><text>비 흡연자</text></ContentsWindow></Contents></ContentsSection>
         <SelectButtonContainer>
-          <SelectionButton><Button onClick={()=>{   
+        <Selection>
+          <Option 
+            onClick={() => {
+              window.ReactNativeWebView?.postMessage(
+                JSON.stringify({ type: "accept" , data: "" })
+              );
+              accept();
+            }}
+          >
+            {/* <img src={require("assets/Like.png")} alt="이미지" /> */}
+            <LottieContainer><Lottie animationData={heartHand} /></LottieContainer>
+            <text className="select">단짠메이트를 찾았어요!</text>
+          </Option>
+        </Selection>
+        <Selection>
+          <Option className="reject"
+            onClick={() => {
+              window.ReactNativeWebView?.postMessage(
+                JSON.stringify({ type: "reject" , data: "" })
+              );
+              reject();
+            }}
+          >
+            <LottieContainer><Lottie animationData={search} /></LottieContainer>
+            <text className="reject">다른 메이트를 찾아볼게요</text>
+          </Option>
+        </Selection>
+          {/* <SelectionButton><Button onClick={()=>{   
               window.ReactNativeWebView?.postMessage(
                 JSON.stringify({ type: "accept" , data: "" })
               );}}
-            ><text>선택하기</text></Button></SelectionButton>
-          <SelectionButton><Button onClick={()=>{   
+            ><text>단짠메이트를 찾았어요!</text></Button></SelectionButton>
+          <SelectionButton className="reject"><Button onClick={()=>{   
               window.ReactNativeWebView?.postMessage(
                 JSON.stringify({ type: "reject" , data: "" })
-              );}} className='reject'><text>거절하기</text></Button></SelectionButton>
+              );}} className='reject'><text>다른 메이트를 찾아볼게요</text></Button></SelectionButton> */}
         </SelectButtonContainer>
       </ContentsContainer>
     </MatchingContainers>
@@ -168,7 +199,10 @@ function Matching2() {
 
 export default Matching2;
 
-
+const LottieContainer = styled.div`
+width : 30px;
+height : 30px;
+`;
 
 export const ProfileImageContainer = styled.div`
   display: flex;
@@ -200,36 +234,35 @@ export const Option = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0px;
-  gap: 17px;
-  width: 37.95%;
+  width: 84.1%;
   top: 10%;
   min-width: 74px;
-  height: 82px;
+  height: 79.55%;
+  border-radius: 20px;
+  gap: 4px;
+  background-color: #FFE3E3;
+
+  &.reject {
+    background-color: #CFD8E3;
+  }
   > img {
     width: 35px;
     height: 35px;
   }
 
   > text {
-    width: 80px;
-    height: 30px;
-
     font-family: var(--font-Pretendard);
-    font-style: normal;
+    font-size: 12px;
     font-weight: 400;
-    font-size: 20px;
-    line-height: 30px;
-    /* identical to box height */
-
+    line-height: 14px;
+    letter-spacing: 0em;
     text-align: center;
+    color : #FF477E;
 
-    /* dzz_pink */
-
-    color: #ff477e;
   }
 
   > text.reject {
-    color: #0094ff;
+    color: #49516F;
   }
 `;
 
@@ -341,7 +374,7 @@ export const SelectionContainer = styled.div`
   justify-content: center;
   position: absolute;
   width: 100%;
-  height: 14.29%;
+  height: 12.57%;
   left: 0px;
   top: 75.14%;
 `;
@@ -570,10 +603,11 @@ border-radius: 13px;
 const SelectButtonContainer = styled.div`
 display: flex;
 position: relative;
-flex-direction: column;
-
+flex-direction: row;
+align-items: center;
+justify-content: center;
 width: 100%;
-height: 154px;
+height: 100px;
 `;
 
 const SelectionButton = styled.div`

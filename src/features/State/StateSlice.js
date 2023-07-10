@@ -12,6 +12,7 @@ const initialState = {
   ReportCase : ["낚시/놀람/도배","상업적 광고 및 판매","불건전한 만남 및 대화유도", "음란성 게시물 공유 및 게시", "정당/정치인 비하 및 선거운동","욕설/모욕/비하","유출/사칭/사기","닉네임 신고"],
   URL : "",
   isFrame : false,
+  isStatic : false,
 };
 
 const StateSlice = createSlice({
@@ -46,7 +47,9 @@ const StateSlice = createSlice({
     URL : (state,action) => {
       state.URL = action.payload;
     },
-    },
+    isStatic : (state,action) => {
+      state.isStatic = action.payload;
+    },}
 });
 
 export default StateSlice;

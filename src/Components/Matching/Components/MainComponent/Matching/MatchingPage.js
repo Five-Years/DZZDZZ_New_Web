@@ -85,11 +85,11 @@ function MatchingPage() {
                 <CardTag theme={Theme}>
                   {Theme === 0 ? (
                     <text>
-                      <span>#</span>소개팅을 원해요
+                      <span>#</span>소개팅을 원해요 
                     </text>
                   ) : (
                     <text>
-                      <span>#</span>친구를 원해요
+                      <span>#</span>친구를 원해요 
                     </text>
                   )}
                 </CardTag>

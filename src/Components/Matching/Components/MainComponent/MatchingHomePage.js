@@ -4,9 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+
 import MatchingProgressHeader from "../HeaderComponent/MatchingProgressHeader";
 
 import { ReactComponent as Info } from "../../../../assets/Info.svg";
+import { ReactComponent as ToggleRight } from "../../../../assets/toggle-right.svg";
+
 import MatchingHeaderNew from "../HeaderComponent/MatchingHeaderNew";
 import StateSlice from "features/State/StateSlice";
 // import MyTicket from "../ReusableComponents/MyTicket";
@@ -18,39 +21,38 @@ function MatchingHomePage() {
   const dispatch = useDispatch();
   const [userData, setUserData] = useState();
 
-  const accessToken =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwcm9AbmF2ZXIuY29tIiwiYXV0aCI6Ik5PUk1BTF9VU0VSIiwiZXhwIjoxNjg3ODUyMDI1fQ.nHYURcTW93rZFCWhz5b_JsCz91AymhGdbcFkQVFplKM";
-  const refreshToken =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODc4NTIwMjV9.xavy7sCNrxbaq43kQFV1t_t4ZIuuJcrNE59lFhlL8Co";
-    const getData = async () => {
-      try {
-        const Response = await axios.get(
-          `${
-            process.env.NODE_ENV === "development"
-              ? ""
-              : "https://dev.fiveyears.click"
-          }/login/token`,
-          {
-            headers: {
-              Authorization: accessToken,
-              "x-refresh-token": refreshToken,
-              "content-type": "application/json",
-            },
-          }
-        )
-        setUserData(JSON.parse(Response.data.data)); 
-        console.log(userData);         
-        dispatch(StateSlice.actions.Name(userData.nickname));
-
-      } catch (error) {
-        console.log(error);
-      }
+  const accessToken = ""
+  //   "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwcm9AbmF2ZXIuY29tIiwiYXV0aCI6Ik5PUk1BTF9VU0VSIiwiZXhwIjoxNjg3ODUyMDI1fQ.nHYURcTW93rZFCWhz5b_JsCz91AymhGdbcFkQVFplKM";
+  const refreshToken = ""
+  //   "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODc4NTIwMjV9.xavy7sCNrxbaq43kQFV1t_t4ZIuuJcrNE59lFhlL8Co";
+  
+  const getData = async () => {
+    try {
+      const Response = await axios.get(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/login/token`,
+        {
+          headers: {
+            Authorization: accessToken,
+            "x-refresh-token": refreshToken,
+            "content-type": "application/json",
+          },
+        }
+      );
+      setUserData(JSON.parse(Response.data.data));
+      console.log(userData);
+      dispatch(StateSlice.actions.Name(userData.nickname));
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     getData();
-},[])
-    
+  }, []);
 
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
@@ -58,8 +60,9 @@ function MatchingHomePage() {
     switch (type) {
       case "loginToken":
         if (Name === "anonymous") {
-          // getData(data);
-          dispatch(StateSlice.actions.Name("미쥬미쥬미쥬"));
+          accessToken = data.accessToken;
+          refreshToken = data.refreshToken;
+          getData(data);
         }
         break;
 
@@ -68,26 +71,25 @@ function MatchingHomePage() {
         break;
 
       case "store":
-        navigate("/purchasing", { state: { title: "충전하기", direct : true } });
+        navigate("/purchasing", { state: { title: "충전하기", direct: true } });
         break;
 
       case "season":
         dispatch(StateSlice.actions.Season(data.season));
         dispatch(StateSlice.actions.SeasonNumber(data.seasonnumber));
 
-      case "back":
-        {
-          navigate(-1);
-          break;
-        }
-        // if (this.props.navigation.isFirstRouteInParent()) {
-        //   navigate("/Matching");
-        // } else {
-        //   navigate(-1);
-        // }
+      case "back": {
+        navigate(-1);
+        break;
+      }
+      // if (this.props.navigation.isFirstRouteInParent()) {
+      //   navigate("/Matching");
+      // } else {
+      //   navigate(-1);
+      // }
 
       case "report":
-        navigate("/")
+        navigate("/");
     }
   };
 
@@ -189,7 +191,7 @@ function MatchingHomePage() {
             <MatchingProgressHeader isFirst={true} />
           </ToggleContainer>
           <ProfileContainer>
-            <MatchingHeaderNew isFirst={true}/>
+            <MatchingHeaderNew isFirst={true} />
           </ProfileContainer>
         </HeaderContainer>
         <CouponContainer>
@@ -201,7 +203,7 @@ function MatchingHomePage() {
             onClick={() => {
               navigate("/matchingpage", {
                 state: {
-                  theme: 0, 
+                  theme: 0,
                   // 이성매칭으로 들어갔는지, 혼성매칭으로 들어갔는지에대한 정보 theme
                   season: Season,
                   // 현재 시즌이 진행중인지 아닌지에 대한 정보 season
@@ -211,7 +213,7 @@ function MatchingHomePage() {
           >
             <SelectionTitle>
               <text>
-                <span>#</span> 소개팅을 원해요
+                <span>#</span> 소개팅을 원해요 (커플매칭)
               </text>
             </SelectionTitle>
             <MoveContainer>
@@ -223,7 +225,7 @@ function MatchingHomePage() {
             onClick={() => {
               navigate("/matchingpage", {
                 state: {
-                  theme: 1, 
+                  theme: 1,
                   // 이성매칭으로 들어갔는지, 혼성매칭으로 들어갔는지에대한 정보 theme
                   season: Season,
                   // 현재 시즌이 진행중인지 아닌지에 대한 정보 season
@@ -234,7 +236,7 @@ function MatchingHomePage() {
             <SelectionTitle>
               {/*  className="disalbed" */}
               <text>
-                <span className="friend">#</span> 친구를 원해요
+                <span className="friend">#</span> 친구를 원해요 (친구매칭)
               </text>
             </SelectionTitle>
             <MoveContainer>
@@ -258,15 +260,30 @@ function MatchingHomePage() {
             </InfoContainer>
           </MatchingOption>
         </MatchingOptionContainer>
-        <HistoryContainer>
-          <HistoryButton
-            onClick={() => {
-              navigate("/MatchHistory", { state: { title: "히스토리" } });
-            }}
-          >
-            <text>히스토리 보기</text>
-          </HistoryButton>
-        </HistoryContainer>
+        <BottomContainer>
+          <BottomContents>
+            <HistoryButton
+              onClick={() => {
+                navigate("/MatchHistory", { state: { title: "히스토리" } });
+              }}
+            >
+              <text>히스토리 보기</text>
+            </HistoryButton>
+          </BottomContents>
+          <BottomContents>
+            <CalenderContainer>
+              <CalenderTextContainer>
+                <text>이번 매칭 일정이 궁금하다면?</text>
+              </CalenderTextContainer>
+              <CalenderIconContainer><CalenderButton onClick={()=> {
+      window.ReactNativeWebView?.postMessage(
+        JSON.stringify({ type: "calender", data: "" })
+      );
+
+              }}><text>단짠 캘린더</text></CalenderButton><ToggleRight/></CalenderIconContainer>
+            </CalenderContainer>
+          </BottomContents>
+        </BottomContainer>
         <EventContainer>{Description(1)}</EventContainer>
       </MobileContainer>
     </>
@@ -275,16 +292,84 @@ function MatchingHomePage() {
 
 export default MatchingHomePage;
 
-const HistoryContainer = styled.div`
+const CalenderButton = styled.div`
+display: flex;
+  width: 69.37%;
+  height: 100%;
+  border-radius: 19px;
+  border: 0.5px;
+  gap: 10px;
+  background: #ff477e;
+  align-items: center;
+  justify-content: center;
+
+  > text {
+    font-family: var(--font-Pretendard);
+font-size: 12px;
+font-weight: 400;
+line-height: 14px;
+letter-spacing: 0em;
+text-align: center;
+color: #FFFFFF;
+
+  }
+`;
+
+const CalenderIconContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 42.69%;
+  height: 100%;
+  gap: 10px;
+`;
+
+const CalenderTextContainer = styled.div`
+  display: flex;
+  width: 30.38%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+
+  > text {
+    font-family: var(--font-Pretendard);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: left;
+    color : #6C6C70;
+  }
+`;
+
+const CalenderContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 66.66%;
+  height: 44.44%;
+`;
+
+const BottomContents = styled.div`
+  display: flex;
+  width: 100%;
+  height: 50%;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+`;
+const BottomContainer = styled.div`
   display: flex;
   position: absolute;
   width: 100%;
-  height: 10%;
+  height: 20.285%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 4px;
-  top: 73.71%;
+  top: 67.285%;
   flex-shrink: 0;
 `;
 const HistoryButton = styled.div`
@@ -425,7 +510,7 @@ const MatchingOptionContainer = styled.div`
   position: absolute;
   width: 100%;
   height: 4.57%;
-  top: 62.43%;
+  top: 60.43%;
 `;
 
 const MatchingOption = styled.div`
@@ -690,7 +775,7 @@ const SelectionTitle = styled.div`
   padding: 0px;
   gap: 10px;
   left: 16.67%;
-  width: 35.9%;
+  width: 55.9%;
   min-width: 140px;
   height: 16.32%;
   min-height: 31px;
