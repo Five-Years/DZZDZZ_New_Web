@@ -22,9 +22,7 @@ function MatchingHomePage() {
   const [userData, setUserData] = useState();
 
   const accessToken = ""
-  //   "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwcm9AbmF2ZXIuY29tIiwiYXV0aCI6Ik5PUk1BTF9VU0VSIiwiZXhwIjoxNjg3ODUyMDI1fQ.nHYURcTW93rZFCWhz5b_JsCz91AymhGdbcFkQVFplKM";
   const refreshToken = ""
-  //   "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODc4NTIwMjV9.xavy7sCNrxbaq43kQFV1t_t4ZIuuJcrNE59lFhlL8Co";
   
   const getData = async () => {
     try {
