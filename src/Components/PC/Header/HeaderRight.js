@@ -3,8 +3,21 @@ import styled from "styled-components";
 import { ReactComponent as Appstore } from "../../../assets/appstore.svg";
 import { ReactComponent as Androidstore } from "../../../assets/androidstore.svg";
 import { ReactComponent as Logo } from "../../../assets/webLogo.svg";
+import { ReactComponent as Jelly } from "../../../assets/webJelly.svg";
+import { ReactComponent as dzzdzzIntroduce } from "../../../assets/dzzdzzweb.svg";
+
+import StateSlice from "features/State/StateSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 
 function HeaderRight() {
+  const isStatic =  useSelector((state) => {
+    return state.Popup.isStatic;
+  });
+
+  const isDzz =  useSelector((state) => {
+    return state.Popup.isDzz;
+  });
   const [Day, setDay] = useState("00");
   const [Hour, setHour] = useState("00");
   const [Minute, setMinute] = useState("00");
@@ -30,7 +43,13 @@ function HeaderRight() {
 
   return (
     <ContentContainer>
-      <TitleContainer>
+      {isStatic ? <ReportContainer>
+        <Jelly /> 
+      <text className="ready">페이지 준비중 입니다.</text>
+      <text className="description">새로운 컨텐츠로 만날 수 있도록 <br/>
+단짠지기가 더 발빠르게 움직이고 있어요!</text>
+      </ReportContainer>
+ :   ( isDzz ? <DzzDzzIntroduce><dzzdzzIntroduce /></DzzDzzIntroduce>: <>      <TitleContainer>
         <Title>
           <span>매칭진행중 </span>
           <span className="text"> 마감까지</span>
@@ -93,12 +112,19 @@ function HeaderRight() {
             alt="이미지"
           />
         </SnsContainer>
-      </MobileSns>
+      </MobileSns></>)}
+
     </ContentContainer>
   );
 }
 
 export default HeaderRight;
+
+const DzzDzzIntroduce = styled.div`
+width : 100%;
+height : 100%;
+overflow: visible;
+`;
 
 const TitleContainer = styled.div`
   display: flex;
@@ -148,6 +174,38 @@ const SnsContainer = styled.div`
   }
 `;
 
+const ReportContainer = styled.div`
+  display: flex;
+  width : 100%;
+  height : 25%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  > img {
+    width : 50px;
+    height : 50px;
+  }
+  >text.ready {
+    font-family: var(--font-Pretendard);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 38px;
+    letter-spacing: 0.05em;
+    text-align: left;
+  }
+
+  > text.description {
+    font-family: var(--font-Pretendard);
+font-size: 16px;
+font-weight: 400;
+line-height: 19px;
+letter-spacing: 0.05em;
+text-align: center;
+color : #888888;
+  }
+`;
+
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -156,6 +214,8 @@ const ContentContainer = styled.div`
   gap: 8px;
   width: 100%;
   height: 100%;
+  
+
   > img {
     visibility: hidden;
   }

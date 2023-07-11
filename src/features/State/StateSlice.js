@@ -13,6 +13,7 @@ const initialState = {
   URL : "",
   isFrame : false,
   isStatic : false,
+  isDzz : false,
 };
 
 const StateSlice = createSlice({
@@ -49,7 +50,10 @@ const StateSlice = createSlice({
     },
     isStatic : (state,action) => {
       state.isStatic = action.payload;
-    },}
+    },
+    isDzz : (state,action) => {
+      state.isDzz = action.payload;
+    },  }
 });
 
 export default StateSlice;

@@ -32,7 +32,7 @@ import ChoiceLoading from "Components/Matching/Components/MainComponent/Matching
 import Coupon from "Components/Matching/Components/MainComponent/CouponComponent/Coupon";
 import HistoryPage from "Components/Matching/Components/MainComponent/HistoryComponent/HistoryPage";
 import MatchHistory from "Components/Matching/Components/MainComponent/HistoryComponent/MatchHistory";
-import HistoryMatchingProfile from "Components/Matching/Components/MainComponent/Matching/HistoryMatchingProfile";
+import HistoryMatchingProfile from "Components/Matching/Components/MainComponent/HistoryComponent/HistoryMatchingProfile";
 
 
 const container = document.getElementById("root");

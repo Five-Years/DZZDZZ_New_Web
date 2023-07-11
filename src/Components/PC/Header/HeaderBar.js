@@ -9,6 +9,7 @@ import StateSlice from "../../../features/State/StateSlice";
 function HeaderBar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  dispatch(StateSlice.actions.isStatic(false));
 
 
   return (
@@ -35,11 +36,12 @@ function HeaderBar() {
         </LogoContainer>
         <MenuContainer>
           <MenuLeft>
-            <text
-              onClick={() => {
-                navigate("/DzzIntroduce");
-              }}
-            >
+            <text onClick={()=>{              
+              dispatch(StateSlice.actions.isDzz(true));
+              dispatch(StateSlice.actions.isStatic(false));
+              dispatch(StateSlice.actions.isFrame(false));
+
+}}>
               단짠단짠
             </text>
             <text
@@ -53,17 +55,33 @@ function HeaderBar() {
               onClick={() => {
                 dispatch(StateSlice.actions.URL("https://dzzdzz-notice.stibee.com/"));
                 dispatch(StateSlice.actions.isFrame(true));
+                dispatch(StateSlice.actions.isStatic(false));
+                dispatch(StateSlice.actions.isDzz(false))
+
+
               }}
             >
               공지사항
             </text>
             <text
               onClick={() => {
-                dispatch(StateSlice.actions.isStatic((e)=>!e));
                 dispatch(StateSlice.actions.isFrame(false));
+                dispatch(StateSlice.actions.isStatic(true));
+                dispatch(StateSlice.actions.isDzz(false))
+
               }}
             >
               통계리포트
+            </text>
+            <text onClick={()=> {
+                              dispatch(StateSlice.actions.isFrame(false));
+
+                              dispatch(StateSlice.actions.isStatic(false));
+                              dispatch(StateSlice.actions.isDzz(false))
+
+
+            }}>
+              FAQ
             </text>
           </MenuLeft>
           {/*<MenuRight onClick={()=>{navigate("/login")}}><text>로그인</text></MenuRight>*/}
@@ -168,16 +186,13 @@ const MenuLeft = styled.div`
   height: 100%;
 
   > text {
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 140%;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    /* FY_black */
-    color: #231815;
+    font-family: var(--font-Pretendard);
+font-size: 16px;
+font-weight: 400;
+line-height: 22px;
+letter-spacing: 0px;
+text-align: center;
+
     cursor: pointer;
 
     :hover {

@@ -15,7 +15,6 @@ import { ReactComponent as RematchInfo } from "../../../../../assets/RematchInfo
 import { ReactComponent as RematchPrice } from "../../../../../assets/RematchPrice.svg";
 import { ReactComponent as RematchUndo } from "../../../../../assets/undo 1.svg";
 
-
 function TicketPage() {
   const dispatch = useDispatch();
   return (
@@ -127,34 +126,42 @@ function TicketPage() {
           </TicketButton>
         </TicketPurchaseContainer>
       </ProductContainer>
-      <RematchHorizon />      
+      <RematchHorizon />
       <RematchContainer>
-        <RematchText><text>이대로 끝내기가 아쉽다면?</text><RematchInfo /></RematchText>
+        <RematchText
+          onClick={() => {
+            window.ReactNativeWebView?.postMessage(
+              JSON.stringify({ type: "reMatchTip", data: "" })
+            );
+          }}
+        >
+          <text>이대로 끝내기가 아쉽다면?</text>
+          <RematchInfo />
+        </RematchText>
         <RematchTicket>
-        <TicketProduct>
-          <TicketImage>
-            <RematchUndo />
-          </TicketImage>
-          <TicketCount>
-            <text>재시도 티켓</text>
-          </TicketCount>
-        </TicketProduct>
-        <TicketPurchaseContainer>
-          {" "}
-          <TicketPrice>
-          <RematchPrice />
-          </TicketPrice>
-          <TicketButton
-            onClick={() => {
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "buy", data: 0 })
-              );
-              dispatch(StateSlice.actions.Ticket());
-            }}
-          >
-            <text>구매</text>
-          </TicketButton>
-        </TicketPurchaseContainer>
+          <TicketProduct>
+            <TicketImage>
+              <RematchUndo />
+            </TicketImage>
+            <TicketCount>
+              <text>재시도 티켓</text>
+            </TicketCount>
+          </TicketProduct>
+          <TicketPurchaseContainer>
+            {" "}
+            <TicketPrice>
+              <RematchPrice />
+            </TicketPrice>
+            <TicketButton
+              onClick={() => {
+                window.ReactNativeWebView?.postMessage(
+                  JSON.stringify({ type: "reMatchBuy", data: 1 })
+                );
+              }}
+            >
+              <text>구매</text>
+            </TicketButton>
+          </TicketPurchaseContainer>
         </RematchTicket>
       </RematchContainer>
     </>
@@ -176,11 +183,12 @@ export const TicketButton = styled.div`
   border-radius: 30px;
 
   > text {
-    font-family: var(--font-Pretendard);    font-style: normal;
+    font-family: var(--font-Pretendard);
+    font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 150%;
-  
+
     /* identical to box height, or 21px */
     text-align: center;
     letter-spacing: 0.05em;
@@ -240,58 +248,59 @@ const ProductContainer = styled.div`
 const RematchHorizon = styled.div`
   display: flex;
   z-index: 10;
-  width : 100%;
+  width: 100%;
   height: 5.05%;
   border-top-style: solid;
-  border-color : #DFE1E4;
+  border-color: #dfe1e4;
   align-items: center;
   flex-shrink: 0;
   align-self: stretch;
 `;
 const RematchContainer = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: flex-start;
-width : 100%;
-height : 17.67%;
-border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 17.67%;
+  border-radius: 15px;
 `;
 
 const RematchText = styled.div`
-display: flex;
-align-items: center;
-gap: 10px;
-width : 100%;
-height : 25.71%;
-
-> text {
-  color: #20C64A;
-  text-align: center;
-  font-family: var(--font-Pretendard);
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 150%;
-  letter-spacing: 0.6px;
-  text-transform: capitalize;
-}
-`;
-const RematchTicket = styled.div`
-display: flex;
-width : 100%;
-height : 64.29%;
-align-items: center;
-gap: 12px;
-border-radius: 30px;
-background: #ECF8ED;
-flex-direction: row;
-align-items: center;
-justify-content: space-between;
-gap: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 25.71%;
 
   > text {
-    font-family: var(--font-Pretendard);    font-style: normal;
+    color: #20c64a;
+    text-align: center;
+    font-family: var(--font-Pretendard);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    letter-spacing: 0.6px;
+    text-transform: capitalize;
+  }
+`;
+const RematchTicket = styled.div`
+  display: flex;
+  width: 100%;
+  height: 64.29%;
+  align-items: center;
+  gap: 12px;
+  border-radius: 30px;
+  background: #ecf8ed;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+
+  > text {
+    font-family: var(--font-Pretendard);
+    font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 24px;
@@ -302,7 +311,6 @@ gap: 6px;
     color: #000000;
   }
 `;
-
 
 const Confirmation = styled.div`
   width: 100%;
@@ -322,7 +330,8 @@ const TicketProduct = styled.div`
   left: 5.71%;
 
   > text {
-    font-family: var(--font-Pretendard);    font-style: normal;
+    font-family: var(--font-Pretendard);
+    font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 24px;
@@ -359,7 +368,8 @@ const TicketPrice = styled.div`
   height: 100%;
 
   > text {
-    font-family: var(--font-Pretendard);    font-style: normal;
+    font-family: var(--font-Pretendard);
+    font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 24px;
@@ -395,7 +405,7 @@ export const TicketCount = styled.div`
   text-align: center;
 
   > text {
-    font-family: var(--font-Pretendard);    
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
