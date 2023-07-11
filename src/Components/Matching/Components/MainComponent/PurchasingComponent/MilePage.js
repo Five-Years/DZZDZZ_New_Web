@@ -6,6 +6,7 @@ import { ReactComponent as Won } from "../../../../../assets/GreyWon.svg";
 
 import { ReactComponent as Jelly } from "../../../../../assets/jelly.svg";
 import { ReactComponent as Jelly2 } from "../../../../../assets/jelly2.svg";
+
 import { ReactComponent as Jelly3 } from "../../../../../assets/Jelly3.svg";
 import { ReactComponent as Jelly4 } from "../../../../../assets/Jelly4.svg";
 
