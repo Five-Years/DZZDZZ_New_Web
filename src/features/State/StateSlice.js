@@ -14,6 +14,7 @@ const initialState = {
   isFrame : false,
   isStatic : false,
   isDzz : false,
+  isFAQ : false,
 };
 
 const StateSlice = createSlice({
@@ -53,6 +54,9 @@ const StateSlice = createSlice({
     },
     isDzz : (state,action) => {
       state.isDzz = action.payload;
+    },
+    isFAQ : (state,action) => {
+      state.isFAQ = action.payload;
     },  }
 });
 

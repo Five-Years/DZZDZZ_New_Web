@@ -3,37 +3,20 @@ import styled from "styled-components";
 function Meta() {
   return (
     <>
-      <ContentLogo>
+    <CorporateContainer>      <ContentLogo>
         <img src={require("../../../assets/5Years.png")} alt="" />
       </ContentLogo>
       <ContentInformation>
         <Information>
-          <InformationTopic>
-            <span>사업자번호</span>
-          </InformationTopic>
-          <InformationTopicDetail>
-            <span>295-40-01132</span>
-          </InformationTopicDetail>
+          <text>사업자명 &nbsp;&nbsp;&nbsp;서화 | 대표자 이찬 | 사업자번호 295-40-01132 | 통신판매번호 제2023-서울마포-2018호</text>
         </Information>
         <Information>
-          <InformationTopic>
-            <span>대표번호</span>
-          </InformationTopic>
-          <InformationTopicDetail>
-            <span>010-5929-6831</span>
-          </InformationTopicDetail>
+        <text>주소 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;서울 특별시 마포구 희우정로 10길 28 3층 3-20호 플랙스홈 (망원동)</text>
         </Information>
         <Information>
-          <InformationTopic>
-            <span>주소</span>
-          </InformationTopic>
-          <InformationTopicDetail>
-            <span>
-              서울특별시 마포구 희우정로 10길 28 3-20호 플렉스홈(망원동)
-            </span>
-          </InformationTopicDetail>
+        <text>고객센터 &nbsp;&nbsp;&nbsp; 0507-0177-1683 | 5iveyears.official@gmail.com | dzzdzz.official@gmail.com</text>
         </Information>
-      </ContentInformation>
+      </ContentInformation></CorporateContainer>
       <ContentSns>
         <img
           src={require("../../../assets/facebook.png")}
@@ -52,9 +35,9 @@ function Meta() {
           alt=""
         />
         <img
-          src={require("../../../assets/Github.png")}
+          src={require("assets/openchat.png")}
           onClick={() => {
-            window.open("https://github.com/orgs/Five-Years");
+            window.open("https://pf.kakao.com/_Wgxgxmb");
           }}
           alt=""
         />
@@ -65,14 +48,21 @@ function Meta() {
 
 export default Meta;
 
+const CorporateContainer = styled.div`
+display: flex;
+width : 100%;
+height : 45%;
+`;
+
 const ContentLogo = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: center;
   padding: 0px;
 
-  width: 385px;
-  height: 91.11px;
+  width: 15%;
+  height: 100%;
 
   @media screen and (max-width: 800px) {
     width: 100%;
@@ -98,8 +88,8 @@ const ContentInformation = styled.div`
   padding: 0px;
   gap: 6px;
 
-  width: 451px;
-  height: 69px;
+  width: 85%;
+  height: 100%;
 
   @media screen and (max-width: 800px) {
     padding: 0px;
@@ -124,12 +114,14 @@ const ContentInformation = styled.div`
 const ContentSns = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   padding: 0px;
-  gap: 30px;
+  gap: 40px;
 
-  width: 385px;
-  height: 30px;
+  width: 15%;
+  height: 20%;
+  align-items: start;
+  justify-content: center;
 
   > img {
     :active {
@@ -149,8 +141,19 @@ const Information = styled.div`
   align-items: flex-start;
   padding: 0px;
 
-  width: 100%;
-  height: 19px;
+  width: 60%;
+  height: 30%;
+
+  > text {
+    font-family: var(--font-Pretendard);    
+font-size: 14px;
+font-weight: 400;
+line-height: 17px;
+letter-spacing: 0em;
+text-align: center;
+color : white;
+
+  }
 
   @media screen and (max-width: 800px) {
     display: flex;

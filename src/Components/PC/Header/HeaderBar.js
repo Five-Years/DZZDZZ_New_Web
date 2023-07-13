@@ -29,7 +29,9 @@ function HeaderBar() {
           <Logo
             onClick={() => {
               dispatch(StateSlice.actions.URL(false));
+              dispatch(StateSlice.actions.isStatic(false));
               dispatch(StateSlice.actions.isFrame(false));
+              dispatch(StateSlice.actions.isFAQ(false))
               navigate("/pc");
             }}
           />
@@ -40,14 +42,20 @@ function HeaderBar() {
               dispatch(StateSlice.actions.isDzz(true));
               dispatch(StateSlice.actions.isStatic(false));
               dispatch(StateSlice.actions.isFrame(false));
+              dispatch(StateSlice.actions.isFAQ(false))
 
 }}>
               단짠단짠
             </text>
             <text
-              onClick={() => {
-                navigate("/DzzIntroduce");
-              }}
+onClick={() => {
+  dispatch(StateSlice.actions.isFrame(false));
+  dispatch(StateSlice.actions.isStatic(true));
+  dispatch(StateSlice.actions.isDzz(false))
+  dispatch(StateSlice.actions.isFAQ(false))
+
+
+}}
             >
               단짠 가이드
             </text>
@@ -57,7 +65,7 @@ function HeaderBar() {
                 dispatch(StateSlice.actions.isFrame(true));
                 dispatch(StateSlice.actions.isStatic(false));
                 dispatch(StateSlice.actions.isDzz(false))
-
+                dispatch(StateSlice.actions.isFAQ(false))
 
               }}
             >
@@ -68,6 +76,8 @@ function HeaderBar() {
                 dispatch(StateSlice.actions.isFrame(false));
                 dispatch(StateSlice.actions.isStatic(true));
                 dispatch(StateSlice.actions.isDzz(false))
+                dispatch(StateSlice.actions.isFAQ(false))
+
 
               }}
             >
@@ -78,6 +88,8 @@ function HeaderBar() {
 
                               dispatch(StateSlice.actions.isStatic(false));
                               dispatch(StateSlice.actions.isDzz(false))
+                              dispatch(StateSlice.actions.isFAQ(true))
+
 
 
             }}>

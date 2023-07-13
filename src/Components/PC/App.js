@@ -17,6 +17,9 @@ function App() {
   const isFrame = useSelector((state) => {
     return state.Popup.isFrame;
   });
+  const isDzz = useSelector((state) => {
+    return state.Popup.isDzz;
+  });
 
   return (
     <div className="App">
@@ -33,8 +36,9 @@ function App() {
           </IFrame>
         ) : (
           <>
+          <SectionContainer>
             <HeaderMain2 />
-            <Footer />
+          </SectionContainer>
           </>
         )}
       </MainFrame>
@@ -53,10 +57,19 @@ const MainFrame = styled.div`
   display: flex;
   position: absolute;
   flex-direction: column;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  width: 100%;
+  height: 100%;
 `;
+
+const SectionContainer = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width : 100%;
+  height : 92%;
+`;
+
+
 
 const IFrame = styled.div`
   display: flex;
@@ -72,7 +85,7 @@ const IFrame = styled.div`
 `;
 const HeaderContainer = styled.div`
   display: flex;
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 8%;
 `;

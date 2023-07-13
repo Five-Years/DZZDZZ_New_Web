@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Links from "./Links";
 import Meta from "./Meta";
+import MenuLinks from "./MenuLinks";
 
 function Footer() {
   return (
@@ -10,6 +11,7 @@ function Footer() {
         <ContentContainer>
           <Content>
             <ContentLink>
+              <MenuLinks />
               <Links />
             </ContentLink>
             <Meta />
@@ -23,13 +25,16 @@ function Footer() {
 export default Footer;
 
 const FooterContainer = styled.div`
-  width: 100vw;
-  height: 33.11vh;
+  width: 100%;
+  height: 33.11%;
+  min-height : 400px;
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #231815;
+  bottom : 0px;
 
   @media screen and (max-width: 800px) {
     height: 44.7vh;
@@ -61,7 +66,6 @@ const ContentContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   width: 94.2%;
   height: 100%;
 
@@ -74,6 +78,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: space-between;
   gap: 10px;
 
   width: 93.8%;
@@ -86,8 +91,8 @@ const Content = styled.div`
 `;
 
 const ContentLink = styled.div`
-  width: 385px;
-  height: 136px;
+  width: 100%;
+  height : 20px;
   display: flex;
   justify-content: space-between;
 

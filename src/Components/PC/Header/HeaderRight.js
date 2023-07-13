@@ -7,123 +7,83 @@ import { ReactComponent as Jelly } from "../../../assets/webJelly.svg";
 import { ReactComponent as dzzdzzIntroduce } from "../../../assets/dzzdzzweb.svg";
 
 import StateSlice from "features/State/StateSlice";
+import Statistic from "../MainComponent/Statistic";
+import CountTimer from "../MainComponent/CountTimer";
+import Dzz from "../MainComponent/Dzz";
+import FAQ from "../MainComponent/FAQ"; 
 import { useDispatch, useSelector } from "react-redux";
-
+import Footer from "../Footer/Footer";
 
 function HeaderRight() {
-  const isStatic =  useSelector((state) => {
+  const isStatic = useSelector((state) => {
     return state.Popup.isStatic;
   });
 
-  const isDzz =  useSelector((state) => {
+  const isDzz = useSelector((state) => {
     return state.Popup.isDzz;
   });
-  const [Day, setDay] = useState("00");
-  const [Hour, setHour] = useState("00");
-  const [Minute, setMinute] = useState("00");
-  const [Second, setSecond] = useState("00");
 
-  useEffect(() => {
-    setInterval(() => {
-      const Dday = new Date("2023-07-30T00:00:00+0900");
-      const now = new Date();
-      const dis = Dday.getTime() - now.getTime(); // 잔여시간(ms단위)
-      const min = 1000 * 60; //1000ms => 1s , 1s*60 = 1m
-      setDay(String(Math.floor(dis / (min * 60 * 24))).padStart(2, "0"));
-      setHour(
-        String(Math.floor((dis % (min * 60 * 24)) / (min * 60))).padStart(
-          2,
-          "0"
-        )
-      );
-      setMinute(String(Math.floor((dis % (min * 60)) / min)).padStart(2, "0"));
-      setSecond(String(Math.floor((dis % min) / 1000)).padStart(2, "0"));
-    }, 1000);
-  }, [Hour, Minute, Second]);
+  const isFAQ = useSelector((state) => {
+    return state.Popup.isFAQ;
+  });
 
   return (
     <ContentContainer>
-      {isStatic ? <ReportContainer>
-        <Jelly /> 
-      <text className="ready">페이지 준비중 입니다.</text>
-      <text className="description">새로운 컨텐츠로 만날 수 있도록 <br/>
-단짠지기가 더 발빠르게 움직이고 있어요!</text>
-      </ReportContainer>
- :   ( isDzz ? <DzzDzzIntroduce><dzzdzzIntroduce /></DzzDzzIntroduce>: <>      <TitleContainer>
-        <Title>
-          <span>매칭진행중 </span>
-          <span className="text"> 마감까지</span>
-        </Title>
-        <Timer>
-          {/* 1일이상 남았다면 일 시간 분, 1일 이하라면 시간 분 초 */}
-          {Day >= 1 ? (
-            <>
-              [<span>{Day}</span>:<span>{Hour}</span>:<span>{Minute}</span>]
-            </>
-          ) : (
-            <>
-              [<span>{Hour}</span>:<span>{Minute}</span>:<span>{Second}</span>]
-            </>
-          )}
-        </Timer>
-      </TitleContainer>
-      <Description>
-        <DownButton>
-          <span>다운로드</span>
-        </DownButton>
-        <Sns>
-          <span>단짠단짠 앱 다운로드</span>
-          <div>
-            <div>
-              <Appstore
-                width="100%"
-                height="auto"
-                onClick={() => {
-                  alert("배포 준비중입니다!");
-                }}
-              />
-            </div>
-            <div>
-              <Androidstore
-                width="100%"
-                height="auto"
-                onClick={() => {
-                  alert("배포 준비중입니다!");
-                }}
-              />
-            </div>
-          </div>
-        </Sns>
-      </Description>
-      <MobileSns>
-        <SnsContainer>
-          <img
-            onClick={() => {
-              window.open("https://www.instagram.com/dzzdzz_official/");
-            }}
-            src={require("../../../assets/insta.png")}
-            alt="이미지"
-          />
-          <img
-            onClick={() => {
-              window.open("http://pf.kakao.com/_Wgxgxmb");
-            }}
-            src={require("../../../assets/kakao.png")}
-            alt="이미지"
-          />
-        </SnsContainer>
-      </MobileSns></>)}
-
+      {isStatic ? (
+        <>
+        <Statistic />
+        <Footer />
+        </>
+      ) : isDzz ? (
+          <Dzz />
+      ) : isFAQ ?  
+      <>
+      <FAQ />
+      <Footer />
+      </>
+        : 
+        <>
+        <CountTimer />
+        <Footer />
+        </>
+      }
     </ContentContainer>
   );
 }
 
 export default HeaderRight;
 
+const ContentContainer = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  /* top : 7.8%; */
+
+  > img {
+    visibility: hidden;
+  }
+
+  @media screen and (max-width: 800px) {
+    gap: 10px;
+
+    > img {
+      width: 120px;
+      height: 63.04px;
+      visibility: visible;
+    }
+  }
+`;
+
 const DzzDzzIntroduce = styled.div`
-width : 100%;
-height : 100%;
-overflow: visible;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  background-color: blue;
 `;
 
 const TitleContainer = styled.div`
@@ -176,17 +136,17 @@ const SnsContainer = styled.div`
 
 const ReportContainer = styled.div`
   display: flex;
-  width : 100%;
-  height : 25%;
+  width: 100%;
+  height: 25%;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
 
   > img {
-    width : 50px;
-    height : 50px;
+    width: 50px;
+    height: 50px;
   }
-  >text.ready {
+  > text.ready {
     font-family: var(--font-Pretendard);
     font-size: 32px;
     font-weight: 700;
@@ -197,39 +157,16 @@ const ReportContainer = styled.div`
 
   > text.description {
     font-family: var(--font-Pretendard);
-font-size: 16px;
-font-weight: 400;
-line-height: 19px;
-letter-spacing: 0.05em;
-text-align: center;
-color : #888888;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0.05em;
+    text-align: center;
+    color: #888888;
   }
 `;
 
-const ContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  height: 100%;
-  
 
-  > img {
-    visibility: hidden;
-  }
-
-  @media screen and (max-width: 800px) {
-    gap: 10px;
-
-    > img {
-      width: 120px;
-      height: 63.04px;
-      visibility: visible;
-    }
-  }
-`;
 
 const Title = styled.div`
   display: flex;
@@ -307,39 +244,6 @@ const Description = styled.div`
     align-items: center;
     justify-content: center;
     gap: 10px;
-  }
-`;
-
-const Timer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 79%;
-  height: 67.41%;
-
-  font-family: "NanumSquare";
-  font-style: normal;
-  font-weight: 800;
-  font-size: 80px;
-  line-height: 80px;
-  color: #ff477e;
-  text-align: start;
-  letter-spacing: 0.05em;
-
-  > span {
-    color: black;
-  }
-
-  @media screen and (max-width: 800px) {
-    width: 330px;
-    height: 75px;
-    font-size: 50px;
-    line-height: 70px;
-    text-align: center;
-    border-radius: 10px;
-    font-size: 50px;
-    line-height: 70px;
   }
 `;
 

@@ -49,10 +49,10 @@ function Links() {
 export default Links;
 
 const MobileWrapper = styled.div`
-  width: 100%;
+  width : 30%;
   height: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
 
   @media screen and (max-width: 800px) {
     flex-direction: column;

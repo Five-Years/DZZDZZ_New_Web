@@ -3,7 +3,6 @@ import "./App.css";
 import styled from "styled-components";
 import { ReactComponent as Logo } from "../../assets/dzzdzzNew.svg";
 import { Navigate, useNavigate } from "react-router-dom";
-
 function PCHome() {
   const [Day, setDay] = useState("00");
   const [Hour, setHour] = useState("01");
