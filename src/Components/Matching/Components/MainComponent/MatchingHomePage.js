@@ -39,7 +39,10 @@ function MatchingHomePage() {
     .catch(error => alert('error', error));
   }
 
-  
+  const getCalendar = async() => {
+    const response = await fetch('https://dev.fiveyears.click/campus/search?word=단국');
+    alert(JSON.stringify(response))
+  }
 
   const getData = async (at, rt) => {
     alert(at)
@@ -86,7 +89,8 @@ function MatchingHomePage() {
       case "loginToken":
         if (Name === "anonymous") {
           alert(data.refreshToken);
-          getData(data.accessToken, data.refreshToken);
+          // getData(data.accessToken, data.refreshToken);
+          getCalendar();
         }
         break;
 
