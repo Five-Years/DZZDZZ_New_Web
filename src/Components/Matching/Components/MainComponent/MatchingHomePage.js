@@ -41,7 +41,7 @@ function MatchingHomePage() {
           headers: {
             Authorization: at,
             "x-refresh-token": rt,
-            fcmToken : "123",
+            "fcmToken" : "123",
             "content-type": "application/json",
           },
         }
@@ -70,6 +70,7 @@ function MatchingHomePage() {
     switch (type) {
       case "loginToken":
         if (Name === "anonymous") {
+          alert(data.refreshToken);
           getData(data.accessToken, data.refreshToken);
         }
         break;
