@@ -21,9 +21,9 @@ function MatchingHomePage() {
   const dispatch = useDispatch();
   const [userData, setUserData] = useState();
 
-  const accessToken = ""
-  const refreshToken = ""
-  
+  const accessToken = "";
+  const refreshToken = "";
+
   const getData = async () => {
     try {
       const Response = await axios.get(
@@ -57,9 +57,11 @@ function MatchingHomePage() {
 
     switch (type) {
       case "loginToken":
+        alert(data.accessToken);
         if (Name === "anonymous") {
           accessToken = data.accessToken;
           refreshToken = data.refreshToken;
+
           getData(data);
         }
         break;
@@ -273,12 +275,18 @@ function MatchingHomePage() {
               <CalenderTextContainer>
                 <text>이번 매칭 일정이 궁금하다면?</text>
               </CalenderTextContainer>
-              <CalenderIconContainer><CalenderButton onClick={()=> {
-      window.ReactNativeWebView?.postMessage(
-        JSON.stringify({ type: "calender", data: "" })
-      );
-
-              }}><text>단짠 캘린더</text></CalenderButton><ToggleRight/></CalenderIconContainer>
+              <CalenderIconContainer>
+                <CalenderButton
+                  onClick={() => {
+                    window.ReactNativeWebView?.postMessage(
+                      JSON.stringify({ type: "calender", data: "" })
+                    );
+                  }}
+                >
+                  <text>단짠 캘린더</text>
+                </CalenderButton>
+                <ToggleRight />
+              </CalenderIconContainer>
             </CalenderContainer>
           </BottomContents>
         </BottomContainer>
@@ -291,7 +299,7 @@ function MatchingHomePage() {
 export default MatchingHomePage;
 
 const CalenderButton = styled.div`
-display: flex;
+  display: flex;
   width: 69.37%;
   height: 100%;
   border-radius: 19px;
@@ -303,13 +311,12 @@ display: flex;
 
   > text {
     font-family: var(--font-Pretendard);
-font-size: 12px;
-font-weight: 400;
-line-height: 14px;
-letter-spacing: 0em;
-text-align: center;
-color: #FFFFFF;
-
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #ffffff;
   }
 `;
 
@@ -337,7 +344,7 @@ const CalenderTextContainer = styled.div`
     line-height: 14px;
     letter-spacing: 0em;
     text-align: left;
-    color : #6C6C70;
+    color: #6c6c70;
   }
 `;
 
