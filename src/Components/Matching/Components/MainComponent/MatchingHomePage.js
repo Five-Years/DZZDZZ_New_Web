@@ -20,9 +20,8 @@ function MatchingHomePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userData, setUserData] = useState();
-
-  const accessToken = "";
-  const refreshToken = "";
+  const [accessToken, setAccessToken] = useState("");
+  const [refreshToken, setRefreshToken] = useState("");
 
   const getData = async () => {
     try {
@@ -48,10 +47,6 @@ function MatchingHomePage() {
     }
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
-
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
 
@@ -59,10 +54,9 @@ function MatchingHomePage() {
       case "loginToken":
         alert(data.accessToken);
         if (Name === "anonymous") {
-          accessToken = data.accessToken;
-          refreshToken = data.refreshToken;
-
-          getData(data);
+          setAccessToken(data.accessToken);
+          setRefreshToken(data.refreshToken);
+          getData();
         }
         break;
 
