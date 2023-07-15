@@ -35,13 +35,12 @@ function MatchingHomePage() {
           headers: {
             Authorization: accessToken,
             "x-refresh-token": refreshToken,
+            fcmToken: "123",
             "content-type": "application/json",
           },
         }
       );
       setUserData(JSON.parse(Response.data.data));
-      alert(userData);
-      alert(userData.nickname);
       dispatch(StateSlice.actions.Name(userData.nickname));
     } catch (error) {
       console.log(error);
