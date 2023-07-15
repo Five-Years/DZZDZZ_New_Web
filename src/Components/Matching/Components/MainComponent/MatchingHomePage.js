@@ -23,22 +23,29 @@ function MatchingHomePage() {
  
 
   const getCalendar = async() => {
-    const response = await fetch('https://dev.fiveyears.click/campus/search?word=단국').then((response)=>response.json());
-    alert(JSON.stringify(response.data))
+    const Response = await axios.get(
+      `https://dev.fiveyears.click/login/token`,
+      {
+        headers: {
+          Authorization: 'at',
+          "x-refresh-token": 'rt',
+          fcmToken : "123",
+          "content-type": "application/json",
+        },
+      }
+    )
+    // const response = await fetch('https://dev.fiveyears.click/campus/search?word=단국').then((response)=>response.json());
+    alert(JSON.stringify(Response.data))
   }
 
   const getData = async (at, rt) => {
     try {
       const Response = await axios.get(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/login/token`,
+        `https://dev.fiveyears.click/login/token`,
         {
           headers: {
-            Authorization: at,
-            "x-refresh-token": rt,
+            Authorization: 'at',
+            "x-refresh-token": 'rt',
             fcmToken : "123",
             "content-type": "application/json",
           },
@@ -69,7 +76,7 @@ function MatchingHomePage() {
     switch (type) {
       case "loginToken":
         if (Name === "anonymous") {
-          getData(data.accessToken, data.refreshToken);
+          // getData(data.accessToken, data.refreshToken);
         }
         break;
 
