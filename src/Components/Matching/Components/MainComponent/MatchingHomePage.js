@@ -24,7 +24,7 @@ function MatchingHomePage() {
 
   const getCalendar = async() => {
     const response = await fetch('https://dev.fiveyears.click/campus/search?word=단국').then((response)=>response.json());
-    alert(response)
+    alert(JSON.stringify(response.data))
   }
 
   const getData = async (at, rt) => {
@@ -39,7 +39,7 @@ function MatchingHomePage() {
           headers: {
             Authorization: at,
             "x-refresh-token": rt,
-            "fcmToken" : "123",
+            fcmToken : "123",
             "content-type": "application/json",
           },
         }
