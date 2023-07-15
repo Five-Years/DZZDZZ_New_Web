@@ -35,24 +35,26 @@ function MatchingHomePage() {
           headers: {
             Authorization: accessToken,
             "x-refresh-token": refreshToken,
-            fcmToken: "123",
+            "fcmToken" : "123",
             "content-type": "application/json",
           },
         }
       );
-      setUserData(JSON.parse(Response.data.data));
+      setUserData(Response.data);
+      console.log(userData);
       dispatch(StateSlice.actions.Name(userData.nickname));
     } catch (error) {
       console.log(error);
     }
   };
 
+  useEffect(()=>{getData()}, []);
+
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
 
     switch (type) {
       case "loginToken":
-        alert(data.accessToken);
         if (Name === "anonymous") {
           setAccessToken(data.accessToken);
           setRefreshToken(data.refreshToken);
