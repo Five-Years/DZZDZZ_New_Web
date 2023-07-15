@@ -2,21 +2,30 @@ import React from "react";
 import styled from "styled-components";
 function Meta() {
   return (
-    <>
-    <CorporateContainer>      <ContentLogo>
-        <img src={require("../../../assets/5Years.png")} alt="" />
-      </ContentLogo>
-      <ContentInformation>
-        <Information>
-          <text>사업자명 &nbsp;&nbsp;&nbsp;서화 | 대표자 이찬 | 사업자번호 295-40-01132 | 통신판매번호 제2023-서울마포-2018호</text>
-        </Information>
-        <Information>
-        <text>주소 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;서울 특별시 마포구 희우정로 10길 28 3층 3-20호 플랙스홈 (망원동)</text>
-        </Information>
-        <Information>
-        <text>고객센터 &nbsp;&nbsp;&nbsp; 0507-0177-1683 | 5iveyears.official@gmail.com | dzzdzz.official@gmail.com</text>
-        </Information>
-      </ContentInformation></CorporateContainer>
+    <MetaContainer>
+      <CorporateContainer>
+        {" "}
+        <ContentLogo>
+          <img src={require("../../../assets/5Years.png")} alt="" />
+        </ContentLogo>
+        <ContentInformation>
+          <Information>
+            <text>사업자명 서화 | 대표자 이찬 | 사업자번호 295-40-01132</text>
+            <text>통신판매번호 제2023-서울마포-2018호</text>
+          </Information>
+          <Information>
+            <text>
+              주소 서울 특별시 마포구 희우정로 10길 28 3층 3-20호 플랙스홈
+              (망원동)
+            </text>
+          </Information>
+          <Information>
+            <text>고객센터 &nbsp;&nbsp;&nbsp; 0507-0177-1683 | </text>
+            <text>5iveyears.official@gmail.com</text>
+            <text>dzzdzz.official@gmail.com</text>
+          </Information>
+        </ContentInformation>
+      </CorporateContainer>
       <ContentSns>
         <img
           src={require("../../../assets/facebook.png")}
@@ -42,16 +51,40 @@ function Meta() {
           alt=""
         />
       </ContentSns>
-    </>
+    </MetaContainer>
   );
 }
 
 export default Meta;
 
+const MetaContainer = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  @media screen and (max-width: 800px) {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+`;
+
 const CorporateContainer = styled.div`
-display: flex;
-width : 100%;
-height : 45%;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 80%;
+
+  @media screen and (max-width: 800px) {
+    width: 100%;
+    height: 90%;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+  }
 `;
 
 const ContentLogo = styled.div`
@@ -61,22 +94,17 @@ const ContentLogo = styled.div`
   justify-content: center;
   padding: 0px;
 
-  width: 15%;
+  width: 20%;
   height: 100%;
 
   @media screen and (max-width: 800px) {
-    width: 100%;
-    height: 15.7%;
+    width: 30%;
+    height: 15%;
+    justify-content: start;
 
     > img {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      padding: 0px;
-      gap: 10px;
-
-      width: 60px;
-      height: 45.56px;
+      width: 60%;
+      height: 100%;
     }
   }
 `;
@@ -84,30 +112,18 @@ const ContentLogo = styled.div`
 const ContentInformation = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: start;
+  justify-content: center;
+
   padding: 0px;
-  gap: 6px;
 
-  width: 85%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
 
   @media screen and (max-width: 800px) {
-    padding: 0px;
-    gap: 20px;
-
     width: 100%;
-    height: 28.2%;
-  }
-
-  @media screen and (max-width: 800px) {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0px;
-    gap: 9px;
-
-    width: 248px;
-    height: 82px;
+    height: 75%;
+    position: relative;
   }
 `;
 
@@ -118,7 +134,7 @@ const ContentSns = styled.div`
   padding: 0px;
   gap: 40px;
 
-  width: 15%;
+  width: 20%;
   height: 20%;
   align-items: start;
   justify-content: center;
@@ -131,40 +147,50 @@ const ContentSns = styled.div`
   }
 
   @media screen and (max-width: 800px) {
-    display: none;
+    width: 50%;
+    height: 10%;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
 const Information = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
+  justify-content: space-between;
   padding: 0px;
 
-  width: 60%;
+  width: 100%;
   height: 30%;
 
   > text {
-    font-family: var(--font-Pretendard);    
-font-size: 14px;
-font-weight: 400;
-line-height: 17px;
-letter-spacing: 0em;
-text-align: center;
-color : white;
-
+    font-family: var(--font-Pretendard);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    letter-spacing: 0em;
+    /* text-align: center; */
+    color: white;
   }
 
   @media screen and (max-width: 800px) {
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: start;
     padding: 0px;
-    gap: 20px;
-
     width: 100%;
-    height: 82px;
-    gap: 6px;
+    height: 33%;
+    /* gap: 6px; */
+
+    > text {
+      font-family: var(--font-Pretendard);
+      color: var(--white, #fff);
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
   }
 `;
 

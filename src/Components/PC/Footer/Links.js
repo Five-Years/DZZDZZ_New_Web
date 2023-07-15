@@ -28,19 +28,33 @@ function Links() {
         >
           광고문의
         </a> */}
-        <a href="#" onClick={()=> {
-          navigate("/Terms")
-        }}>이용약관</a>
-        <a className="pc" href="#" onClick={()=> {
-          navigate("/Privacy")
-        }}>
+        <a
+          href="#"
+          onClick={() => {
+            navigate("/Terms");
+          }}
+        >
+          이용약관
+        </a>
+        <a
+          className="pc"
+          href="#"
+          onClick={() => {
+            navigate("/Privacy");
+          }}
+        >
           개인정보 처리방침
         </a>
       </Link>
       <Link className="Mobile">
-        <a href="#" onClick={()=> {
-          navigate("/Privacy")
-        }}>개인정보 처리방침</a>
+        <a
+          href="#"
+          onClick={() => {
+            navigate("/Privacy");
+          }}
+        >
+          개인정보 처리방침
+        </a>
       </Link>
     </MobileWrapper>
   );
@@ -49,18 +63,20 @@ function Links() {
 export default Links;
 
 const MobileWrapper = styled.div`
-  width : 30%;
+  width: 30%;
   height: 100%;
   display: flex;
   justify-content: end;
+  display: none;
 
   @media screen and (max-width: 800px) {
+    display: none;
     flex-direction: column;
     align-items: flex-start;
     padding: 0px;
     gap: 20px;
-    width: 216px;
-    height: 56px;
+    height: 10%;
+    background-color: yellow;
   }
 `;
 
@@ -73,7 +89,7 @@ const Link = styled.div`
   align-items: flex-start;
   color: white;
   gap: 24px;
-  text-underline-offset : 3px;
+  text-underline-offset: 3px;
   > a {
     :active {
       opacity: 0.5;
@@ -105,7 +121,8 @@ const Link = styled.div`
     gap: 24px;
 
     width: 100%;
-    height: 18px;
+    height: 100%;
+    background-color: yellow;
 
     > a {
       width: 120px;

@@ -9,7 +9,7 @@ function MenuLinks() {
   const navigate = useNavigate();
   return (
     <MobileWrapper>
-      <Link>
+      <Link className="pc">
         {/* <a
           href="#"
           onClick={() => {
@@ -28,50 +28,79 @@ function MenuLinks() {
         >
           광고문의
         </a> */}
-        <text onClick={()=> {              dispatch(StateSlice.actions.isDzz(true));
-              dispatch(StateSlice.actions.isStatic(false));
-              dispatch(StateSlice.actions.isFrame(false));
-              dispatch(StateSlice.actions.isFAQ(false))}}>단짠단짠</text>
-        <text onClick={() => {
-                dispatch(StateSlice.actions.isFrame(false));
-                dispatch(StateSlice.actions.isStatic(true));
-                dispatch(StateSlice.actions.isDzz(false))
-                dispatch(StateSlice.actions.isFAQ(false))
+        <text
+          onClick={() => {
+            dispatch(StateSlice.actions.isDzz(true));
+            dispatch(StateSlice.actions.isStatic(false));
+            dispatch(StateSlice.actions.isFrame(false));
+            dispatch(StateSlice.actions.isFAQ(false));
+          }}
+        >
+          단짠단짠
+        </text>
+        <text
+          onClick={() => {
+            // https://www.notion.so/URL-802ee347ca324ff48616617bd4931627?pvs=4
+            dispatch(StateSlice.actions.isFrame(true));
+            dispatch(StateSlice.actions.isStatic(false));
+            dispatch(StateSlice.actions.isDzz(false));
+            dispatch(StateSlice.actions.isFAQ(false));
+          }}
+        >
+          단짠가이드
+        </text>
+        <text
+          onClick={() => {
+            dispatch(
+              StateSlice.actions.URL("https://dzzdzz-notice.stibee.com/")
+            );
+            dispatch(StateSlice.actions.isFrame(true));
+            dispatch(StateSlice.actions.isStatic(false));
+            dispatch(StateSlice.actions.isDzz(false));
+            dispatch(StateSlice.actions.isFAQ(false));
+          }}
+        >
+          공지사항
+        </text>
+        <text
+          onClick={() => {
+            dispatch(StateSlice.actions.isFrame(false));
+            dispatch(StateSlice.actions.isStatic(true));
+            dispatch(StateSlice.actions.isDzz(false));
+            dispatch(StateSlice.actions.isFAQ(false));
+          }}
+        >
+          통계리포트
+        </text>
+        <text
+          onClick={() => {
+            dispatch(StateSlice.actions.isFrame(false));
 
-
-              }}>단짠가이드</text>
-        <text onClick={() => {
-                dispatch(StateSlice.actions.URL("https://dzzdzz-notice.stibee.com/"));
-                dispatch(StateSlice.actions.isFrame(true));
-                dispatch(StateSlice.actions.isStatic(false));
-                dispatch(StateSlice.actions.isDzz(false))
-                dispatch(StateSlice.actions.isFAQ(false))
-
-              }}>공지사항</text>
-        <text               onClick={() => {
-                dispatch(StateSlice.actions.isFrame(false));
-                dispatch(StateSlice.actions.isStatic(true));
-                dispatch(StateSlice.actions.isDzz(false))
-                dispatch(StateSlice.actions.isFAQ(false))
-
-
-              }}>통계리포트</text>
-        <text onClick={()=> {
-                              dispatch(StateSlice.actions.isFrame(false));
-
-                              dispatch(StateSlice.actions.isStatic(false));
-                              dispatch(StateSlice.actions.isDzz(false))
-                              dispatch(StateSlice.actions.isFAQ(true))
-
-
-
-            }}>FAQ</text>
-
+            dispatch(StateSlice.actions.isStatic(false));
+            dispatch(StateSlice.actions.isDzz(false));
+            dispatch(StateSlice.actions.isFAQ(true));
+          }}
+        >
+          FAQ
+        </text>
       </Link>
       <Link className="Mobile">
-        <a href="#" onClick={()=> {
-          navigate("/Privacy")
-        }}>개인정보 처리방침</a>
+        <a
+          href="#"
+          onClick={() => {
+            navigate("/Privacy");
+          }}
+        >
+          이용약관
+        </a>
+        <a
+          href="#"
+          onClick={() => {
+            navigate("/Privacy");
+          }}
+        >
+          개인정보 처리방침
+        </a>
       </Link>
     </MobileWrapper>
   );
@@ -85,16 +114,13 @@ const MobileWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 
-
-
-
   @media screen and (max-width: 800px) {
     flex-direction: column;
     align-items: flex-start;
+    position: relative;
     padding: 0px;
-    gap: 20px;
-    width: 216px;
-    height: 56px;
+    width: 100%;
+    height: 100%;
   }
 `;
 
@@ -110,8 +136,8 @@ const Link = styled.div`
     text-align: center;
 
     :hover {
-        cursor: pointer;
-        opacity: 50%;
+      cursor: pointer;
+      opacity: 50%;
     }
   }
 
@@ -121,7 +147,7 @@ const Link = styled.div`
   align-items: flex-start;
   color: white;
   gap: 24px;
-  text-underline-offset : 3px;
+  text-underline-offset: 3px;
   > a {
     :active {
       opacity: 0.5;
@@ -150,15 +176,12 @@ const Link = styled.div`
     flex-direction: row;
     align-items: flex-start;
     padding: 0px;
-    gap: 24px;
+    /* gap: 24px; */
 
     width: 100%;
     height: 18px;
 
     > a {
-      width: 120px;
-      height: 18px;
-
       font-family: "Noto Sans";
       font-style: normal;
       font-weight: 500;
@@ -174,9 +197,15 @@ const Link = styled.div`
     > a.pc {
       display: none;
     }
-
+    &.pc {
+      display: none;
+    }
     &.Mobile {
-      display: block;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: start;
+      gap: 24px;
     }
   }
 `;

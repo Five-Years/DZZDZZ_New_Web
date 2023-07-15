@@ -3,44 +3,43 @@ import styled from "styled-components";
 import { ReactComponent as Appstore } from "../../../assets/appstore.svg";
 import { ReactComponent as Androidstore } from "../../../assets/androidstore.svg";
 function CountTimer() {
-    const [Day, setDay] = useState("00");
-    const [Hour, setHour] = useState("00");
-    const [Minute, setMinute] = useState("00");
-    const [Second, setSecond] = useState("00");
-  
-    useEffect(() => {
-      setInterval(() => {
-        const Dday = new Date("2023-07-30T00:00:00+0900");
-        const now = new Date();
-        const dis = Dday.getTime() - now.getTime(); // 잔여시간(ms단위)
-        const min = 1000 * 60; //1000ms => 1s , 1s*60 = 1m
-        setDay(String(Math.floor(dis / (min * 60 * 24))).padStart(2, "0"));
-        setHour(
-          String(Math.floor((dis % (min * 60 * 24)) / (min * 60))).padStart(
-            2,
-            "0"
-          )
-        );
-        setMinute(String(Math.floor((dis % (min * 60)) / min)).padStart(2, "0"));
-        setSecond(String(Math.floor((dis % min) / 1000)).padStart(2, "0"));
-      }, 1000);
-    }, [Hour, Minute, Second]);
+  const [Day, setDay] = useState("00");
+  const [Hour, setHour] = useState("00");
+  const [Minute, setMinute] = useState("00");
+  const [Second, setSecond] = useState("00");
+
+  useEffect(() => {
+    setInterval(() => {
+      const Dday = new Date("2023-07-30T00:00:00+0900");
+      const now = new Date();
+      const dis = Dday.getTime() - now.getTime(); // 잔여시간(ms단위)
+      const min = 1000 * 60; //1000ms => 1s , 1s*60 = 1m
+      setDay(String(Math.floor(dis / (min * 60 * 24))).padStart(2, "0"));
+      setHour(
+        String(Math.floor((dis % (min * 60 * 24)) / (min * 60))).padStart(
+          2,
+          "0"
+        )
+      );
+      setMinute(String(Math.floor((dis % (min * 60)) / min)).padStart(2, "0"));
+      setSecond(String(Math.floor((dis % min) / 1000)).padStart(2, "0"));
+    }, 1000);
+  }, [Hour, Minute, Second]);
   return (
-    <CountTimerContainer> 
+    <CountTimerContainer>
       <TitleContainer>
         <Title>
           <span>매칭진행중 </span>
           <span className="text"> 마감까지</span>
         </Title>
         <Timer>
-          {/* 1일이상 남았다면 일 시간 분, 1일 이하라면 시간 분 초 */}
           {Day >= 1 ? (
             <>
               [<span>{Day}</span>:<span>{Hour}</span>:<span>{Minute}</span>]
             </>
           ) : (
             <>
-              [<span>{Hour}</span>:<span>{Minute}</span>:<span>{Second}</span>]
+              [<span>{Hour}</span>: <span>{Minute}</span>:<span>{Second}</span>]
             </>
           )}
         </Timer>
@@ -73,7 +72,7 @@ function CountTimer() {
           </div>
         </Sns>
       </Description>
-      <MobileSns> 
+      <MobileSns>
         <SnsContainer>
           <img
             onClick={() => {
@@ -92,18 +91,23 @@ function CountTimer() {
         </SnsContainer>
       </MobileSns>
     </CountTimerContainer>
-  )
+  );
 }
 
-export default CountTimer
+export default CountTimer;
 
 const CountTimerContainer = styled.div`
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-width : 100%;
-height : 100%
+  width: 100%;
+  height: 100%;
+
+  @media screen and (max-width: 800px) {
+    height: 50%;
+    position: relative;
+  }
 `;
 
 const TitleContainer = styled.div`
@@ -115,6 +119,14 @@ const TitleContainer = styled.div`
   height: 19.71%;
   min-width: 572px;
   min-height: 135px;
+
+  @media screen and (max-width: 800px) {
+    min-width: 0px;
+    min-height: 0px;
+    width: 100%;
+    height: 15%;
+    position: relative;
+  }
 `;
 
 const MobileSns = styled.div`
@@ -130,11 +142,10 @@ const MobileSns = styled.div`
 
   @media screen and (max-width: 800px) {
     display: flex;
-    position: absolute;
+    position: relative;
     width: 100%;
-    height: 40px;
+    height: 10%;
     margin-top: 0px;
-    top: 49.45%;
     align-items: center;
     justify-content: center;
   }
@@ -154,9 +165,6 @@ const SnsContainer = styled.div`
   }
 `;
 
-
-
-
 const Title = styled.div`
   display: flex;
   flex-direction: row;
@@ -166,7 +174,7 @@ const Title = styled.div`
 
   > span {
     height: 36px;
-    font-family: "SF Pro";
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 700;
     font-size: 30px;
@@ -178,7 +186,7 @@ const Title = styled.div`
 
   > span.text {
     height: 23px;
-    font-family: "SF Pro";
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: bold;
     font-size: 15px;
@@ -207,7 +215,7 @@ const Title = styled.div`
 
     > span.text {
       height: 23px;
-      font-family: "SF Pro";
+      font-family: var(--font-Pretendard);
       font-style: normal;
       font-weight: bold;
       font-size: 15px;
@@ -228,11 +236,14 @@ const Description = styled.div`
   border-radius: 10px;
 
   @media screen and (max-width: 800px) {
+    min-width: 0px;
+    min-height: 0px;
     width: 100%;
-    height: 150px;
+    height: 40%;
     align-items: center;
     justify-content: center;
     gap: 10px;
+    background-color: r;
   }
 `;
 
@@ -244,7 +255,7 @@ const Timer = styled.div`
   width: 79%;
   height: 67.41%;
 
-  font-family: "NanumSquare";
+  font-family: var(--font-Pretendard);
   font-style: normal;
   font-weight: 800;
   font-size: 80px;
@@ -280,7 +291,7 @@ const Sns = styled.div`
   margin-top: 20px;
 
   > span {
-    font-family: "Noto Sans";
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-size: 12px;
     line-height: 16px;
@@ -334,25 +345,19 @@ const DownButton = styled.div`
 
   @media screen and (max-width: 800px) {
     visibility: visible;
-    box-sizing: border-box;
     display: flex;
-    flex-direction: row;
+    width: 64.1%;
+    height: 33%;
     justify-content: center;
     align-items: center;
-    padding: 12px 24px;
     gap: 10px;
-    width: 330px;
-    height: 48px;
-    background: #ff477e;
-    border-width: 1px 2px 2px 1px;
-    border-style: solid;
-    border-color: #49516f;
-    border-radius: 6px;
+    border-radius: 8px;
+    background: var(--dzz-pink, #ff477e);
 
     > span {
       width: 70px;
       height: 26px;
-      font-family: "PFStardust";
+      font-family: var(--font-Pretendard);
       font-style: normal;
       font-weight: 500;
       font-size: 17px;

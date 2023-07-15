@@ -11,7 +11,6 @@ function HeaderBar() {
   const dispatch = useDispatch();
   dispatch(StateSlice.actions.isStatic(false));
 
-
   return (
     <HeaderBarContainer>
       <MobileHeaderBar>
@@ -31,68 +30,71 @@ function HeaderBar() {
               dispatch(StateSlice.actions.URL(false));
               dispatch(StateSlice.actions.isStatic(false));
               dispatch(StateSlice.actions.isFrame(false));
-              dispatch(StateSlice.actions.isFAQ(false))
+              dispatch(StateSlice.actions.isFAQ(false));
+              dispatch(StateSlice.actions.isDzz(false));
+
               navigate("/pc");
             }}
           />
         </LogoContainer>
         <MenuContainer>
           <MenuLeft>
-            <text onClick={()=>{              
-              dispatch(StateSlice.actions.isDzz(true));
-              dispatch(StateSlice.actions.isStatic(false));
-              dispatch(StateSlice.actions.isFrame(false));
-              dispatch(StateSlice.actions.isFAQ(false))
-
-}}>
+            <text
+              onClick={() => {
+                dispatch(StateSlice.actions.isDzz(true));
+                dispatch(StateSlice.actions.isStatic(false));
+                dispatch(StateSlice.actions.isFrame(false));
+                dispatch(StateSlice.actions.isFAQ(false));
+              }}
+            >
               단짠단짠
             </text>
             <text
-onClick={() => {
-  dispatch(StateSlice.actions.isFrame(false));
-  dispatch(StateSlice.actions.isStatic(true));
-  dispatch(StateSlice.actions.isDzz(false))
-  dispatch(StateSlice.actions.isFAQ(false))
-
-
-}}
+              onClick={() => {
+                dispatch(
+                  StateSlice.actions.URL("https://dzz-guide.stibee.com")
+                );
+                dispatch(StateSlice.actions.isFrame(true));
+                dispatch(StateSlice.actions.isStatic(false));
+                dispatch(StateSlice.actions.isDzz(false));
+                dispatch(StateSlice.actions.isFAQ(false));
+              }}
             >
               단짠 가이드
             </text>
             <text
               onClick={() => {
-                dispatch(StateSlice.actions.URL("https://dzzdzz-notice.stibee.com/"));
+                dispatch(
+                  StateSlice.actions.URL("https://dzzdzz-notice.stibee.com/")
+                );
                 dispatch(StateSlice.actions.isFrame(true));
                 dispatch(StateSlice.actions.isStatic(false));
-                dispatch(StateSlice.actions.isDzz(false))
-                dispatch(StateSlice.actions.isFAQ(false))
-
+                dispatch(StateSlice.actions.isDzz(false));
+                dispatch(StateSlice.actions.isFAQ(false));
               }}
             >
               공지사항
             </text>
             <text
               onClick={() => {
-                dispatch(StateSlice.actions.isFrame(false));
                 dispatch(StateSlice.actions.isStatic(true));
-                dispatch(StateSlice.actions.isDzz(false))
-                dispatch(StateSlice.actions.isFAQ(false))
+                dispatch(StateSlice.actions.URL(false));
 
-
+                dispatch(StateSlice.actions.isFrame(false));
+                dispatch(StateSlice.actions.isDzz(false));
+                dispatch(StateSlice.actions.isFAQ(false));
               }}
             >
               통계리포트
             </text>
-            <text onClick={()=> {
-                              dispatch(StateSlice.actions.isFrame(false));
-
-                              dispatch(StateSlice.actions.isStatic(false));
-                              dispatch(StateSlice.actions.isDzz(false))
-                              dispatch(StateSlice.actions.isFAQ(true))
-
-
-
-            }}>
+            <text
+              onClick={() => {
+                dispatch(StateSlice.actions.isFrame(false));
+                dispatch(StateSlice.actions.isStatic(false));
+                dispatch(StateSlice.actions.isDzz(false));
+                dispatch(StateSlice.actions.isFAQ(true));
+              }}
+            >
               FAQ
             </text>
           </MenuLeft>
@@ -199,11 +201,11 @@ const MenuLeft = styled.div`
 
   > text {
     font-family: var(--font-Pretendard);
-font-size: 16px;
-font-weight: 400;
-line-height: 22px;
-letter-spacing: 0px;
-text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0px;
+    text-align: center;
 
     cursor: pointer;
 

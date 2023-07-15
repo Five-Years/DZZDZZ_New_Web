@@ -37,12 +37,14 @@ const HeaderBackground = styled.div`
   height: 100%;
   position: absolute;
   justify-content: center;
-  background-color: yellow;
 
   @media screen and (max-width: 800px) {
     /* 전체 가로 390 세로 844px 중 헤더부분은 가로 390 세로 중 */
-    width: 100vw;
-    height: 55.3vh;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    justify-content: center;
   }
 `;
 
@@ -51,12 +53,13 @@ const HeaderContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  position  : relative;
+  position: relative;
   align-items: center;
   justify-content: center;
 
   @media screen and (max-width: 800px) {
-    width: 100vw;
+    width: 100%;
+    height: 100%;
   }
 `;
 

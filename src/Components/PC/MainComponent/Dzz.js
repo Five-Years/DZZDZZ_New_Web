@@ -25,21 +25,21 @@ display: flex;
 position: relative;
 width : 100%;
 height : 100%;
+background-color: green;
+
+> img {
+  width : 100%;
+}
 `;
 
 const IntroduceContainer = styled.div`
   display: flex;
-  position: absolute;
+  position: relative;
   flex-direction: column;
   width: 100%;
   height: 100%;
   background: #231815;
   overflow-y: scroll;
-
-  > img {
-    width : 100%;
-    height :100%;
-  }
 `;
 
 const BackgroundContainer = styled.div`

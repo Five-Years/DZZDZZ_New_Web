@@ -10,7 +10,6 @@ import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 function App() {
-
   const URL = useSelector((state) => {
     return state.Popup.URL;
   });
@@ -29,16 +28,18 @@ function App() {
       />
       {/* user-scalable=no, 모바일 화면에서 input창 확대되는것 방지 */}
       <MainFrame>
-        <HeaderContainer><HeaderBar /></HeaderContainer>
+        <HeaderContainer>
+          <HeaderBar />
+        </HeaderContainer>
         {isFrame ? (
           <IFrame>
-            <iframe src={URL}/>
+            <iframe src={URL} />
           </IFrame>
         ) : (
           <>
-          <SectionContainer>
-            <HeaderMain2 />
-          </SectionContainer>
+            <SectionContainer>
+              <HeaderMain2 />
+            </SectionContainer>
           </>
         )}
       </MainFrame>
@@ -59,28 +60,43 @@ const MainFrame = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+
+  @media screen and (max-width: 800px) {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const SectionContainer = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
-  width : 100%;
-  height : 92%;
+  width: 100%;
+  height: 92%;
+
+  @media screen and (max-width: 800px) {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: 100%;
+    height: 92%;
+    background-color: red;
+  }
 `;
-
-
 
 const IFrame = styled.div`
   display: flex;
   position: absolute;
-  top : 8%;
+  top: 8%;
   width: 100%;
   height: 92%;
 
   > iframe {
-    width : 100%;
-    height : 100%;    
+    width: 100%;
+    height: 100%;
   }
 `;
 const HeaderContainer = styled.div`
@@ -88,4 +104,10 @@ const HeaderContainer = styled.div`
   position: relative;
   width: 100%;
   height: 8%;
+
+  @media screen and (max-width: 800px) {
+    display: flex;
+    width: 100%;
+    height: 8%;
+  }
 `;

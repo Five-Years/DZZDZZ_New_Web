@@ -10,7 +10,7 @@ import StateSlice from "features/State/StateSlice";
 import Statistic from "../MainComponent/Statistic";
 import CountTimer from "../MainComponent/CountTimer";
 import Dzz from "../MainComponent/Dzz";
-import FAQ from "../MainComponent/FAQ"; 
+import FAQ from "../MainComponent/FAQ";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../Footer/Footer";
 
@@ -31,22 +31,22 @@ function HeaderRight() {
     <ContentContainer>
       {isStatic ? (
         <>
-        <Statistic />
-        <Footer />
+          <Statistic />
+          <Footer />
         </>
       ) : isDzz ? (
-          <Dzz />
-      ) : isFAQ ?  
-      <>
-      <FAQ />
-      <Footer />
-      </>
-        : 
+        <Dzz />
+      ) : isFAQ ? (
         <>
-        <CountTimer />
-        <Footer />
+          <FAQ />
+          <Footer />
         </>
-      }
+      ) : (
+        <>
+          <CountTimer />
+          <Footer />
+        </>
+      )}
     </ContentContainer>
   );
 }
@@ -68,13 +68,13 @@ const ContentContainer = styled.div`
   }
 
   @media screen and (max-width: 800px) {
-    gap: 10px;
+    position: absolute;
 
-    > img {
+    /* > img {
       width: 120px;
       height: 63.04px;
       visibility: visible;
-    }
+    } */
   }
 `;
 
@@ -147,6 +147,8 @@ const ReportContainer = styled.div`
     height: 50px;
   }
   > text.ready {
+    border-radius: 8px;
+    background: var(--dzz-pink, #ff477e);
     font-family: var(--font-Pretendard);
     font-size: 32px;
     font-weight: 700;
@@ -165,8 +167,6 @@ const ReportContainer = styled.div`
     color: #888888;
   }
 `;
-
-
 
 const Title = styled.div`
   display: flex;

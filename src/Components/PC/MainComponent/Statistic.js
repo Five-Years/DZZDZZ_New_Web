@@ -19,18 +19,18 @@ export default Statistic;
 
 const ReportContainer = styled.div`
   display: flex;
-  width : 100%;
-  height : 100%;
+  width: 100%;
+  height: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap : 30px;
+  gap: 30px;
 
   > img {
-    width : 50px;
-    height : 50px;
+    width: 50px;
+    height: 50px;
   }
-  >text.ready {
+  > text.ready {
     font-family: var(--font-Pretendard);
     font-size: 32px;
     font-weight: 700;
@@ -41,11 +41,11 @@ const ReportContainer = styled.div`
 
   > text.description {
     font-family: var(--font-Pretendard);
-font-size: 16px;
-font-weight: 400;
-line-height: 19px;
-letter-spacing: 0.05em;
-text-align: center;
-color : #888888;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0.05em;
+    text-align: center;
+    color: #888888;
   }
 `;

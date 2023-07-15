@@ -12,7 +12,7 @@ function Footer() {
           <Content>
             <ContentLink>
               <MenuLinks />
-              <Links />
+              {/* <Links /> */}
             </ContentLink>
             <Meta />
           </Content>
@@ -27,17 +27,21 @@ export default Footer;
 const FooterContainer = styled.div`
   width: 100%;
   height: 33.11%;
-  min-height : 400px;
+  min-height: 300px;
   display: flex;
   position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #231815;
-  bottom : 0px;
+
+  bottom: 0px;
 
   @media screen and (max-width: 800px) {
-    height: 44.7vh;
+    min-height: 0px;
+    height: 52%;
+    position: relative;
+    min-height: 300px;
   }
 `;
 
@@ -45,10 +49,9 @@ const FooterContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0px 30px;
   gap: 10px;
 
-  width: 71.9%;
+  width: 75%;
   height: 100%;
 
   @media screen and (max-width: 800px) {
@@ -66,7 +69,7 @@ const ContentContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 94.2%;
+  width: 100%;
   height: 100%;
 
   @media screen and (max-width: 800px) {
@@ -82,27 +85,28 @@ const Content = styled.div`
   gap: 10px;
 
   width: 93.8%;
-  height: 81.6%;
-
+  height: 85%;
   @media screen and (max-width: 800px) {
-    width: 100%;
-    height: 100%;
+    width: 85%;
+    height: 85%;
+    position: absolute;
   }
 `;
 
 const ContentLink = styled.div`
   width: 100%;
-  height : 20px;
+  height: 10%;
   display: flex;
   justify-content: space-between;
 
   @media screen and (max-width: 800px) {
     flex-direction: column;
     align-items: flex-start;
-    padding: 0px 0px 30px;
+    /* padding: 0px 0px 30px; */
     /* gap: 10px; */
 
     width: 100%;
-    height: 49%;
+    height: 15%;
+    position: relative;
   }
 `;
