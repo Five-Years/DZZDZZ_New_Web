@@ -23,6 +23,7 @@ function MatchingHomePage() {
  
 
   const getData = async (at, rt) => {
+    alert(at)
     try {
       const Response = await axios.get(
         `${
