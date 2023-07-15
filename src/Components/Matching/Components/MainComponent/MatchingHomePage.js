@@ -21,36 +21,26 @@ function MatchingHomePage() {
   const dispatch = useDispatch();
   const [userData, setUserData] = useState();
  
-  
-  const getFetch = async() => {
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJDbGVtZW50aW5lX0Rvb2xleUBleGFtcGxlLmNvbSIsImF1dGgiOiJOT1JNQUxfVVNFUiIsImV4cCI6MTY4OTUwNjg4N30.vfUVQ2qW2wB5t62zwwk9S-3XZSh8Nfs8n2XZQqc3-P4");
-    myHeaders.append("x-refresh-token", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODk1MDY4ODd9.WlvaBp858t4GKxcKvybxcooWfSOLW6BBIpQD9XMlDMw");
-    myHeaders.append("fcmToken", "123");
-
-    var requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
-    fetch("https://dev.fiveyears.click/login/token", requestOptions)
-    .then(response => response.text())
-    .then(result => alert(result))
-    .catch(error => alert('error', error));
-  }
 
   const getCalendar = async() => {
-    const response = await fetch('/campus/search?word=단국');
-    alert(JSON.stringify(response))
+    const response = await fetch('/campus/search?word=단국').then((response)=>response.json());
+    console.log(response)
   }
 
   const getData = async (at, rt) => {
+    if (process.env.NODE_ENV === "development")
+    {
+      alert("development")
+    }
+    else{
+      alert("production")
+    }
     try {
       const Response = await axios.get(
         `${
           process.env.NODE_ENV === "development"
             ? ""
-            : ""
+            : "https://dev.fiveyears.click"
             // "https://dev.fiveyears.click"
         }/login/token`,
         {
@@ -80,6 +70,8 @@ function MatchingHomePage() {
   },[userData])
 
  
+  useEffect(()=>{          getCalendar();
+  },[])
 
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
@@ -88,7 +80,6 @@ function MatchingHomePage() {
       case "loginToken":
         if (Name === "anonymous") {
           getData(data.accessToken, data.refreshToken);
-          // getCalendar();
         }
         break;
 
