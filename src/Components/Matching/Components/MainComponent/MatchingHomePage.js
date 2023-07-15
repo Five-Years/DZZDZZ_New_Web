@@ -23,19 +23,26 @@ function MatchingHomePage() {
  
 
   const getCalendar = async() => {
-    const Response = await axios.get(
-      `https://dev.fiveyears.click/login/token`,
-      {
-        headers: {
-          Authorization: 'at',
-          "x-refresh-token": 'rt',
-          fcmToken : "123",
-          "content-type": "application/json",
-        },
-      }
-    )
-    // const response = await fetch('https://dev.fiveyears.click/campus/search?word=단국').then((response)=>response.json());
-    alert(JSON.stringify(Response.data))
+    try {
+      const Response = await axios.get(
+        `https://dev.fiveyears.click/login/token`,
+        {
+          headers: {
+            Authorization: 'at',
+            "x-refresh-token": 'rt',
+            fcmToken : "123",
+            "content-type": "application/json",
+          },
+        }
+      )
+      // const response = await fetch('https://dev.fiveyears.click/campus/search?word=단국').then((response)=>response.json());
+      alert(JSON.stringify(Response.data))
+    }
+
+    catch(error){
+      alert(error)
+    }
+ 
   }
 
   const getData = async (at, rt) => {
