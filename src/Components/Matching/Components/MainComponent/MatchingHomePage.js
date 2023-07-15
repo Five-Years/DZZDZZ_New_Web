@@ -40,7 +40,8 @@ function MatchingHomePage() {
         }
       );
       setUserData(JSON.parse(Response.data.data));
-      console.log(userData);
+      alert(userData);
+      alert(userData.nickname);
       dispatch(StateSlice.actions.Name(userData.nickname));
     } catch (error) {
       console.log(error);
