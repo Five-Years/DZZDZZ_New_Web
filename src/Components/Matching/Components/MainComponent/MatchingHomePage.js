@@ -33,7 +33,7 @@ function MatchingHomePage() {
       headers: myHeaders,
       redirect: 'follow'
     };
-    fetch("/login/token", requestOptions)
+    fetch("https://dev.fiveyears.click/login/token", requestOptions)
     .then(response => response.text())
     .then(result => alert(result))
     .catch(error => alert('error', error));
@@ -69,7 +69,7 @@ function MatchingHomePage() {
     }
   };
   
-  // useEffect(()=>{getFetch()},[])
+  useEffect(()=>{getFetch()},[]);
 
   useEffect(()=>{
     if(userData){
