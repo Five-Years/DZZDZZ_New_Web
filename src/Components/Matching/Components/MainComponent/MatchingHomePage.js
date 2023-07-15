@@ -20,10 +20,9 @@ function MatchingHomePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userData, setUserData] = useState();
-  const [accessToken, setAccessToken] = useState("");
-  const [refreshToken, setRefreshToken] = useState("");
+ 
 
-  const getData = async (accessToken, refreshToken) => {
+  const getData = async (at, rt) => {
     try {
       const Response = await axios.get(
         `${
@@ -33,22 +32,28 @@ function MatchingHomePage() {
         }/login/token`,
         {
           headers: {
-            Authorization: accessToken,
-            "x-refresh-token": refreshToken,
-            "fcmToken" : "123",
+            Authorization: at,
+            "x-refresh-token": rt,
+            fcmToken : "123",
             "content-type": "application/json",
           },
         }
-      );
-      setUserData(Response.data);
-      alert(userData.nickname);
-      dispatch(StateSlice.actions.Name(userData.nickname));
+      )
+        // return Response.data
+        setUserData(Response.data.data)
+        
+        // setUserData(Response.data)
     } catch (error) {
       alert(error);
     }
   };
+  
 
-  useEffect(()=>{getData()}, []);
+  useEffect(()=>{
+    if(userData){
+      dispatch(StateSlice.actions.Name(userData.nickname))
+    }
+  },[userData])
 
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
@@ -56,9 +61,6 @@ function MatchingHomePage() {
     switch (type) {
       case "loginToken":
         if (Name === "anonymous") {
-          alert(data.accessToken);
-          alert(data.refreshToken);
-
           getData(data.accessToken, data.refreshToken);
         }
         break;
