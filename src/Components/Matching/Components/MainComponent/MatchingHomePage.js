@@ -62,6 +62,7 @@ function MatchingHomePage() {
     switch (type) {
       case "loginToken":
         if (Name === "anonymous") {
+          alert(data);
           getData(data.accessToken, data.refreshToken);
         }
         break;
