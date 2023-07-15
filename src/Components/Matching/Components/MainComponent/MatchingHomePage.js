@@ -21,11 +21,25 @@ function MatchingHomePage() {
   const dispatch = useDispatch();
   const [userData, setUserData] = useState();
  
+  
   const getFetch = async() => {
-    fetch('https://jsonplaceholder.typicode.com/todos/1')
-      .then(response => response.json())
-      .then(json => alert(json.title))
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJDbGVtZW50aW5lX0Rvb2xleUBleGFtcGxlLmNvbSIsImF1dGgiOiJOT1JNQUxfVVNFUiIsImV4cCI6MTY4OTUwNjg4N30.vfUVQ2qW2wB5t62zwwk9S-3XZSh8Nfs8n2XZQqc3-P4");
+    myHeaders.append("x-refresh-token", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODk1MDY4ODd9.WlvaBp858t4GKxcKvybxcooWfSOLW6BBIpQD9XMlDMw");
+    myHeaders.append("fcmToken", "123");
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    fetch("/login/token", requestOptions)
+    .then(response => response.text())
+    .then(result => alert(result))
+    .catch(error => alert('error', error));
   }
+
+  
 
   const getData = async (at, rt) => {
     alert(at)
@@ -34,7 +48,7 @@ function MatchingHomePage() {
       const Response = await axios.get(
         `${
           process.env.NODE_ENV === "development"
-            ? "https://dev.fiveyears.click"
+            ? ""
             : "https://dev.fiveyears.click"
         }/login/token`,
         {
@@ -55,6 +69,7 @@ function MatchingHomePage() {
     }
   };
   
+  // useEffect(()=>{getFetch()},[])
 
   useEffect(()=>{
     if(userData){

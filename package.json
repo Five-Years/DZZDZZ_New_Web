@@ -59,6 +59,5 @@
   },
   "resolutions": {
     "styled-components": "^5"
-  },
-  "proxy": "https://dev.fiveyears.click"
+  }
 }
