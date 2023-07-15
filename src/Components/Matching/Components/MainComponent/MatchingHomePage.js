@@ -61,7 +61,7 @@ function MatchingHomePage() {
     }
   },[userData])
 
-  useEffect(getFetch(),[]);
+ 
 
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
@@ -70,7 +70,6 @@ function MatchingHomePage() {
       case "loginToken":
         if (Name === "anonymous") {
           getData(data.accessToken, data.refreshToken);
-          getFetch();
         }
         break;
 
