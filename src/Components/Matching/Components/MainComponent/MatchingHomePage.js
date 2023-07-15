@@ -41,7 +41,7 @@ function MatchingHomePage() {
         }
       );
       setUserData(Response.data);
-      console.log(userData);
+      alert(userData.nickname);
       dispatch(StateSlice.actions.Name(userData.nickname));
     } catch (error) {
       console.log(error);
@@ -56,6 +56,8 @@ function MatchingHomePage() {
     switch (type) {
       case "loginToken":
         if (Name === "anonymous") {
+          alert(data.accessToken);
+          alert(data.refreshToken);
           setAccessToken(data.accessToken);
           setRefreshToken(data.refreshToken);
           getData();
