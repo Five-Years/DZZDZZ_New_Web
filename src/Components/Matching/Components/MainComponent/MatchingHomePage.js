@@ -20,41 +20,40 @@ function MatchingHomePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userData, setUserData] = useState();
- 
 
   const getData = async (at, rt) => {
     try {
       const Response = await axios.get(
-        `${  process.env.NODE_ENV === "development"
-                    ? ""
-                    : "https://dev.fiveyears.click"}/login/token`,        
-          {
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/login/token`,
+        {
           headers: {
             Authorization: at,
             "x-refresh-token": rt,
-            fcmToken : "123",
+            fcmToken: "123",
             "content-type": "application/json",
           },
         }
-      )
-        // return Response.data
-        setUserData(Response.data.data)
-        
-        // setUserData(Response.data)
+      );
+      // return Response.data
+      setUserData(Response.data.data);
+
+      // setUserData(Response.data)
     } catch (error) {
       alert(error);
     }
   };
-  
+
   // useEffect(()=>{getFetch()},[]);
 
-  useEffect(()=>{
-    if(userData){
-      dispatch(StateSlice.actions.Name(userData.nickname))
+  useEffect(() => {
+    if (userData) {
+      dispatch(StateSlice.actions.Name(userData.nickname));
     }
-  },[userData])
-
- useEffect(()=>{getCalendar()},[])
+  }, [userData]);
 
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
