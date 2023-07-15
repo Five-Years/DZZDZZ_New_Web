@@ -23,25 +23,17 @@ function MatchingHomePage() {
  
 
   const getCalendar = async() => {
-    const response = await fetch('/campus/search?word=단국').then((response)=>response.json());
-    console.log(response)
+    const response = await fetch('https://dev.fiveyears.click/campus/search?word=단국').then((response)=>response.json());
+    alert(response)
   }
 
   const getData = async (at, rt) => {
-    if (process.env.NODE_ENV === "development")
-    {
-      alert("development")
-    }
-    else{
-      alert("production")
-    }
     try {
       const Response = await axios.get(
         `${
           process.env.NODE_ENV === "development"
             ? ""
             : "https://dev.fiveyears.click"
-            // "https://dev.fiveyears.click"
         }/login/token`,
         {
           headers: {
@@ -69,9 +61,7 @@ function MatchingHomePage() {
     }
   },[userData])
 
- 
-  useEffect(()=>{          getCalendar();
-  },[])
+ useEffect(()=>{getCalendar()},[])
 
   const listener = (event) => {
     const { data, type } = JSON.parse(event);

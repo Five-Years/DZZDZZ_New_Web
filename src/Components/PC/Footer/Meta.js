@@ -156,9 +156,9 @@ const ContentSns = styled.div`
 
 const Information = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: start;
   padding: 0px;
 
   width: 100%;
