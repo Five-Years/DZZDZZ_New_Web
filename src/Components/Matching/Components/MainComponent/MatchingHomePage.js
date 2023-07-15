@@ -23,7 +23,7 @@ function MatchingHomePage() {
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
 
-  const getData = async () => {
+  const getData = async (accessToken, refreshToken) => {
     try {
       const Response = await axios.get(
         `${
@@ -44,7 +44,7 @@ function MatchingHomePage() {
       alert(userData.nickname);
       dispatch(StateSlice.actions.Name(userData.nickname));
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
@@ -58,9 +58,8 @@ function MatchingHomePage() {
         if (Name === "anonymous") {
           alert(data.accessToken);
           alert(data.refreshToken);
-          setAccessToken(data.accessToken);
-          setRefreshToken(data.refreshToken);
-          getData();
+
+          getData(data.accessToken, data.refreshToken);
         }
         break;
 
