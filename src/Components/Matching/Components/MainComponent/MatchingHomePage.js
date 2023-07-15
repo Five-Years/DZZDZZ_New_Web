@@ -21,6 +21,11 @@ function MatchingHomePage() {
   const dispatch = useDispatch();
   const [userData, setUserData] = useState();
  
+  const getFetch = async() => {
+    fetch('https://jsonplaceholder.typicode.com/todos/1')
+      .then(response => response.json())
+      .then(json => alert(json.title))
+  }
 
   const getData = async (at, rt) => {
     alert(at)
@@ -56,14 +61,16 @@ function MatchingHomePage() {
     }
   },[userData])
 
+  useEffect(getFetch(),[]);
+
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
 
     switch (type) {
       case "loginToken":
         if (Name === "anonymous") {
-          alert(data);
           getData(data.accessToken, data.refreshToken);
+          getFetch();
         }
         break;
 
