@@ -45,14 +45,13 @@ function MatchingHomePage() {
   }
 
   const getData = async (at, rt) => {
-    alert(at)
-    alert(rt)
     try {
       const Response = await axios.get(
         `${
           process.env.NODE_ENV === "development"
             ? ""
-            : "https://dev.fiveyears.click"
+            : ""
+            // "https://dev.fiveyears.click"
         }/login/token`,
         {
           headers: {
@@ -72,7 +71,7 @@ function MatchingHomePage() {
     }
   };
   
-  useEffect(()=>{getFetch()},[]);
+  // useEffect(()=>{getFetch()},[]);
 
   useEffect(()=>{
     if(userData){
@@ -88,9 +87,8 @@ function MatchingHomePage() {
     switch (type) {
       case "loginToken":
         if (Name === "anonymous") {
-        
-          // getData(data.accessToken, data.refreshToken);
-          getCalendar();
+          getData(data.accessToken, data.refreshToken);
+          // getCalendar();
         }
         break;
 
