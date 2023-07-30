@@ -21,6 +21,199 @@ function MatchingHomePage() {
   const dispatch = useDispatch();
   const [userData, setUserData] = useState();
 
+  //@ 커플매칭, 친구매칭 신청여부, true => 신청가능(미신청), false => 신청불가능(신청))
+  const [CoupleParticipate, setCoupleParticipate] = useState(false);
+  const [FriendParticipate, setFriendParticipate] = useState(false);
+
+  const [Day, setDay] = useState("00");
+  const [Hour, setHour] = useState("00");
+  const [Minute, setMinute] = useState("00");
+  const min = 1000 * 60; //1000ms => 1s , 1s*60 = 1m
+
+  const StartTimer = () => {
+    setInterval(() => {
+      const now = new Date();
+      const dis = SeasonTimer - now.getTime(); // 잔여시간(ms단위)
+      setDay(String(Math.floor(dis / (min * 60 * 24))).padStart(2, "0"));
+      setHour(
+        String(Math.floor((dis % (min * 60 * 24)) / (min * 60))).padStart(
+          2,
+          "0"
+        )
+      );
+      setMinute(String(Math.floor((dis % (min * 60)) / min)).padStart(2, "0"));
+    }, 1000);
+  };
+
+  //@ 사용자 티켓 수
+  const Ticket = useSelector((state) => {
+    return state.Popup.ticket;
+  });
+
+  //@ 사용자 정보
+  const UserData = useSelector((state) => {
+    return state.Popup.userData;
+  });
+
+  const FriendmatchResult = useSelector((state) => {
+    return state.Popup.FriendmatchResult;
+  });
+
+  const CouplematchResult = useSelector((state) => {
+    return state.Popup.CouplematchResult;
+  });
+
+  //@ 사용자 이름
+  const Name = useSelector((state) => {
+    return state.Popup.name;
+  });
+
+  //@ 현재 시즌 회차 (삭제 예정)
+  const Season = useSelector((state) => {
+    return state.Popup.Season;
+  });
+
+  //@ 현재 시즌 상태 (접수중, 매칭중, 접수완료)
+  const SeasonStep = useSelector((state) => {
+    return state.Popup.seasonStep;
+  });
+
+  const matchParticipate = useSelector((state) => {
+    return state.Popup.matchParticipate;
+  });
+
+  const SeasonTimer = useSelector((state) => {
+    return state.Popup.seasonTimer;
+  });
+
+  const getMatchResult = async (at, rt) => {
+    try {
+      const CoupleResponse = await axios.get(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/matching/user/result?matchingType=Couple`,
+        {
+          headers: {
+            Authorization: at,
+            "x-refresh-token": rt,
+            fcmToken: "123",
+            "content-type": "application/json",
+          },
+        }
+      );
+
+      dispatch(StateSlice.actions.CouplematchResult(CoupleResponse.data.data));
+      // 커플 매칭 성사 조회
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      const FriendResponse = await axios.get(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/matching/user/result?matchingType=Friend`,
+        {
+          headers: {
+            Authorization: at,
+            "x-refresh-token": rt,
+            fcmToken: "123",
+            "content-type": "application/json",
+          },
+        }
+      );
+
+      dispatch(StateSlice.actions.FriendmatchResult(FriendResponse.data.data));
+      //친구매칭 성사 조회
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // @ 사용자의 매칭 정보를 가져온다
+  // @ 친구매칭, 커플 매칭 신청 정보를 가져와 리듀서에 저장한다
+  const getMatchStatus = async (at, rt) => {
+    try {
+      const Response = await axios.get(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/matching/participate/status`,
+        {
+          headers: {
+            Authorization: at,
+            "x-refresh-token": rt,
+            fcmToken: "123",
+            "content-type": "application/json",
+          },
+        }
+      );
+      dispatch(StateSlice.actions.matchParticipate(Response.data.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // @ 현재 시즌 상태를 가져오고 리듀서에 저장한다
+  // (현재 시즌상태, 마감일에 대한 정보)
+  const getSeason = async () => {
+    const today = new Date();
+    const todaytime = {
+      year: today.getFullYear(),
+      month: today.getMonth() + 1,
+      date: today.getDate(),
+      hours: today.getHours(),
+      minutes: today.getMinutes(),
+      seconds: today.getSeconds(),
+    };
+    const expire = new Date(
+      todaytime.year,
+      todaytime.month - 1,
+      todaytime.date + 1,
+      0,
+      0
+    );
+    try {
+      const Response = await axios.get(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/matching/calendar?today=${`${todaytime.year}-${String(
+          todaytime.month
+        ).padStart(2, "0")}-${String(todaytime.date).padStart(2, "0")}`}`,
+
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
+
+      dispatch(StateSlice.actions.seasonTimer(expire));
+
+      if (Response.data.data === "Regiter") {
+        dispatch(StateSlice.actions.SeasonStep(0));
+      } else if (Response.data.data === "Matching") {
+        {
+          dispatch(StateSlice.actions.SeasonStep(1));
+        }
+      } else if (Response.data.data === "None") {
+        {
+          dispatch(StateSlice.actions.SeasonStep(2));
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // @ 사용자 정보를 가져와 리덕스에 저장하는 매소드
   const getData = async (at, rt) => {
     try {
       const Response = await axios.get(
@@ -38,16 +231,18 @@ function MatchingHomePage() {
           },
         }
       );
-      // return Response.data
-      setUserData(Response.data.data);
 
-      // setUserData(Response.data)
+      dispatch(StateSlice.actions.userInfo(Response.data.data));
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
   };
 
-  // useEffect(()=>{getFetch()},[]);
+  //@ 만약 사용자 정보가 있다면 닉네임, 정보등을 최신화 한다.
+  //@ 티켓수,젤리수, 매칭상태 등.
+  useEffect(() => {
+    if (SeasonTimer !== 0) StartTimer();
+  }, [SeasonTimer]);
 
   useEffect(() => {
     if (userData) {
@@ -55,116 +250,216 @@ function MatchingHomePage() {
     }
   }, [userData]);
 
+  useEffect(() => {
+    if (matchParticipate) {
+      setCoupleParticipate(matchParticipate.friendMatchingAvailable);
+      setFriendParticipate(matchParticipate.coupleMatchingAvailable);
+    }
+  }, [matchParticipate]);
+
+  useEffect(() => {
+    if (SeasonStep === -1) {
+      getSeason();
+    } else if (SeasonStep === 1) {
+      getMatchResult();
+    }
+  }, [SeasonStep]);
+
+  useEffect(() => {});
+
+  useEffect(() => {
+    if (matchParticipate === null) {
+      getMatchStatus();
+    }
+  });
+
+  //@웹뷰 통신을 하기위한 리스너 이벤트들
+
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
 
     switch (type) {
+      //@ 사용자 토큰을 받아와 정보를 서버로부터 받아온다
       case "loginToken":
         if (Name === "anonymous") {
           getData(data.accessToken, data.refreshToken);
         }
         break;
 
+      //@초기화면으로 되돌리는 이벤트
       case "onBlur":
         navigate("/matching");
         break;
 
+      //@ 상점페이지로 이동하는 이벤트
       case "store":
         navigate("/purchasing", { state: { title: "충전하기", direct: true } });
         break;
 
-      case "season":
-        dispatch(StateSlice.actions.Season(data.season));
-        dispatch(StateSlice.actions.SeasonNumber(data.seasonnumber));
+      //@ 현재 시즌정보를 받아오는 이벤트, 서버로부터 받아올 예정임으로 삭제할 예정
+      // case "season":
+      //   dispatch(StateSlice.actions.Season(data.season));
+      //   dispatch(StateSlice.actions.SeasonNumber(data.seasonnumber));
 
+      //@ 뒤로가기 이벤트, 뒷페이지로 이동한다.
       case "back": {
         navigate(-1);
         break;
       }
+
+      //@ 현재 스택이 남아있는지에 대한 이벤트 (오류 수정중)
       // if (this.props.navigation.isFirstRouteInParent()) {
       //   navigate("/Matching");
       // } else {
       //   navigate(-1);
       // }
 
+      //@신고 이벤트, 메인화면으로 이동
       case "report":
-        navigate("/");
+        navigate("/matching");
     }
   };
 
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       `${
-  //         process.env.NODE_ENV === "development"
-  //           ? ""
-  //           : "https://dev.fiveyears.click"
-  //       }/login/token`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${accessToken}`,
-  //           "x-refresh-token": `Bearer ${refreshToken}`,
-  //           "content-type": "application/json",
-  //         },
-  //       }
-  //     )
-  //     .then((response) => console.log(response.data));
-  // }, []);
-
-  const Ticket = useSelector((state) => {
-    return state.Popup.ticket;
-  });
-
-  const UserData = useSelector((state) => {
-    return state.Popup.userData;
-  });
-  const Name = useSelector((state) => {
-    return state.Popup.name;
-  });
-  const Season = useSelector((state) => {
-    return state.Popup.Season;
-  });
-  const SeasonNumber = useSelector((state) => {
-    return state.Popup.SeasonNumber;
-  });
-
-  // 유저인증여부 확인, 추후 서버 연동 필요
-  const authentification = true;
-
   const Description = (props) => {
+    //@ 접수중 상태일때
     if (props === 0) {
-      return (
+      //@ 매칭 접수를 안한 상태인 경우
+      if (CoupleParticipate && FriendParticipate) {
+        return (
+          <EventTextContainer>
+            {" "}
+            <EventText>
+              <text>아직 신청하지 않으셨네요!</text>
+            </EventText>
+            <EventTextTime>
+              <text>
+                {Day}일 {Hour}시간 {Minute}분 뒤에 접수가 끝나요.
+              </text>
+            </EventTextTime>
+          </EventTextContainer>
+        );
+      }
+      //@ 매칭 접수를 한 경우
+      else {
+        return (
+          <EventTextContainer>
+            {" "}
+            <EventText>
+              <text>정상적으로 매칭 신청이 되었어요</text>
+            </EventText>
+            <EventTextTime>
+              <text>
+                {Day}일 {Hour}시간 {Minute}분 뒤에 매칭이 시작돼요.
+              </text>
+            </EventTextTime>
+          </EventTextContainer>
+        );
+      }
+    }
+    //@ 매칭 시작!
+    else if (props === 1) {
+      // 접수를 안한 경우, 매칭성사가 안된 경우
+      // 매칭성사 안된 경우 확인할수 있는 방법이 있나??
+      if ((CoupleParticipate && FriendParticipate) || true) {
+        return (
+          <EventTextContainer>
+            {" "}
+            <EventText>
+              <text>지금은 매칭중!</text>
+            </EventText>
+            <EventTextTime>
+              <text>다음 매칭접수 일정을 기다려주세요.</text>
+            </EventTextTime>
+          </EventTextContainer>
+        );
+      }
+
+      //@ 접수를 한 경우에서의 조건들
+
+      // else if // 매칭성사, 상대방확인 아직 안했거나 결정하지 않은 상태
+      // {
+      //   <EventTextContainer>
+      //   {" "}
+      //   <EventText>
+      //     <text>매칭 시작!</text>
+      //   </EventText>
+      //   <EventTextTime>
+      //     <text>지금 상대방을 확인할 수 있어요</text>
+      //   </EventTextTime>
+      // </EventTextContainer>
+      // }
+
+      // else if // 접수를 한상태, 나도 선택(수락)을 하였고, 상대방도 선택을 한 상태
+      // {
+      //   <EventTextContainer>
+      //   {" "}
+      //   <EventText>
+      //     <text>결과 발표!</text>
+      //   </EventText>
+      //   <EventTextTime>
+      //     <text>지금 결과를 확인할 수 있어요</text>
+      //   </EventTextTime>
+      // </EventTextContainer>
+      // }
+
+      //@ 매칭이 성사된 상태 + 상대방을 선택 결정한 상태
+      else if (
+        (CouplematchResult.matchingResult !== "None" &&
+          CouplematchResult.myChoice === "Accept") ||
+        (FriendmatchResult.matchingResult !== "None" &&
+          FriendmatchResult.myChoice === "Accept")
+      ) {
         <EventTextContainer>
           {" "}
           <EventText>
-            <text>아직 신청하지 않으셨네요!</text>
+            <text>매칭 시작!</text>
           </EventText>
           <EventTextTime>
-            <text>1일 2시간 25분 뒤에 접수가 끝나요.</text>
+            <text>
+              {Day}일 {Hour}시간 {Minute}분 뒤에 결과를 확인할 수 있어요
+            </text>
           </EventTextTime>
-        </EventTextContainer>
-      );
-    } else if (props === 1) {
-      return (
+        </EventTextContainer>;
+      } else if (
+        CouplematchResult.matchingResult !== "None" ||
+        FriendmatchResult.matchingResult !== "None"
+      ) {
         <EventTextContainer>
           {" "}
           <EventText>
-            <text>잠시 후 매칭이 시작됩니다!</text>
+            <text>매칭시작!</text>
           </EventText>
           <EventTextTime>
-            <text>1일 2시간 25분 뒤에 상대방을 확인할 수 있어요.</text>
+            <text>
+              {Day}일 {Hour}시간 {Minute}분 까지 상대를 결정할 수 있어요.
+            </text>
           </EventTextTime>
-        </EventTextContainer>
-      );
+        </EventTextContainer>;
+      }
+
+      // 접수를 한상태, 상대방확인
+      else {
+        <EventTextContainer>
+          {" "}
+          <EventText>
+            <text>지금은 매칭중!</text>
+          </EventText>
+          <EventTextTime>
+            <text>다음 매칭접수 일정을 기다려주세요.</text>
+          </EventTextTime>
+        </EventTextContainer>;
+      }
     } else if (props === 2) {
       return (
         <EventTextContainer>
           {" "}
           <EventText>
-            <text>과연 결과는?</text>
+            <text>지금은 준비중</text>
           </EventText>
           <EventTextTime>
-            <text>2시간 25분 뒤에 결과가 나와요.</text>
+            <text>
+              {Day}일 {Hour}시간 {Minute}분 뒤에 접수가 시작돼요.
+            </text>
           </EventTextTime>
         </EventTextContainer>
       );
@@ -212,7 +507,17 @@ function MatchingHomePage() {
           >
             <SelectionTitle>
               <text>
-                <span>#</span> 소개팅을 원해요 (커플매칭)
+                {SeasonStep === 1 && CoupleParticipate === false ? (
+                  <>
+                    {" "}
+                    <span>#</span> <span>확인하러가기</span>
+                  </>
+                ) : (
+                  <>
+                    {" "}
+                    <span>#</span> 소개팅을 원해요 (커플매칭)
+                  </>
+                )}
               </text>
             </SelectionTitle>
             <MoveContainer>
@@ -235,7 +540,18 @@ function MatchingHomePage() {
             <SelectionTitle>
               {/*  className="disalbed" */}
               <text>
-                <span className="friend">#</span> 친구를 원해요 (친구매칭)
+                {SeasonStep === 1 && FriendParticipate === false ? (
+                  <>
+                    {" "}
+                    <span className="friend">#</span>{" "}
+                    <span className="friend">확인하러가기</span>
+                  </>
+                ) : (
+                  <>
+                    {" "}
+                    <span className="friend">#</span> 친구를 원해요 (친구매칭)
+                  </>
+                )}
               </text>
             </SelectionTitle>
             <MoveContainer>
@@ -289,7 +605,7 @@ function MatchingHomePage() {
             </CalenderContainer>
           </BottomContents>
         </BottomContainer>
-        <EventContainer>{Description(1)}</EventContainer>
+        <EventContainer>{Description(SeasonStep)}</EventContainer>
       </MobileContainer>
     </>
   );
@@ -379,7 +695,7 @@ const BottomContainer = styled.div`
 const HistoryButton = styled.div`
   display: flex;
   width: 66.66%;
-  height: 100%;
+  height: 80%;
   justify-content: center;
   align-items: center;
   gap: 10px;
@@ -428,11 +744,12 @@ const ProfileContainer = styled.div`
 
 const EventContainer = styled.div`
   width: 100%;
-  height: 11.71%;
+  height: 12.3%;
   position: absolute;
-  top: 87.57%;
+  top: 88%;
   border-radius: 20px 20px 0px 0px;
   box-shadow: 0px -4px 23px -3px rgba(0, 0, 0, 0.15);
+  bottom: 0px;
 `;
 
 const EventText = styled.div`

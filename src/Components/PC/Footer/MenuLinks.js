@@ -40,7 +40,7 @@ function MenuLinks() {
         </text>
         <text
           onClick={() => {
-            // https://www.notion.so/URL-802ee347ca324ff48616617bd4931627?pvs=4
+            dispatch(StateSlice.actions.URL("https://dzz-guide.stibee.com"));
             dispatch(StateSlice.actions.isFrame(true));
             dispatch(StateSlice.actions.isStatic(false));
             dispatch(StateSlice.actions.isDzz(false));
@@ -100,6 +100,14 @@ function MenuLinks() {
           }}
         >
           개인정보 처리방침
+        </a>
+        <a
+          href="#"
+          onClick={() => {
+            navigate("/Marketing");
+          }}
+        >
+          마케팅 이용약관
         </a>
       </Link>
     </MobileWrapper>

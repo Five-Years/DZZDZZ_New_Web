@@ -39,7 +39,7 @@ const FooterContainer = styled.div`
 
   @media screen and (max-width: 800px) {
     min-height: 0px;
-    height: 52%;
+    height: 50%;
     position: relative;
     min-height: 300px;
   }

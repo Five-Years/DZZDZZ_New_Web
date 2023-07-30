@@ -6,30 +6,44 @@ import Background3 from "assets/dzz_img3.png";
 import Background4 from "assets/dzz_img4.png";
 import Footer from "../Footer/Footer";
 
-
 function Dzz() {
   return (
     <IntroduceContainer>
-      <ImageContainer><img src={Background1} /></ImageContainer>
-      <ImageContainer><img src={Background2} /></ImageContainer>
-      <ImageContainer><img src={Background3} /></ImageContainer>
-      <ImageContainer><img src={Background4} /></ImageContainer>
-        <Footer />
+      <ImageContainer>
+        <img src={Background1} />
+      </ImageContainer>
+      <ImageContainer>
+        <img src={Background2} />
+      </ImageContainer>
+
+      <ImageContainer>
+        <img src={Background3} />
+      </ImageContainer>
+      <ImageContainer>
+        <img src={Background4} />
+      </ImageContainer>
+      <Footer />
     </IntroduceContainer>
   );
 }
 
 export default Dzz;
 const ImageContainer = styled.div`
-display: flex;
-position: relative;
-width : 100%;
-height : 100%;
-background-color: green;
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100%;
 
-> img {
-  width : 100%;
-}
+  > img {
+    width: 100%;
+  }
+
+  @media screen and (max-width: 800px) {
+    > img {
+      width: 100%;
+      height: 300px;
+    }
+  }
 `;
 
 const IntroduceContainer = styled.div`
@@ -40,6 +54,10 @@ const IntroduceContainer = styled.div`
   height: 100%;
   background: #231815;
   overflow-y: scroll;
+
+  @media screen and (max-width: 800px) {
+    position: absolute;
+  }
 `;
 
 const BackgroundContainer = styled.div`

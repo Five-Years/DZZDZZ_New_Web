@@ -26,7 +26,18 @@ function HeaderRight() {
   const isFAQ = useSelector((state) => {
     return state.Popup.isFAQ;
   });
+  // stepseason 0 && 접수 안함 => 아직 신청하지 않으셨네요
+  // stepseason 0 && 접수 함 => 신청되었습니다 ~~에 매칭이 시작돼요
+  // stepseason 1 && 접수 안함 => 아직 신청하지 않으셨네요. ~~에 매칭 접수가 시작될 예정이에요
+  // stepseason 1 && 접수함, 매칭 선택 전 => 매칭시작! ~~까지 상대방을 확인 할 수 있어요
+  // stepseason 1 && 접수함, 매칭 선택 후 => 매칭시작! ~~분 뒤에 결과확인 가능
+  // stepseason 2 => 지금은 준비중! ~~에 접수받을거에요
 
+  /* > img {
+      width: 120px;
+      height: 63.04px;
+      visibility: visible;
+    } */
   return (
     <ContentContainer>
       {isStatic ? (
@@ -65,16 +76,6 @@ const ContentContainer = styled.div`
 
   > img {
     visibility: hidden;
-  }
-
-  @media screen and (max-width: 800px) {
-    position: absolute;
-
-    /* > img {
-      width: 120px;
-      height: 63.04px;
-      visibility: visible;
-    } */
   }
 `;
 

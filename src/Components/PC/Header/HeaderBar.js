@@ -89,10 +89,15 @@ function HeaderBar() {
             </text>
             <text
               onClick={() => {
-                dispatch(StateSlice.actions.isFrame(false));
+                dispatch(
+                  StateSlice.actions.URL(
+                    "https://www.notion.so/DZZDZZ-e65ee160595b46c29333619d3fea7e2e?pvs=4"
+                  )
+                );
+                dispatch(StateSlice.actions.isFrame(true));
                 dispatch(StateSlice.actions.isStatic(false));
                 dispatch(StateSlice.actions.isDzz(false));
-                dispatch(StateSlice.actions.isFAQ(true));
+                dispatch(StateSlice.actions.isFAQ(false));
               }}
             >
               FAQ

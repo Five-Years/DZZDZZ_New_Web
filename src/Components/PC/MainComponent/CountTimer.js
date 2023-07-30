@@ -2,18 +2,24 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as Appstore } from "../../../assets/appstore.svg";
 import { ReactComponent as Androidstore } from "../../../assets/androidstore.svg";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import StateSlice from "features/State/StateSlice";
+import { useSelector } from "react-redux";
+
 function CountTimer() {
+  const dispatch = useDispatch();
   const [Day, setDay] = useState("00");
   const [Hour, setHour] = useState("00");
   const [Minute, setMinute] = useState("00");
   const [Second, setSecond] = useState("00");
+  const min = 1000 * 60; //1000ms => 1s , 1s*60 = 1m
+  const seasonlist = ["매칭 접수", "매칭 진행", "준비중"];
 
-  useEffect(() => {
+  const StartTimer = () => {
     setInterval(() => {
-      const Dday = new Date("2023-07-30T00:00:00+0900");
       const now = new Date();
-      const dis = Dday.getTime() - now.getTime(); // 잔여시간(ms단위)
-      const min = 1000 * 60; //1000ms => 1s , 1s*60 = 1m
+      const dis = SeasonTimer - now.getTime(); // 잔여시간(ms단위)
       setDay(String(Math.floor(dis / (min * 60 * 24))).padStart(2, "0"));
       setHour(
         String(Math.floor((dis % (min * 60 * 24)) / (min * 60))).padStart(
@@ -24,13 +30,90 @@ function CountTimer() {
       setMinute(String(Math.floor((dis % (min * 60)) / min)).padStart(2, "0"));
       setSecond(String(Math.floor((dis % min) / 1000)).padStart(2, "0"));
     }, 1000);
-  }, [Hour, Minute, Second]);
+  };
+
+  useEffect(() => {
+    if (SeasonTimer != 0) {
+      StartTimer();
+    }
+  }, []);
+
+  // @ 현재 시즌 상태를 가져오는 매소드, 날짜 객체를 이용
+  const getSeason = async () => {
+    // @ 시즌 정보 통신을 위한 날짜 객체
+    const today = new Date();
+    const todaytime = {
+      year: today.getFullYear(),
+      month: today.getMonth() + 1,
+      date: today.getDate(),
+      hours: today.getHours(),
+      minutes: today.getMinutes(),
+      seconds: today.getSeconds(),
+    };
+
+    const expire = new Date(
+      todaytime.year,
+      todaytime.month - 1,
+      todaytime.date,
+      23,
+      59
+    );
+
+    try {
+      const Response = await axios.get(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/matching/calendar?today=${`${todaytime.year}-${String(
+          todaytime.month
+        ).padStart(2, "0")}-${String(todaytime.date).padStart(2, "0")}`}`,
+
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
+      dispatch(StateSlice.actions.seasonTimer(expire));
+
+      if (Response.data.data === "Regiter") {
+        dispatch(StateSlice.actions.SeasonStep(0));
+      } else if (Response.data.data === "Matching") {
+        {
+          dispatch(StateSlice.actions.SeasonStep(1));
+        }
+      } else if (Response.data.data === "None") {
+        {
+          dispatch(StateSlice.actions.SeasonStep(2));
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const SeasonTimer = useSelector((state) => {
+    return state.Popup.seasonTimer;
+  });
+  const season = useSelector((state) => {
+    return state.Popup.seasonstep;
+  });
+  const SeasonStep = useSelector((state) => {
+    return state.Popup.seasonStep;
+  });
+  useEffect(() => {
+    if (SeasonTimer === 0) {
+      getSeason();
+    }
+  }, []);
+
   return (
     <CountTimerContainer>
       <TitleContainer>
         <Title>
-          <span>매칭진행중 </span>
-          <span className="text"> 마감까지</span>
+          <span>지금상태는 {seasonlist[SeasonStep]} </span>
+          <span className="text"> 종료까지</span>
         </Title>
         <Timer>
           {Day >= 1 ? (
@@ -249,34 +332,57 @@ const Description = styled.div`
 
 const Timer = styled.div`
   display: flex;
-  flex-direction: row;
+  position: relative;
+  width: 77.27%;
+  height: 80px;
   align-items: center;
   justify-content: center;
-  width: 79%;
-  height: 67.41%;
-
+  text-align: center;
   font-family: var(--font-Pretendard);
   font-style: normal;
-  font-weight: 800;
+  font-weight: 400;
   font-size: 80px;
   line-height: 80px;
   color: #ff477e;
-  text-align: start;
-  letter-spacing: 0.05em;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 
   > span {
     color: black;
   }
 
+  /* > text {
+    font-family: var(--font-Pretendard);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 80px;
+    color: #ff477e;
+    letter-spacing: 0.05em;
+
+    > span {
+      width: 20%;
+      color: black;
+    }
+  } */
+
   @media screen and (max-width: 800px) {
-    width: 330px;
+    width: 80%;
     height: 75px;
-    font-size: 50px;
-    line-height: 70px;
-    text-align: center;
-    border-radius: 10px;
-    font-size: 50px;
-    line-height: 70px;
+
+    > text {
+      font-size: 50px;
+      line-height: 70px;
+      text-align: center;
+      border-radius: 10px;
+      font-size: 50px;
+      line-height: 70px;
+
+      > span {
+        background-color: yellow;
+        color: black;
+      }
+    }
   }
 `;
 

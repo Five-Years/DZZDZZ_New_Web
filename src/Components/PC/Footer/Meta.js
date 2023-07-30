@@ -20,8 +20,10 @@ function Meta() {
             </text>
           </Information>
           <Information>
-            <text>고객센터 &nbsp;&nbsp;&nbsp; 0507-0177-1683 | </text>
-            <text>5iveyears.official@gmail.com</text>
+            <text>
+              고객센터 &nbsp;&nbsp;&nbsp; 0507-0177-1683 &nbsp;|&nbsp;
+            </text>
+            <text>5iveyears.official@gmail.com &nbsp;|&nbsp;</text>
             <text>dzzdzz.official@gmail.com</text>
           </Information>
         </ContentInformation>

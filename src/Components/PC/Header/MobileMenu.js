@@ -50,9 +50,9 @@ function MobileMenu() {
           <ContentContainer
             onClick={() => {
               // https://www.notion.so/URL-802ee347ca324ff48616617bd4931627?pvs=4
-              dispatch(StateSlice.actions.isFrame(true));
+              dispatch(StateSlice.actions.isFrame(false));
               dispatch(StateSlice.actions.isStatic(false));
-              dispatch(StateSlice.actions.isDzz(false));
+              dispatch(StateSlice.actions.isDzz(true));
               dispatch(StateSlice.actions.isFAQ(false));
               navigate("/pc");
             }}
@@ -70,6 +70,7 @@ function MobileMenu() {
               dispatch(StateSlice.actions.isStatic(false));
               dispatch(StateSlice.actions.isDzz(false));
               dispatch(StateSlice.actions.isFAQ(false));
+              navigate("/pc");
             }}
           >
             <text>공지사항</text>
@@ -82,6 +83,8 @@ function MobileMenu() {
               dispatch(StateSlice.actions.isStatic(true));
               dispatch(StateSlice.actions.isDzz(false));
               dispatch(StateSlice.actions.isFAQ(false));
+              alert("준비중입니다");
+              navigate("/pc");
             }}
           >
             <text>통계리포트</text>
@@ -106,6 +109,15 @@ function MobileMenu() {
             }}
           >
             <text>개인정보 처리방침</text>
+          </ContentContainer>
+        </Content>
+        <Content>
+          <ContentContainer
+            onClick={() => {
+              navigate("/Privacy");
+            }}
+          >
+            <text>마케팅 이용약관</text>
           </ContentContainer>
         </Content>
       </MenuMain>

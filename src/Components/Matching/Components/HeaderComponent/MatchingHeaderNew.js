@@ -2,30 +2,35 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { ReactComponent as Tickets } from "../../../../assets/ticket.svg";
-import { ReactComponent as Mile } from "../../../../assets/mile.svg";
+// import { ReactComponent as Tickets } from "../../../../assets/ticket.svg";
+// import { ReactComponent as Mile } from "../../../../assets/mile.svg";
 
 function MatchingHeaderNew(props) {
   // 유저티켓 보유 갯수 확인, 추후 서버 연동 필요
   const location = useLocation();
   const color = props.theme;
 
-  const Ticket = useSelector((state) => {
-    return state.Popup.ticket;
-  });
+  // const Ticket = useSelector((state) => {
+  //   return state.Popup.ticket;
+  // });
+  // const Season = useSelector((state) => {
+  //   return state.Popup.season;
+  // });
+  // const SeasonNumber = useSelector((state) => {
+  //   return state.Popup.seasonNumber;
+  // });
 
   const Name = useSelector((state) => {
     return state.Popup.name;
   });
-  const Season = useSelector((state) => {
-    return state.Popup.season;
-  });
-  const SeasonNumber = useSelector((state) => {
-    return state.Popup.seasonNumber;
+  // 실제 서비스시엔 userData로 통일하는게 나을거 같기도..?
+
+  const SeasonStep = useSelector((state) => {
+    return state.Popup.seasonStep;
   });
 
   const dispatch = useDispatch();
-  const seasonlist = ["매칭", "정리중"];
+  const seasonlist = ["매칭 접수", "매칭 진행", "준비중"];
   const navigate = useNavigate();
   return (
     <>
@@ -36,19 +41,17 @@ function MatchingHeaderNew(props) {
             <text>안녕하세요!</text>
           </HeaderName>
           <HeaderSeason isFirst={props.isFirst} color={props.theme}>
-            {Season ? (
-              <>
-                {" "}
-                <text>
-                  지금은  <span className="season">{"매칭 접수"}</span>{"  "}
-                  기간입니다.
-                </text>
-              </>
-            ) : (
+            <>
+              {" "}
               <text>
-                지금은 <span className="ready">준비중</span> 입니다!
+                지금은{" "}
+                <span seasonstep={SeasonStep} className="season">
+                  {seasonlist[SeasonStep]}
+                </span>
+                {"  "}
+                기간입니다.
               </text>
-            )}
+            </>
           </HeaderSeason>
         </HeaderTop>
       </HeaderContainer>
@@ -141,10 +144,12 @@ const HeaderSeason = styled.div`
   }
 
   > text > span {
+    /*  */
     color: ${(props) => (props.isFirst ? "#000000" : "#FFFFFF")};
     font-weight: 600;
     font-size: 14px;
-    background: ${(props) => props.isFirst ? "#FFF100" : (props.color === 0 ? "#FF477E" : "#0094FF")};
+    background: ${(props) =>
+      props.isFirst ? "#FFF100" : props.color === 0 ? "#FF477E" : "#0094FF"};
 
     &.ready {
       color: black;

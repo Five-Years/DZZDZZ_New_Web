@@ -33,7 +33,7 @@ import Coupon from "Components/Matching/Components/MainComponent/CouponComponent
 import HistoryPage from "Components/Matching/Components/MainComponent/HistoryComponent/HistoryPage";
 import MatchHistory from "Components/Matching/Components/MainComponent/HistoryComponent/MatchHistory";
 import HistoryMatchingProfile from "Components/Matching/Components/MainComponent/HistoryComponent/HistoryMatchingProfile";
-
+import Marketing from "Components/PC/Policy/Marketing";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -58,8 +58,10 @@ root.render(
           <Route path="/coupon" element={<Coupon />}></Route>
           <Route path="/history" element={<HistoryPage />}></Route>
           <Route path="/matchhistory" element={<MatchHistory />}></Route>
-          <Route path="/historymatchingprofile" element={<HistoryMatchingProfile />}></Route>
-
+          <Route
+            path="/historymatchingprofile"
+            element={<HistoryMatchingProfile />}
+          ></Route>
 
           <Route path="/" element={<PCHome />}></Route>
           <Route path="/pc" element={<App />}></Route>
@@ -67,6 +69,7 @@ root.render(
           <Route path="DzzIntroduce" element={<DzzDzzIntrodue />}></Route>
           <Route path="Terms" element={<Terms />}></Route>
           <Route path="Privacy" element={<Privacy />}></Route>
+          <Route path="marketing" element={<Marketing />}></Route>
         </Routes>
       </BrowserRouter>
     </Provider>

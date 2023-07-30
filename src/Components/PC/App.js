@@ -9,6 +9,7 @@ import HeaderMain2 from "./Header/HeaderMain2";
 import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+
 function App() {
   const URL = useSelector((state) => {
     return state.Popup.URL;
@@ -107,6 +108,7 @@ const HeaderContainer = styled.div`
 
   @media screen and (max-width: 800px) {
     display: flex;
+    position: relative;
     width: 100%;
     height: 8%;
   }

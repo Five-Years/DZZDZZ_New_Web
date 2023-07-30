@@ -56,6 +56,16 @@ function Links() {
           개인정보 처리방침
         </a>
       </Link>
+      <Link className="Mobile">
+        <a
+          href="#"
+          onClick={() => {
+            navigate("/Marketing");
+          }}
+        >
+          마케팅 이용약관
+        </a>
+      </Link>
     </MobileWrapper>
   );
 }

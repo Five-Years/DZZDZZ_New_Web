@@ -20,6 +20,9 @@ function MatchingPage() {
   const Season = useSelector((state) => {
     return state.Popup.season;
   });
+  const SeasonStep = useSelector((state) => {
+    return state.Popup.seasonstep;
+  });
 
   useEffect(() => {
     window.ReactNativeWebView?.postMessage(
@@ -27,12 +30,10 @@ function MatchingPage() {
     );
   }, []);
 
-  // application 왔으면 GotoMatching()
-
-  const datalist = ["date","friend"]
-  const GotoMatching = ()=>{
+  const datalist = ["date", "friend"];
+  const GotoMatching = () => {
     navigate("/MatchingProgress", { state: { theme: Theme } });
-  }
+  };
 
   useEffect(() => {
     //android
@@ -40,29 +41,88 @@ function MatchingPage() {
     //ios
     window.addEventListener("message", (e) => listener(e.data));
   }, []);
-  
-    const listener = (event) => {
-      const { data, type } = JSON.parse(event);
-      switch (type) {
-        case "back":
-          if (this.props.navigation.isFirstRouteInParent()) {
-            navigate("/Matching");
-          } else {
-            navigate(-1);
-          }
-          break;
-        case "application": {
-          GotoMatching();
+
+  const listener = (event) => {
+    const { data, type } = JSON.parse(event);
+    switch (type) {
+      case "back":
+        if (this.props.navigation.isFirstRouteInParent()) {
+          navigate("/Matching");
+        } else {
+          navigate(-1);
         }
+        break;
+      case "application": {
+        GotoMatching();
       }
-    };
-      
-    
+    }
+  };
 
- 
-    console.log(datalist[Theme])
+  const MatchingAvailable = () => {
+    // 매칭이 가능한지 판별해줘서 알맞는 버튼을 리턴해주는 함수
+    // @접수중, 접수가능일때는 신청하기 버튼을
+    if (SeasonStep === 0 && true) {
+      //신청하기
+      <EachButton
+        className="activate"
+        onClick={() => {
+          window.ReactNativeWebView?.postMessage(
+            JSON.stringify({
+              type: "application",
+              data: datalist[Theme],
+            })
+          );
+          GotoMatching();
 
+          // window.ReactNativeWebView?.postMessage(
+          //   JSON.stringify({ type: "lackinfo", data: {photoauthen : bool, studentauthen : bool})
+          // );
+        }}
+        matching={Theme}
+      >
+        <text className="enter">신청하기</text>
+      </EachButton>;
+    }
 
+    // @매칭중, 매칭상대가 존재하는 경우에는 확인하기 버튼을
+    else if (SeasonStep === 1 && true) {
+      //매칭시작하기 버튼
+      <EachButton
+        className="activate"
+        onClick={() => {
+          window.ReactNativeWebView?.postMessage(
+            JSON.stringify({
+              type: "application",
+              data: datalist[Theme],
+            })
+          );
+          GotoMatching();
+
+          // window.ReactNativeWebView?.postMessage(
+          //   JSON.stringify({ type: "lackinfo", data: {photoauthen : bool, studentauthen : bool})
+          // );
+        }}
+        matching={Theme}
+      >
+        <text className="enter">확인하기</text>
+      </EachButton>;
+    } else {
+      //신청할수없음 버튼
+      return (
+        <EachButton className="deactivate" matching={Theme}>
+          <text className="enter">지금은 신청할 수 없어요.</text>
+        </EachButton>
+      );
+    }
+  };
+
+  console.log(datalist[Theme]);
+
+  //@ 매칭 페이지
+  //stepseason이 0이면 신청 하기 버튼 활성화 및 신청 가능, 신청한 사람은 중복 신청 불가토록 비활성화
+  //stepseason1 && 미신청 => 지금은 신청 할 수 없어요, 버튼 비활성화
+  //stepseason1 && 신청 => 매칭상대 확인하기 => 버튼 호라성화
+  //stepseason2 => 지금은 신청 할 수 없어요, 버튼 비활성화
   return (
     <>
       <MobileContainer>
@@ -85,11 +145,11 @@ function MatchingPage() {
                 <CardTag theme={Theme}>
                   {Theme === 0 ? (
                     <text>
-                      <span>#</span>소개팅을 원해요 
+                      <span>#</span>소개팅을 원해요
                     </text>
                   ) : (
                     <text>
-                      <span>#</span>친구를 원해요 
+                      <span>#</span>친구를 원해요
                     </text>
                   )}
                 </CardTag>
@@ -136,36 +196,42 @@ function MatchingPage() {
           </MatchingCardContainer>
         </MatchingContainer>
         <ButtonContainer>
-          <EachButtonContainer> 
+          <EachButtonContainer>
             {/* 
             버튼 눌렀을때 정보 충분하지 서버와 통신 확인, 부족하다면 부족한 정보를 웹뷰 통신으로 팝업창 띄우기 요청하기,  
               충분하다면 티켓수량이 충분한지 확인후 웹뷰통신으로 어떤매칭인지 정보와 확인요청 팝업 요청하기, 데이터가 true가 오면 서버에 매칭 신청
             */}
 
             {/*
-            Case1 
-            신청기간인 경우 => 신청하기 버튼
+            seasonstep == 0, 미접수 상태 
+            => 신청하기 버튼
 
-            Case2
-            신청기간이 아닌경우 => 지금은 신청기간이 아니에요 버튼 (deactivate)
+            seasonstep == 1, 접수안한 상태
+            => 지금은 신청할 수 없어요
 
-            Case1-1 
-              매칭기간인 경우 => 지금은 매칭중 버튼
-            Case1-2
-              매칭당일인 경우 => 매칭상대 확인하기 버튼 => 매칭2로 이동 (선택, 거절 분기점 발생)
+            seasonstep ==1, 접수한 상태
+            => 매칭상대 확인하기
 
-            선택시 => 선택까지 남은시간 표시 (상대방까지 확정시 바로 결과 노출)
-            거절시 => 거절사유 팝업 요청, 프로필정보 거절상태로 변경, 이전매칭 권유뷰 노출
+            seasonstep ==2, 지금은 신청할 수 없어요
+
+            seasonstep == 0, 접수한 상태
+            => 지금은 신청할 수 없어요
+
+            seasonstep == 0, 접수불가능 상태??? 
+            => 지금은 신청할 수 없어요
 
             */}
 
-
-            {Season ? (
+            {/* 접수중 기간인지,  신청가능한지 여부를 확인 */}
+            {SeasonStep === 0 && true ? (
               <EachButton
                 className="activate"
                 onClick={() => {
                   window.ReactNativeWebView?.postMessage(
-                    JSON.stringify({ type: "application", data: datalist[Theme] })
+                    JSON.stringify({
+                      type: "application",
+                      data: datalist[Theme],
+                    })
                   );
                   GotoMatching();
 
@@ -178,8 +244,8 @@ function MatchingPage() {
                 <text className="enter">신청하기</text>
               </EachButton>
             ) : (
-              <EachButton className="deactivate" theme={Theme}>
-                <text className="enter">지금은 신청 기간이 아니에요</text>
+              <EachButton className="deactivate" matching={Theme}>
+                <text className="enter">지금은 신청할 수 없어요.</text>
               </EachButton>
             )}
 
@@ -474,7 +540,7 @@ const EachButton = styled.div`
   }
 
   &.deactivate {
-    background: ${(props) => (props.matching === 0 ? "#A6DAFF" : "#FEC7D7")};
+    background: ${(props) => (props.matching === 0 ? "#FEC7D7" : "#A6DAFF")};
   }
   > text {
     font-family: var(--font-Pretendard);
