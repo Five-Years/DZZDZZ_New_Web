@@ -26,6 +26,23 @@ function Matching2() {
     //ios
     window.addEventListener("message", (e) => listener(e.data));
   }, []);
+  const userData = {
+    matchedUserNickname: "단짠지기",
+    images: "",
+    school: "단국대학교(죽전)",
+    gender: "Female",
+    studentId: "14",
+    college: "공과대학",
+    introduce: "안녕하세요",
+    personalities: ["진지한", "진취적인", "예의바른", "솔직한", "상냥한"],
+    interests: ["향수", "애니메이션", "인테리어", "맛집", "홈카페"],
+    region: "",
+    militaryServiceStatus: null,
+    mbti: "INTJ",
+    religion: "",
+    drink: "한달에 한번",
+    smoke: "비 흡연자",
+  };
 
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
@@ -121,7 +138,7 @@ function Matching2() {
       <ProfileNameContainer>
         <ProfileName>
           <img src={require("assets/CircleWavyCheck.png")} alt="이미지" />
-          <text>단짠지기임당</text>
+          <text>{userData.matchedUserNickname}임당</text>
         </ProfileName>
       </ProfileNameContainer>
       <SelectionContainer>
@@ -190,7 +207,7 @@ function Matching2() {
               <text>학교</text>
             </ContentsTitle>
             <ContentsWindow className="fixed">
-              <text>단국대학교(죽전)</text>
+              <text>{userData.school}</text>
               {/* {MatcherInfo.school} */}
             </ContentsWindow>
           </Contents>
@@ -201,7 +218,7 @@ function Matching2() {
               <text>성별</text>
             </ContentsTitle>
             <ContentsWindow className="fixed">
-              <text>여자</text>
+              <text>{userData.gender}</text>
               {/* {MatcherInfo.sex} */}
             </ContentsWindow>
           </Contents>
@@ -212,7 +229,7 @@ function Matching2() {
               <text>학번</text>
             </ContentsTitle>
             <ContentsWindow className="fixed">
-              <text>14학번</text>
+              <text>{userData.studentId}학번</text>
               {/* {MatcherInfo.gradenumber} */}
             </ContentsWindow>
           </Contents>
@@ -224,7 +241,7 @@ function Matching2() {
               <span>변경이 필요한 경우 고객센터를 통해 요청해주세요</span>
             </ContentsTitle>
             <ContentsWindow className="fixed">
-              <text>공과대학</text>
+              <text>{userData.college}</text>
               {/* {MatcherInfo.major} */}
             </ContentsWindow>
           </Contents>
@@ -235,21 +252,27 @@ function Matching2() {
               <text>자기소개</text>
             </ContentsTitle>
             <ContentsWindow>
-              <text>안녕하세요.</text>
+              <text>{userData.introduce}</text>
               {/* {MatcherInfo.introduce} */}
             </ContentsWindow>
           </Contents>
         </ContentsSection>
-        <ContentsSection>
-          <Contents>
-            <ContentsTitle>
-              <text>내 성격</text>
-            </ContentsTitle>
-            <ContentsWindow className="tag">
-              <TagContainer>
-                {/* {MatcherInfo.personality, => foreach} */}
-
-                <text>
+        {userData.personalities && (
+          <ContentsSection>
+            <Contents>
+              <ContentsTitle>
+                <text>내 성격</text>
+              </ContentsTitle>
+              <ContentsWindow className="tag">
+                <TagContainer>
+                  {/* {MatcherInfo.personality, => foreach} */}
+                  {userData.personalities.map((item) => (
+                    <text>
+                      <span>#</span>
+                      {item}
+                    </text>
+                  ))}
+                  {/* <text>
                   <span>#</span>진지한
                 </text>
                 <text>
@@ -263,25 +286,12 @@ function Matching2() {
                 </text>
                 <text>
                   <span>#</span>상냥한
-                </text>
-              </TagContainer>
-              <TagContainer>
-                <text>
-                  <span>#</span>진지한
-                </text>
-                <text>
-                  <span>#</span>예의바른
-                </text>
-                <text>
-                  <span>#</span>솔직한
-                </text>
-                <text>
-                  <span>#</span>상냥한
-                </text>
-              </TagContainer>
-            </ContentsWindow>
-          </Contents>
-        </ContentsSection>
+                </text> */}
+                </TagContainer>
+              </ContentsWindow>
+            </Contents>
+          </ContentsSection>
+        )}
         <ContentsSection>
           <Contents>
             <ContentsTitle>
@@ -290,8 +300,13 @@ function Matching2() {
             <ContentsWindow className="tag">
               <TagContainer>
                 {/* {MatcherInfo.interest} =>foreach */}
-
-                <text>
+                {userData.interests.map((item) => (
+                  <text>
+                    <span>#</span>
+                    {item}
+                  </text>
+                ))}
+                {/* <text>
                   <span>#</span>향수
                 </text>
                 <text>
@@ -305,7 +320,7 @@ function Matching2() {
                 </text>
                 <text>
                   <span>#</span>홈카페
-                </text>
+                </text> */}
               </TagContainer>
             </ContentsWindow>
           </Contents>
@@ -316,7 +331,7 @@ function Matching2() {
               <text>지역</text>
             </ContentsTitle>
             <ContentsWindow>
-              <text>서울</text>
+              <text>{userData.region}</text>
               {/* {MatcherInfo.area} */}
             </ContentsWindow>
           </Contents>
@@ -327,7 +342,7 @@ function Matching2() {
               <text>병역 여부</text>
             </ContentsTitle>
             <ContentsWindow>
-              <text>해당없음</text>
+              <text>{userData.militaryServiceStatus}</text>
               {/* {MatcherInfo.military} */}
             </ContentsWindow>
           </Contents>
@@ -338,7 +353,7 @@ function Matching2() {
               <text>MBTI</text>
             </ContentsTitle>
             <ContentsWindow>
-              <text>INTJ</text>
+              <text>{userData.mbti}</text>
               {/* {MatcherInfo.mbti} */}
             </ContentsWindow>
           </Contents>
@@ -349,7 +364,7 @@ function Matching2() {
               <text>종교</text>
             </ContentsTitle>
             <ContentsWindow>
-              <text>무 교</text>
+              <text>{userData.religion}</text>
               {/* {MatcherInfo.religion} */}
             </ContentsWindow>
           </Contents>
@@ -360,7 +375,7 @@ function Matching2() {
               <text>음주</text>
             </ContentsTitle>
             <ContentsWindow>
-              <text>한 달에 1회 미만</text>
+              <text>{userData.drink}</text>
               {/* {MatcherInfo.alcohol} */}
             </ContentsWindow>
           </Contents>
@@ -371,7 +386,7 @@ function Matching2() {
               <text>흡연</text>
             </ContentsTitle>
             <ContentsWindow>
-              <text>비 흡연자</text>
+              <text>{userData.smoke}</text>
               {/* {MatcherInfo.smoke} */}
             </ContentsWindow>
           </Contents>
@@ -949,22 +964,26 @@ const ContentsWindow = styled.div`
 
 const TagContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   padding: 0px;
   gap: 10px;
   margin-left: 14px;
 
-  width: 100%;
-  height: 22px;
+  width: 96%;
+  /* white-space: normal; */
 
   > text {
-    overflow: hidden;
     font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 150%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+
     /* identical to box height, or 21px */
 
     letter-spacing: 0.5px;
@@ -1018,9 +1037,10 @@ const ContentsContainer = styled.div`
   align-items: flex-start;
   padding: 0px;
   width: 100%;
-  height: 1550px;
+  /* height: 1550px; */
   left: 0px;
   top: 0%;
+  /* background-color: blue; */
 `;
 
 const ContentsSection = styled.div`
@@ -1029,6 +1049,7 @@ const ContentsSection = styled.div`
   align-items: center;
   justify-content: center;
   gap: 7px;
+  /* background-color: red; */
 
   width: 100%;
   height: 100px;

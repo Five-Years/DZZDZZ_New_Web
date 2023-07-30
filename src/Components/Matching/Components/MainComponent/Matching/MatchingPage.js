@@ -201,7 +201,6 @@ function MatchingPage() {
             버튼 눌렀을때 정보 충분하지 서버와 통신 확인, 부족하다면 부족한 정보를 웹뷰 통신으로 팝업창 띄우기 요청하기,  
               충분하다면 티켓수량이 충분한지 확인후 웹뷰통신으로 어떤매칭인지 정보와 확인요청 팝업 요청하기, 데이터가 true가 오면 서버에 매칭 신청
             */}
-
             {/*
             seasonstep == 0, 미접수 상태 
             => 신청하기 버튼
@@ -221,9 +220,9 @@ function MatchingPage() {
             => 지금은 신청할 수 없어요
 
             */}
-
             {/* 접수중 기간인지,  신청가능한지 여부를 확인 */}
-            {SeasonStep === 0 && true ? (
+            {/* SeasonStep === 0 && */}
+            {true ? (
               <EachButton
                 className="activate"
                 onClick={() => {
@@ -248,7 +247,6 @@ function MatchingPage() {
                 <text className="enter">지금은 신청할 수 없어요.</text>
               </EachButton>
             )}
-
             {/* 
               <EachButton
                 className="activate"

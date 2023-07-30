@@ -67,6 +67,7 @@ const MetaContainer = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+
   @media screen and (max-width: 800px) {
     display: flex;
     position: relative;
@@ -79,6 +80,8 @@ const MetaContainer = styled.div`
 const CorporateContainer = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 80%;
 
@@ -122,7 +125,7 @@ const ContentInformation = styled.div`
   padding: 0px;
 
   width: 80%;
-  height: 80%;
+  height: 60%;
 
   @media screen and (max-width: 800px) {
     width: 100%;
@@ -166,7 +169,7 @@ const Information = styled.div`
   padding: 0px;
 
   width: 100%;
-  height: 30%;
+  height: 20%;
 
   > text {
     font-family: var(--font-Pretendard);

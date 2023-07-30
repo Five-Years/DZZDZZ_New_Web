@@ -3,6 +3,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as DzzDate } from "assets/dzzdzz_datelogo.svg";
+// 로티이미지 삽입하기
+import Lottie from "lottie-react";
+import Logo from "assets/matching_logo2.json";
+import search from "assets/search.json";
 
 var Spinner = require("react-spinkit");
 
@@ -26,12 +30,20 @@ function MatchingProgress() {
       <CardContainer>
         <CardContents theme={state.theme}>
           {state.theme === 1 ? (
-            <img
-              src={require("assets/dzzdzz_logo.png")}
-              alt="이미지"
-            />
+            <LottieContainer>
+              {" "}
+              <Lottie animationData={Logo} />
+            </LottieContainer>
           ) : (
-            <DzzDate />
+            //   <img
+            //   src={require("assets/dzzdzz_logo.png")}
+            //   alt="이미지"
+            // />
+            <LottieContainer>
+              {" "}
+              <Lottie animationData={Logo} />
+            </LottieContainer>
+            // <DzzDate />
           )}
           <text>
             지금부터<br></br>
@@ -122,11 +134,11 @@ const CardContents = styled.div`
   > text > span {
     color: ${(props) => (props.theme === 1 ? "#0094FF" : "#FF477E")};
   }
+`;
 
-  > img {
-    width: 50px;
-    height: 50px;
-  }
+const LottieContainer = styled.div`
+  width: 65px;
+  height: 65px;
 `;
 
 const MatchingConfirmContainer = styled.div`
@@ -153,7 +165,6 @@ const MatchingConfirmContainer = styled.div`
     color: ${(props) => (props.theme === 1 ? "#0094FF" : "#FF477E")};
   }
 `;
-
 
 const ConfirmButton = styled.div`
   display: flex;

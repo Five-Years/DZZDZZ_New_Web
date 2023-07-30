@@ -41,6 +41,15 @@ function CountTimer() {
   // @ 현재 시즌 상태를 가져오는 매소드, 날짜 객체를 이용
   const getSeason = async () => {
     // @ 시즌 정보 통신을 위한 날짜 객체
+    const today = new Date();
+    const todaytime = {
+      year: today.getFullYear(),
+      month: today.getMonth() + 1,
+      date: today.getDate(),
+      hours: today.getHours(),
+      minutes: today.getMinutes(),
+      seconds: today.getSeconds(),
+    };
 
     try {
       const Response = await axios.get(
@@ -62,7 +71,7 @@ function CountTimer() {
         StateSlice.actions.seasonTimer(new Date(Response.data.data.endsAt))
       );
 
-      if (Response.data.data.status === "Regiter") {
+      if (Response.data.data.status === "Register") {
         dispatch(StateSlice.actions.SeasonStep(0));
       } else if (Response.data.data.status === "Matching") {
         {

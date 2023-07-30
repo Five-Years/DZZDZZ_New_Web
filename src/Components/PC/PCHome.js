@@ -52,14 +52,6 @@ function PCHome() {
       seconds: today.getSeconds(),
     };
 
-    const expire = new Date(
-      todaytime.year,
-      todaytime.month - 1,
-      todaytime.date,
-      23,
-      59
-    );
-
     try {
       const Response = await axios.get(
         `${
@@ -76,14 +68,15 @@ function PCHome() {
           },
         }
       );
+      dispatch(
+        StateSlice.actions.seasonTimer(new Date(Response.data.data.endsAt))
+      );
 
-      dispatch(StateSlice.actions.seasonTimer(expire));
-
-      if (Response.data.data === "Regiter") {
+      if (Response.data.data.status === "Register") {
         dispatch(StateSlice.actions.SeasonStep(0));
-      } else if (Response.data.data === "Matching") {
+      } else if (Response.data.data.status === "Matching") {
         dispatch(StateSlice.actions.SeasonStep(1));
-      } else if (Response.data.data === "None") {
+      } else if (Response.data.data.status === "None") {
         dispatch(StateSlice.actions.SeasonStep(2));
       }
     } catch (error) {
@@ -113,23 +106,31 @@ function PCHome() {
       <ContentContainer>
         <Logo />
         <Timer>
-          {Day >= 1 ? (
+          {/* {Day >= 1 ? (
             <>
-              [<span>{Day}</span>:<span>{Hour}</span>:<span>{Minute}</span>]
+              <text>
+                [<span>{Day}</span>:<span>{Hour}</span>:<span>{Minute}</span>]
+              </text>
             </>
           ) : (
             <>
-              [<span>{Hour}</span>:<span>{Minute}</span>:<span>{Second}</span>]
+              <text>
+                [<span>{Hour}</span>:<span>{Minute}</span>:<span>{Second}</span>
+                ]
+              </text>
             </>
-          )}
+          )} */}
+          <text>
+            [<span>??</span>:<span>??</span>:<span>??</span>]
+          </text>
         </Timer>
-        <ButtonContainer
+        {/* <ButtonContainer
           onClick={() => {
             navigate("/pc");
           }}
         >
           <text>홈페이지로 이동</text>
-        </ButtonContainer>
+        </ButtonContainer> */}
       </ContentContainer>
     </BackgroundContainer>
   );
@@ -140,6 +141,10 @@ function PCHome() {
 export default PCHome;
 
 const BackgroundContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: 100vw;
   height: 100vh;
   background: #231815;
@@ -156,33 +161,60 @@ const BackgroundContainer = styled.div`
 const Timer = styled.div`
   display: flex;
   position: relative;
-  width: 400px;
-  height: 100px;
-  font-family: var(--font-Pretendard);
-  font-style: normal;
-  font-weight: 500;
-  font-size: 80px;
-  line-height: 80px;
-  color: #ff477e;
+  width: 100%;
+  height: 90px;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  bottom: 35px;
 
-  > span {
+  > text {
     display: flex;
-    color: white;
+    width: 80%;
+    height: 90px;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    font-family: var(--font-Pretendard);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 80px;
+    line-height: 80px;
+    color: #ff477e;
+    /* text-align: center; */
+
+    > span {
+      width: 25%;
+      text-align: center;
+      overflow: hidden;
+      color: white;
+    }
   }
 
   @media screen and (max-width: 800px) {
+    display: flex;
     position: relative;
-    width: 70vw;
-    height: 75px;
-    font-size: 50px;
-    line-height: 70px;
-    text-align: center;
-    border-radius: 10px;
-    font-size: 50px;
-    line-height: 70px;
+    width: 100%;
+    height: 90px;
+
+    > text {
+      font-family: var(--font-Pretendard);
+      font-style: normal;
+      font-weight: 400;
+      font-size: 60px;
+      line-height: 80px;
+      color: #ff477e;
+      /* text-align: center; */
+    }
+
+    align-items: center;
+    justify-content: center;
+
+    > span {
+      width: 15%;
+      text-align: center;
+      overflow: hidden;
+      color: white;
+    }
   }
 `;
 
@@ -202,17 +234,15 @@ const ContentContainer = styled.div`
 
   @media screen and (max-width: 800px) {
     display: flex;
+    position: relative;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 0px;
-    gap: 48px;
 
-    position: absolute;
-    top: 15%;
-    left: 20%;
+    top: 0%;
+    left: 0%;
     right: 31.67%;
-    width: 60%;
+    width: 100%;
     height: 40%;
   }
 `;

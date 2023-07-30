@@ -77,13 +77,14 @@ function Links() {
 export default Links;
 
 const MobileWrapper = styled.div`
-  width: 30%;
-  height: 100%;
   display: flex;
+  width: 50%;
+  height: 100%;
   justify-content: end;
 
   @media screen and (max-width: 800px) {
     display: none;
+    width: 30%;
     flex-direction: column;
     align-items: flex-start;
     padding: 0px;
@@ -94,12 +95,16 @@ const MobileWrapper = styled.div`
 `;
 
 const Link = styled.div`
+  display: flex;
+  width: 100%;
+
+  /* align-items: center; */
   box-sizing: border-box;
 
   /* Auto layout */
 
-  display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   color: white;
   gap: 24px;
   text-underline-offset: 3px;

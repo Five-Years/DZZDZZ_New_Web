@@ -22,8 +22,8 @@ function MatchingHomePage() {
   // const [userData, setUserData] = useState();
 
   //@ 커플매칭, 친구매칭 신청여부, true => 신청가능(미신청), false => 신청불가능(신청))
-  const [CoupleParticipate, setCoupleParticipate] = useState(false);
-  const [FriendParticipate, setFriendParticipate] = useState(false);
+  const [CoupleParticipate, setCoupleParticipate] = useState(true);
+  const [FriendParticipate, setFriendParticipate] = useState(true);
 
   const [Day, setDay] = useState("00");
   const [Hour, setHour] = useState("00");
@@ -171,13 +171,7 @@ function MatchingHomePage() {
       minutes: today.getMinutes(),
       seconds: today.getSeconds(),
     };
-    const expire = new Date(
-      todaytime.year,
-      todaytime.month - 1,
-      todaytime.date + 1,
-      0,
-      0
-    );
+
     try {
       const Response = await axios.get(
         `${
@@ -194,18 +188,19 @@ function MatchingHomePage() {
           },
         }
       );
-
-      dispatch(StateSlice.actions.seasonTimer(expire));
-
-      if (Response.data.data === "Regiter") {
+      dispatch(
+        StateSlice.actions.seasonTimer(new Date(Response.data.data.endsAt))
+      );
+      if (Response.data.data.status === "Register") {
         dispatch(StateSlice.actions.SeasonStep(0));
-      } else if (Response.data.data === "Matching") {
+      } else if (Response.data.data.status === "Matching") {
         {
           dispatch(StateSlice.actions.SeasonStep(1));
         }
-      } else if (Response.data.data === "None") {
+      } else if (Response.data.data.status === "None") {
         {
-          dispatch(StateSlice.actions.SeasonStep(2));
+          dispatch(StateSlice.actions.SeasonStep(0));
+          // 테스트 기간동안만 0, 추후 2로 바꾸기
         }
       }
     } catch (error) {
@@ -322,7 +317,12 @@ function MatchingHomePage() {
     //@ 접수중 상태일때
     if (props === 0) {
       //@ 매칭 접수를 안한 상태인 경우
-      if (CoupleParticipate && FriendParticipate) {
+
+      if (
+        matchParticipate !== null &&
+        (!matchParticipate.CoupleParticipate ||
+          !matchParticipate.FriendParticipate)
+      ) {
         return (
           <EventTextContainer>
             {" "}
@@ -358,7 +358,11 @@ function MatchingHomePage() {
     else if (props === 1) {
       // 접수를 안한 경우, 매칭성사가 안된 경우
       // 매칭성사 안된 경우 확인할수 있는 방법이 있나??
-      if ((CoupleParticipate && FriendParticipate) || true) {
+      if (
+        matchParticipate !== null &&
+        (!matchParticipate.CoupleParticipate ||
+          !matchParticipate.FriendParticipate)
+      ) {
         return (
           <EventTextContainer>
             {" "}

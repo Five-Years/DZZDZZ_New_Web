@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import StateSlice from "../../../../features/State/StateSlice";
 import { useDispatch } from "react-redux";
 import { ReactComponent as CareLeft } from "assets/CaretLeft.svg";
+import { ReactComponent as Reportbutton } from "assets/DotsThree.svg";
 
 function MatchingProgressHeader(props) {
   const navigate = useNavigate();
@@ -69,7 +70,16 @@ function MatchingProgressHeader(props) {
       <ContentRight>
         {props.isReport ? (
           <>
-            <MoreHorizIcon
+            <Reportbutton
+              onClick={() => {
+                window.ReactNativeWebView?.postMessage(
+                  JSON.stringify({ type: "report", data: "" })
+                );
+              }}
+              style={{ marginRight: "15.4%" }}
+            />
+
+            {/* <MoreHorizIcon
               onClick={() => {
                 window.ReactNativeWebView?.postMessage(
                   JSON.stringify({ type: "report", data: "" })
@@ -77,7 +87,7 @@ function MatchingProgressHeader(props) {
                 alert("신고");
               }}
               style={{ width: "50%", height: "50%", marginRight: "15.4%" }}
-            />
+            /> */}
           </>
         ) : (
           <>
