@@ -19,7 +19,7 @@ import axios from "axios";
 function MatchingHomePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [userData, setUserData] = useState();
+  // const [userData, setUserData] = useState();
 
   //@ 커플매칭, 친구매칭 신청여부, true => 신청가능(미신청), false => 신청불가능(신청))
   const [CoupleParticipate, setCoupleParticipate] = useState(false);
@@ -245,10 +245,10 @@ function MatchingHomePage() {
   }, [SeasonTimer]);
 
   useEffect(() => {
-    if (userData) {
-      dispatch(StateSlice.actions.Name(userData.nickname));
+    if (UserData) {
+      dispatch(StateSlice.actions.Name(UserData.nickname));
     }
-  }, [userData]);
+  }, [UserData]);
 
   useEffect(() => {
     if (matchParticipate) {
@@ -264,8 +264,6 @@ function MatchingHomePage() {
       getMatchResult();
     }
   }, [SeasonStep]);
-
-  useEffect(() => {});
 
   useEffect(() => {
     if (matchParticipate === null) {
@@ -561,7 +559,7 @@ function MatchingHomePage() {
           </Selection>
         </SelectionContainer>
         <MatchingOptionContainer>
-          <MatchingOption>
+          {/* <MatchingOption>
             <input type="checkbox" disabled />
             <text>같은 학교끼리 만나기</text>
             <InfoContainer>
@@ -573,7 +571,7 @@ function MatchingHomePage() {
                 }}
               />
             </InfoContainer>
-          </MatchingOption>
+          </MatchingOption> */}
         </MatchingOptionContainer>
         <BottomContainer>
           <BottomContents>

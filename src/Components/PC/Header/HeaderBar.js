@@ -91,7 +91,7 @@ function HeaderBar() {
               onClick={() => {
                 dispatch(
                   StateSlice.actions.URL(
-                    "https://www.notion.so/DZZDZZ-e65ee160595b46c29333619d3fea7e2e?pvs=4"
+                    "https://dzzdzz.notion.site/DZZDZZ-e65ee160595b46c29333619d3fea7e2e?pvs=4"
                   )
                 );
                 dispatch(StateSlice.actions.isFrame(true));
