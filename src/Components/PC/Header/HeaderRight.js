@@ -15,10 +15,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Footer from "../Footer/Footer";
 
 function HeaderRight() {
-  const isStatic = useSelector((state) => {
-    return state.Popup.isStatic;
-  });
-
   const isDzz = useSelector((state) => {
     return state.Popup.isDzz;
   });
@@ -26,6 +22,11 @@ function HeaderRight() {
   const isFAQ = useSelector((state) => {
     return state.Popup.isFAQ;
   });
+
+  const isStatic = useSelector((state) => {
+    return state.Popup.isStatic;
+  });
+
   // stepseason 0 && 접수 안함 => 아직 신청하지 않으셨네요
   // stepseason 0 && 접수 함 => 신청되었습니다 ~~에 매칭이 시작돼요
   // stepseason 1 && 접수 안함 => 아직 신청하지 않으셨네요. ~~에 매칭 접수가 시작될 예정이에요
@@ -38,26 +39,47 @@ function HeaderRight() {
       height: 63.04px;
       visibility: visible;
     } */
+  const getView = () => {
+    if (isStatic) {
+      return <Statistic />;
+    } else if (isDzz) {
+      return <Dzz />;
+    } else if (isFAQ) {
+      return <FAQ />;
+    } else {
+      return <CountTimer />;
+    }
+  };
+
+  useEffect(() => {
+    getView();
+  }, [isStatic, isDzz, isFAQ]);
+
+  // {isStatic ? (
+  //   <>
+  //     <Statistic />
+  //     <Footer />
+  //   </>
+  // ) : isDzz ? (
+  //   <Dzz />
+  // ) : isFAQ ? (
+  //   <>
+  //     <FAQ />
+  //     <Footer />
+  //   </>
+  // ) : (
+  //   <>
+  //     <CountTimer />
+  //     <Footer />
+  //   </>
+  // )}
+
   return (
     <ContentContainer>
-      {isStatic ? (
-        <>
-          <Statistic />
-          <Footer />
-        </>
-      ) : isDzz ? (
-        <Dzz />
-      ) : isFAQ ? (
-        <>
-          <FAQ />
-          <Footer />
-        </>
-      ) : (
-        <>
-          <CountTimer />
-          <Footer />
-        </>
-      )}
+      <>
+        {getView()}
+        {isDzz ? <></> : <Footer />}
+      </>
     </ContentContainer>
   );
 }

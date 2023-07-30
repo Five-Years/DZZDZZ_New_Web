@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import styled from "styled-components";
+import { ReactComponent as CareLeft } from "assets/CaretLeft.svg";
 
 function MenuHeader(props) {
   const navigate = useNavigate();
@@ -10,17 +11,15 @@ function MenuHeader(props) {
     <>
       <ContentContainers>
         <ContentLeft>
-          <ArrowBackIosIcon
-            style={{ marginLeft: "15.4%", width: "50%", height: "50%" }}
+          <CareLeft
+            style={{ marginLeft: "15.4%" }}
             onClick={() => {
-              if (props.direct)
-              {
+              if (props.direct) {
                 navigate("/Matching");
-              }
-              else 
-              {
+              } else {
                 navigate(-1);
-              }}}
+              }
+            }}
           />
         </ContentLeft>
         <ContentTitle>
@@ -67,7 +66,8 @@ export const ContentTitle = styled.div`
   height: 100%;
 
   > text {
-    font-family: var(--font-Pretendard);    font-style: normal;
+    font-family: var(--font-Pretendard);
+    font-style: normal;
     font-weight: 400;
     font-size: 19px;
     line-height: 22px;

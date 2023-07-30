@@ -1,5 +1,4 @@
 import React from "react";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useNavigate, useState } from "react-router-dom";
 import styled from "styled-components";
@@ -7,11 +6,12 @@ import { ReactComponent as Jelly } from "../../../../assets/jelly.svg";
 import { useEffect } from "react";
 import StateSlice from "../../../../features/State/StateSlice";
 import { useDispatch } from "react-redux";
+import { ReactComponent as CareLeft } from "assets/CaretLeft.svg";
 
 function MatchingProgressHeader(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
 
@@ -19,10 +19,8 @@ function MatchingProgressHeader(props) {
       case "report":
         dispatch(StateSlice.actions.ReportData(data));
         navigate("/ChoicePage", { state: "reject" });
-      }
+    }
   };
-
-
 
   useEffect(() => {
     //android
@@ -39,7 +37,18 @@ function MatchingProgressHeader(props) {
           <></>
         ) : (
           <>
-            <ArrowBackIosIcon
+            <CareLeft
+              style={{ marginLeft: "15.4%" }}
+              onClick={() => {
+                if (props.direct) {
+                  navigate("/Matching");
+                } else {
+                  navigate(-1);
+                }
+              }}
+            />
+
+            {/* <ArrowBackIosIcon
               style={{ marginLeft: "15.4%", width: "60%", height: "60%" }}
               onClick={() => {
                 if (props.direct)
@@ -50,7 +59,7 @@ function MatchingProgressHeader(props) {
                 {
                   navigate(-1);
                 }              }}
-            />
+            /> */}
           </>
         )}
       </ContentLeft>
@@ -96,10 +105,10 @@ const MileHeader = styled.div`
 
   > text {
     color: #333333;
-font-size: 16px;
-font-family: var(--font-Pretendard);
-font-weight: 600;
-line-height: 24px;
+    font-size: 16px;
+    font-family: var(--font-Pretendard);
+    font-weight: 600;
+    line-height: 24px;
   }
 `;
 
@@ -138,7 +147,7 @@ export const ContentTitle = styled.div`
   height: 100%;
 
   > text {
-    font-family : var(--font-Pretendard);    
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
     font-size: 19px;

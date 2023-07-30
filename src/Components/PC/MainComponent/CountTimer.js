@@ -118,11 +118,16 @@ function CountTimer() {
         <Timer>
           {Day >= 1 ? (
             <>
-              [<span>{Day}</span>:<span>{Hour}</span>:<span>{Minute}</span>]
+              <text>
+                [<span>{Day}</span>:<span>{Hour}</span>:<span>{Minute}</span>]
+              </text>
             </>
           ) : (
             <>
-              [<span>{Hour}</span>: <span>{Minute}</span>:<span>{Second}</span>]
+              <text>
+                [<span>{Hour}</span>:<span>{Minute}</span>:<span>{Second}</span>
+                ]
+              </text>
             </>
           )}
         </Timer>
@@ -333,23 +338,32 @@ const Description = styled.div`
 const Timer = styled.div`
   display: flex;
   position: relative;
-  width: 77.27%;
-  height: 80px;
+  width: 100%;
+  height: 90px;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  font-family: var(--font-Pretendard);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 80px;
-  line-height: 80px;
-  color: #ff477e;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
 
-  > span {
-    color: black;
+  > text {
+    display: flex;
+    width: 80%;
+    height: 90px;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    font-family: var(--font-Pretendard);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 80px;
+    line-height: 80px;
+    color: #ff477e;
+    /* text-align: center; */
+
+    > span {
+      width: 25%;
+      text-align: center;
+      overflow: hidden;
+      color: black;
+    }
   }
 
   /* > text {
@@ -367,7 +381,8 @@ const Timer = styled.div`
   } */
 
   @media screen and (max-width: 800px) {
-    width: 80%;
+    display: flex;
+    width: 100%;
     height: 75px;
 
     > text {
@@ -379,7 +394,6 @@ const Timer = styled.div`
       line-height: 70px;
 
       > span {
-        background-color: yellow;
         color: black;
       }
     }

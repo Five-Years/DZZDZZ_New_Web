@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import styled from "styled-components";
 import HeaderMain from "./Header/HeaderMain";
@@ -20,6 +20,12 @@ function App() {
   const isDzz = useSelector((state) => {
     return state.Popup.isDzz;
   });
+
+  const isStatic = useSelector((state) => {
+    return state.Popup.isStatic;
+  });
+
+  useEffect(() => {}, [isStatic]);
 
   return (
     <div className="App">

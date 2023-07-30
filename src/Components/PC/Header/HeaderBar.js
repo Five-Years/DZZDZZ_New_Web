@@ -9,7 +9,6 @@ import StateSlice from "../../../features/State/StateSlice";
 function HeaderBar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  dispatch(StateSlice.actions.isStatic(false));
 
   return (
     <HeaderBarContainer>
@@ -77,12 +76,11 @@ function HeaderBar() {
             </text>
             <text
               onClick={() => {
-                dispatch(StateSlice.actions.isStatic(true));
-                dispatch(StateSlice.actions.URL(false));
-
                 dispatch(StateSlice.actions.isFrame(false));
+                dispatch(StateSlice.actions.URL(false));
                 dispatch(StateSlice.actions.isDzz(false));
                 dispatch(StateSlice.actions.isFAQ(false));
+                dispatch(StateSlice.actions.isStatic(true));
               }}
             >
               통계리포트

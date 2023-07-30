@@ -12,7 +12,7 @@ function Footer() {
           <Content>
             <ContentLink>
               <MenuLinks />
-              {/* <Links /> */}
+              <Links />
             </ContentLink>
             <Meta />
           </Content>

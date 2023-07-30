@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import { ReactComponent as FYLogo } from "assets/FYlogo.svg";
 function Meta() {
   return (
     <MetaContainer>
       <CorporateContainer>
         {" "}
         <ContentLogo>
-          <img src={require("../../../assets/5Years.png")} alt="" />
+          {/* <img src={require("../../../assets/5Years.png")} alt="" /> */}
+          <FYLogo />
         </ContentLogo>
         <ContentInformation>
           <Information>
@@ -101,7 +103,7 @@ const ContentLogo = styled.div`
 
   @media screen and (max-width: 800px) {
     width: 30%;
-    height: 15%;
+    height: 35%;
     justify-content: start;
 
     > img {

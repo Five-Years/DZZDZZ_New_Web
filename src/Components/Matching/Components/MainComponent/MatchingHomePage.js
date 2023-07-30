@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-
 import MatchingProgressHeader from "../HeaderComponent/MatchingProgressHeader";
+import { ReactComponent as CareLeft } from "assets/CaretLeft.svg";
 
 import { ReactComponent as Info } from "../../../../assets/Info.svg";
 import { ReactComponent as ToggleRight } from "../../../../assets/toggle-right.svg";
