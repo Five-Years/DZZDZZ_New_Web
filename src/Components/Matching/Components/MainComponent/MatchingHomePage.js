@@ -51,8 +51,8 @@ function MatchingHomePage() {
   });
 
   //@ 사용자 정보
-  const UserData = useSelector((state) => {
-    return state.Popup.userData;
+  const userInfo = useSelector((state) => {
+    return state.Popup.userInfo;
   });
 
   const FriendmatchResult = useSelector((state) => {
@@ -245,10 +245,10 @@ function MatchingHomePage() {
   }, [SeasonTimer]);
 
   useEffect(() => {
-    if (UserData) {
-      dispatch(StateSlice.actions.Name(UserData.nickname));
+    if (userInfo) {
+      dispatch(StateSlice.actions.Name(userInfo.nickname));
     }
-  }, [UserData]);
+  }, [userInfo]);
 
   useEffect(() => {
     if (matchParticipate) {

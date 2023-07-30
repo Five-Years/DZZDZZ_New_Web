@@ -37,7 +37,7 @@ const initialState = {
   isFAQ: false,
 
   //@ 사용자 정보
-  userInfo: [],
+  userInfo: {},
 
   //@ 현재 시즌상태 남은시간
   seasonTimer: 0,
@@ -78,9 +78,6 @@ const StateSlice = createSlice({
     },
     SeasonStep: (state, action) => {
       state.seasonStep = action.payload;
-    },
-    userData: (state, action) => {
-      state.userData = action.payload;
     },
     ReportData: (state, action) => {
       state.ReportData = action.payload;
