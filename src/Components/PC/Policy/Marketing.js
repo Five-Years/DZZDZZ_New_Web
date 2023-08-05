@@ -71,17 +71,6 @@ const TermContents = styled.div`
   height: 100%;
 `;
 
-const ContentsTitle = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  > text {
-    font-size: 32px;
-    font-weight: bold;
-  }
-`;
-
 const ContentsDetail = styled.div`
   margin-top: 15px;
   width: 96%;

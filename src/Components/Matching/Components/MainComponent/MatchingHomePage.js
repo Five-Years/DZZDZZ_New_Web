@@ -748,10 +748,10 @@ const EventContainer = styled.div`
   width: 100%;
   height: 12.3%;
   position: absolute;
-  top: 88%;
+  /* top: 88%; */
+  bottom: 0;
   border-radius: 20px 20px 0px 0px;
   box-shadow: 0px -4px 23px -3px rgba(0, 0, 0, 0.15);
-  bottom: 0px;
 `;
 
 const EventText = styled.div`

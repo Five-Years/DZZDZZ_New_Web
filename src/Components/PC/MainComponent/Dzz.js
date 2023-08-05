@@ -10,17 +10,17 @@ function Dzz() {
   return (
     <IntroduceContainer>
       <ImageContainer>
-        <img src={Background1} />
+        <img src={Background1} aalt="단짠단짠" />
       </ImageContainer>
       <ImageContainer>
-        <img src={Background2} />
+        <img src={Background2} aalt="단짠단짠" />
       </ImageContainer>
 
       <ImageContainer>
-        <img src={Background3} />
+        <img src={Background3} alt="단짠단짠" />
       </ImageContainer>
       <ImageContainer>
-        <img src={Background4} />
+        <img src={Background4} alt="단짠단짠" />
       </ImageContainer>
       <Footer />
     </IntroduceContainer>
@@ -60,14 +60,14 @@ const IntroduceContainer = styled.div`
   }
 `;
 
-const BackgroundContainer = styled.div`
-  width: 100%;
-  height: 100%;
-`;
+// const BackgroundContainer = styled.div`
+//   width: 100%;
+//   height: 100%;
+// `;
 
-const BackgroundContainer2 = styled.div`
-  display: flex;
-  width: 100%;
-  height: 2000px;
-  background-color: pink;
-`;
+// const BackgroundContainer2 = styled.div`
+//   display: flex;
+//   width: 100%;
+//   height: 2000px;
+//   background-color: pink;
+// `;

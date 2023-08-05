@@ -6,10 +6,15 @@ import MatchingProgressHeader from "../../HeaderComponent/MatchingProgressHeader
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Lottie from "lottie-react";
+import Slider from "react-slick";
 
 import styled from "styled-components";
 import heartHand from "assets/heartHand.json";
 import search from "assets/search.json";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { backIn } from "framer-motion";
+import { BackgroundCard } from "../../StyledComponent/MatchingStyled";
 
 function Matching2() {
   const DetailDownRef = useRef();
@@ -107,13 +112,39 @@ function Matching2() {
   const [isSelected, setIsSelected] = useState(0);
   const navigate = useNavigate();
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToShow: 1,
+  };
+
+  // const Userimages = [
+  //   "assets/mango.jpg",
+  //   "assets/mango.jpg",
+  //   "assets/mango.jpg",
+  //   "assets/mango.jpg",
+  // ];
   return (
     <MatchingContainers detail={detail}>
       <ContentContainer>
         <MatchingProgressHeader isReport={true} />
       </ContentContainer>
       <ProfileImageContainer>
-        <img src={require("assets/ProfileSample.png")} alt="이미지" />
+        <CarouselContainer dynamicHeight={true} showThumbs={false}>
+          <div>
+            <img src={require("assets/mango.jpg")} alt="" />
+          </div>
+          <div>
+            <img src={require("assets/mango.jpg")} alt="" />
+          </div>
+          {/* 
+          <div>
+            <img src={require("assets/mango.jpg")} alt="" />
+          </div> */}
+        </CarouselContainer>
+        {/* <img src={require("assets/mango.jpg")} alt="" /> */}
       </ProfileImageContainer>
       <IntroduceContainer
         onClick={() => {
@@ -197,9 +228,8 @@ function Matching2() {
       <ContentsContainer ref={DetailDownRef}>
         <ContentsName>
           <text>
-            <span>단짠지기임당</span>님의 정보
+            <span>{userData.matchedUserNickname}</span>님의 정보
           </text>
-          {/* {MatcherInfo.nickname} */}
         </ContentsName>
         <ContentsSection>
           <Contents>
@@ -272,125 +302,116 @@ function Matching2() {
                       {item}
                     </text>
                   ))}
-                  {/* <text>
-                  <span>#</span>진지한
-                </text>
-                <text>
-                  <span>#</span>진취적인
-                </text>
-                <text>
-                  <span>#</span>예의바른
-                </text>
-                <text>
-                  <span>#</span>솔직한
-                </text>
-                <text>
-                  <span>#</span>상냥한
-                </text> */}
                 </TagContainer>
               </ContentsWindow>
             </Contents>
           </ContentsSection>
         )}
-        <ContentsSection>
-          <Contents>
-            <ContentsTitle>
-              <text>관심사</text>
-            </ContentsTitle>
-            <ContentsWindow className="tag">
-              <TagContainer>
-                {/* {MatcherInfo.interest} =>foreach */}
-                {userData.interests.map((item) => (
-                  <text>
-                    <span>#</span>
-                    {item}
-                  </text>
-                ))}
-                {/* <text>
-                  <span>#</span>향수
-                </text>
-                <text>
-                  <span>#</span>애니메이션
-                </text>
-                <text>
-                  <span>#</span>인테리어
-                </text>
-                <text>
-                  <span>#</span>맛집
-                </text>
-                <text>
-                  <span>#</span>홈카페
-                </text> */}
-              </TagContainer>
-            </ContentsWindow>
-          </Contents>
-        </ContentsSection>
-        <ContentsSection>
-          <Contents>
-            <ContentsTitle>
-              <text>지역</text>
-            </ContentsTitle>
-            <ContentsWindow>
-              <text>{userData.region}</text>
-              {/* {MatcherInfo.area} */}
-            </ContentsWindow>
-          </Contents>
-        </ContentsSection>
-        <ContentsSection>
-          <Contents>
-            <ContentsTitle>
-              <text>병역 여부</text>
-            </ContentsTitle>
-            <ContentsWindow>
-              <text>{userData.militaryServiceStatus}</text>
-              {/* {MatcherInfo.military} */}
-            </ContentsWindow>
-          </Contents>
-        </ContentsSection>
-        <ContentsSection>
-          <Contents>
-            <ContentsTitle>
-              <text>MBTI</text>
-            </ContentsTitle>
-            <ContentsWindow>
-              <text>{userData.mbti}</text>
-              {/* {MatcherInfo.mbti} */}
-            </ContentsWindow>
-          </Contents>
-        </ContentsSection>
-        <ContentsSection>
-          <Contents>
-            <ContentsTitle>
-              <text>종교</text>
-            </ContentsTitle>
-            <ContentsWindow>
-              <text>{userData.religion}</text>
-              {/* {MatcherInfo.religion} */}
-            </ContentsWindow>
-          </Contents>
-        </ContentsSection>
-        <ContentsSection>
-          <Contents>
-            <ContentsTitle>
-              <text>음주</text>
-            </ContentsTitle>
-            <ContentsWindow>
-              <text>{userData.drink}</text>
-              {/* {MatcherInfo.alcohol} */}
-            </ContentsWindow>
-          </Contents>
-        </ContentsSection>
-        <ContentsSection>
-          <Contents>
-            <ContentsTitle>
-              <text>흡연</text>
-            </ContentsTitle>
-            <ContentsWindow>
-              <text>{userData.smoke}</text>
-              {/* {MatcherInfo.smoke} */}
-            </ContentsWindow>
-          </Contents>
-        </ContentsSection>
+        {userData.interests && (
+          <ContentsSection>
+            <Contents>
+              <ContentsTitle>
+                <text>관심사</text>
+              </ContentsTitle>
+              <ContentsWindow className="tag">
+                <TagContainer>
+                  {/* {MatcherInfo.interest} =>foreach */}
+                  {userData.interests.map((item) => (
+                    <text>
+                      <span>#</span>
+                      {item}
+                    </text>
+                  ))}
+                </TagContainer>
+              </ContentsWindow>
+            </Contents>
+          </ContentsSection>
+        )}
+
+        {userData.region && (
+          <ContentsSection>
+            <Contents>
+              <ContentsTitle>
+                <text>지역</text>
+              </ContentsTitle>
+              <ContentsWindow>
+                <text>{userData.region}</text>
+                {/* {MatcherInfo.area} */}
+              </ContentsWindow>
+            </Contents>
+          </ContentsSection>
+        )}
+
+        {userData.militaryServiceStatus && (
+          <ContentsSection>
+            <Contents>
+              <ContentsTitle>
+                <text>병역 여부</text>
+              </ContentsTitle>
+              <ContentsWindow>
+                <text>{userData.militaryServiceStatus}</text>
+                {/* {MatcherInfo.military} */}
+              </ContentsWindow>
+            </Contents>
+          </ContentsSection>
+        )}
+
+        {userData.mbti && (
+          <ContentsSection>
+            <Contents>
+              <ContentsTitle>
+                <text>MBTI</text>
+              </ContentsTitle>
+              <ContentsWindow>
+                <text>{userData.mbti}</text>
+                {/* {MatcherInfo.mbti} */}
+              </ContentsWindow>
+            </Contents>
+          </ContentsSection>
+        )}
+
+        {userData.religion && (
+          <ContentsSection>
+            <Contents>
+              <ContentsTitle>
+                <text>종교</text>
+              </ContentsTitle>
+              <ContentsWindow>
+                <text>{userData.religion}</text>
+                {/* {MatcherInfo.religion} */}
+              </ContentsWindow>
+            </Contents>
+          </ContentsSection>
+        )}
+
+        {userData.drink && (
+          <ContentsSection>
+            <Contents>
+              <ContentsTitle>
+                <text>음주</text>
+              </ContentsTitle>
+              <ContentsWindow>
+                <text>{userData.drink}</text>
+                {/* {MatcherInfo.alcohol} */}
+              </ContentsWindow>
+            </Contents>
+          </ContentsSection>
+        )}
+
+        {userData.smoke && (
+          <ContentsSection>
+            <Contents>
+              <ContentsTitle>
+                <text>흡연</text>
+              </ContentsTitle>
+              <ContentsWindow>
+                <text>{userData.smoke}</text>
+                {/* {MatcherInfo.smoke} */}
+              </ContentsWindow>
+            </Contents>
+          </ContentsSection>
+        )}
+
         <SelectButtonContainer>
           <Selection>
             <Option
@@ -441,6 +462,34 @@ function Matching2() {
 
 export default Matching2;
 
+const CarouselContainer = styled(Carousel)`
+  width: 100%;
+  height: 100%;
+
+  > div {
+    width: 100%;
+    height: 100%;
+  }
+  > img {
+    width: 100%;
+    object-fit: cover;
+  }
+`;
+
+const ImageSlider = styled(Slider)`
+  width: 100%;
+  position: relative;
+  height: auto;
+`;
+
+const Slide = styled.div`
+  > img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+`;
+
 const LottieContainer = styled.div`
   width: 30px;
   height: 30px;
@@ -448,7 +497,7 @@ const LottieContainer = styled.div`
 
 export const ProfileImageContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-end;
   align-items: start;
   gap: 10px;
@@ -457,10 +506,11 @@ export const ProfileImageContainer = styled.div`
   width: 100%;
   height: 53.286%;
 
-  > img {
+  /* > img {
     width: 100%;
     height: 100%;
-  }
+    object-fit: cover;
+  } */
 `;
 
 export const MatchingContainers = styled.div`
