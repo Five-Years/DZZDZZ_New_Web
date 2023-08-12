@@ -100,7 +100,7 @@ function CountTimer() {
     if (SeasonTimer === 0) {
       getSeason();
     }
-  }, []);
+  }, [SeasonTimer]);
 
   return (
     <CountTimerContainer>
@@ -119,8 +119,7 @@ function CountTimer() {
           ) : (
             <>
               <text>
-                [<span>{Hour}</span>:<span>{Minute}</span>:<span>{Second}</span>
-                ]
+                [<span>{"00"}</span>:<span>{"00"}</span>:<span>{"00"}</span>]
               </text>
             </>
           )}
@@ -197,6 +196,7 @@ const TitleContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 15px;
   width: 47.67%;
   height: 19.71%;
   min-width: 572px;
@@ -250,8 +250,8 @@ const SnsContainer = styled.div`
 const Title = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
-  width: 60%;
+  align-items: end;
+  width: 550px;
   height: 26.67%;
 
   > span {
@@ -267,10 +267,11 @@ const Title = styled.div`
   }
 
   > span.text {
+    margin-left: 10px;
     height: 23px;
     font-family: var(--font-Pretendard);
     font-style: normal;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 15px;
     line-height: 150%;
     letter-spacing: 0.5px;
@@ -316,6 +317,7 @@ const Description = styled.div`
   min-width: 303px;
   min-height: 70px;
   border-radius: 10px;
+  margin-top: 10px;
 
   @media screen and (max-width: 800px) {
     min-width: 0px;
@@ -332,7 +334,7 @@ const Description = styled.div`
 const Timer = styled.div`
   display: flex;
   position: relative;
-  width: 100%;
+  width: 700px;
   height: 90px;
   align-items: center;
   justify-content: center;
@@ -346,7 +348,7 @@ const Timer = styled.div`
     overflow: hidden;
     font-family: var(--font-Pretendard);
     font-style: normal;
-    font-weight: 400;
+    font-weight: 700;
     font-size: 80px;
     line-height: 80px;
     color: #ff477e;
@@ -357,6 +359,7 @@ const Timer = styled.div`
       text-align: center;
       overflow: hidden;
       color: black;
+      /* letter-spacing: 2rem; */
     }
   }
 

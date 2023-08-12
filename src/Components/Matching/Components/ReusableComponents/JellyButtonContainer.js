@@ -49,6 +49,7 @@ const InviteTextBox = styled.div`
     line-height: 21px;
     letter-spacing: 0.05em;
     text-align: center;
+    color: var(--system-gray-700, #6c6c70);
 
     > span {
       color: #ff477e;

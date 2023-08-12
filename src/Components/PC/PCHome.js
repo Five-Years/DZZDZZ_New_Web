@@ -98,7 +98,7 @@ function PCHome() {
     if (SeasonTimer === 0) {
       getSeason();
     }
-  }, []);
+  }, [SeasonTimer]);
 
   const navigate = useNavigate();
   return (
@@ -236,7 +236,7 @@ const ContentContainer = styled.div`
     display: flex;
     position: relative;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 
     top: 0%;

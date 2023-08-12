@@ -67,7 +67,7 @@ const InviteTextBox = styled.div`
 
     /* dzz_grey */
 
-    color: #49516f;
+    color: var(--system-gray-700, #6c6c70);
 
     > span {
       color: #ff477e;

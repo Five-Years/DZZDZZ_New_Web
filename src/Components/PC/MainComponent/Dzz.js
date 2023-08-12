@@ -22,7 +22,7 @@ function Dzz() {
       <ImageContainer>
         <img src={Background4} alt="단짠단짠" />
       </ImageContainer>
-      <Footer />
+      {/* <Footer /> */}
     </IntroduceContainer>
   );
 }
@@ -32,7 +32,7 @@ const ImageContainer = styled.div`
   display: flex;
   position: relative;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
 
   > img {
     width: 100%;

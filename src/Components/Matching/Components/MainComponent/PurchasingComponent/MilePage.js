@@ -5,7 +5,7 @@ import StateSlice from "../../../../../features/State/StateSlice";
 import { ReactComponent as Won } from "../../../../../assets/GreyWon.svg";
 
 import { ReactComponent as Jelly } from "../../../../../assets/jelly.svg";
-import { ReactComponent as Jelly2 } from "../../../../../assets/jelly.svg"
+import { ReactComponent as Jelly2 } from "../../../../../assets/jelly.svg";
 
 import { ReactComponent as Jelly3 } from "../../../../../assets/Jelly3.svg";
 import { ReactComponent as Jelly4 } from "../../../../../assets/Jelly4.svg";
@@ -216,17 +216,19 @@ const RecommendContainer = styled.div`
   > text {
     text-align: center;
     font-size: 12px;
-    font-family: var(--font-Pretendard);    
+    font-family: var(--font-Pretendard);
     font-weight: 500;
     line-height: 150%;
     letter-spacing: 0.6px;
     text-transform: capitalize;
 
     &.cheap {
+      margin-left: 10px;
       color: #0094ff;
     }
 
     &.popular {
+      margin-left: 10px;
       color: #ff477e;
     }
 
@@ -250,7 +252,8 @@ export const TicketButton = styled.div`
   border-radius: 30px;
 
   > text {
-    font-family: var(--font-Pretendard);    font-style: normal;
+    font-family: var(--font-Pretendard);
+    font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 150%;
@@ -351,7 +354,8 @@ const TicketProduct = styled.div`
   left: 5.71%;
 
   > text {
-    font-family: var(--font-Pretendard);    font-style: normal;
+    font-family: var(--font-Pretendard);
+    font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 24px;
@@ -388,11 +392,12 @@ const TicketPrice = styled.div`
   height: 100%;
 
   > text {
-    color: var(--system-gray-700, #6C6C70);
-text-align: right;
-font-size: 14px;
-font-family: var(--font-Pretendard);    font-style: normal;
-line-height: 24px;
+    color: var(--system-gray-700, #6c6c70);
+    text-align: right;
+    font-size: 14px;
+    font-family: var(--font-Pretendard);
+    font-style: normal;
+    line-height: 24px;
   }
 `;
 
@@ -421,8 +426,9 @@ export const TicketCount = styled.div`
   text-align: center;
 
   > text {
-    font-family: var(--font-Pretendard);    font-style: normal;
-    font-weight: 600;
+    font-family: var(--font-Pretendard);
+    font-style: normal;
+    font-weight: 400;
     font-size: 14px;
     line-height: 24px;
     /* identical to box height, or 171% */

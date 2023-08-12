@@ -98,7 +98,9 @@ function MenuLinks() {
         <a
           href="#"
           onClick={() => {
-            navigate("/Privacy");
+            window.open(
+              "https://dzzdzz.notion.site/78dbf85d5258479badc2f8eaf31c297f?pvs=4"
+            );
           }}
         >
           이용약관
@@ -106,7 +108,9 @@ function MenuLinks() {
         <a
           href="#"
           onClick={() => {
-            navigate("/Privacy");
+            window.open(
+              "https://dzzdzz.notion.site/d48fbfd46b354eda9c71543bfbe1b0ee?pvs=4"
+            );
           }}
         >
           개인정보 처리방침
@@ -114,7 +118,9 @@ function MenuLinks() {
         <a
           href="#"
           onClick={() => {
-            navigate("/Marketing");
+            window.open(
+              "https://dzzdzz.notion.site/461ea44398c042a585db3cb78647ba3c?pvs=4"
+            );
           }}
         >
           마케팅 이용약관
@@ -147,7 +153,7 @@ const Link = styled.div`
 
   > text {
     font-family: var(--font-Pretendard);
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 700;
     line-height: 17px;
     letter-spacing: 0em;
@@ -174,7 +180,7 @@ const Link = styled.div`
     font-family: "Noto Sans";
     font-style: normal;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 19px;
     /* identical to box height */
 

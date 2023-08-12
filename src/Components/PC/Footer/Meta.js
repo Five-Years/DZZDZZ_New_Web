@@ -18,7 +18,6 @@ function Meta() {
           <Information>
             <text>
               주소 서울 특별시 마포구 희우정로 10길 28 3층 3-20호 플랙스홈
-              (망원동)
             </text>
           </Information>
           <Information>
@@ -173,7 +172,7 @@ const Information = styled.div`
 
   > text {
     font-family: var(--font-Pretendard);
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     line-height: 17px;
     letter-spacing: 0em;
@@ -187,7 +186,7 @@ const Information = styled.div`
     align-items: start;
     padding: 0px;
     width: 100%;
-    height: 33%;
+    /* height: 33%; */
     /* gap: 6px; */
 
     > text {
@@ -196,7 +195,7 @@ const Information = styled.div`
       font-size: 12px;
       font-style: normal;
       font-weight: 400;
-      line-height: normal;
+      /* line-height: normal; q */
     }
   }
 `;

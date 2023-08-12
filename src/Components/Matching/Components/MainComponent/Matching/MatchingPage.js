@@ -310,11 +310,7 @@ function MatchingPage() {
                           ‘연애 수문장 졸업기원..ㅠㅠ’
                         </text>
                         <br />
-                        <span>
-                          <span className="highlight">더이상 고민</span>하지말고
-                        </span>
-                        <br />
-                        매칭 입장!
+                        <span>더이상 고민 하지말고 입장!</span>
                       </text>
                     ) : (
                       <text>
@@ -326,12 +322,7 @@ function MatchingPage() {
                           ‘맛집 뿌실 단짝 어디 없나?’
                         </text>
                         <br />
-                        <span>
-                          <span className="highlight">애매하게 서성이지</span>
-                          말고
-                        </span>
-                        <br />
-                        매칭 입장!
+                        <span>애매하게 서성이지 말고 입장!</span>
                       </text>
                     )}
                   </TextField>
@@ -481,7 +472,8 @@ const MatchingContainer = styled.div`
   position: absolute;
   width: 100%;
   height: 32.43%;
-  top: 36.57%;
+  top: 33.57%;
+  /* background-color: red; */
   align-items: center;
   justify-content: center;
 `;
@@ -490,9 +482,9 @@ const MatchingCardContainer = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
-  gap: 10px;
+  /* gap: 10px; */
   width: 66.66%;
-  height: 100%;
+  height: 85%;
   background: #ffffff;
   border: 3px solid ${(props) => (props.theme === 1 ? "#C4DFF3" : "#FEC7D7")};
   justify-content: center;
@@ -505,7 +497,7 @@ const TextField = styled.div`
   > text {
     font-family: var(--font-Pretendard);
     font-style: normal;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 16px;
     line-height: 26px;
     /* or 160% */
@@ -516,7 +508,7 @@ const TextField = styled.div`
   }
 
   > text > text {
-    font-weight: bold;
+    font-weight: 700;
     line-height: 26px;
     letter-spacing: 0em;
     text-align: center;
@@ -525,13 +517,13 @@ const TextField = styled.div`
   > text > span {
     font-family: var(--font-Pretendard);
     font-style: normal;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 16px;
     line-height: 26px;
     /* or 160% */
     text-align: center;
     /* Text Black */
-    color: #ff477e;
+    color: ${(props) => (props.theme === 0 ? "#ff477e" : "#0094FF")};
   }
 
   > text > span > span {
@@ -556,8 +548,8 @@ export const CardTitleContainer = styled.div`
   position: absolute;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 38px;
+  justify-content: center;
+  gap: 20px;
   width: 100%;
   height: 83.63%;
 `;
@@ -617,13 +609,15 @@ const ContentContainer = styled.div`
 
 export const CardTitle = styled.div`
   display: flex;
-  position: relative;
-  width: 76.92%;
+  /* position: relative; */
+  align-items: center;
+  justify-content: center;
+  /* width: 76.92%;
   min-width: 200px;
   height: 64.64%;
   min-height: 130px;
   text-align: center;
-  bottom: 5.051%;
+  bottom: 5.051%; */
   > text {
     font-family: var(--font-Pretendard);
     font-style: normal;
@@ -648,7 +642,7 @@ const ButtonContainer = styled.div`
   position: absolute;
   width: 100%;
   height: 24.57%;
-  top: 72.71%;
+  top: 67.71%;
 `;
 
 const EachButtonContainer = styled.div`
@@ -669,7 +663,7 @@ const EachButton = styled.div`
   align-items: center;
   gap: 10px;
   width: 53.85%;
-  height: 84.62%;
+  height: 80.62%;
   background: #dfe1e4;
   border-radius: 30px;
 

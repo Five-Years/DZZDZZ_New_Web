@@ -157,6 +157,9 @@ const ItemContainers = styled.div`
   position: relative;
   width: 89.74%;
   height: 78.11%;
+
+  > text {
+  }
 `;
 
 const HeaderContainer = styled.div`
@@ -175,6 +178,14 @@ const ItemContainer = styled.div`
 
   width: 46.15%;
   height: 66.66%;
+
+  > text {
+    font-weight: 700;
+    font-size: 16px;
+    font-family: var(--font-Pretendard);
+
+    // 비활성화시 시스템그레이 500
+  }
 `;
 
 const MileSection = styled.div`

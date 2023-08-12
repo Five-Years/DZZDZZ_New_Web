@@ -15,6 +15,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { backIn } from "framer-motion";
 import { BackgroundCard } from "../../StyledComponent/MatchingStyled";
+import { ReactComponent as Careup } from "assets/CaretDoubleUp.svg";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
@@ -223,9 +224,10 @@ function Matching2(props) {
       >
         <DetailTextView detail={detail}></DetailTextView>
         <TextContainer detail={detail}>
-          {MatchedUserData.introduce && (
-            <text>{MatchedUserData.introduce}</text>
-          )}
+          <text>학교에서 과제만 하기엔 너무 아쉽지 않아????????</text>
+          {/* {MatchedUserData.introduce && (
+            // <text>{MatchedUserData.introduce}</text>
+          )} */}
         </TextContainer>
         <KeyboardArrowDownIcon
           style={{
@@ -283,7 +285,8 @@ function Matching2(props) {
           });
         }}
       >
-        <KeyboardDoubleArrowUpIcon color="disabled" fontSize="large" />
+        {/* <KeyboardDoubleArrowUpIcon color="disabled" fontSize="large" /> */}
+        <Careup />
         <DetailView>
           <MatchingLink ref={DetailUpRef}>
             <text>자세히 보기</text>
@@ -757,7 +760,7 @@ export const DetailContainer = styled.div`
   position: absolute;
   width: 100%;
   height: 58px;
-  top: 88.22%;
+  top: 90.22%;
 
   > KeyboardDoubleArrowUpIcon {
     width: 40px;
@@ -1157,8 +1160,10 @@ const ContentsContainer = styled.div`
   position: relative;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0px;
+  padding-bottom: 80px;
   width: 100%;
+  margin-top: 50px;
+
   /* height: 1550px; */
   left: 0px;
   top: 0%;

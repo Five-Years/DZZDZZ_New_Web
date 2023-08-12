@@ -88,28 +88,28 @@ function MatchingProgress() {
       )}
       <CardContainer>
         <CardContents theme={state.theme}>
-          {state.theme === 1 ? (
-            <LottieContainer>
-              {" "}
-              <Lottie animationData={Logo} />
-            </LottieContainer>
-          ) : (
-            //   <img
-            //   src={require("assets/dzzdzz_logo.png")}
-            //   alt="이미지"
-            // />
-            <LottieContainer>
-              {" "}
-              <Lottie animationData={Logo} />
-            </LottieContainer>
-            // <DzzDate />
-          )}
           <text>
             지금부터<br></br>
-            <span>매칭</span>이<br />
-            시작됩니다!
+            <span>매칭상대</span>가<br />
+            공개됩니다.
           </text>
         </CardContents>
+        {state.theme === 1 ? (
+          <LottieContainer>
+            {" "}
+            <Lottie animationData={Logo} />
+          </LottieContainer>
+        ) : (
+          //   <img
+          //   src={require("assets/dzzdzz_logo.png")}
+          //   alt="이미지"
+          // />
+          <LottieContainer>
+            {" "}
+            <Lottie animationData={Logo} />
+          </LottieContainer>
+          // <DzzDate />
+        )}
       </CardContainer>
       <MatchingConfirmContainer theme={state.theme}>
         {loading ? (
@@ -141,6 +141,7 @@ const MatchingContainer = styled.div`
   min-width: 375px;
   min-height: 720px;
   justify-content: center;
+  align-items: center;
 `;
 
 export const SpinnerContainer = styled.div`

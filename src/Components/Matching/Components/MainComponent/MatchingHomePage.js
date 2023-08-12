@@ -19,7 +19,17 @@ function MatchingHomePage(props) {
   const dispatch = useDispatch();
 
   //@ 커플매칭, 친구매칭 신청여부, true => 신청가능(미신청), false => 신청불가능(신청))
-
+  //사용자의 at,rt정보를 userToken에 저장한다, 테스트용 코드
+  useEffect(() => {
+    dispatch(
+      StateSlice.actions.userToken({
+        accessToken:
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBZGVsYmVydC5LcmlzMjFAZXhhbXBsZS5jb20iLCJhdXRoIjoiTk9STUFMX1VTRVIiLCJleHAiOjE2OTE5MDI3OTJ9.tT-SN0hPD71cLvPbKukprblcYmMAwyRpCuaoxBT9uWI",
+        refreshToken:
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTE5MDI3OTJ9.-Tznsj85iXM-5hxxKYZ1s0LeNdOETuE9NIRmR3oAb0Q",
+      })
+    );
+  }, []);
   const [Day, setDay] = useState("00");
   const [Hour, setHour] = useState("00");
   const [Minute, setMinute] = useState("00");
@@ -551,18 +561,18 @@ function MatchingHomePage(props) {
             </HistoryButton>
           </BottomContents>
           <BottomContents>
-            <CalenderContainer>
+            <CalenderContainer
+              onClick={() => {
+                window.ReactNativeWebView?.postMessage(
+                  JSON.stringify({ type: "calender", data: "" })
+                );
+              }}
+            >
               <CalenderTextContainer>
                 <text>이번 매칭 일정이 궁금하다면?</text>
               </CalenderTextContainer>
               <CalenderIconContainer>
-                <CalenderButton
-                  onClick={() => {
-                    window.ReactNativeWebView?.postMessage(
-                      JSON.stringify({ type: "calender", data: "" })
-                    );
-                  }}
-                >
+                <CalenderButton>
                   <text>단짠 캘린더</text>
                 </CalenderButton>
                 <ToggleRight />
@@ -662,7 +672,7 @@ const BottomContainer = styled.div`
 const HistoryButton = styled.div`
   display: flex;
   width: 66.66%;
-  height: 80%;
+  height: 60px;
   justify-content: center;
   align-items: center;
   gap: 10px;
@@ -684,7 +694,7 @@ const EventTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  justify-content: center;
+  justify-content: start;
   width: 80%;
   height: 60.98%;
   left: 7.43%;
@@ -712,7 +722,8 @@ const ProfileContainer = styled.div`
 const EventContainer = styled.div`
   width: 100%;
   height: 12.3%;
-  position: absolute;
+  background-color: white;
+  position: fixed;
   /* top: 88%; */
   bottom: 0px;
   border-radius: 20px 20px 0px 0px;
@@ -1111,8 +1122,9 @@ const SelectionTitle = styled.div`
 const SelectionContainer = styled.div`
   position: absolute;
   width: 100%;
-  height: 26.14%;
+  height: 18.14%;
   top: 36.29%;
+  /* background-color: red; */
 `;
 const Selection = styled.div`
   display: flex;

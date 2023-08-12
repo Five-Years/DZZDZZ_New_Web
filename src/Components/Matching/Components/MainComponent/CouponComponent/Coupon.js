@@ -6,8 +6,6 @@ import { useState } from "react";
 function Coupon() {
   const [isError, setIsError] = useState(false);
 
-
-  
   return (
     <PurchasePageContainer>
       <HeaderContainer>
@@ -69,7 +67,8 @@ const ErrorContainer = styled.div`
   align-items: center;
   position: relative;
   width: 82.62%;
-  height: 15px;
+  height: 13px;
+  margin-bottom: 18px;
 
   > text {
     font-family: var(--font-Pretendard);
@@ -105,7 +104,7 @@ const ConfirmButton = styled.div`
   /* dzz_pink */
   display: flex;
   width: 84.87%;
-  height: 74.29%;
+  height: 52px;
   background: #ff477e;
   border-radius: 13px;
   align-items: center;
@@ -132,10 +131,11 @@ const CouponContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  justify-content: space-between;
+  margin-top: 11px;
+  gap: 5px;
   width: 100%;
-  height: 54.57%;
+  height: 115px;
 `;
 
 const InputTitle = styled.div`
@@ -153,15 +153,18 @@ const TextContainer = styled.div`
   flex-direction: row;
   align-items: center;
   width: 84.62%;
-  height: 17.95%;
+  height: 21px;
 `;
 const InputContainer = styled.input`
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 82.62%;
-  height: 40.17%;
-  padding-left: 5.15%;
+  /* height: 55.17%; */
+  height: 47px;
+  /* padding-left: 5.15%; */
+  text-indent: 17px;
+
   /* white */
   background: #ffffff;
   /* SystemGray/400 */

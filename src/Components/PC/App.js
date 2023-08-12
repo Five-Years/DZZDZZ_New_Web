@@ -82,7 +82,8 @@ const SectionContainer = styled.div`
   position: relative;
   flex-direction: column;
   width: 100%;
-  height: 92%;
+  /* height: 92%; */
+  flex: 1;
 
   @media screen and (max-width: 800px) {
     display: flex;

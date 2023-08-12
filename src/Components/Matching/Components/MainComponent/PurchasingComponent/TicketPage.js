@@ -135,7 +135,9 @@ function TicketPage() {
             );
           }}
         >
-          <text>이대로 끝내기가 아쉽다면?</text>
+          <text>
+            이대로 끝내기가 아쉽다면? <span>(클릭)</span>
+          </text>
           <RematchInfo />
         </RematchText>
         <RematchTicket>
@@ -249,7 +251,7 @@ const RematchHorizon = styled.div`
   display: flex;
   z-index: 10;
   width: 100%;
-  height: 5.05%;
+  height: 2.05%;
   border-top-style: solid;
   border-color: #dfe1e4;
   align-items: center;
@@ -274,6 +276,7 @@ const RematchText = styled.div`
   height: 25.71%;
 
   > text {
+    margin-left: 10px;
     color: #20c64a;
     text-align: center;
     font-family: var(--font-Pretendard);
@@ -407,7 +410,7 @@ export const TicketCount = styled.div`
   > text {
     font-family: var(--font-Pretendard);
     font-style: normal;
-    font-weight: 600;
+    font-weight: 400;
     font-size: 14px;
     line-height: 24px;
     /* identical to box height, or 171% */

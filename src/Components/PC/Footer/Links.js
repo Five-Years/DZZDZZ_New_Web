@@ -30,7 +30,9 @@ function Links() {
         </a> */}
         <a
           onClick={() => {
-            navigate("/Terms");
+            window.open(
+              "https://dzzdzz.notion.site/78dbf85d5258479badc2f8eaf31c297f?pvs=4"
+            );
           }}
         >
           이용약관
@@ -38,7 +40,9 @@ function Links() {
         <a
           className="pc"
           onClick={() => {
-            navigate("/Privacy");
+            window.open(
+              "https://dzzdzz.notion.site/d48fbfd46b354eda9c71543bfbe1b0ee?pvs=4"
+            );
           }}
         >
           개인정보 처리방침
@@ -46,7 +50,9 @@ function Links() {
         <a
           className="pc"
           onClick={() => {
-            navigate("/marketing");
+            window.open(
+              "https://dzzdzz.notion.site/461ea44398c042a585db3cb78647ba3c?pvs=4"
+            );
           }}
         >
           마케팅 이용약관
@@ -115,7 +121,7 @@ const Link = styled.div`
     }
     cursor: pointer;
 
-    font-family: "Noto Sans";
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -148,7 +154,7 @@ const Link = styled.div`
       width: 120px;
       height: 18px;
 
-      font-family: "Noto Sans";
+      font-family: var(--font-Pretendard);
       font-style: normal;
       font-weight: 500;
       font-size: 13px;

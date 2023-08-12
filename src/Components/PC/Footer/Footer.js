@@ -26,8 +26,7 @@ export default Footer;
 
 const FooterContainer = styled.div`
   width: 100%;
-  height: 33.11%;
-  min-height: 300px;
+  height: 300px;
   display: flex;
   position: relative;
   flex-direction: column;

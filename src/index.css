@@ -44,8 +44,8 @@ code {
   src: url(./static/fonts/Pretendard-Light.otf);
 }
 @font-face {
-  font-family: "Pretendard-Medium";
-  src: url(./static/fonts/Pretendard-Medium.otf);
+  font-family: "Pretendard-Regular";
+  src: url(./static/fonts/Pretendard-Regular.otf);
 }
 
 :root {
@@ -56,5 +56,5 @@ code {
   --font-Pretendard-ExtraLight: "Pretendard-ExtraLight";
   --font-Pretendard-SemiBold: "Pretendard-SemiBold";
   --font-Pretendard-Light: "Pretendard-Light";
-  --font-Pretendard: "Pretendard-Medium";
+  --font-Pretendard: "Pretendard-Regular";
 }
