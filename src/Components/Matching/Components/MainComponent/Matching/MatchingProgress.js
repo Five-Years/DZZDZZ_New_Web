@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import styled from "styled-components";
@@ -7,16 +7,75 @@ import { ReactComponent as DzzDate } from "assets/dzzdzz_datelogo.svg";
 import Lottie from "lottie-react";
 import Logo from "assets/matching_logo2.json";
 import search from "assets/search.json";
-
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import StateSlice from "features/State/StateSlice";
+import { useSelector } from "react-redux";
 var Spinner = require("react-spinkit");
 
 function MatchingProgress() {
+  const location = useLocation();
+  const dispatch = useDispatch();
   const { state } = useLocation();
+  const Theme = location.state.theme; // Theme-> 0이면 커플, 1이면 친구
+
   const [loading, setLoading] = useState(true);
+  const [MatchedUserData, setMatchedUserData] = useState(null);
+  const matchingType = ["Couple", "Friend"];
+
   setInterval(() => {
     setLoading(false);
   }, 5000);
+
   const navigate = useNavigate();
+
+  //@ 현재 매칭하는 상대방의 정보를 불러오고 리듀서에 저장한다 (친구, 이성 테마에 맞춰서)
+  const getMatchedUserInfo = async (at, rt) => {
+    try {
+      const Response = await axios.get(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/matching/user/info?matchingType=${matchingType[Theme]}`, // 매칭타입 가변적으로 만들어주기
+        {
+          headers: {
+            Authorization: at,
+            "x-refresh-token": rt,
+            fcmToken: "123",
+            "content-type": "application/json",
+          },
+        }
+      );
+      // dispatch(StateSlice.actions.matchParticipate(Response.data.data));
+      dispatch(StateSlice.actions.MatchedUserInfo(Response.data.data));
+      setMatchedUserData(Response.data.data);
+
+      // 매칭상대방 정보 불러오기
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  //@ 매칭된 상대방 정보
+  // const matchedUserInfo = useSelector((state) => {
+  //   return state.Popup.MatchedUserInfo;
+  // });
+
+  const userAt = useSelector((state) => {
+    return state.Popup.userToken.accessToken;
+  });
+
+  const userRt = useSelector((state) => {
+    return state.Popup.userToken.refreshToken;
+  });
+
+  useEffect(() => {
+    if (MatchedUserData === null) {
+      getMatchedUserInfo(userAt, userRt); //토큰값 넣어주기
+    } else {
+      setLoading(false);
+    }
+  }, [MatchedUserData]);
 
   return (
     <MatchingContainer>
@@ -79,6 +138,8 @@ const MatchingContainer = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
+  min-width: 375px;
+  min-height: 720px;
   justify-content: center;
 `;
 

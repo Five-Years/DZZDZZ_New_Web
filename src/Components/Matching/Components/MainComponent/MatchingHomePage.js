@@ -5,9 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import MatchingProgressHeader from "../HeaderComponent/MatchingProgressHeader";
-import { ReactComponent as CareLeft } from "assets/CaretLeft.svg";
 
-import { ReactComponent as Info } from "../../../../assets/Info.svg";
 import { ReactComponent as ToggleRight } from "../../../../assets/toggle-right.svg";
 
 import MatchingHeaderNew from "../HeaderComponent/MatchingHeaderNew";
@@ -16,20 +14,18 @@ import StateSlice from "features/State/StateSlice";
 import MyTicket from "Components/Matching/Components/ReusableComponents/MyTicket";
 import axios from "axios";
 
-function MatchingHomePage() {
+function MatchingHomePage(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const [userData, setUserData] = useState();
 
   //@ 커플매칭, 친구매칭 신청여부, true => 신청가능(미신청), false => 신청불가능(신청))
-  const [CoupleParticipate, setCoupleParticipate] = useState(true);
-  const [FriendParticipate, setFriendParticipate] = useState(true);
 
   const [Day, setDay] = useState("00");
   const [Hour, setHour] = useState("00");
   const [Minute, setMinute] = useState("00");
   const min = 1000 * 60; //1000ms => 1s , 1s*60 = 1m
 
+  //@ 매칭타이머, 하단 팝업창 시간 표시용
   const StartTimer = () => {
     setInterval(() => {
       const now = new Date();
@@ -45,47 +41,112 @@ function MatchingHomePage() {
     }, 1000);
   };
 
-  //@ 사용자 티켓 수
-  const Ticket = useSelector((state) => {
-    return state.Popup.ticket;
-  });
+  // @ 사용자 정보를 가져와 userInfo에 넣은후 리덕스에 저장. (엑세스,리프래시토큰은 웹뷰통신으로 리덕스에 저장)
+  const getData = async (at, rt) => {
+    try {
+      const Response = await axios.get(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/login/token`,
+        {
+          headers: {
+            Authorization: at,
+            "x-refresh-token": rt,
+            fcmToken: "123",
+            "content-type": "application/json",
+          },
+        }
+      );
 
-  //@ 사용자 정보
-  const userInfo = useSelector((state) => {
-    return state.Popup.userInfo;
-  });
+      dispatch(StateSlice.actions.userInfo(Response.data.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const FriendmatchResult = useSelector((state) => {
-    return state.Popup.FriendmatchResult;
-  });
+  // @ 현재 시즌 상태를 가져오고 리듀서에 저장한다
+  // (현재 시즌상태, 마감일에 대한 정보)
+  const getSeason = async () => {
+    const today = new Date();
+    const todaytime = {
+      year: today.getFullYear(),
+      month: today.getMonth() + 1,
+      date: today.getDate(),
+      hours: today.getHours(),
+      minutes: today.getMinutes(),
+      seconds: today.getSeconds(),
+    };
 
-  const CouplematchResult = useSelector((state) => {
-    return state.Popup.CouplematchResult;
-  });
+    try {
+      const Response = await axios.get(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/matching/calendar?today=${`${todaytime.year}-${String(
+          todaytime.month
+        ).padStart(2, "0")}-${String(todaytime.date).padStart(2, "0")}`}`,
 
-  //@ 사용자 이름
-  const Name = useSelector((state) => {
-    return state.Popup.name;
-  });
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
 
-  //@ 현재 시즌 회차 (삭제 예정)
-  const Season = useSelector((state) => {
-    return state.Popup.Season;
-  });
+      dispatch(
+        StateSlice.actions.seasonTimer(
+          new Date(Response.data.data.endsAt).getTime()
+        )
+      );
+      if (Response.data.data.status === "Register") {
+        //@ 접수기간
+        dispatch(StateSlice.actions.SeasonStep(0));
+      } else if (Response.data.data.status === "Matching") {
+        {
+          //@ 매칭기간
+          dispatch(StateSlice.actions.SeasonStep(1));
+        }
+      } else if (Response.data.data.status === "None") {
+        {
+          //@ 휴식기간
+          dispatch(StateSlice.actions.SeasonStep(2));
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  //@ 현재 시즌 상태 (접수중, 매칭중, 접수완료)
-  const SeasonStep = useSelector((state) => {
-    return state.Popup.seasonStep;
-  });
+  // @ 사용자의 매칭 정보를 가져온다
+  // @ 친구매칭, 커플 매칭 신청 정보를 가져와 리듀서에 저장한다
+  const getMatchStatus = async (at, rt) => {
+    try {
+      const Response = await axios.get(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/matching/participate/status`,
+        {
+          headers: {
+            Authorization: at,
+            "x-refresh-token": rt,
+            fcmToken: "123",
+            "content-type": "application/json",
+          },
+        }
+      );
+      dispatch(StateSlice.actions.matchParticipate(Response.data.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const matchParticipate = useSelector((state) => {
-    return state.Popup.matchParticipate;
-  });
-
-  const SeasonTimer = useSelector((state) => {
-    return state.Popup.seasonTimer;
-  });
-
+  //@ 사용자의 매칭 결과 상태를 가져온다.
+  // 접수단계에서 매칭 접수를 안한 상태라면 None, 매칭을 접수했다면 waiting, 진행단계에서 실패했다면 ??? 성공했다면 ??? 등으로 나올듯
   const getMatchResult = async (at, rt) => {
     try {
       const CoupleResponse = await axios.get(
@@ -134,137 +195,82 @@ function MatchingHomePage() {
     }
   };
 
-  // @ 사용자의 매칭 정보를 가져온다
-  // @ 친구매칭, 커플 매칭 신청 정보를 가져와 리듀서에 저장한다
-  const getMatchStatus = async (at, rt) => {
-    try {
-      const Response = await axios.get(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/matching/participate/status`,
-        {
-          headers: {
-            Authorization: at,
-            "x-refresh-token": rt,
-            fcmToken: "123",
-            "content-type": "application/json",
-          },
-        }
-      );
-      dispatch(StateSlice.actions.matchParticipate(Response.data.data));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //@ 사용자 티켓 수 => 아직 서버 통신 구현안됨, 기다리는 중
+  const Ticket = useSelector((state) => {
+    return state.Popup.ticket;
+  });
 
-  // @ 현재 시즌 상태를 가져오고 리듀서에 저장한다
-  // (현재 시즌상태, 마감일에 대한 정보)
-  const getSeason = async () => {
-    const today = new Date();
-    const todaytime = {
-      year: today.getFullYear(),
-      month: today.getMonth() + 1,
-      date: today.getDate(),
-      hours: today.getHours(),
-      minutes: today.getMinutes(),
-      seconds: today.getSeconds(),
-    };
+  //@ 사용자 정보가 담기는 리듀서
+  const userInfo = useSelector((state) => {
+    return state.Popup.userInfo;
+  });
 
-    try {
-      const Response = await axios.get(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/matching/calendar?today=${`${todaytime.year}-${String(
-          todaytime.month
-        ).padStart(2, "0")}-${String(todaytime.date).padStart(2, "0")}`}`,
+  //@ 사용자 이름
+  const Name = useSelector((state) => {
+    return state.Popup.name;
+  });
 
-        {
-          headers: {
-            "content-type": "application/json",
-          },
-        }
-      );
-      dispatch(
-        StateSlice.actions.seasonTimer(new Date(Response.data.data.endsAt))
-      );
-      if (Response.data.data.status === "Register") {
-        dispatch(StateSlice.actions.SeasonStep(0));
-      } else if (Response.data.data.status === "Matching") {
-        {
-          dispatch(StateSlice.actions.SeasonStep(1));
-        }
-      } else if (Response.data.data.status === "None") {
-        {
-          dispatch(StateSlice.actions.SeasonStep(0));
-          // 테스트 기간동안만 0, 추후 2로 바꾸기
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //매칭진행 결과 관련데이터, 친구매칭 결과 (접수안했다면 상태가 None, 접수했다면 waiting, 실패했다면, ??? 성공했다면 기타 등등)
+  const FriendmatchResult = useSelector((state) => {
+    return state.Popup.FriendmatchResult;
+  });
 
-  // @ 사용자 정보를 가져와 리덕스에 저장하는 매소드
-  const getData = async (at, rt) => {
-    try {
-      const Response = await axios.get(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/login/token`,
-        {
-          headers: {
-            Authorization: at,
-            "x-refresh-token": rt,
-            fcmToken: "123",
-            "content-type": "application/json",
-          },
-        }
-      );
+  //매칭진행 결과 관련데이터, 커플매칭 결과  (접수안했다면 상태가 None, 접수했다면 waiting, 실패했다면, ??? 성공했다면 기타 등등)
+  const CouplematchResult = useSelector((state) => {
+    return state.Popup.CouplematchResult;
+  });
 
-      dispatch(StateSlice.actions.userInfo(Response.data.data));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //@ 현재 시즌 회차 (삭제 예정)
+  const Season = useSelector((state) => {
+    return state.Popup.Season;
+  });
 
-  //@ 만약 사용자 정보가 있다면 닉네임, 정보등을 최신화 한다.
-  //@ 티켓수,젤리수, 매칭상태 등.
+  const userAt = useSelector((state) => {
+    return state.Popup.userToken.accessToken;
+  });
+
+  const userRt = useSelector((state) => {
+    return state.Popup.userToken.refreshToken;
+  });
+
+  //@ 현재 시즌 상태 (접수중, 매칭중, 접수완료)
+  const SeasonStep = useSelector((state) => {
+    return state.Popup.seasonStep;
+  });
+
+  const matchParticipate = useSelector((state) => {
+    return state.Popup.matchParticipate;
+  });
+
+  //@ 현재 시즌상태가 언제 끝나는지에 대한 정보가 담긴 리듀서 (매칭접수, 매칭진행 등 언제까지 진행하는지)
+  const SeasonTimer = useSelector((state) => {
+    return state.Popup.seasonTimer;
+  });
+
+  //@ 현재 시즌상태 없다면 시즌상태를 가져온다, 시즌상태가 있다면 매칭 결과를 가져온다
+  //접수를 안한 상태라면 상태가 None이 나온다, 접수를 한 상태라면 waiting, 매칭결과는 기타 등등
   useEffect(() => {
-    if (SeasonTimer !== 0) StartTimer();
+    if (SeasonStep === -1 && userAt != null) {
+      getSeason();
+      getData(userAt, userRt);
+    } else if (SeasonStep !== -1 && userAt != null) {
+      // 만약 현재 시즌진행중이라면 매칭 결과정보를 가져온다.
+      getMatchStatus(userAt, userRt);
+      getMatchResult(userAt, userRt);
+    }
+  }, [SeasonStep, userAt]);
+
+  // //@ 시즌타이머 정보를 서버로부터 받아 왔다면 타이머 실행.
+  useEffect(() => {
+    if (SeasonTimer !== null) StartTimer();
   }, [SeasonTimer]);
 
+  // //@ 만약 사용자 정보가 있다면 닉네임, 티켓수 등 최신화. (아직 티켓수는 반영안됨.)
   useEffect(() => {
     if (userInfo) {
       dispatch(StateSlice.actions.Name(userInfo.nickname));
     }
   }, [userInfo]);
-
-  useEffect(() => {
-    if (matchParticipate) {
-      setCoupleParticipate(matchParticipate.friendMatchingAvailable);
-      setFriendParticipate(matchParticipate.coupleMatchingAvailable);
-    }
-  }, [matchParticipate]);
-
-  useEffect(() => {
-    if (SeasonStep === -1) {
-      getSeason();
-    } else if (SeasonStep === 1) {
-      getMatchResult();
-    }
-  }, [SeasonStep]);
-
-  useEffect(() => {
-    if (matchParticipate === null) {
-      getMatchStatus();
-    }
-  });
 
   //@웹뷰 통신을 하기위한 리스너 이벤트들
 
@@ -275,7 +281,13 @@ function MatchingHomePage() {
       //@ 사용자 토큰을 받아와 정보를 서버로부터 받아온다
       case "loginToken":
         if (Name === "anonymous") {
-          getData(data.accessToken, data.refreshToken);
+          dispatch(
+            StateSlice.actions.userToken({
+              accessToken: data.accessToken,
+              refreshToken: data.refreshToken,
+            })
+          );
+          // getData(data.accessToken, data.refreshToken);
         }
         break;
 
@@ -317,11 +329,9 @@ function MatchingHomePage() {
     //@ 접수중 상태일때
     if (props === 0) {
       //@ 매칭 접수를 안한 상태인 경우
-
       if (
-        matchParticipate !== null &&
-        (!matchParticipate.CoupleParticipate ||
-          !matchParticipate.FriendParticipate)
+        matchParticipate.friendMatchingAvailable &&
+        matchParticipate.coupleMatchingAvailable // 친구매칭, 이성매칭 둘다 신청가능한상태라면
       ) {
         return (
           <EventTextContainer>
@@ -356,13 +366,35 @@ function MatchingHomePage() {
     }
     //@ 매칭 시작!
     else if (props === 1) {
-      // 접수를 안한 경우, 매칭성사가 안된 경우
-      // 매칭성사 안된 경우 확인할수 있는 방법이 있나??
+      // 접수를 안한 경우 혹은 매칭성사가 안된 경우
       if (
-        matchParticipate !== null &&
-        (!matchParticipate.CoupleParticipate ||
-          !matchParticipate.FriendParticipate)
+        CouplematchResult.matchingResult === "WaitRoundResult" ||
+        CouplematchResult.matchingResult === "WaitChoice" ||
+        CouplematchResult.matchingResult === "RoundSuccess" ||
+        CouplematchResult.matchingResult === "NoneWithHistory" ||
+        FriendmatchResult.matchingResult === "WaitRoundResult" ||
+        FriendmatchResult.matchingResult === "WaitChoice" ||
+        FriendmatchResult.matchingResult === "RoundSuccess" ||
+        FriendmatchResult.matchingResult === "NoneWithHistory"
       ) {
+        return (
+          <EventTextContainer>
+            {" "}
+            <EventText>
+              <text>매칭시작</text>
+            </EventText>
+            <EventTextTime>
+              <text>
+                {" "}
+                {Day}일 {Hour}시간 {Minute}분 까지 매칭이 진행될 예정이에요
+              </text>
+            </EventTextTime>
+          </EventTextContainer>
+        );
+      }
+
+      // 접수를 한상태, 정상적으로 매칭이 진행중인경우 => 각 단계별 케이스 추가 필요
+      else {
         return (
           <EventTextContainer>
             {" "}
@@ -375,83 +407,8 @@ function MatchingHomePage() {
           </EventTextContainer>
         );
       }
-
-      //@ 접수를 한 경우에서의 조건들
-
-      // else if // 매칭성사, 상대방확인 아직 안했거나 결정하지 않은 상태
-      // {
-      //   <EventTextContainer>
-      //   {" "}
-      //   <EventText>
-      //     <text>매칭 시작!</text>
-      //   </EventText>
-      //   <EventTextTime>
-      //     <text>지금 상대방을 확인할 수 있어요</text>
-      //   </EventTextTime>
-      // </EventTextContainer>
-      // }
-
-      // else if // 접수를 한상태, 나도 선택(수락)을 하였고, 상대방도 선택을 한 상태
-      // {
-      //   <EventTextContainer>
-      //   {" "}
-      //   <EventText>
-      //     <text>결과 발표!</text>
-      //   </EventText>
-      //   <EventTextTime>
-      //     <text>지금 결과를 확인할 수 있어요</text>
-      //   </EventTextTime>
-      // </EventTextContainer>
-      // }
-
-      //@ 매칭이 성사된 상태 + 상대방을 선택 결정한 상태
-      else if (
-        (CouplematchResult.matchingResult !== "None" &&
-          CouplematchResult.myChoice === "Accept") ||
-        (FriendmatchResult.matchingResult !== "None" &&
-          FriendmatchResult.myChoice === "Accept")
-      ) {
-        <EventTextContainer>
-          {" "}
-          <EventText>
-            <text>매칭 시작!</text>
-          </EventText>
-          <EventTextTime>
-            <text>
-              {Day}일 {Hour}시간 {Minute}분 뒤에 결과를 확인할 수 있어요
-            </text>
-          </EventTextTime>
-        </EventTextContainer>;
-      } else if (
-        CouplematchResult.matchingResult !== "None" ||
-        FriendmatchResult.matchingResult !== "None"
-      ) {
-        <EventTextContainer>
-          {" "}
-          <EventText>
-            <text>매칭시작!</text>
-          </EventText>
-          <EventTextTime>
-            <text>
-              {Day}일 {Hour}시간 {Minute}분 까지 상대를 결정할 수 있어요.
-            </text>
-          </EventTextTime>
-        </EventTextContainer>;
-      }
-
-      // 접수를 한상태, 상대방확인
-      else {
-        <EventTextContainer>
-          {" "}
-          <EventText>
-            <text>지금은 매칭중!</text>
-          </EventText>
-          <EventTextTime>
-            <text>다음 매칭접수 일정을 기다려주세요.</text>
-          </EventTextTime>
-        </EventTextContainer>;
-      }
     } else if (props === 2) {
+      // 웹뷰 팝업 필요
       return (
         <EventTextContainer>
           {" "}
@@ -509,7 +466,10 @@ function MatchingHomePage() {
           >
             <SelectionTitle>
               <text>
-                {SeasonStep === 1 && CoupleParticipate === false ? (
+                {SeasonStep === 1 &&
+                (CouplematchResult.matchingResult === "WaitChoice" ||
+                  CouplematchResult.matchingResult === "WaitRoundResult" ||
+                  FriendmatchResult.matchingResult === "NoneWithHistory") ? (
                   <>
                     {" "}
                     <span>#</span> <span>확인하러가기</span>
@@ -542,7 +502,10 @@ function MatchingHomePage() {
             <SelectionTitle>
               {/*  className="disalbed" */}
               <text>
-                {SeasonStep === 1 && FriendParticipate === false ? (
+                {SeasonStep === 1 &&
+                (FriendmatchResult.matchingResult === "WaitChoice" ||
+                  FriendmatchResult.matchingResult === "WaitRoundResult" ||
+                  FriendmatchResult.matchingResult === "NoneWithHistory") ? (
                   <>
                     {" "}
                     <span className="friend">#</span>{" "}
@@ -607,7 +570,9 @@ function MatchingHomePage() {
             </CalenderContainer>
           </BottomContents>
         </BottomContainer>
-        <EventContainer>{Description(SeasonStep)}</EventContainer>
+        <EventContainer>
+          {matchParticipate != null ? Description(SeasonStep) : <></>}
+        </EventContainer>
       </MobileContainer>
     </>
   );
@@ -749,7 +714,7 @@ const EventContainer = styled.div`
   height: 12.3%;
   position: absolute;
   /* top: 88%; */
-  bottom: 0;
+  bottom: 0px;
   border-radius: 20px 20px 0px 0px;
   box-shadow: 0px -4px 23px -3px rgba(0, 0, 0, 0.15);
 `;
@@ -787,6 +752,10 @@ export const MobileContainer = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+  min-width: 375px;
+  min-height: 720px;
+  /* max-width: 412px;
+  max-height: 915px; */
   position: absolute;
 `;
 

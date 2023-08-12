@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -7,21 +7,51 @@ import styled from "styled-components";
 import MatchingHeaderNew from "../../HeaderComponent/MatchingHeaderNew";
 import MatchingProgressHeader from "../../HeaderComponent/MatchingProgressHeader";
 import MyTicket from "../../ReusableComponents/MyTicket";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import StateSlice from "features/State/StateSlice";
 
 function MatchingPage() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const Theme = location.state.theme;
-  console.log(Theme);
+  const Theme = location.state.theme; // Theme-> 0이면 커플, 1이면 친구
+  const [can, setCan] = useState();
+  const [status, setStatus] = useState({});
+  const matchingType = ["Couple", "Friend"];
+
+  // 접수단계라면 현재 카테고리에 대하여 신청가능한지 리덕스에서 불러와 로컬변수에 넣어준다.
 
   // const Name = useSelector((state) => {
   //   return state.Popup.name;
   // });
-  const Season = useSelector((state) => {
-    return state.Popup.season;
-  });
+  // const Season = useSelector((state) => {
+  //   return state.Popup.season;
+  // });
   const SeasonStep = useSelector((state) => {
-    return state.Popup.seasonstep;
+    return state.Popup.seasonStep;
+  });
+
+  const matchParticipate = useSelector((state) => {
+    return state.Popup.matchParticipate;
+  });
+
+  const userAt = useSelector((state) => {
+    return state.Popup.userToken.accessToken;
+  });
+
+  const userRt = useSelector((state) => {
+    return state.Popup.userToken.refreshToken;
+  });
+
+  //매칭진행 결과 관련데이터, 친구매칭 결과 (접수안했다면 상태가 None, 접수했다면 waiting, 실패했다면, ??? 성공했다면 기타 등등)
+  const FriendmatchResult = useSelector((state) => {
+    return state.Popup.FriendmatchResult;
+  });
+
+  //매칭진행 결과 관련데이터, 커플매칭 결과  (접수안했다면 상태가 None, 접수했다면 waiting, 실패했다면, ??? 성공했다면 기타 등등)
+  const CouplematchResult = useSelector((state) => {
+    return state.Popup.CouplematchResult;
   });
 
   useEffect(() => {
@@ -30,7 +60,7 @@ function MatchingPage() {
     );
   }, []);
 
-  const datalist = ["date", "friend"];
+  const datalist = ["Couple", "Friend"];
   const GotoMatching = () => {
     navigate("/MatchingProgress", { state: { theme: Theme } });
   };
@@ -40,6 +70,16 @@ function MatchingPage() {
     document.addEventListener("message", (e) => listener(e.data));
     //ios
     window.addEventListener("message", (e) => listener(e.data));
+  }, []);
+
+  useEffect(() => {
+    if (Theme === 0) {
+      setCan(matchParticipate.coupleMatchingAvailable);
+      setStatus(CouplematchResult);
+    } else {
+      setCan(matchParticipate.friendMatchingAvailable);
+      setStatus(FriendmatchResult);
+    }
   }, []);
 
   const listener = (event) => {
@@ -58,54 +98,161 @@ function MatchingPage() {
     }
   };
 
-  const MatchingAvailable = () => {
-    // 매칭이 가능한지 판별해줘서 알맞는 버튼을 리턴해주는 함수
-    // @접수중, 접수가능일때는 신청하기 버튼을
-    if (SeasonStep === 0 && true) {
-      //신청하기
-      <EachButton
-        className="activate"
-        onClick={() => {
-          window.ReactNativeWebView?.postMessage(
-            JSON.stringify({
-              type: "application",
-              data: datalist[Theme],
-            })
-          );
-          GotoMatching();
+  const getMatchStatus = async (at, rt) => {
+    try {
+      const Response = await axios.get(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/matching/participate/status`,
+        {
+          headers: {
+            Authorization: at,
+            "x-refresh-token": rt,
+            fcmToken: "123",
+            "content-type": "application/json",
+          },
+        }
+      );
+      dispatch(StateSlice.actions.matchParticipate(Response.data.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-          // window.ReactNativeWebView?.postMessage(
-          //   JSON.stringify({ type: "lackinfo", data: {photoauthen : bool, studentauthen : bool})
-          // );
-        }}
-        matching={Theme}
-      >
-        <text className="enter">신청하기</text>
-      </EachButton>;
+  const Apply = async (at, rt) => {
+    try {
+      const Response = await axios.post(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/matching/participate?matchingType=${matchingType[Theme]}`, // 신청하기, 친구매칭 Friend, 커플매칭 Couple
+        {},
+        {
+          headers: {
+            Authorization: at,
+            "x-refresh-token": rt,
+            fcmToken: "123",
+            "content-type": "application/json",
+          },
+        }
+      );
+      console.log(Response.data.data);
+      alert("신청하였습니다!");
+      navigate("/matching");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //상황별 버튼 제공해주는 함수, 신청접수기간 + 접수가능 => 신청하기 버튼, 접수불가능 => 지금은 신청할수 없어요 버튼
+  //매칭진행기간 + 매칭성공 => 상대방확인하기 버튼, 매칭진행기간 + 매칭실패 또는 미신청 => 지금은 신청할수 없어요 버튼, => 그외 확인하기 버튼
+  //매칭준비기간 => 지금은 신청할수 없어요 버튼
+
+  const Button = () => {
+    // @접수중, 접수가능일때는 신청하기 버튼을
+    //테스트용, 추후 can으로 바꾸기
+    if (SeasonStep === 0 && can) {
+      //신청하기
+      return (
+        <EachButton
+          className="activate"
+          onClick={() => {
+            Apply(userAt, userRt);
+            window.ReactNativeWebView?.postMessage(
+              JSON.stringify({
+                type: "application",
+                data: datalist[Theme],
+              })
+            );
+          }}
+          matching={Theme}
+        >
+          <text className="enter">신청하기</text>
+        </EachButton>
+      );
     }
 
-    // @매칭중, 매칭상대가 존재하는 경우에는 확인하기 버튼을
-    else if (SeasonStep === 1 && true) {
+    // @매칭중, 매칭상대가 존재하는 경우에는 상대방 확인하기 버튼 활성화
+    else if (SeasonStep === 1 && status.matchingResult === "WaitChoice") {
       //매칭시작하기 버튼
-      <EachButton
-        className="activate"
-        onClick={() => {
-          window.ReactNativeWebView?.postMessage(
-            JSON.stringify({
-              type: "application",
-              data: datalist[Theme],
-            })
-          );
-          GotoMatching();
+      return (
+        <EachButton
+          className="activate"
+          onClick={() => {
+            window.ReactNativeWebView?.postMessage(
+              JSON.stringify({
+                type: "application",
+                data: datalist[Theme],
+              })
+            );
+            GotoMatching();
 
-          // window.ReactNativeWebView?.postMessage(
-          //   JSON.stringify({ type: "lackinfo", data: {photoauthen : bool, studentauthen : bool})
-          // );
-        }}
-        matching={Theme}
-      >
-        <text className="enter">확인하기</text>
-      </EachButton>;
+            // window.ReactNativeWebView?.postMessage(
+            //   JSON.stringify({ type: "lackinfo", data: {photoauthen : bool, studentauthen : bool})
+            // );
+          }}
+          matching={Theme}
+        >
+          <text className="enter">상대방 확인하기</text>
+        </EachButton>
+      );
+    } else if (
+      SeasonStep === 1 &&
+      status.matchingResult === "WaitRoundResult"
+    ) {
+      //매칭시작하기 버튼
+      return (
+        <EachButton
+          className="activate"
+          onClick={() => {
+            window.ReactNativeWebView?.postMessage(
+              JSON.stringify({
+                type: "application",
+                data: datalist[Theme],
+              })
+            );
+            GotoMatching();
+
+            // window.ReactNativeWebView?.postMessage(
+            //   JSON.stringify({ type: "lackinfo", data: {photoauthen : bool, studentauthen : bool})
+            // );
+          }}
+          matching={Theme}
+        >
+          <text className="enter">결과 대기중</text>
+        </EachButton>
+      );
+    } else if (
+      SeasonStep === 1 &&
+      (status.matchingResult === "RoundFail" ||
+        status.matchingResult === "RoundSuccess") &&
+      status.myChoice != null
+    ) {
+      //@ 결과대기중, 상대방 결정 확인 페이지로 이동
+      return (
+        <EachButton
+          className="activate"
+          onClick={() => {
+            window.ReactNativeWebView?.postMessage(
+              JSON.stringify({
+                type: "application",
+                data: datalist[Theme],
+              })
+            );
+            GotoMatching();
+
+            // window.ReactNativeWebView?.postMessage(
+            //   JSON.stringify({ type: "lackinfo", data: {photoauthen : bool, studentauthen : bool})
+            // );
+          }}
+          matching={Theme}
+        >
+          <text className="enter">결과 확인하러 가기</text>
+        </EachButton>
+      );
     } else {
       //신청할수없음 버튼
       return (
@@ -115,8 +262,6 @@ function MatchingPage() {
       );
     }
   };
-
-  console.log(datalist[Theme]);
 
   //@ 매칭 페이지
   //stepseason이 0이면 신청 하기 버튼 활성화 및 신청 가능, 신청한 사람은 중복 신청 불가토록 비활성화
@@ -222,7 +367,8 @@ function MatchingPage() {
             */}
             {/* 접수중 기간인지,  신청가능한지 여부를 확인 */}
             {/* SeasonStep === 0 && */}
-            {true ? (
+            {Button()}
+            {/* {true ? (
               <EachButton
                 className="activate"
                 onClick={() => {
@@ -246,7 +392,7 @@ function MatchingPage() {
               <EachButton className="deactivate" matching={Theme}>
                 <text className="enter">지금은 신청할 수 없어요.</text>
               </EachButton>
-            )}
+            )} */}
             {/* 
               <EachButton
                 className="activate"
@@ -294,6 +440,8 @@ export const MobileContainer = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+  min-width: 375px;
+  min-height: 720px;
   position: absolute;
 `;
 

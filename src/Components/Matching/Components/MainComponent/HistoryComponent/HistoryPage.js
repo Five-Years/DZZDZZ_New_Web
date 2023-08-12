@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { ReactComponent as Mile } from "assets/mile.svg";
+import { ReactComponent as Jelly } from "assets/jelly.svg";
 import { ReactComponent as DisabledTicket } from "assets/disabledTicket.svg";
-import { ReactComponent as DisabledMile } from "assets/disabledMile.svg";
+import { ReactComponent as DisabledJelly } from "assets/DisabledJelly.svg";
 import { ReactComponent as Ticket } from "assets/ticket.svg";
 
 import { Link } from "react-router-dom";
@@ -63,7 +63,7 @@ function HistoryPage() {
             }}
           >
             <ItemContainer>
-              {isSelected ? <DisabledMile /> : <Mile />}
+              {isSelected ? <DisabledJelly /> : <Jelly />}
               <text>1</text>
             </ItemContainer>
           </MileSection>

@@ -34,6 +34,8 @@ function MenuLinks() {
             dispatch(StateSlice.actions.isStatic(false));
             dispatch(StateSlice.actions.isFrame(false));
             dispatch(StateSlice.actions.isFAQ(false));
+            dispatch(StateSlice.actions.isNotice(false));
+            dispatch(StateSlice.actions.isGuide(false));
           }}
         >
           단짠단짠
@@ -45,6 +47,8 @@ function MenuLinks() {
             dispatch(StateSlice.actions.isStatic(false));
             dispatch(StateSlice.actions.isDzz(false));
             dispatch(StateSlice.actions.isFAQ(false));
+            dispatch(StateSlice.actions.isNotice(false));
+            dispatch(StateSlice.actions.isGuide(true));
           }}
         >
           단짠가이드
@@ -58,6 +62,8 @@ function MenuLinks() {
             dispatch(StateSlice.actions.isStatic(false));
             dispatch(StateSlice.actions.isDzz(false));
             dispatch(StateSlice.actions.isFAQ(false));
+            dispatch(StateSlice.actions.isNotice(true));
+            dispatch(StateSlice.actions.isGuide(false));
           }}
         >
           공지사항
@@ -68,6 +74,8 @@ function MenuLinks() {
             dispatch(StateSlice.actions.isStatic(true));
             dispatch(StateSlice.actions.isDzz(false));
             dispatch(StateSlice.actions.isFAQ(false));
+            dispatch(StateSlice.actions.isNotice(false));
+            dispatch(StateSlice.actions.isGuide(false));
           }}
         >
           통계리포트
@@ -79,6 +87,8 @@ function MenuLinks() {
             dispatch(StateSlice.actions.isStatic(false));
             dispatch(StateSlice.actions.isDzz(false));
             dispatch(StateSlice.actions.isFAQ(true));
+            dispatch(StateSlice.actions.isNotice(false));
+            dispatch(StateSlice.actions.isGuide(false));
           }}
         >
           FAQ

@@ -15,8 +15,24 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { backIn } from "framer-motion";
 import { BackgroundCard } from "../../StyledComponent/MatchingStyled";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
-function Matching2() {
+function Matching2(props) {
+  const [matchingType, setMatchingType] = useState(""); // 친구매칭인지, 이성매칭인지 정보.
+
+  useEffect(() => {
+    if (props.theme === 0) {
+      setMatchingType("Couple");
+    } else {
+      setMatchingType("Friend");
+    }
+  });
+
+  // theme == 0 커플매칭, theme == 1 친구매칭
+
+  // 상대방 정보 가져오기
+
   const DetailDownRef = useRef();
   const DetailUpRef = useRef();
 
@@ -31,23 +47,23 @@ function Matching2() {
     //ios
     window.addEventListener("message", (e) => listener(e.data));
   }, []);
-  const userData = {
-    matchedUserNickname: "단짠지기",
-    images: "",
-    school: "단국대학교(죽전)",
-    gender: "Female",
-    studentId: "14",
-    college: "공과대학",
-    introduce: "안녕하세요",
-    personalities: ["진지한", "진취적인", "예의바른", "솔직한", "상냥한"],
-    interests: ["향수", "애니메이션", "인테리어", "맛집", "홈카페"],
-    region: "",
-    militaryServiceStatus: null,
-    mbti: "INTJ",
-    religion: "",
-    drink: "한달에 한번",
-    smoke: "비 흡연자",
-  };
+  // const userData = {
+  //   matchedUserNickname: "에스테반",
+  //   studentId: 13,
+  //   introduce: null,
+  //   gender: "FEMALE",
+  //   campusIdentifier: "단국대학교",
+  //   college: "소프트웨어학과",
+  //   interests: [],
+  //   personalities: [],
+  //   region: "",
+  //   religion: "",
+  //   militaryServiceStatus: "",
+  //   mbti: "INITIAL_VALUE",
+  //   drink: "",
+  //   smoke: "",
+  //   images: [],
+  // };
 
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
@@ -63,19 +79,65 @@ function Matching2() {
       case "application":
         if (data) {
           if (window.confirm("선택하시겠습니까?")) {
-            alert("선택하셨습니다");
             navigate("/Choice", { state: "accept" });
           }
         }
     }
   };
+  const userAt = useSelector((state) => {
+    return state.Popup.userToken.accessToken;
+  });
 
-  const accept = () => {
-    navigate("/Choice", { state: "accept" });
+  const userRt = useSelector((state) => {
+    return state.Popup.userToken.refreshToken;
+  });
+
+  const accept = async (at, rt) => {
+    try {
+      const Response = await axios.post(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/matching/user/decide?matchingChoice=Accept&matchingType=${matchingType}`, // 동의, couple, friend
+        {},
+        {
+          headers: {
+            Authorization: at,
+            "x-refresh-token": rt,
+            fcmToken: "123",
+            "content-type": "application/json",
+          },
+        }
+      );
+      navigate("/Choice", { state: "accept" });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const reject = () => {
-    navigate("/Choice", { state: "reject" });
+  const reject = async (at, rt) => {
+    try {
+      const Response = await axios.post(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/matching/user/decide?matchingChoice=Reject&matchingType=${matchingType}`, // 동의, couple, friend
+        {},
+        {
+          headers: {
+            Authorization: at,
+            "x-refresh-token": rt,
+            fcmToken: "123",
+            "content-type": "application/json",
+          },
+        }
+      );
+      navigate("/Choice", { state: "reject" });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // @ 사용자 정보를 가져와 리덕스에 저장하는 매소드
@@ -111,7 +173,6 @@ function Matching2() {
   const [detail, setDetail] = useState(false);
   const [isSelected, setIsSelected] = useState(0);
   const navigate = useNavigate();
-
   const settings = {
     dots: true,
     infinite: true,
@@ -119,6 +180,10 @@ function Matching2() {
     slidesToShow: 1,
     slidesToShow: 1,
   };
+
+  const MatchedUserData = useSelector((state) => {
+    return state.Popup.MatchedUserInfo;
+  });
 
   // const Userimages = [
   //   "assets/mango.jpg",
@@ -133,6 +198,11 @@ function Matching2() {
       </ContentContainer>
       <ProfileImageContainer>
         <CarouselContainer dynamicHeight={true} showThumbs={false}>
+          {MatchedUserData.interests.map((item) => (
+            <div>
+              <img src={require("assets/mango.jpg")} alt="" />
+            </div>
+          ))}
           <div>
             <img src={require("assets/mango.jpg")} alt="" />
           </div>
@@ -153,10 +223,9 @@ function Matching2() {
       >
         <DetailTextView detail={detail}></DetailTextView>
         <TextContainer detail={detail}>
-          <text>
-            학교에서 과제만 하기엔 너무 아쉽지 않아? 학교에서 과제만 하기엔 너무
-            아쉽지 않아?
-          </text>
+          {MatchedUserData.introduce && (
+            <text>{MatchedUserData.introduce}</text>
+          )}
         </TextContainer>
         <KeyboardArrowDownIcon
           style={{
@@ -168,8 +237,7 @@ function Matching2() {
       </IntroduceContainer>
       <ProfileNameContainer>
         <ProfileName>
-          <img src={require("assets/CircleWavyCheck.png")} alt="이미지" />
-          <text>{userData.matchedUserNickname}임당</text>
+          <text>{MatchedUserData.matchedUserNickname}</text>
         </ProfileName>
       </ProfileNameContainer>
       <SelectionContainer>
@@ -180,7 +248,7 @@ function Matching2() {
               window.ReactNativeWebView?.postMessage(
                 JSON.stringify({ type: "accept", data: "" })
               );
-              accept();
+              accept(userAt, userRt);
             }}
           >
             {/* <img src={require("assets/Like.png")} alt="이미지" /> */}
@@ -197,7 +265,7 @@ function Matching2() {
               window.ReactNativeWebView?.postMessage(
                 JSON.stringify({ type: "reject", data: "" })
               );
-              reject();
+              reject(userAt, userRt);
             }}
           >
             <LottieContainer>
@@ -228,7 +296,7 @@ function Matching2() {
       <ContentsContainer ref={DetailDownRef}>
         <ContentsName>
           <text>
-            <span>{userData.matchedUserNickname}</span>님의 정보
+            <span>{MatchedUserData.matchedUserNickname}</span>님의 정보
           </text>
         </ContentsName>
         <ContentsSection>
@@ -237,7 +305,7 @@ function Matching2() {
               <text>학교</text>
             </ContentsTitle>
             <ContentsWindow className="fixed">
-              <text>{userData.school}</text>
+              <text>{MatchedUserData.campusIdentifier}</text>
               {/* {MatcherInfo.school} */}
             </ContentsWindow>
           </Contents>
@@ -248,7 +316,7 @@ function Matching2() {
               <text>성별</text>
             </ContentsTitle>
             <ContentsWindow className="fixed">
-              <text>{userData.gender}</text>
+              <text>{MatchedUserData.gender}</text>
               {/* {MatcherInfo.sex} */}
             </ContentsWindow>
           </Contents>
@@ -259,7 +327,7 @@ function Matching2() {
               <text>학번</text>
             </ContentsTitle>
             <ContentsWindow className="fixed">
-              <text>{userData.studentId}학번</text>
+              <text>{MatchedUserData.studentId}학번</text>
               {/* {MatcherInfo.gradenumber} */}
             </ContentsWindow>
           </Contents>
@@ -271,23 +339,25 @@ function Matching2() {
               <span>변경이 필요한 경우 고객센터를 통해 요청해주세요</span>
             </ContentsTitle>
             <ContentsWindow className="fixed">
-              <text>{userData.college}</text>
+              <text>{MatchedUserData.college}</text>
               {/* {MatcherInfo.major} */}
             </ContentsWindow>
           </Contents>
         </ContentsSection>
-        <ContentsSection>
-          <Contents>
-            <ContentsTitle>
-              <text>자기소개</text>
-            </ContentsTitle>
-            <ContentsWindow>
-              <text>{userData.introduce}</text>
-              {/* {MatcherInfo.introduce} */}
-            </ContentsWindow>
-          </Contents>
-        </ContentsSection>
-        {userData.personalities && (
+        {MatchedUserData.introduce && (
+          <ContentsSection>
+            <Contents>
+              <ContentsTitle>
+                <text>자기소개</text>
+              </ContentsTitle>
+              <ContentsWindow>
+                <text>{MatchedUserData.introduce}</text>
+                {/* {MatcherInfo.introduce} */}
+              </ContentsWindow>
+            </Contents>
+          </ContentsSection>
+        )}
+        {MatchedUserData.personalities.length !== 0 && (
           <ContentsSection>
             <Contents>
               <ContentsTitle>
@@ -296,7 +366,7 @@ function Matching2() {
               <ContentsWindow className="tag">
                 <TagContainer>
                   {/* {MatcherInfo.personality, => foreach} */}
-                  {userData.personalities.map((item) => (
+                  {MatchedUserData.personalities.map((item) => (
                     <text>
                       <span>#</span>
                       {item}
@@ -307,7 +377,7 @@ function Matching2() {
             </Contents>
           </ContentsSection>
         )}
-        {userData.interests && (
+        {MatchedUserData.interests.length !== 0 && (
           <ContentsSection>
             <Contents>
               <ContentsTitle>
@@ -316,7 +386,7 @@ function Matching2() {
               <ContentsWindow className="tag">
                 <TagContainer>
                   {/* {MatcherInfo.interest} =>foreach */}
-                  {userData.interests.map((item) => (
+                  {MatchedUserData.interests.map((item) => (
                     <text>
                       <span>#</span>
                       {item}
@@ -328,84 +398,84 @@ function Matching2() {
           </ContentsSection>
         )}
 
-        {userData.region && (
+        {MatchedUserData.region && (
           <ContentsSection>
             <Contents>
               <ContentsTitle>
                 <text>지역</text>
               </ContentsTitle>
               <ContentsWindow>
-                <text>{userData.region}</text>
+                <text>{MatchedUserData.region}</text>
                 {/* {MatcherInfo.area} */}
               </ContentsWindow>
             </Contents>
           </ContentsSection>
         )}
 
-        {userData.militaryServiceStatus && (
+        {MatchedUserData.militaryServiceStatus && (
           <ContentsSection>
             <Contents>
               <ContentsTitle>
                 <text>병역 여부</text>
               </ContentsTitle>
               <ContentsWindow>
-                <text>{userData.militaryServiceStatus}</text>
+                <text>{MatchedUserData.militaryServiceStatus}</text>
                 {/* {MatcherInfo.military} */}
               </ContentsWindow>
             </Contents>
           </ContentsSection>
         )}
 
-        {userData.mbti && (
+        {MatchedUserData.mbti && (
           <ContentsSection>
             <Contents>
               <ContentsTitle>
                 <text>MBTI</text>
               </ContentsTitle>
               <ContentsWindow>
-                <text>{userData.mbti}</text>
+                <text>{MatchedUserData.mbti}</text>
                 {/* {MatcherInfo.mbti} */}
               </ContentsWindow>
             </Contents>
           </ContentsSection>
         )}
 
-        {userData.religion && (
+        {MatchedUserData.religion && (
           <ContentsSection>
             <Contents>
               <ContentsTitle>
                 <text>종교</text>
               </ContentsTitle>
               <ContentsWindow>
-                <text>{userData.religion}</text>
+                <text>{MatchedUserData.religion}</text>
                 {/* {MatcherInfo.religion} */}
               </ContentsWindow>
             </Contents>
           </ContentsSection>
         )}
 
-        {userData.drink && (
+        {MatchedUserData.drink && (
           <ContentsSection>
             <Contents>
               <ContentsTitle>
                 <text>음주</text>
               </ContentsTitle>
               <ContentsWindow>
-                <text>{userData.drink}</text>
+                <text>{MatchedUserData.drink}</text>
                 {/* {MatcherInfo.alcohol} */}
               </ContentsWindow>
             </Contents>
           </ContentsSection>
         )}
 
-        {userData.smoke && (
+        {MatchedUserData.smoke && (
           <ContentsSection>
             <Contents>
               <ContentsTitle>
                 <text>흡연</text>
               </ContentsTitle>
               <ContentsWindow>
-                <text>{userData.smoke}</text>
+                <text>{MatchedUserData.smoke}</text>
                 {/* {MatcherInfo.smoke} */}
               </ContentsWindow>
             </Contents>
@@ -419,7 +489,7 @@ function Matching2() {
                 window.ReactNativeWebView?.postMessage(
                   JSON.stringify({ type: "accept", data: "" })
                 );
-                accept();
+                accept(userAt, userRt);
               }}
             >
               {/* <img src={require("assets/Like.png")} alt="이미지" /> */}
@@ -436,7 +506,7 @@ function Matching2() {
                 window.ReactNativeWebView?.postMessage(
                   JSON.stringify({ type: "reject", data: "" })
                 );
-                reject();
+                reject(userAt, userRt);
               }}
             >
               <LottieContainer>
@@ -517,6 +587,8 @@ export const MatchingContainers = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
+  min-width: 375px;
+  min-height: 700px;
   background: white;
 `;
 
@@ -978,7 +1050,7 @@ const ContentsWindow = styled.div`
   background: #ffffff;
   /* SystemGray/400 */
 
-  border: 0.5px solid #bcbcc0;
+  border: 1px solid #bcbcc0;
   border-radius: 10px;
   &.tag {
     flex-direction: column;

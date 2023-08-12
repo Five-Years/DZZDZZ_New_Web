@@ -1,15 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as Logo } from "../../../assets/dzzdzzNew.svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import StateSlice from "../../../features/State/StateSlice";
+import { useSelector } from "react-redux";
+import { backIn } from "framer-motion";
 
 function HeaderBar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isDzz = useSelector((state) => {
+    return state.Popup.isDzz;
+  });
 
+  const isFAQ = useSelector((state) => {
+    return state.Popup.isFAQ;
+  });
+
+  const isStatic = useSelector((state) => {
+    return state.Popup.isStatic;
+  });
+  const isNotice = useSelector((state) => {
+    return state.Popup.isNotice;
+  });
+  const isGuide = useSelector((state) => {
+    return state.Popup.isGuide;
+  });
   return (
     <HeaderBarContainer>
       <MobileHeaderBar>
@@ -31,6 +49,8 @@ function HeaderBar() {
               dispatch(StateSlice.actions.isFrame(false));
               dispatch(StateSlice.actions.isFAQ(false));
               dispatch(StateSlice.actions.isDzz(false));
+              dispatch(StateSlice.actions.isNotice(false));
+              dispatch(StateSlice.actions.isGuide(false));
 
               navigate("/pc");
             }}
@@ -38,68 +58,83 @@ function HeaderBar() {
         </LogoContainer>
         <MenuContainer>
           <MenuLeft>
-            <text
+            <span
+              className={isDzz ? "isClicked" : ""}
               onClick={() => {
                 dispatch(StateSlice.actions.isDzz(true));
                 dispatch(StateSlice.actions.isStatic(false));
                 dispatch(StateSlice.actions.isFrame(false));
                 dispatch(StateSlice.actions.isFAQ(false));
+                dispatch(StateSlice.actions.isNotice(false));
+                dispatch(StateSlice.actions.isGuide(false));
               }}
             >
               단짠단짠
-            </text>
-            <text
+            </span>
+            <span
+              className={isGuide ? "isClicked" : ""}
               onClick={() => {
                 dispatch(
                   StateSlice.actions.URL("https://dzz-guide.stibee.com")
                 );
                 dispatch(StateSlice.actions.isFrame(true));
+                dispatch(StateSlice.actions.isGuide(true));
                 dispatch(StateSlice.actions.isStatic(false));
                 dispatch(StateSlice.actions.isDzz(false));
                 dispatch(StateSlice.actions.isFAQ(false));
+                dispatch(StateSlice.actions.isNotice(false));
               }}
             >
               단짠 가이드
-            </text>
-            <text
+            </span>
+            <span
+              className={isNotice ? "isClicked" : ""}
               onClick={() => {
                 dispatch(
                   StateSlice.actions.URL("https://dzzdzz-notice.stibee.com/")
                 );
                 dispatch(StateSlice.actions.isFrame(true));
+                dispatch(StateSlice.actions.isNotice(true));
+
                 dispatch(StateSlice.actions.isStatic(false));
                 dispatch(StateSlice.actions.isDzz(false));
                 dispatch(StateSlice.actions.isFAQ(false));
+                dispatch(StateSlice.actions.isGuide(false));
               }}
             >
               공지사항
-            </text>
-            <text
+            </span>
+            <span
+              className={isStatic ? "isClicked" : ""}
               onClick={() => {
                 dispatch(StateSlice.actions.isFrame(false));
                 dispatch(StateSlice.actions.URL(false));
                 dispatch(StateSlice.actions.isDzz(false));
                 dispatch(StateSlice.actions.isFAQ(false));
                 dispatch(StateSlice.actions.isStatic(true));
+                dispatch(StateSlice.actions.isNotice(false));
+                dispatch(StateSlice.actions.isGuide(false));
               }}
             >
               통계리포트
-            </text>
-            <text
+            </span>
+            <span
+              className={isFAQ ? "isClicked" : ""}
               onClick={() => {
                 dispatch(
                   StateSlice.actions.URL(
-                    "https://dzzdzz.notion.site/DZZDZZ-e65ee160595b46c29333619d3fea7e2e?pvs=4"
+                    "https://dzzdzz.notion.site/FAQ-bbd41fcf81eb4c7c8cb09ef7b1bfe8bd?pvs=4"
                   )
                 );
                 dispatch(StateSlice.actions.isFrame(true));
                 dispatch(StateSlice.actions.isStatic(false));
                 dispatch(StateSlice.actions.isDzz(false));
-                dispatch(StateSlice.actions.isFAQ(false));
+                dispatch(StateSlice.actions.isFAQ(true));
+                dispatch(StateSlice.actions.isGuide(false));
               }}
             >
               FAQ
-            </text>
+            </span>
           </MenuLeft>
           {/*<MenuRight onClick={()=>{navigate("/login")}}><text>로그인</text></MenuRight>*/}
         </MenuContainer>
@@ -188,6 +223,7 @@ const MenuContainer = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
 const MenuLeft = styled.div`
   display: flex;
   flex-direction: row;
@@ -202,7 +238,7 @@ const MenuLeft = styled.div`
   min-width: 420px;
   height: 100%;
 
-  > text {
+  > span {
     font-family: var(--font-Pretendard);
     font-size: 16px;
     font-weight: 400;
@@ -219,6 +255,13 @@ const MenuLeft = styled.div`
       text-underline-offset: 7px;
       opacity: 0.5;
     }
+  }
+  > span.isClicked {
+    text-decoration-line: underline;
+    text-decoration-color: red;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 7px;
+    opacity: 0.5;
   }
 `;
 const MenuRight = styled.div`

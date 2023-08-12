@@ -35,12 +35,15 @@ const initialState = {
   isStatic: false,
   isDzz: false,
   isFAQ: false,
+  isNotice: false,
+  isGuide: false,
 
   //@ 사용자 정보
   userInfo: {},
+  userToken: {},
 
   //@ 현재 시즌상태 남은시간
-  seasonTimer: 0,
+  seasonTimer: null,
 
   //@현재 시즌상태정보 (접수중, 매칭중, 휴식중 3가지 케이스)
   seasonStep: -1,
@@ -51,6 +54,9 @@ const initialState = {
   //@매칭 성사 여부, 나의 결정 여부
   FriendmatchResult: {},
   CouplematchResult: {},
+
+  //@ 매칭된 상대방 정보
+  MatchedUserInfo: null,
 };
 
 const StateSlice = createSlice({
@@ -94,6 +100,15 @@ const StateSlice = createSlice({
     isDzz: (state, action) => {
       state.isDzz = action.payload;
     },
+    isGuide: (state, action) => {
+      state.isGuide = action.payload;
+    },
+    userToken: (state, action) => {
+      state.userToken = action.payload;
+    },
+    isNotice: (state, action) => {
+      state.isNotice = action.payload;
+    },
     isFAQ: (state, action) => {
       state.isFAQ = action.payload;
     },
@@ -111,6 +126,9 @@ const StateSlice = createSlice({
     },
     CouplematchResult: (state, action) => {
       state.CouplematchResult = action.payload;
+    },
+    MatchedUserInfo: (state, action) => {
+      state.MatchedUserInfo = action.payload;
     },
   },
 });

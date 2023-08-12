@@ -30,7 +30,7 @@ function MatchingHeaderNew(props) {
   });
 
   const dispatch = useDispatch();
-  const seasonlist = ["매칭 접수", "매칭 진행", "준비중"];
+  const seasonlist = ["매칭 접수", "매칭 진행", "매칭 휴식"];
   const navigate = useNavigate();
   return (
     <>
@@ -110,6 +110,7 @@ const HeaderName = styled.div`
 
   width: 100%;
   height: 81%;
+  overflow: hidden;
 
   > text {
     font-family: var(--font-Pretendard);

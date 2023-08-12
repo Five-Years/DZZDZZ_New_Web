@@ -4,26 +4,26 @@ function HistoryMile() {
   const data = [
     { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
     { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
-    { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
-    { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
-    { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
-    { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
-    { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
-    { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
-    { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
-    { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
-    { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
+    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
+    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
+    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
+    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
+    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
+    // { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
+    // { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
+    // { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
+    // { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
+    // { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
+    // { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
+    // { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
+    // { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
+    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
+    // { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
+    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
+    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
+    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
+    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
+    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
   ];
   return (
     <>
@@ -57,10 +57,10 @@ function HistoryMile() {
                 </ItemRight>
               </ItemBox>
             </ListItemContainer>
-            )
+          );
         }
       })}
-      
+
       {/* // <ListItemContainer>
       //   <ItemBox>
       //     <ItemLeft>
@@ -268,6 +268,7 @@ const ListItemContainer = styled.div`
   justify-content: center;
   width: 100%;
   height: 80px;
+  min-height: 10%;
   left: 0px;
   border-bottom: 0.7px solid #eeeeee;
 `;
