@@ -20,16 +20,7 @@ function MatchingHomePage(props) {
 
   //@ 커플매칭, 친구매칭 신청여부, true => 신청가능(미신청), false => 신청불가능(신청))
   //사용자의 at,rt정보를 userToken에 저장한다, 테스트용 코드
-  useEffect(() => {
-    dispatch(
-      StateSlice.actions.userToken({
-        accessToken:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBZGVsYmVydC5LcmlzMjFAZXhhbXBsZS5jb20iLCJhdXRoIjoiTk9STUFMX1VTRVIiLCJleHAiOjE2OTE5MDI3OTJ9.tT-SN0hPD71cLvPbKukprblcYmMAwyRpCuaoxBT9uWI",
-        refreshToken:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTE5MDI3OTJ9.-Tznsj85iXM-5hxxKYZ1s0LeNdOETuE9NIRmR3oAb0Q",
-      })
-    );
-  }, []);
+
   const [Day, setDay] = useState("00");
   const [Hour, setHour] = useState("00");
   const [Minute, setMinute] = useState("00");
