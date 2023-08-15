@@ -10,12 +10,16 @@ function MyTicket() {
   const Season = useSelector((state) => {
     return state.Popup.Season;
   });
+
+  const userAsset = useSelector((state) => {
+    return state.Popup.userAsset;
+  });
   return (
     <TicketContainer>
       <TicketButton>
         <Ticket>
           <Tickets />
-          <text>1</text>
+          <text>{userAsset.ticket}</text>
         </Ticket>
         <Charge
           onClick={() => {

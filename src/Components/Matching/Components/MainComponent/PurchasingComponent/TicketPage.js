@@ -185,7 +185,7 @@ export const TicketButton = styled.div`
   border-radius: 30px;
 
   > text {
-    font-family: var(--font-Pretendard);
+    font-family: var(--font-Pretendard-SemiBold);
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
@@ -302,7 +302,7 @@ const RematchTicket = styled.div`
   gap: 6px;
 
   > text {
-    font-family: var(--font-Pretendard);
+    font-family: var(--font-Pretendard-SemiBold);
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
@@ -333,7 +333,7 @@ const TicketProduct = styled.div`
   left: 5.71%;
 
   > text {
-    font-family: var(--font-Pretendard);
+    font-family: var(--font-Pretendard-SemiBold);
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
@@ -371,7 +371,7 @@ const TicketPrice = styled.div`
   height: 100%;
 
   > text {
-    font-family: var(--font-Pretendard);
+    font-family: var(--font-Pretendard-SemiBold);
     font-style: normal;
     font-weight: 600;
     font-size: 14px;

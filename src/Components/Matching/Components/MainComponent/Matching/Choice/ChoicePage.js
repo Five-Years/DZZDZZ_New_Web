@@ -330,7 +330,7 @@ const SuggentionButton = styled.div`
   border-radius: 31px;
 
   > text {
-    font-family: var(--font-Pretendard);
+    font-family: var(--font-Pretendard-Bold);
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -386,7 +386,7 @@ const ResultBox = styled.div`
   z-index: 10;
 
   > text {
-    font-family: var(--font-Pretendard);
+    font-family: var(--font-Pretendard-Light);
     font-style: normal;
     font-weight: 300;
     font-size: 18px;
@@ -453,6 +453,7 @@ const WaitingBox = styled.div`
 
     color: #000000;
     > span {
+      font-family: var(--font-Pretendard-Bold);
       color: #ff477e;
       font-weight: 700;
       > span {

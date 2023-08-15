@@ -5,6 +5,7 @@ import { ReactComponent as Jelly } from "assets/jelly.svg";
 import { ReactComponent as DisabledTicket } from "assets/disabledTicket.svg";
 import { ReactComponent as DisabledJelly } from "assets/DisabledJelly.svg";
 import { ReactComponent as Ticket } from "assets/ticket.svg";
+import axios from "axios";
 
 import {
   PurchasePageContainer,
@@ -70,6 +71,46 @@ function Purchasing() {
     window.addEventListener("message", (e) => listener(e.data));
   }, []);
 
+  const getHistory = async (at, rt) => {
+    try {
+      const Response = await axios.get(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/item/history`,
+        {
+          headers: {
+            Authorization: at,
+            "x-refresh-token": rt,
+            fcmToken: "123",
+            "content-type": "application/json",
+          },
+        }
+      );
+
+      dispatch(StateSlice.actions.userHistory(Response.data.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const userAt = useSelector((state) => {
+    return state.Popup.userToken.accessToken;
+  });
+
+  const userRt = useSelector((state) => {
+    return state.Popup.userToken.refreshToken;
+  });
+
+  const userAsset = useSelector((state) => {
+    return state.Popup.userAsset;
+  });
+
+  useEffect(() => {
+    if (userAt) getHistory(userAt, userRt);
+  }, [userAt]);
+
   return (
     <>
       <PurchasePageContainer>
@@ -86,7 +127,7 @@ function Purchasing() {
           >
             <ItemContainer>
               {isSelected ? <DisabledJelly /> : <Jelly />}
-              <text>1</text>
+              <text>{userAsset.jelly}</text>
             </ItemContainer>
           </MileSection>
           <TicketSection
@@ -98,7 +139,7 @@ function Purchasing() {
           >
             <ItemContainer>
               {isSelected ? <Ticket /> : <DisabledTicket />}
-              <text>1</text>
+              <text>{userAsset.ticket}</text>
             </ItemContainer>{" "}
           </TicketSection>
         </TicketMileChangeContainer>

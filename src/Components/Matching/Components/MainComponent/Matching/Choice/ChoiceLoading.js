@@ -6,13 +6,12 @@ import styled from "styled-components";
 var Spinner = require("react-spinkit");
 
 function ChoiceLoading() {
-  const {state} = useLocation();
+  const { state } = useLocation();
   const [loading, setLoading] = useState(true);
   setInterval(() => {
     setLoading(false);
   }, 5000);
   const navigate = useNavigate();
-  
 
   return (
     <MatchingContainer>
@@ -24,29 +23,33 @@ function ChoiceLoading() {
         <></>
       )}
       <CardContainer>
-        <CardContents theme = {state.theme}>
-        {state.theme === 1 ? <img
-                src={require("assets/dzzdzz_logo.png")}
-                alt="이미지"
-              />       : <img
-              src={require("assets/dzzdzz_logo2.png")}
-              alt="이미지"
-            />       }  
-                    <text>
-              드디어<br></br>
-              <span>매칭결과</span>가<br />
-              나왔어요!
-            </text>
+        <CardContents theme={state.theme}>
+          {state.theme === 1 ? (
+            <img src={require("assets/dzzdzz_logo.png")} alt="이미지" />
+          ) : (
+            <img src={require("assets/dzzdzz_logo2.png")} alt="이미지" />
+          )}
+          <text>
+            드디어<br></br>
+            <span>매칭결과</span>가<br />
+            나왔어요!
+          </text>
         </CardContents>
       </CardContainer>
-      <MatchingConfirmContainer theme = {state.theme}>
+      <MatchingConfirmContainer theme={state.theme}>
         {loading ? (
           <text>
-            두근두근!<br/>
+            두근두근!
+            <br />
             결과를 가져오고 있어요.
           </text>
         ) : (
-          <ConfirmButton onClick={()=>{navigate("/ChoiceResult")}} theme = {state.theme}>
+          <ConfirmButton
+            onClick={() => {
+              navigate("/ChoiceResult");
+            }}
+            theme={state.theme}
+          >
             <text>확인하기</text>
           </ConfirmButton>
         )}
@@ -103,7 +106,7 @@ const CardContents = styled.div`
   height: 100%;
 
   > text {
-    font-family: var(--font-Pretendard);
+    font-family: var(--font-Pretendard-SemiBold);
     font-style: normal;
     font-weight: 600;
     font-size: 22px;
@@ -115,8 +118,7 @@ const CardContents = styled.div`
   }
 
   > text > span {
-    
-    color: ${props=> props.theme === 1 ? "#0094FF" : "#FF477E" };  
+    color: ${(props) => (props.theme === 1 ? "#0094FF" : "#FF477E")};
   }
 
   > img {
@@ -146,7 +148,7 @@ const MatchingConfirmContainer = styled.div`
     /* or 156% */
     text-align: center;
     /* dzz_pink */
-    color: ${props=> props.theme === 1 ? "#0094FF" : "#FF477E" };  
+    color: ${(props) => (props.theme === 1 ? "#0094FF" : "#FF477E")};
   }
 `;
 
@@ -163,11 +165,11 @@ const ConfirmButton = styled.div`
   width: 66.66%;
   height: 100%;
   /* dzz_pink */
-  background: ${props=> props.theme === 1 ? "#0094FF" : "#FF477E" };  
+  background: ${(props) => (props.theme === 1 ? "#0094FF" : "#FF477E")};
   border-radius: 13px;
 
   > text {
-    font-family: var(--font-Pretendard);
+    font-family: var(--font-Pretendard-SemiBold);
     font-style: normal;
     font-weight: 600;
     font-size: 16px;

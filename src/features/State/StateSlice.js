@@ -41,6 +41,7 @@ const initialState = {
   //@ 사용자 정보
   userInfo: {},
   userToken: {},
+  userHistory: {},
 
   //@ 현재 시즌상태 남은시간
   seasonTimer: null,
@@ -57,6 +58,10 @@ const initialState = {
 
   //@ 매칭된 상대방 정보
   MatchedUserInfo: null,
+
+  //@사용자 자산 정보
+  userAsset: { jelly: 0, ticket: 0 },
+  userMatchAvailable: {},
 };
 
 const StateSlice = createSlice({
@@ -129,6 +134,15 @@ const StateSlice = createSlice({
     },
     MatchedUserInfo: (state, action) => {
       state.MatchedUserInfo = action.payload;
+    },
+    userAsset: (state, action) => {
+      state.userAsset = action.payload;
+    },
+    userHistory: (state, action) => {
+      state.userHistory = action.payload;
+    },
+    matchAvailable: (state, action) => {
+      state.userMatchAvailable = action.payload;
     },
   },
 });

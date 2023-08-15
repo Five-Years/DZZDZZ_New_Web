@@ -67,6 +67,30 @@ function MatchingHomePage(props) {
     }
   };
 
+  const getAsset = async (at, rt) => {
+    try {
+      const Response = await axios.get(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/item/remain`,
+        {
+          headers: {
+            Authorization: at,
+            "x-refresh-token": rt,
+            fcmToken: "123",
+            "content-type": "application/json",
+          },
+        }
+      );
+
+      dispatch(StateSlice.actions.userAsset(Response.data.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // @ 현재 시즌 상태를 가져오고 리듀서에 저장한다
   // (현재 시즌상태, 마감일에 대한 정보)
   const getSeason = async () => {
@@ -108,7 +132,7 @@ function MatchingHomePage(props) {
       } else if (Response.data.data.status === "Matching") {
         {
           //@ 매칭기간
-          dispatch(StateSlice.actions.SeasonStep(1));
+          dispatch(StateSlice.actions.SeasonStep(0));
         }
       } else if (Response.data.data.status === "None") {
         {
@@ -234,6 +258,10 @@ function MatchingHomePage(props) {
     return state.Popup.userToken.refreshToken;
   });
 
+  const userAsset = useSelector((state) => {
+    return state.Popup.userAsset;
+  });
+
   //@ 현재 시즌 상태 (접수중, 매칭중, 접수완료)
   const SeasonStep = useSelector((state) => {
     return state.Popup.seasonStep;
@@ -248,11 +276,24 @@ function MatchingHomePage(props) {
     return state.Popup.seasonTimer;
   });
 
+  const cantApplyPopup = () => {
+    window.ReactNativeWebView?.postMessage(
+      JSON.stringify({ type: "applicationEnd", data: "" })
+    );
+  };
+
+  const seasonBreaking = () => {
+    window.ReactNativeWebView?.postMessage(
+      JSON.stringify({ type: "seasonEnd", data: "" })
+    );
+  };
+
   //@ 현재 시즌상태 없다면 시즌상태를 가져온다, 시즌상태가 있다면 매칭 결과를 가져온다
   //접수를 안한 상태라면 상태가 None이 나온다, 접수를 한 상태라면 waiting, 매칭결과는 기타 등등
   useEffect(() => {
     if (SeasonStep === -1 && userAt != null) {
       getSeason();
+      getAsset(userAt, userRt);
       getData(userAt, userRt);
     } else if (SeasonStep !== -1 && userAt != null) {
       // 만약 현재 시즌진행중이라면 매칭 결과정보를 가져온다.
@@ -279,7 +320,7 @@ function MatchingHomePage(props) {
     const { data, type } = JSON.parse(event);
 
     switch (type) {
-      //@ 사용자 토큰을 받아와 정보를 서버로부터 받아온다
+      //@ 사용자 토큰을 받아 리덕스에 저장
       case "loginToken":
         if (Name === "anonymous") {
           dispatch(
@@ -288,7 +329,6 @@ function MatchingHomePage(props) {
               refreshToken: data.refreshToken,
             })
           );
-          // getData(data.accessToken, data.refreshToken);
         }
         break;
 
@@ -302,29 +342,28 @@ function MatchingHomePage(props) {
         navigate("/purchasing", { state: { title: "충전하기", direct: true } });
         break;
 
-      //@ 현재 시즌정보를 받아오는 이벤트, 서버로부터 받아올 예정임으로 삭제할 예정
-      // case "season":
-      //   dispatch(StateSlice.actions.Season(data.season));
-      //   dispatch(StateSlice.actions.SeasonNumber(data.seasonnumber));
-
       //@ 뒤로가기 이벤트, 뒷페이지로 이동한다.
       case "back": {
         navigate(-1);
         break;
       }
-
-      //@ 현재 스택이 남아있는지에 대한 이벤트 (오류 수정중)
-      // if (this.props.navigation.isFirstRouteInParent()) {
-      //   navigate("/Matching");
-      // } else {
-      //   navigate(-1);
-      // }
-
-      //@신고 이벤트, 메인화면으로 이동
-      case "report":
-        navigate("/matching");
     }
   };
+
+  // 만약 시즌이 진행중인데 매칭이 실패하였다면 웹뷰로 티켓을 돌려드린다는 팝업을 띄워줌 둘중 하나라도 실패했을때
+  useEffect(() => {
+    if (
+      (SeasonStep === 1 &&
+        FriendmatchResult.matchingResult === "RoundFail" &&
+        FriendmatchResult.myChoice === null) ||
+      (CouplematchResult.matchingResult === "RoundFail" &&
+        CouplematchResult.myChoice === null)
+    ) {
+      window.ReactNativeWebView?.postMessage(
+        JSON.stringify({ type: "giveBack", data: "" })
+      );
+    }
+  }, [FriendmatchResult, CouplematchResult]);
 
   const Description = (props) => {
     //@ 접수중 상태일때
@@ -367,7 +406,6 @@ function MatchingHomePage(props) {
     }
     //@ 매칭 시작!
     else if (props === 1) {
-      // 접수를 안한 경우 혹은 매칭성사가 안된 경우
       if (
         CouplematchResult.matchingResult === "WaitRoundResult" ||
         CouplematchResult.matchingResult === "WaitChoice" ||
@@ -455,6 +493,14 @@ function MatchingHomePage(props) {
           <Selection
             theme={0}
             onClick={() => {
+              if (
+                SeasonStep === 1 &&
+                matchParticipate.coupleMatchingAvailable
+              ) {
+                cantApplyPopup();
+              } else if (SeasonStep == 2) {
+                seasonBreaking();
+              }
               navigate("/matchingpage", {
                 state: {
                   theme: 0,
@@ -490,6 +536,14 @@ function MatchingHomePage(props) {
           <Selection
             theme={1}
             onClick={() => {
+              if (
+                SeasonStep === 1 &&
+                matchParticipate.friendMatchingAvailable
+              ) {
+                cantApplyPopup();
+              } else if (SeasonStep === 2) {
+                seasonBreaking();
+              }
               navigate("/matchingpage", {
                 state: {
                   theme: 1,
@@ -526,21 +580,7 @@ function MatchingHomePage(props) {
             {/* color="disabled" */}
           </Selection>
         </SelectionContainer>
-        <MatchingOptionContainer>
-          {/* <MatchingOption>
-            <input type="checkbox" disabled />
-            <text>같은 학교끼리 만나기</text>
-            <InfoContainer>
-              <Info
-                onClick={() => {
-                  window.ReactNativeWebView?.postMessage(
-                    JSON.stringify({ type: "same", data: 0 })
-                  );
-                }}
-              />
-            </InfoContainer>
-          </MatchingOption> */}
-        </MatchingOptionContainer>
+        <MatchingOptionContainer></MatchingOptionContainer>
         <BottomContainer>
           <BottomContents>
             <HistoryButton
@@ -874,7 +914,7 @@ const Highlight = styled.div`
   text-transform: capitalize;
 
   > text {
-    font-family: var(--font-Pretendard);
+    font-family: var(--font-Pretendard-SemiBold);
     font-style: normal;
     font-weight: 600;
     font-size: 12px;
@@ -897,7 +937,7 @@ const PurchaserButton = styled.div`
   border-radius: 30px;
 
   > text {
-    font-family: var(--font-Pretendard);
+    font-family: var(--font-Pretendard-SemiBold);
     font-style: normal;
     font-weight: 600;
     font-size: 12px;
@@ -983,6 +1023,7 @@ const HeaderName = styled.div`
   }
 
   > text.name {
+    font-family: var(--font-Pretendard-SemiBold);
     font-weight: 600;
     font-size: 22px;
     line-height: 26px;
@@ -1028,6 +1069,7 @@ const HeaderSeason = styled.div`
   }
 
   > text > span {
+    font-family: var(--font-Pretendard-SemiBold);
     color: ${(props) =>
       props.theme === 1
         ? "#0094FF"

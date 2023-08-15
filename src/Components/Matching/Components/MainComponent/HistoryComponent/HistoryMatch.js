@@ -21,6 +21,7 @@ function HistoryMatch() {
     { time: "23.05.14 12:44", season: 1, isSuccess: false, isLink: false },
     { time: "23.05.14 12:44", season: 1, isSuccess: false, isLink: false },
   ];
+
   return (
     <>
       {data.map((prop, idx) => {
@@ -55,7 +56,6 @@ function HistoryMatch() {
 }
 
 export default HistoryMatch;
-
 
 const ListItemContainer = styled.div`
   display: flex;

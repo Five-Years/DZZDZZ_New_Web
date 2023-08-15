@@ -26,10 +26,13 @@ function Coupon() {
         <ConfirmButtonContainer>
           <ConfirmButton
             onClick={() => {
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "coupon", data: "" })
-              );
-              setIsError(true);
+              // 서버에 쿠폰 검증요청, 검증 완료되면 수민이형한테 웹뷰 요청, 검증실패시 에러로그 띄워준다.
+              if (true) {
+                setIsError(false);
+                window.ReactNativeWebView?.postMessage(
+                  JSON.stringify({ type: "coupon", data: "" })
+                );
+              } else setIsError(true);
             }}
           >
             <text>확 인</text>

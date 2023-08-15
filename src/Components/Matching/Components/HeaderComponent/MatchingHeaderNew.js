@@ -121,6 +121,7 @@ const HeaderName = styled.div`
     color: #000000;
   }
   > text.name {
+    font-family: var(--font-Pretendard-SemiBold);
     font-weight: 600;
     font-size: 27px;
     line-height: 26px;
@@ -147,6 +148,7 @@ const HeaderSeason = styled.div`
   > text > span {
     /*  */
     color: ${(props) => (props.isFirst ? "#000000" : "#FFFFFF")};
+    font-family: var(--font-Pretendard-SemiBold);
     font-weight: 600;
     font-size: 14px;
     background: ${(props) =>

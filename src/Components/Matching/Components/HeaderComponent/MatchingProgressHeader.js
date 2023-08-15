@@ -6,6 +6,7 @@ import { ReactComponent as Jelly } from "../../../../assets/jelly.svg";
 import { useEffect } from "react";
 import StateSlice from "../../../../features/State/StateSlice";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { ReactComponent as CareLeft } from "assets/CaretLeft.svg";
 import { ReactComponent as Reportbutton } from "assets/DotsThree.svg";
 
@@ -22,6 +23,10 @@ function MatchingProgressHeader(props) {
         navigate("/ChoicePage", { state: "reject" });
     }
   };
+
+  const userAsset = useSelector((state) => {
+    return state.Popup.userAsset;
+  });
 
   useEffect(() => {
     //android
@@ -93,7 +98,7 @@ function MatchingProgressHeader(props) {
           <>
             <MileHeader>
               <Jelly />
-              <text>1</text>
+              <text>{userAsset.jelly}</text>
             </MileHeader>
           </>
         )}
@@ -116,7 +121,7 @@ const MileHeader = styled.div`
   > text {
     color: #333333;
     font-size: 16px;
-    font-family: var(--font-Pretendard);
+    font-family: var(--font-Pretendard-SemiBold);
     font-weight: 600;
     line-height: 24px;
   }

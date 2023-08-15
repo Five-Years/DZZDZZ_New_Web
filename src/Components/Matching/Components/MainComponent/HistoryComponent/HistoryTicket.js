@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 function HistoryTicket() {
   const data = [
     {
@@ -109,6 +110,10 @@ function HistoryTicket() {
     },
     { time: "23.05.14 12:44", title: "티켓 1개", type: "젤리", count: -20 },
   ];
+
+  const userTicketHistory = useSelector((state) => {
+    return state.Popup.userHistory.jellyHistory;
+  });
   return (
     <>
       {data.map((data) => {
@@ -121,7 +126,7 @@ function HistoryTicket() {
                   <text>{data.title}</text>
                 </ItemLeft>
                 <ItemRight>
-                  <text className="title">{data.type}</text>
+                  <text className="title">{"티켓"}</text>
                   <text>
                     +{data.count}
                     <span>({data.won})</span>
@@ -139,7 +144,7 @@ function HistoryTicket() {
                   <text>{data.title}</text>
                 </ItemLeft>
                 <ItemRight>
-                  <text className="title">{data.type}</text>
+                  <text className="title">{"티켓"}</text>
                   <text className="use">{data.count}</text>
                 </ItemRight>
               </ItemBox>

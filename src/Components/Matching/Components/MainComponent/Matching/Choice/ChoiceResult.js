@@ -30,10 +30,7 @@ function ChoiceResult() {
 
       <ProfileNameContainer>
         <ProfileName>
-          <img
-            src={require("assets/CircleWavyCheck.png")}
-            alt="이미지"
-          />
+          <img src={require("assets/CircleWavyCheck.png")} alt="이미지" />
           <text>단짠지기임당</text>
         </ProfileName>
       </ProfileNameContainer>
@@ -251,7 +248,7 @@ const SuggestionButton = styled.div`
   border-radius: 13px;
 
   > text {
-    font-family: var(--font-Pretendard);
+    font-family: var(--font-Pretendard-Bold);
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -301,7 +298,7 @@ const ResultBox = styled.div`
   justify-content: space-between;
   padding: 0px;
   gap: 7px;
-  width : 100%;
+  width: 100%;
   height: 120px;
 
   > img {
@@ -309,7 +306,7 @@ const ResultBox = styled.div`
     height: 50px;
   }
   > text {
-    font-family: var(--font-Pretendard);
+    font-family: var(--font-Pretendard-Light);
     font-style: normal;
     font-weight: 300;
     font-size: 18px;
@@ -317,6 +314,7 @@ const ResultBox = styled.div`
     /* identical to box height */
 
     > span {
+      font-family: var(--font-Pretendard-Bold);
       font-weight: 700;
     }
   }
@@ -365,6 +363,7 @@ const WaitingBox = styled.div`
     > span {
       color: #ff477e;
       > span {
+        font-family: var(--font-Pretendard-SemiBold);
         font-weight: 600;
         color: #000000;
       }

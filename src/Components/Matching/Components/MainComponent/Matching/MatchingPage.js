@@ -20,14 +20,6 @@ function MatchingPage() {
   const [status, setStatus] = useState({});
   const matchingType = ["Couple", "Friend"];
 
-  // 접수단계라면 현재 카테고리에 대하여 신청가능한지 리덕스에서 불러와 로컬변수에 넣어준다.
-
-  // const Name = useSelector((state) => {
-  //   return state.Popup.name;
-  // });
-  // const Season = useSelector((state) => {
-  //   return state.Popup.season;
-  // });
   const SeasonStep = useSelector((state) => {
     return state.Popup.seasonStep;
   });
@@ -36,6 +28,13 @@ function MatchingPage() {
     return state.Popup.matchParticipate;
   });
 
+  const userAsset = useSelector((state) => {
+    return state.Popup.userAsset;
+  });
+
+  const userInfo = useSelector((state) => {
+    return state.Popup.userInfo;
+  });
   const userAt = useSelector((state) => {
     return state.Popup.userToken.accessToken;
   });
@@ -54,13 +53,16 @@ function MatchingPage() {
     return state.Popup.CouplematchResult;
   });
 
+  const userMatchAvailable = useSelector((state) => {
+    return state.Popup.matchAvailable;
+  });
+
   useEffect(() => {
     window.ReactNativeWebView?.postMessage(
       JSON.stringify({ type: "notfirst", data: "" })
     );
   }, []);
 
-  const datalist = ["Couple", "Friend"];
   const GotoMatching = () => {
     navigate("/MatchingProgress", { state: { theme: Theme } });
   };
@@ -72,7 +74,9 @@ function MatchingPage() {
     window.addEventListener("message", (e) => listener(e.data));
   }, []);
 
+  //@매칭을 신청 유무 확인, 신청을 안한상태라면 true값이 들어옴
   useEffect(() => {
+    //현재 테마에 맞게 status를 설정
     if (Theme === 0) {
       setCan(matchParticipate.coupleMatchingAvailable);
       setStatus(CouplematchResult);
@@ -92,20 +96,24 @@ function MatchingPage() {
           navigate(-1);
         }
         break;
+
       case "application": {
-        GotoMatching();
+        // true가 왔다면 매칭을 신청한다
+        if (data) Apply(userAt, userRt);
       }
     }
   };
 
-  const getMatchStatus = async (at, rt) => {
+  //@ 사용자의 매칭 신청가능 조건 상태를 가져온다
+  //지원학교여부, 사용자필수정보, 사진인증, 학생인증
+  const getAvailable = async (at, rt) => {
     try {
       const Response = await axios.get(
         `${
           process.env.NODE_ENV === "development"
             ? ""
             : "https://dev.fiveyears.click"
-        }/matching/participate/status`,
+        }/matching/user/available`,
         {
           headers: {
             Authorization: at,
@@ -115,12 +123,18 @@ function MatchingPage() {
           },
         }
       );
-      dispatch(StateSlice.actions.matchParticipate(Response.data.data));
+      dispatch(StateSlice.actions.matchAvailable(Response.data.data));
     } catch (error) {
       console.log(error);
     }
   };
 
+  //@ 사용자 매칭신청 조건 충족여부
+  useEffect(() => {
+    if (userAt) getAvailable(userAt, userRt);
+  }, [userAt]);
+
+  //@ 매칭신청하기
   const Apply = async (at, rt) => {
     try {
       const Response = await axios.post(
@@ -139,34 +153,69 @@ function MatchingPage() {
           },
         }
       );
-      console.log(Response.data.data);
-      alert("신청하였습니다!");
-      navigate("/matching");
+
+      // 신청이 성공했다면 매칭 페이지로 이동하면서 토스트메시지 띄우기
+
+      // 신청이 실패했다면 토스트메시지로 실패했습니다 띄우기
+      if (Response.data.data == "success") {
+        window.ReactNativeWebView?.postMessage(
+          JSON.stringify({ type: "toast", data: "신청이 완료되었습니다" }) // 메시지
+        );
+        navigate("/matching");
+      } else {
+        window.ReactNativeWebView?.postMessage(
+          JSON.stringify({ type: "toast", data: "신청이 실패하였습니다" }) // 메시지
+        );
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
-  //상황별 버튼 제공해주는 함수, 신청접수기간 + 접수가능 => 신청하기 버튼, 접수불가능 => 지금은 신청할수 없어요 버튼
-  //매칭진행기간 + 매칭성공 => 상대방확인하기 버튼, 매칭진행기간 + 매칭실패 또는 미신청 => 지금은 신청할수 없어요 버튼, => 그외 확인하기 버튼
-  //매칭준비기간 => 지금은 신청할수 없어요 버튼
-
   const Button = () => {
-    // @접수중, 접수가능일때는 신청하기 버튼을
-    //테스트용, 추후 can으로 바꾸기
+    // 접수중 + 신청가능한 상태
     if (SeasonStep === 0 && can) {
-      //신청하기
       return (
         <EachButton
           className="activate"
           onClick={() => {
-            Apply(userAt, userRt);
-            window.ReactNativeWebView?.postMessage(
-              JSON.stringify({
-                type: "application",
-                data: datalist[Theme],
-              })
-            );
+            // 지원하는 학교가 아닌 경우
+            if (!userMatchAvailable.isSupportedCampus) {
+              window.ReactNativeWebView?.postMessage(
+                JSON.stringify({
+                  type: "unSupportedSchool",
+                  data: userInfo.campusIdentifier,
+                })
+              );
+              // 학교는 지원하지만 필수인증정보 3가지중 하나이상이 부족한 경우
+            } else if (
+              (!userMatchAvailable.profileDescription ||
+                !userMatchAvailable.representativeImageStatus ||
+                !userMatchAvailable.campusAuthStatus) &&
+              can
+            ) {
+              window.ReactNativeWebView?.postMessage(
+                JSON.stringify({
+                  type: "lackinfo",
+                  data: {
+                    photoauthen: userMatchAvailable.representativeImageStatus,
+                    campusauthen: userMatchAvailable.campusAuthStatus,
+                    infoauthen: userMatchAvailable.profileDescription,
+                  },
+                })
+              );
+            } //그외, 즉 조건이 모두 충족하였고 신청하지 않은 경우
+            else {
+              window.ReactNativeWebView?.postMessage(
+                JSON.stringify({
+                  type: "application",
+                  data: {
+                    matchingType: matchingType[Theme],
+                    ticket: userAsset.ticket,
+                  },
+                })
+              );
+            }
           }}
           matching={Theme}
         >
@@ -182,21 +231,11 @@ function MatchingPage() {
         <EachButton
           className="activate"
           onClick={() => {
-            window.ReactNativeWebView?.postMessage(
-              JSON.stringify({
-                type: "application",
-                data: datalist[Theme],
-              })
-            );
             GotoMatching();
-
-            // window.ReactNativeWebView?.postMessage(
-            //   JSON.stringify({ type: "lackinfo", data: {photoauthen : bool, studentauthen : bool})
-            // );
           }}
           matching={Theme}
         >
-          <text className="enter">상대방 확인하기</text>
+          <text className="enter">매칭상대 확인하기</text>
         </EachButton>
       );
     } else if (
@@ -208,17 +247,7 @@ function MatchingPage() {
         <EachButton
           className="activate"
           onClick={() => {
-            window.ReactNativeWebView?.postMessage(
-              JSON.stringify({
-                type: "application",
-                data: datalist[Theme],
-              })
-            );
             GotoMatching();
-
-            // window.ReactNativeWebView?.postMessage(
-            //   JSON.stringify({ type: "lackinfo", data: {photoauthen : bool, studentauthen : bool})
-            // );
           }}
           matching={Theme}
         >
@@ -236,17 +265,7 @@ function MatchingPage() {
         <EachButton
           className="activate"
           onClick={() => {
-            window.ReactNativeWebView?.postMessage(
-              JSON.stringify({
-                type: "application",
-                data: datalist[Theme],
-              })
-            );
             GotoMatching();
-
-            // window.ReactNativeWebView?.postMessage(
-            //   JSON.stringify({ type: "lackinfo", data: {photoauthen : bool, studentauthen : bool})
-            // );
           }}
           matching={Theme}
         >
@@ -263,11 +282,6 @@ function MatchingPage() {
     }
   };
 
-  //@ 매칭 페이지
-  //stepseason이 0이면 신청 하기 버튼 활성화 및 신청 가능, 신청한 사람은 중복 신청 불가토록 비활성화
-  //stepseason1 && 미신청 => 지금은 신청 할 수 없어요, 버튼 비활성화
-  //stepseason1 && 신청 => 매칭상대 확인하기 => 버튼 호라성화
-  //stepseason2 => 지금은 신청 할 수 없어요, 버튼 비활성화
   return (
     <>
       <MobileContainer>
@@ -282,7 +296,6 @@ function MatchingPage() {
         <CouponContainer>
           <MyTicket />
         </CouponContainer>
-        {/* theme={location.state.theme} */}
         <MatchingContainer>
           <MatchingCardContainer theme={Theme}>
             <CardContainer>
@@ -299,7 +312,7 @@ function MatchingPage() {
                   )}
                 </CardTag>
                 <CardTitle>
-                  <TextField>
+                  <TextField theme={Theme}>
                     {Theme === 0 ? (
                       <text>
                         매칭의 정석 소개팅♥
@@ -332,70 +345,7 @@ function MatchingPage() {
           </MatchingCardContainer>
         </MatchingContainer>
         <ButtonContainer>
-          <EachButtonContainer>
-            {/* 
-            버튼 눌렀을때 정보 충분하지 서버와 통신 확인, 부족하다면 부족한 정보를 웹뷰 통신으로 팝업창 띄우기 요청하기,  
-              충분하다면 티켓수량이 충분한지 확인후 웹뷰통신으로 어떤매칭인지 정보와 확인요청 팝업 요청하기, 데이터가 true가 오면 서버에 매칭 신청
-            */}
-            {/*
-            seasonstep == 0, 미접수 상태 
-            => 신청하기 버튼
-
-            seasonstep == 1, 접수안한 상태
-            => 지금은 신청할 수 없어요
-
-            seasonstep ==1, 접수한 상태
-            => 매칭상대 확인하기
-
-            seasonstep ==2, 지금은 신청할 수 없어요
-
-            seasonstep == 0, 접수한 상태
-            => 지금은 신청할 수 없어요
-
-            seasonstep == 0, 접수불가능 상태??? 
-            => 지금은 신청할 수 없어요
-
-            */}
-            {/* 접수중 기간인지,  신청가능한지 여부를 확인 */}
-            {/* SeasonStep === 0 && */}
-            {Button()}
-            {/* {true ? (
-              <EachButton
-                className="activate"
-                onClick={() => {
-                  window.ReactNativeWebView?.postMessage(
-                    JSON.stringify({
-                      type: "application",
-                      data: datalist[Theme],
-                    })
-                  );
-                  GotoMatching();
-
-                  // window.ReactNativeWebView?.postMessage(
-                  //   JSON.stringify({ type: "lackinfo", data: {photoauthen : bool, studentauthen : bool})
-                  // );
-                }}
-                matching={Theme}
-              >
-                <text className="enter">신청하기</text>
-              </EachButton>
-            ) : (
-              <EachButton className="deactivate" matching={Theme}>
-                <text className="enter">지금은 신청할 수 없어요.</text>
-              </EachButton>
-            )} */}
-            {/* 
-              <EachButton
-                className="activate"
-                onClick={() => {
-                  navigate("/MatchingProgress", { state: { theme: Theme } });
-                }}
-                matching={Theme}
-              >
-                <text className="enter">지금은 매칭중</text>
-              </EachButton>
-               */}
-          </EachButtonContainer>
+          <EachButtonContainer>{Button()}</EachButtonContainer>
           <EachButtonContainer>
             <EachButton
               onClick={() => {
@@ -407,17 +357,6 @@ function MatchingPage() {
               <text>내 정보 수정하기</text>
             </EachButton>
           </EachButtonContainer>
-          {/* <EachButtonContainer>
-            <EachButton
-              onClick={() => {
-                window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "student", data: "" })
-                );
-              }}
-            >
-              <text>학생 인증하기</text>
-            </EachButton>
-          </EachButtonContainer> */}
         </ButtonContainer>
       </MobileContainer>
     </>
@@ -508,6 +447,7 @@ const TextField = styled.div`
   }
 
   > text > text {
+    font-family: var(--font-Pretendard-Bold);
     font-weight: 700;
     line-height: 26px;
     letter-spacing: 0em;
@@ -523,10 +463,11 @@ const TextField = styled.div`
     /* or 160% */
     text-align: center;
     /* Text Black */
-    color: ${(props) => (props.theme === 0 ? "#ff477e" : "#0094FF")};
+    color: ${(props) => (props.theme === 1 ? "#0094FF" : "#FF477E")};
   }
 
   > text > span > span {
+    font-family: var(--font-Pretendard-SemiBold);
     font-weight: 600;
   }
 `;
@@ -703,6 +644,7 @@ const EachButton = styled.div`
     }
 
     &.enter {
+      font-family: var(--font-Pretendard-SemiBold);
       font-weight: 600;
       color: #ffffff;
     }
