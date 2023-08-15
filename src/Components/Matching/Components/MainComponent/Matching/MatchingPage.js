@@ -644,8 +644,8 @@ const EachButton = styled.div`
     }
 
     &.enter {
-      font-family: var(--font-Pretendard-SemiBold);
-      font-weight: 600;
+      font-family: var(--font-Pretendard-Bold);
+      font-weight: 700;
       color: #ffffff;
     }
   }

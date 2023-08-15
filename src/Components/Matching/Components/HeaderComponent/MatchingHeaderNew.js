@@ -121,8 +121,9 @@ const HeaderName = styled.div`
     color: #000000;
   }
   > text.name {
-    font-family: var(--font-Pretendard-SemiBold);
-    font-weight: 600;
+    font-family: var(--font-Pretendard-Bold);
+    /* font-family: "SF-Pro"; */
+    font-weight: 700;
     font-size: 27px;
     line-height: 26px;
     letter-spacing: 0em;
@@ -148,8 +149,8 @@ const HeaderSeason = styled.div`
   > text > span {
     /*  */
     color: ${(props) => (props.isFirst ? "#000000" : "#FFFFFF")};
-    font-family: var(--font-Pretendard-SemiBold);
-    font-weight: 600;
+    font-family: var(--font-Pretendard);
+    font-weight: 400;
     font-size: 14px;
     background: ${(props) =>
       props.isFirst ? "#FFF100" : props.color === 0 ? "#FF477E" : "#0094FF"};
