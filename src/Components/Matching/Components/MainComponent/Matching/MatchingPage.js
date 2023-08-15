@@ -54,7 +54,7 @@ function MatchingPage() {
   });
 
   const userMatchAvailable = useSelector((state) => {
-    return state.Popup.matchAvailable;
+    return state.Popup.userMatchAvailable;
   });
 
   useEffect(() => {

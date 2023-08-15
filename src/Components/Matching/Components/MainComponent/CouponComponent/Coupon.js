@@ -165,6 +165,10 @@ const ConfirmButton = styled.div`
   align-items: center;
   justify-content: center;
 
+  :hover {
+    opacity: 0.5;
+  }
+
   > text {
     font-family: var(--font-Pretendard);
     font-style: normal;
