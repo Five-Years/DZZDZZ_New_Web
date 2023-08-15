@@ -10,6 +10,8 @@ import { ReactComponent as Jelly2 } from "../../../../../assets/jelly.svg";
 import { ReactComponent as Jelly3 } from "../../../../../assets/Jelly3.svg";
 import { ReactComponent as Jelly4 } from "../../../../../assets/Jelly4.svg";
 
+// 웹뷰통신 필요
+// buyjelly날라오면 서버로부터 자산 갱신하기
 function MilePage(props) {
   const dispatch = useDispatch();
   return (
@@ -32,9 +34,8 @@ function MilePage(props) {
             <TicketButton
               onClick={() => {
                 window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "buy", data: 8 })
+                  JSON.stringify({ type: "buyJelly", data: 8 })
                 );
-                dispatch(StateSlice.actions.Ticket());
               }}
             >
               <text>구매</text>
@@ -59,9 +60,8 @@ function MilePage(props) {
             <TicketButton
               onClick={() => {
                 window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "buy", data: 25 })
+                  JSON.stringify({ type: "buyJelly", data: 25 })
                 );
-                dispatch(StateSlice.actions.Ticket());
               }}
             >
               <text>구매</text>
@@ -86,9 +86,8 @@ function MilePage(props) {
             <TicketButton
               onClick={() => {
                 window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "buy", data: 56 })
+                  JSON.stringify({ type: "buyJelly", data: 56 })
                 );
-                dispatch(StateSlice.actions.Ticket());
               }}
             >
               <text>구매</text>
@@ -116,9 +115,8 @@ function MilePage(props) {
             <TicketButton
               onClick={() => {
                 window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "buy", data: 77 })
+                  JSON.stringify({ type: "buyJelly", data: 77 })
                 );
-                dispatch(StateSlice.actions.Ticket());
               }}
             >
               <text>구매</text>
@@ -145,9 +143,8 @@ function MilePage(props) {
             <TicketButton
               onClick={() => {
                 window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "buy", data: 100 })
+                  JSON.stringify({ type: "buyJelly", data: 100 })
                 );
-                dispatch(StateSlice.actions.Ticket());
               }}
             >
               <text>구매</text>
@@ -175,9 +172,8 @@ function MilePage(props) {
             <TicketButton
               onClick={() => {
                 window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "buy", data: 130 })
+                  JSON.stringify({ type: "buyJelly", data: 130 })
                 );
-                dispatch(StateSlice.actions.Ticket());
               }}
             >
               <text>구매</text>

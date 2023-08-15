@@ -2,9 +2,61 @@ import React from "react";
 import MenuHeader from "../../HeaderComponent/MenuHeader";
 import styled from "styled-components";
 import { useState } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 function Coupon() {
   const [isError, setIsError] = useState(false);
+  const [ErrorMessage, setErrorMessage] = useState("");
+  const [inputValue, setInputValue] = useState("");
+
+  const postCoupon = async (at, rt) => {
+    try {
+      const Response = await axios.post(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://dev.fiveyears.click"
+        }/item/coupon?code=${inputValue}`,
+        {},
+        {
+          headers: {
+            Authorization: at,
+            "x-refresh-token": rt,
+            fcmToken: "123",
+            "content-type": "application/json",
+          },
+        }
+      );
+
+      // 비정상적으로 처리되었다면 isError 를 false로 하고 웹뷰에 표시 요청
+      if (Response.data.status === 6000) {
+        setErrorMessage(Response.data.data.message);
+        setIsError(true);
+      } else {
+        window.ReactNativeWebView?.postMessage(
+          JSON.stringify({ type: "coupon", data: "" })
+        );
+        setErrorMessage("");
+        isError(false);
+      }
+
+      // 정상적이지 않다면 isError를 true로 바꾼다
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const userAt = useSelector((state) => {
+    return state.Popup.userToken.accessToken;
+  });
+
+  const userRt = useSelector((state) => {
+    return state.Popup.userToken.refreshToken;
+  });
 
   return (
     <PurchasePageContainer>
@@ -18,21 +70,21 @@ function Coupon() {
               <text>쿠폰번호 입력하기</text>
             </InputTitle>
           </TextContainer>
-          <InputContainer maxLength={10} />
+          <InputContainer
+            maxLength={15}
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+          />
           <ErrorContainer>
-            {isError ? <text>유효하지 않은 번호입니다.</text> : <></>}
+            {isError ? <text>{ErrorMessage}</text> : <></>}
           </ErrorContainer>
         </CouponContainer>
         <ConfirmButtonContainer>
           <ConfirmButton
             onClick={() => {
               // 서버에 쿠폰 검증요청, 검증 완료되면 수민이형한테 웹뷰 요청, 검증실패시 에러로그 띄워준다.
-              if (true) {
-                setIsError(false);
-                window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "coupon", data: "" })
-                );
-              } else setIsError(true);
+              postCoupon(userAt, userRt);
             }}
           >
             <text>확 인</text>

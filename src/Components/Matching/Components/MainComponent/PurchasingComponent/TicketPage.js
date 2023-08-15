@@ -36,9 +36,8 @@ function TicketPage() {
           <TicketButton
             onClick={() => {
               window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "buy", data: 1 })
+                JSON.stringify({ type: "buyTicket", data: 1 })
               );
-              dispatch(StateSlice.actions.Ticket());
             }}
           >
             <text>구매</text>
@@ -63,9 +62,8 @@ function TicketPage() {
           <TicketButton
             onClick={() => {
               window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "buy", data: 3 })
+                JSON.stringify({ type: "buyTicket", data: 4 })
               );
-              dispatch(StateSlice.actions.Ticket());
             }}
           >
             <text>구매</text>
@@ -90,9 +88,8 @@ function TicketPage() {
           <TicketButton
             onClick={() => {
               window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "buy", data: 6 })
+                JSON.stringify({ type: "buyTicket", data: 8 })
               );
-              dispatch(StateSlice.actions.Ticket());
             }}
           >
             <text>구매</text>
@@ -117,9 +114,8 @@ function TicketPage() {
           <TicketButton
             onClick={() => {
               window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "buy", data: 11 })
+                JSON.stringify({ type: "buyTicket", data: 15 })
               );
-              dispatch(StateSlice.actions.Ticket());
             }}
           >
             <text>구매</text>
