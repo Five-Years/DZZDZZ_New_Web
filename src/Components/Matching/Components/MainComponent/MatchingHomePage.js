@@ -710,8 +710,8 @@ const HistoryButton = styled.div`
   border-radius: 13px;
   background: var(--system-gray-100, #ebebf0);
 
-  :hover {
-    opacity: 0.5;
+  :active {
+    opacity: 50%;
   }
 
   > text {

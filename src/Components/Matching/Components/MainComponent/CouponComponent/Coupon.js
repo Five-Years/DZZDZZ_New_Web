@@ -165,8 +165,8 @@ const ConfirmButton = styled.div`
   align-items: center;
   justify-content: center;
 
-  :hover {
-    opacity: 0.5;
+  :active {
+    opacity: 50%;
   }
 
   > text {
