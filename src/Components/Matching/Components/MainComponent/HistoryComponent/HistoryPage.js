@@ -48,6 +48,10 @@ function HistoryPage() {
     );
   }, []);
 
+  const userAsset = useSelector((state) => {
+    return state.Popup.userAsset;
+  });
+
   return (
     <>
       <PurchasePageContainer>
@@ -64,7 +68,7 @@ function HistoryPage() {
           >
             <ItemContainer>
               {isSelected ? <DisabledJelly /> : <Jelly />}
-              <text>1</text>
+              <text>{userAsset.jelly}</text>
             </ItemContainer>
           </MileSection>
           <TicketSection
@@ -76,7 +80,7 @@ function HistoryPage() {
           >
             <ItemContainer>
               {isSelected ? <Ticket /> : <DisabledTicket />}
-              <text>1</text>
+              <text>{userAsset.ticket}</text>
             </ItemContainer>{" "}
           </TicketSection>
         </TicketMileChangeContainer>

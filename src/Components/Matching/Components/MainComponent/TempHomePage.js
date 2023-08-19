@@ -14,7 +14,7 @@ import StateSlice from "features/State/StateSlice";
 import MyTicket from "Components/Matching/Components/ReusableComponents/MyTicket";
 import axios from "axios";
 
-function MatchingHomePage(props) {
+function TempHomePage(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -146,7 +146,7 @@ function MatchingHomePage(props) {
       } else if (Response.data.data.status === "None") {
         {
           //@ 휴식기간
-          dispatch(StateSlice.actions.SeasonStep(0));
+          dispatch(StateSlice.actions.SeasonStep(2));
         }
       }
     } catch (error) {
@@ -374,105 +374,6 @@ function MatchingHomePage(props) {
     }
   }, [FriendmatchResult, CouplematchResult]);
 
-  const Description = (props) => {
-    //@ 접수중 상태일때
-    if (props === 0) {
-      //@ 매칭 접수를 안한 상태인 경우
-      if (
-        matchParticipate.friendMatchingAvailable &&
-        matchParticipate.coupleMatchingAvailable // 친구매칭, 이성매칭 둘다 신청가능한상태라면
-      ) {
-        return (
-          <EventTextContainer>
-            {" "}
-            <EventText>
-              <text>아직 신청하지 않으셨네요!</text>
-            </EventText>
-            <EventTextTime>
-              <text>
-                {Day}일 {Hour}시간 {Minute}분 뒤에 접수가 끝나요.
-              </text>
-            </EventTextTime>
-          </EventTextContainer>
-        );
-      }
-      //@ 매칭 접수를 한 경우
-      else {
-        return (
-          <EventTextContainer>
-            {" "}
-            <EventText>
-              <text>정상적으로 매칭 신청이 되었어요</text>
-            </EventText>
-            <EventTextTime>
-              <text>
-                {Day}일 {Hour}시간 {Minute}분 뒤에 매칭이 시작돼요.
-              </text>
-            </EventTextTime>
-          </EventTextContainer>
-        );
-      }
-    }
-    //@ 매칭 시작!
-    else if (props === 1) {
-      if (
-        CouplematchResult.matchingResult === "WaitRoundResult" ||
-        CouplematchResult.matchingResult === "WaitChoice" ||
-        CouplematchResult.matchingResult === "RoundSuccess" ||
-        CouplematchResult.matchingResult === "NoneWithHistory" ||
-        FriendmatchResult.matchingResult === "WaitRoundResult" ||
-        FriendmatchResult.matchingResult === "WaitChoice" ||
-        FriendmatchResult.matchingResult === "RoundSuccess" ||
-        FriendmatchResult.matchingResult === "NoneWithHistory"
-      ) {
-        return (
-          <EventTextContainer>
-            {" "}
-            <EventText>
-              <text>매칭시작</text>
-            </EventText>
-            <EventTextTime>
-              <text>
-                {" "}
-                {Day}일 {Hour}시간 {Minute}분 까지 매칭이 진행될 예정이에요
-              </text>
-            </EventTextTime>
-          </EventTextContainer>
-        );
-      }
-
-      // 접수를 한상태, 정상적으로 매칭이 진행중인경우 => 각 단계별 케이스 추가 필요
-      else {
-        return (
-          <EventTextContainer>
-            {" "}
-            <EventText>
-              <text>지금은 매칭중!</text>
-            </EventText>
-            <EventTextTime>
-              <text>다음 매칭접수 일정을 기다려주세요.</text>
-            </EventTextTime>
-          </EventTextContainer>
-        );
-      }
-    } else if (props === 2) {
-      // 웹뷰 팝업 필요
-      return (
-        <EventTextContainer>
-          {" "}
-          <EventText>
-            <text>지금은 준비중</text>
-          </EventText>
-          <EventTextTime>
-            <text>
-              {Day}일 {Hour}시간 {Minute}분 뒤에 접수가 시작돼요.
-            </text>
-          </EventTextTime>
-        </EventTextContainer>
-      );
-    }
-  };
-
   useEffect(() => {
     //android
     document.addEventListener("message", (e) => listener(e.data));
@@ -592,14 +493,13 @@ function MatchingHomePage(props) {
         <MatchingOptionContainer></MatchingOptionContainer>
         <BottomContainer>
           <BottomContents>
-            {/* 추후 지원예정 */}
-            {/* <HistoryButton
+            <HistoryButton
               onClick={() => {
                 navigate("/MatchHistory", { state: { title: "히스토리" } });
               }}
             >
               <text>히스토리 보기</text>
-            </HistoryButton> */}
+            </HistoryButton>
           </BottomContents>
           <BottomContents>
             <CalenderContainer
@@ -622,14 +522,24 @@ function MatchingHomePage(props) {
           </BottomContents>
         </BottomContainer>
         <EventContainer>
-          {matchParticipate != null ? Description(SeasonStep) : <></>}
+          <EventTextContainer>
+            {" "}
+            <EventText>
+              <text>지금은 준비중</text>
+            </EventText>
+            <EventTextTime>
+              <text>
+                {Day}일 {Hour}시간 {Minute}분 뒤에 접수가 시작돼요.
+              </text>
+            </EventTextTime>
+          </EventTextContainer>
         </EventContainer>
       </MobileContainer>
     </>
   );
 }
 
-export default MatchingHomePage;
+export default TempHomePage;
 
 const CalenderButton = styled.div`
   display: flex;

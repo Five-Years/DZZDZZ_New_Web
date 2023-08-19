@@ -132,7 +132,7 @@ function ChoicePage() {
               <text>상대방이 선택하면 결과가 나와요.</text>
             </WaitingBox>
           )} */}
-          <ChanceBox state={state}>
+          {/* <ChanceBox state={state}>
             {state === "accept" ? (
               <text
                 onClick={() => {
@@ -161,7 +161,7 @@ function ChoicePage() {
                 </SuggentionButton>
               </>
             )}
-          </ChanceBox>
+          </ChanceBox> */}
         </ContentsBox>
       </ContentsContainer>
     </MatchingContainers>

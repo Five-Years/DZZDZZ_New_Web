@@ -34,6 +34,7 @@ import HistoryPage from "Components/Matching/Components/MainComponent/HistoryCom
 import MatchHistory from "Components/Matching/Components/MainComponent/HistoryComponent/MatchHistory";
 import HistoryMatchingProfile from "Components/Matching/Components/MainComponent/HistoryComponent/HistoryMatchingProfile";
 import Marketing from "Components/PC/Policy/Marketing";
+import TempHomePage from "Components/Matching/Components/MainComponent/TempHomePage";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -43,6 +44,7 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
+          <Route path="/Temp" element={<TempHomePage />}></Route>
           <Route path="/Matching" element={<MatchingHomePage />}></Route>
           <Route path="/purchasing" element={<Purchasing />}></Route>
           <Route path="/matchingPage" element={<MatchingPage />}></Route>
