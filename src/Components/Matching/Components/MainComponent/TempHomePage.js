@@ -20,16 +20,16 @@ function TempHomePage(props) {
 
   //@ 커플매칭, 친구매칭 신청여부, true => 신청가능(미신청), false => 신청불가능(신청))
   //사용자의 at,rt정보를 userToken에 저장한다, 테스트용 코드
-  useEffect(() => {
-    dispatch(
-      StateSlice.actions.userToken({
-        accessToken:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJEaWFuYV9IZXJtaXN0b25AZXhhbXBsZS5jb20iLCJhdXRoIjoiVU5SRVNUUklDVEVELOuLqOq1reuMgO2Vmeq1kCxOT1JNQUxfVVNFUixJVCxGRU1BTEUiLCJleHAiOjE2OTQ2OTQ5MjV9.V9mfrEUUsaawVCtzfZo76xgIhHff5dpwzqu-FtG0sTg",
-        refreshToken:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTQ2OTQ5MjV9.SVDVlBw4IB9HuIaOfkGbyQ7CGnA0ckjBOpulFuD5EIY",
-      })
-    );
-  }, []);
+  //   useEffect(() => {
+  //     dispatch(
+  //       StateSlice.actions.userToken({
+  //         accessToken:
+  //           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJEaWFuYV9IZXJtaXN0b25AZXhhbXBsZS5jb20iLCJhdXRoIjoiVU5SRVNUUklDVEVELOuLqOq1reuMgO2Vmeq1kCxOT1JNQUxfVVNFUixJVCxGRU1BTEUiLCJleHAiOjE2OTQ2OTQ5MjV9.V9mfrEUUsaawVCtzfZo76xgIhHff5dpwzqu-FtG0sTg",
+  //         refreshToken:
+  //           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTQ2OTQ5MjV9.SVDVlBw4IB9HuIaOfkGbyQ7CGnA0ckjBOpulFuD5EIY",
+  //       })
+  //     );
+  //   }, []);
   const [Day, setDay] = useState("00");
   const [Hour, setHour] = useState("00");
   const [Minute, setMinute] = useState("00");
