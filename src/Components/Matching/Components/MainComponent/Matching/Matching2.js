@@ -3,7 +3,7 @@ import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp
 import { useState, useRef } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MatchingProgressHeader from "../../HeaderComponent/MatchingProgressHeader";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Lottie from "lottie-react";
 import Slider from "react-slick";
@@ -16,23 +16,14 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { backIn } from "framer-motion";
 import { BackgroundCard } from "../../StyledComponent/MatchingStyled";
 import { ReactComponent as Careup } from "assets/CaretDoubleUp.svg";
-import axios from "axios";
+// import axios from "axios";
 import { useSelector } from "react-redux";
+import { AxiosInstanse } from "../../../../../utils/AxiosInstance";
 
 function Matching2(props) {
-  const [matchingType, setMatchingType] = useState(""); // 친구매칭인지, 이성매칭인지 정보.
-
-  useEffect(() => {
-    if (props.theme === 0) {
-      setMatchingType("Couple");
-    } else {
-      setMatchingType("Friend");
-    }
-  });
-
-  // theme == 0 커플매칭, theme == 1 친구매칭
-
-  // 상대방 정보 가져오기
+  const matchingType = ["Couple", "Friend"];
+  const location = useLocation();
+  const Theme = location.state.theme; // Theme-> 0이면 커플, 1이면 친구
 
   const DetailDownRef = useRef();
   const DetailUpRef = useRef();
@@ -48,43 +39,7 @@ function Matching2(props) {
     //ios
     window.addEventListener("message", (e) => listener(e.data));
   }, []);
-  // const userData = {
-  //   matchedUserNickname: "에스테반",
-  //   studentId: 13,
-  //   introduce: null,
-  //   gender: "FEMALE",
-  //   campusIdentifier: "단국대학교",
-  //   college: "소프트웨어학과",
-  //   interests: [],
-  //   personalities: [],
-  //   region: "",
-  //   religion: "",
-  //   militaryServiceStatus: "",
-  //   mbti: "INITIAL_VALUE",
-  //   drink: "",
-  //   smoke: "",
-  //   images: [],
-  // };
 
-  const listener = (event) => {
-    const { data, type } = JSON.parse(event);
-
-    switch (type) {
-      case "accept":
-        accept();
-        break;
-      case "reject":
-        reject();
-        break;
-
-      case "application":
-        if (data) {
-          if (window.confirm("선택하시겠습니까?")) {
-            navigate("/Choice", { state: "accept" });
-          }
-        }
-    }
-  };
   const userAt = useSelector((state) => {
     return state.Popup.userToken.accessToken;
   });
@@ -93,14 +48,14 @@ function Matching2(props) {
     return state.Popup.userToken.refreshToken;
   });
 
-  const accept = async (at, rt) => {
+  const reportCase = useSelector((state) => {
+    return state.Popup.ReportCase;
+  });
+
+  const accepts = async (at, rt) => {
     try {
-      const Response = await axios.post(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/matching/user/decide?matchingChoice=Accept&matchingType=${matchingType}`, // 동의, couple, friend
+      const Response = await AxiosInstanse.post(
+        `/matching/user/decide?matchingChoice=Accept&matchingType=${matchingType[Theme]}`, // 동의, Couple, Friend
         {},
         {
           headers: {
@@ -111,20 +66,17 @@ function Matching2(props) {
           },
         }
       );
-      navigate("/Choice", { state: "accept" });
+      if (Response.data.status == 200)
+        navigate("/Choice", { state: { theme: Theme, Result: 1 } });
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
-  const reject = async (at, rt) => {
+  const rejects = async (at, rt) => {
     try {
-      const Response = await axios.post(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/matching/user/decide?matchingChoice=Reject&matchingType=${matchingType}`, // 동의, couple, friend
+      const Response = await AxiosInstanse.post(
+        `/matching/user/decide?matchingChoice=Reject&matchingType=${matchingType[Theme]}`, // 동의, couple, friend
         {},
         {
           headers: {
@@ -135,9 +87,47 @@ function Matching2(props) {
           },
         }
       );
-      navigate("/Choice", { state: "reject" });
+      if (Response.data.status == 200)
+        navigate("/ChoiceLoading", {
+          state: { theme: Theme, result: 0 },
+        });
     } catch (error) {
-      console.log(error);
+      alert(error);
+    }
+  };
+
+  const listener = (event) => {
+    const { data, type } = JSON.parse(event);
+
+    switch (type) {
+      case "accept":
+        if (data) accepts(userAt, userRt);
+        break;
+      case "reject":
+        if (data) rejects(userAt, userRt);
+        break;
+
+      case "application":
+        if (data) {
+          if (window.confirm("선택하시겠습니까?")) {
+            navigate("/Choice", { state: "accept" });
+          }
+        }
+        break;
+      case "report":
+        {
+          window.ReactNativeWebView?.postMessage(
+            JSON.stringify({
+              type: "toast",
+              data:
+                reportCase[data.reportNum] +
+                "의 항목으로 신고가 접수되었습니다.",
+            }) // 메시지
+          );
+          // 신고 API완성되면 대체하기
+          rejects(userAt, userRt); // 거절처리하기
+        }
+        break;
     }
   };
 
@@ -186,34 +176,18 @@ function Matching2(props) {
     return state.Popup.MatchedUserInfo;
   });
 
-  // const Userimages = [
-  //   "assets/mango.jpg",
-  //   "assets/mango.jpg",
-  //   "assets/mango.jpg",
-  //   "assets/mango.jpg",
-  // ];
   return (
     <MatchingContainers detail={detail}>
       <ContentContainer>
-        <MatchingProgressHeader isReport={true} />
+        <MatchingProgressHeader isReport={true} direct={true} />
       </ContentContainer>
       <ProfileImageContainer>
         <CarouselContainer dynamicHeight={true} showThumbs={false}>
-          {MatchedUserData.interests.map((item) => (
+          {MatchedUserData.images.map((item) => (
             <div>
-              <img src={require("assets/mango.jpg")} alt="" />
+              <img src={item.imageUrl} alt="" />
             </div>
           ))}
-          <div>
-            <img src={require("assets/mango.jpg")} alt="" />
-          </div>
-          <div>
-            <img src={require("assets/mango.jpg")} alt="" />
-          </div>
-          {/* 
-          <div>
-            <img src={require("assets/mango.jpg")} alt="" />
-          </div> */}
         </CarouselContainer>
         {/* <img src={require("assets/mango.jpg")} alt="" /> */}
       </ProfileImageContainer>
@@ -224,10 +198,9 @@ function Matching2(props) {
       >
         <DetailTextView detail={detail}></DetailTextView>
         <TextContainer detail={detail}>
-          <text>학교에서 과제만 하기엔 너무 아쉽지 않아????????</text>
-          {/* {MatchedUserData.introduce && (
-            // <text>{MatchedUserData.introduce}</text>
-          )} */}
+          {MatchedUserData.introduce && (
+            <text>{MatchedUserData.introduce}</text>
+          )}
         </TextContainer>
         <KeyboardArrowDownIcon
           style={{
@@ -250,7 +223,7 @@ function Matching2(props) {
               window.ReactNativeWebView?.postMessage(
                 JSON.stringify({ type: "accept", data: "" })
               );
-              accept(userAt, userRt);
+              // accept(userAt, userRt);
             }}
           >
             {/* <img src={require("assets/Like.png")} alt="이미지" /> */}
@@ -267,7 +240,7 @@ function Matching2(props) {
               window.ReactNativeWebView?.postMessage(
                 JSON.stringify({ type: "reject", data: "" })
               );
-              reject(userAt, userRt);
+              // reject(userAt, userRt);
             }}
           >
             <LottieContainer>
@@ -492,7 +465,7 @@ function Matching2(props) {
                 window.ReactNativeWebView?.postMessage(
                   JSON.stringify({ type: "accept", data: "" })
                 );
-                accept(userAt, userRt);
+                // accept(userAt, userRt);
               }}
             >
               {/* <img src={require("assets/Like.png")} alt="이미지" /> */}
@@ -509,7 +482,7 @@ function Matching2(props) {
                 window.ReactNativeWebView?.postMessage(
                   JSON.stringify({ type: "reject", data: "" })
                 );
-                reject(userAt, userRt);
+                // reject(userAt, userRt);
               }}
             >
               <LottieContainer>

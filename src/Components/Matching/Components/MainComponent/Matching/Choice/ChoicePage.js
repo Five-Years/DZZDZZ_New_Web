@@ -2,7 +2,7 @@ import React from "react";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useNavigate } from "react-router-dom";
@@ -16,124 +16,180 @@ import Lottie from "lottie-react";
 import lovelykiss from "assets/lovelykiss.json";
 import pokerface from "assets/pokerface.json";
 import sadlook from "assets/sadlook.json";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 function ChoicePage() {
+  const location = useLocation();
+  const Result = location.state.Result;
   const [isStart, setIsStart] = useState(true);
   const [detail, setDetail] = useState(false);
   const navigate = useNavigate();
   const { state } = useLocation();
-  const [theme, setTheme] = useState(0);
-  const ReportedData = useSelector((state) => {
-    return state.Popup.ReportData;
+  // const ReportedData = useSelector((state) => {
+  //   return state.Popup.ReportData;
+  // });
+  // const ReportCase = useSelector((state) => {
+  //   return state.Popup.ReportCase;
+  // });
+
+  const today = new Date();
+  const todaytime = {
+    year: today.getFullYear(),
+    month: today.getMonth() + 1,
+    date: today.getDate(),
+    hours: today.getHours(),
+    minutes: today.getMinutes(),
+    seconds: today.getSeconds(),
+  };
+  const [Hour, setHour] = useState("00");
+  const [Minute, setMinute] = useState("00");
+  const min = 1000 * 60; //1000ms => 1s , 1s*60 = 1m
+  const SeasonTimer = useSelector((state) => {
+    return state.Popup.seasonTimer;
   });
-  const ReportCase = useSelector((state) => {
-    return state.Popup.ReportCase;
+  const StartTimer = () => {
+    setInterval(() => {
+      const now = new Date();
+      const dis = SeasonTimer - now.getTime(); // 잔여시간(ms단위)
+      setHour(
+        String(Math.floor((dis % (min * 60 * 24)) / (min * 60))).padStart(
+          2,
+          "0"
+        )
+      );
+      setMinute(String(Math.floor((dis % (min * 60)) / min)).padStart(2, "0"));
+    }, 1000);
+  };
+
+  useEffect(() => {
+    if (SeasonTimer !== null) StartTimer();
+  }, [SeasonTimer]);
+
+  const MatchedUserData = useSelector((state) => {
+    return state.Popup.MatchedUserInfo;
   });
+
+  console.log(MatchedUserData);
   return (
     <MatchingContainers detail={detail}>
       <ContentContainer>
-        <MatchingProgressHeader isReport={true} />
+        <MatchingProgressHeader isReport={false} direct={true} />
       </ContentContainer>
 
       <ProfileImageContainer>
-        <img src={require("assets/mango.jpg")} alt="이미지" />
+        <CarouselContainer dynamicHeight={true} showThumbs={false}>
+          {MatchedUserData.images.map((item) => (
+            <div>
+              <img src={item.imageUrl} alt="" />
+            </div>
+          ))}
+        </CarouselContainer>{" "}
       </ProfileImageContainer>
 
       <ProfileNameContainer>
         <ProfileName>
-          <img src={require("assets/CircleWavyCheck.png")} alt="이미지" />
-          <text>단짠지기임당</text>
+          <text>{MatchedUserData.matchedUserNickname}</text>
         </ProfileName>
       </ProfileNameContainer>
       <ContentsContainer>
         <ContentsBox>
           <ResultBox>
-            {state === "accept" ? (
+            {Result === 1 ? (
               <>
-                {/* <img src={Smile} alt="loading..." /> */}
-                {/* <Lottie animationData={lovelykiss} /> */}
+                {" "}
                 <LottieContainer>
                   <Lottie animationData={lovelykiss} />
                 </LottieContainer>
                 <text>
-                  <span>단짠지기임당</span>님을 선택하셨습니다!
+                  <span>{MatchedUserData.matchedUserNickname}</span>님을
+                  선택하셨습니다!
                 </text>
               </>
-            ) : (
+            ) : Result === 2 ? (
               <>
-                {/* <img src={Tear} alt="loading..." /> */}
+                <LottieContainer>
+                  <Lottie animationData={sadlook} />
+                </LottieContainer>{" "}
+                <text>
+                  아쉽게도<span>단짠지기임당</span>님은
+                </text>
+                <text>인연이 아닌가봐요</text>
+              </>
+            ) : Result === 3 ? (
+              <>
+                {" "}
                 <LottieContainer>
                   <Lottie animationData={sadlook} />
                 </LottieContainer>
                 <text>
-                  <span>단짠지기임당</span>님을 거절하셨습니다
+                  <span>{MatchedUserData.matchedUserNickname}</span>님을
+                  거절하셨습니다
                 </text>
-
-                {ReportedData ? (
-                  <>
-                    <ReportContainer>
-                      <ReportCard>
-                        <text>
-                          '{ReportCase[ReportedData.reportNum]}'의 항목으로
-                          신고가 접수되었습니다.
-                        </text>
-                      </ReportCard>
-                    </ReportContainer>
-                  </>
-                ) : (
-                  <></>
-                )}
-                <text
-                  onClick={() => {
-                    navigate("/Matching");
-                  }}
-                  className="reject"
-                >
-                  메인으로 돌아가기
+              </>
+            ) : (
+              <>
+                {" "}
+                <LottieContainer>
+                  <Lottie animationData={lovelykiss} />
+                </LottieContainer>
+                <text>축하합니다!</text>
+                <text>
+                  <span>{MatchedUserData.matchedUserNickname}</span>님과매칭이
+                  성공했어요!
                 </text>
               </>
             )}
           </ResultBox>
-          <WaitingBox state={state}>
-            <text>
-              선택시간이
-              <span>
-                22<span>시간</span>
-              </span>
-              <span>
-                41<span>분</span>
-              </span>{" "}
-              남았어요.
-            </text>
-            <text>상대방이 선택하면 결과가 나와요.</text>
-          </WaitingBox>
-          {/* {isStart ? (
-            <WaitingBox state={state}>
-              <SuggentionButton
-                onClick={() => {
-                  navigate("/ChoiceLoading", { state: { theme: 1 } });
-                }}
-              >
-                <text>결과 확인하기</text>
-              </SuggentionButton>
-            </WaitingBox>
-          ) : (
+          {Result === 1 ? (
             <WaitingBox state={state}>
               <text>
                 선택시간이
                 <span>
-                  22<span>시간</span>
+                  {Hour}
+                  <span>시간</span>
                 </span>
                 <span>
-                  41<span>분</span>
+                  {Minute}
+                  <span>분</span>
                 </span>{" "}
                 남았어요.
               </text>
               <text>상대방이 선택하면 결과가 나와요.</text>
             </WaitingBox>
-          )} */}
-          {/* <ChanceBox state={state}>
-            {state === "accept" ? (
+          ) : (
+            <></>
+          )}
+
+          <ChanceBox state={state}>
+            {Result === 0 ? (
+              <>
+                {/* api 완성되면 실제 링크로 바꾸기 */}
+                <SuggestionButton
+                  onClick={() => {
+                    window.ReactNativeWebView?.postMessage(
+                      JSON.stringify({
+                        type: "openchat",
+                        data: "https://open.kakao.com/o/gZ5Purqf",
+                      })
+                    );
+                  }}
+                >
+                  <text>오픈 카톡 URL 열기</text>
+                </SuggestionButton>
+              </>
+            ) : (
+              <></>
+            )}
+            <text
+              onClick={() => {
+                navigate("/matching");
+              }}
+              className="result"
+            >
+              메인으로 돌아가기
+            </text>
+            {/* {state === "accept" ? (
               <text
                 onClick={() => {
                   navigate("/Matching");
@@ -158,10 +214,10 @@ function ChoicePage() {
                   }}
                 >
                   <text>이건 어때요?</text>
-                </SuggentionButton>
+                </SuggentionButton> 
               </>
-            )}
-          </ChanceBox> */}
+            )} */}
+          </ChanceBox>
         </ContentsBox>
       </ContentsContainer>
     </MatchingContainers>
@@ -170,12 +226,60 @@ function ChoicePage() {
 
 export default ChoicePage;
 
+const SuggestionButton = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+
+  width: 56.41%;
+  height: 52px;
+
+  /* dzz_pink */
+
+  background: #ff477e;
+  border-radius: 13px;
+
+  > text {
+    font-family: var(--font-Pretendard-Bold);
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.1px;
+
+    /* white */
+
+    color: #ffffff;
+  }
+`;
+
+const CarouselContainer = styled(Carousel)`
+  width: 100%;
+  height: 100%;
+
+  > div {
+    width: 100%;
+    height: 100%;
+  }
+  > img {
+    width: 100%;
+    object-fit: cover;
+  }
+`;
+
 const ContentsBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  width: 65.31%;
+  width: 100%;
   height: 95%;
 `;
 
@@ -377,7 +481,7 @@ const ResultBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: start;
+  justify-content: space-between;
   padding: 0px;
   gap: 7px;
 
@@ -389,12 +493,9 @@ const ResultBox = styled.div`
     font-family: var(--font-Pretendard-Light);
     font-style: normal;
     font-weight: 300;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 25px;
     /* identical to box height */
-
-    display: flex;
-    align-items: center;
 
     > span {
       font-weight: 700;
@@ -429,9 +530,10 @@ const LottieContainer = styled.div`
 `;
 
 const WaitingBox = styled.div`
-  display: ${(props) => (props.state === "accept" ? "flex" : "none")};
+  display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 0px;
   gap: 5px;
 
@@ -472,7 +574,7 @@ const ChanceBox = styled.div`
   padding: 0px;
   gap: 5px;
 
-  width: 180px;
+  width: 100%;
   height: 60px;
 
   > text {

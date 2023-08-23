@@ -7,10 +7,12 @@ import { ReactComponent as DzzDate } from "assets/dzzdzz_datelogo.svg";
 import Lottie from "lottie-react";
 import Logo from "assets/matching_logo2.json";
 import search from "assets/search.json";
-import axios from "axios";
+// import axios from "axios";
 import { useDispatch } from "react-redux";
 import StateSlice from "features/State/StateSlice";
 import { useSelector } from "react-redux";
+import { AxiosInstanse } from "../../../../../utils/AxiosInstance";
+
 var Spinner = require("react-spinkit");
 
 function MatchingProgress() {
@@ -32,12 +34,8 @@ function MatchingProgress() {
   //@ 현재 매칭하는 상대방의 정보를 불러오고 리듀서에 저장한다 (친구, 이성 테마에 맞춰서)
   const getMatchedUserInfo = async (at, rt) => {
     try {
-      const Response = await axios.get(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/matching/user/info?matchingType=${matchingType[Theme]}`, // 매칭타입 가변적으로 만들어주기
+      const Response = await AxiosInstanse.get(
+        `/matching/user/info?matchingType=${matchingType[Theme]}`, // 매칭타입 가변적으로 만들어주기
         {
           headers: {
             Authorization: at,
@@ -119,7 +117,7 @@ function MatchingProgress() {
         ) : (
           <ConfirmButton
             onClick={() => {
-              navigate("/matching2");
+              navigate("/matching2", { state: { theme: Theme } });
             }}
             theme={state.theme}
           >

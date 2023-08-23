@@ -2,8 +2,10 @@ import React from "react";
 import MenuHeader from "../../HeaderComponent/MenuHeader";
 import styled from "styled-components";
 import { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { useSelector } from "react-redux";
+
+import { AxiosInstanse } from "../../../../../utils/AxiosInstance";
 
 function Coupon() {
   const [isError, setIsError] = useState(false);
@@ -12,12 +14,8 @@ function Coupon() {
 
   const postCoupon = async (at, rt) => {
     try {
-      const Response = await axios.post(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/item/coupon?code=${inputValue}`,
+      const Response = await AxiosInstanse.post(
+        `/item/coupon?code=${inputValue}`,
         {},
         {
           headers: {

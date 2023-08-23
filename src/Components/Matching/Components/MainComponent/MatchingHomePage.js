@@ -12,7 +12,8 @@ import MatchingHeaderNew from "../HeaderComponent/MatchingHeaderNew";
 import StateSlice from "features/State/StateSlice";
 // import MyTicket from "../ReusableComponents/MyTicket";
 import MyTicket from "Components/Matching/Components/ReusableComponents/MyTicket";
-import axios from "axios";
+// import axios from "axios";
+import { AxiosInstanse, setHeader } from "../../../../utils/AxiosInstance";
 
 function MatchingHomePage(props) {
   const navigate = useNavigate();
@@ -24,9 +25,9 @@ function MatchingHomePage(props) {
   //   dispatch(
   //     StateSlice.actions.userToken({
   //       accessToken:
-  //         "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJEaWFuYV9IZXJtaXN0b25AZXhhbXBsZS5jb20iLCJhdXRoIjoiVU5SRVNUUklDVEVELOuLqOq1reuMgO2Vmeq1kCxOT1JNQUxfVVNFUixJVCxGRU1BTEUiLCJleHAiOjE2OTQ2OTQ5MjV9.V9mfrEUUsaawVCtzfZo76xgIhHff5dpwzqu-FtG0sTg",
+  //         "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLaW5nOTFAZXhhbXBsZS5uZXQiLCJhdXRoIjoiRkVNQUxFLOuLqOq1reuMgO2Vmeq1kCjso73soIQpLElULE5PUk1BTF9VU0VSLFVOUkVTVFJJQ1RFRCIsImV4cCI6MTY5NTA0OTU5N30.H_jxIKtu9uHQ6WmvRynepOxCvPdegmjX4Nyb-290pmQ",
   //       refreshToken:
-  //         "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTQ2OTQ5MjV9.SVDVlBw4IB9HuIaOfkGbyQ7CGnA0ckjBOpulFuD5EIY",
+  //         "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTUwNDk1OTd9.epbO4uyjinz_-nlMUeuq1ehcpkKftvxY2srQSBB4ISg",
   //     })
   //   );
   // }, []);
@@ -54,21 +55,14 @@ function MatchingHomePage(props) {
   // @ 사용자 정보를 가져와 userInfo에 넣은후 리덕스에 저장. (엑세스,리프래시토큰은 웹뷰통신으로 리덕스에 저장)
   const getData = async (at, rt) => {
     try {
-      const Response = await axios.get(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/login/token`,
-        {
-          headers: {
-            Authorization: at,
-            "x-refresh-token": rt,
-            fcmToken: "123",
-            "content-type": "application/json",
-          },
-        }
-      );
+      const Response = await AxiosInstanse.get(`/login/token`, {
+        headers: {
+          Authorization: at,
+          "x-refresh-token": rt,
+          fcmToken: "123",
+          "content-type": "application/json",
+        },
+      });
 
       dispatch(StateSlice.actions.userInfo(Response.data.data));
     } catch (error) {
@@ -78,21 +72,14 @@ function MatchingHomePage(props) {
 
   const getAsset = async (at, rt) => {
     try {
-      const Response = await axios.get(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/item/remain`,
-        {
-          headers: {
-            Authorization: at,
-            "x-refresh-token": rt,
-            fcmToken: "123",
-            "content-type": "application/json",
-          },
-        }
-      );
+      const Response = await AxiosInstanse.get(`/item/remain`, {
+        headers: {
+          Authorization: at,
+          "x-refresh-token": rt,
+          fcmToken: "123",
+          "content-type": "application/json",
+        },
+      });
 
       dispatch(StateSlice.actions.userAsset(Response.data.data));
     } catch (error) {
@@ -114,12 +101,8 @@ function MatchingHomePage(props) {
     };
 
     try {
-      const Response = await axios.get(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/matching/calendar?today=${`${todaytime.year}-${String(
+      const Response = await AxiosInstanse.get(
+        `/matching/calendar?today=${`${todaytime.year}-${String(
           todaytime.month
         ).padStart(2, "0")}-${String(todaytime.date).padStart(2, "0")}`}`,
 
@@ -135,18 +118,38 @@ function MatchingHomePage(props) {
           new Date(Response.data.data.endsAt).getTime()
         )
       );
-      if (Response.data.data.status === "Register") {
-        //@ 접수기간
-        dispatch(StateSlice.actions.SeasonStep(0));
-      } else if (Response.data.data.status === "Matching") {
-        {
-          //@ 매칭기간
+
+      if (isProd) {
+        //운영 바꾸면안됨!!
+        if (Response.data.data.status === "Register") {
+          //@ 접수기간
           dispatch(StateSlice.actions.SeasonStep(0));
+        } else if (Response.data.data.status === "Matching") {
+          {
+            //@ 매칭기간
+            dispatch(StateSlice.actions.SeasonStep(1));
+          }
+        } else if (Response.data.data.status === "None") {
+          {
+            //@ 휴식기간
+            dispatch(StateSlice.actions.SeasonStep(2));
+          }
         }
-      } else if (Response.data.data.status === "None") {
-        {
-          //@ 휴식기간
+      } else {
+        //개발일때
+        if (Response.data.data.status === "Register") {
+          //@ 접수기간
           dispatch(StateSlice.actions.SeasonStep(0));
+        } else if (Response.data.data.status === "Matching") {
+          {
+            //@ 매칭기간
+            dispatch(StateSlice.actions.SeasonStep(1));
+          }
+        } else if (Response.data.data.status === "None") {
+          {
+            //@ 휴식기간
+            dispatch(StateSlice.actions.SeasonStep(2));
+          }
         }
       }
     } catch (error) {
@@ -158,21 +161,14 @@ function MatchingHomePage(props) {
   // @ 친구매칭, 커플 매칭 신청 정보를 가져와 리듀서에 저장한다
   const getMatchStatus = async (at, rt) => {
     try {
-      const Response = await axios.get(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/matching/participate/status`,
-        {
-          headers: {
-            Authorization: at,
-            "x-refresh-token": rt,
-            fcmToken: "123",
-            "content-type": "application/json",
-          },
-        }
-      );
+      const Response = await AxiosInstanse.get(`/matching/participate/status`, {
+        headers: {
+          Authorization: at,
+          "x-refresh-token": rt,
+          fcmToken: "123",
+          "content-type": "application/json",
+        },
+      });
       dispatch(StateSlice.actions.matchParticipate(Response.data.data));
     } catch (error) {
       console.log(error);
@@ -183,12 +179,8 @@ function MatchingHomePage(props) {
   // 접수단계에서 매칭 접수를 안한 상태라면 None, 매칭을 접수했다면 waiting, 진행단계에서 실패했다면 ??? 성공했다면 ??? 등으로 나올듯
   const getMatchResult = async (at, rt) => {
     try {
-      const CoupleResponse = await axios.get(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/matching/user/result?matchingType=Couple`,
+      const CoupleResponse = await AxiosInstanse.get(
+        `/matching/user/result?matchingType=Couple`,
         {
           headers: {
             Authorization: at,
@@ -206,12 +198,8 @@ function MatchingHomePage(props) {
     }
 
     try {
-      const FriendResponse = await axios.get(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/matching/user/result?matchingType=Friend`,
+      const FriendResponse = await AxiosInstanse.get(
+        `/matching/user/result?matchingType=Friend`,
         {
           headers: {
             Authorization: at,
@@ -228,6 +216,11 @@ function MatchingHomePage(props) {
       console.log(error);
     }
   };
+
+  //@ 개발/상용 여부
+  const isProd = useSelector((state) => {
+    return state.Popup.isProd;
+  });
 
   //@ 사용자 티켓 수 => 아직 서버 통신 구현안됨, 기다리는 중
   const Ticket = useSelector((state) => {
@@ -300,16 +293,18 @@ function MatchingHomePage(props) {
   //@ 현재 시즌상태 없다면 시즌상태를 가져온다, 시즌상태가 있다면 매칭 결과를 가져온다
   //접수를 안한 상태라면 상태가 None이 나온다, 접수를 한 상태라면 waiting, 매칭결과는 기타 등등
   useEffect(() => {
-    if (SeasonStep === -1 && userAt != null) {
-      getSeason();
-      getAsset(userAt, userRt);
-      getData(userAt, userRt);
-    } else if (SeasonStep !== -1 && userAt != null) {
-      // 만약 현재 시즌진행중이라면 매칭 결과정보를 가져온다.
-      getMatchStatus(userAt, userRt);
-      getMatchResult(userAt, userRt);
+    if (typeof isProd !== "undefined") {
+      if (SeasonStep === -1 && userAt != null) {
+        getSeason();
+        getAsset(userAt, userRt);
+        getData(userAt, userRt);
+      } else if (SeasonStep !== -1 && userAt != null) {
+        // 만약 현재 시즌진행중이라면 매칭 결과정보를 가져온다.
+        getMatchStatus(userAt, userRt);
+        getMatchResult(userAt, userRt);
+      }
     }
-  }, [SeasonStep, userAt]);
+  }, [SeasonStep, userAt, isProd]);
 
   // //@ 시즌타이머 정보를 서버로부터 받아 왔다면 타이머 실행.
   useEffect(() => {
@@ -329,7 +324,7 @@ function MatchingHomePage(props) {
     const { data, type } = JSON.parse(event);
 
     switch (type) {
-      //@ 사용자 토큰을 받아 리덕스에 저장
+      // @ 사용자 토큰을 받아 리덕스에 저장
       case "loginToken":
         if (Name === "anonymous") {
           dispatch(
@@ -338,6 +333,8 @@ function MatchingHomePage(props) {
               refreshToken: data.refreshToken,
             })
           );
+          setHeader(data.isProd ?? false);
+          dispatch(StateSlice.actions.setIsProd(data.isProd ?? false));
         }
         break;
 
@@ -524,8 +521,8 @@ function MatchingHomePage(props) {
               <text>
                 {SeasonStep === 1 &&
                 (CouplematchResult.matchingResult === "WaitChoice" ||
-                  CouplematchResult.matchingResult === "WaitRoundResult" ||
-                  FriendmatchResult.matchingResult === "NoneWithHistory") ? (
+                  CouplematchResult.matchingResult === "RoundSuccess" ||
+                  CouplematchResult.matchingResult === "NoneWithHistory") ? (
                   <>
                     {" "}
                     <span>#</span> <span>확인하러가기</span>
@@ -568,7 +565,7 @@ function MatchingHomePage(props) {
               <text>
                 {SeasonStep === 1 &&
                 (FriendmatchResult.matchingResult === "WaitChoice" ||
-                  FriendmatchResult.matchingResult === "WaitRoundResult" ||
+                  FriendmatchResult.matchingResult === "RoundSuccess" ||
                   FriendmatchResult.matchingResult === "NoneWithHistory") ? (
                   <>
                     {" "}
@@ -809,7 +806,7 @@ export const MobileContainer = styled.div`
   width: 100%;
   height: 100%;
   min-width: 375px;
-  min-height: 720px;
+  min-height: 700px;
   /* max-width: 412px;
   max-height: 915px; */
   position: absolute;

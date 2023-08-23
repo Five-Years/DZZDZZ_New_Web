@@ -116,6 +116,8 @@ export const MatchingContainers = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
+  min-width: 375px;
+  min-height: 700px;
   background: white;
 `;
 

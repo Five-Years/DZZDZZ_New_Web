@@ -28,6 +28,14 @@ function MatchingProgressHeader(props) {
     return state.Popup.userAsset;
   });
 
+  const Name = useSelector((state) => {
+    return state.Popup.name;
+  });
+
+  const MatchedUserData = useSelector((state) => {
+    return state.Popup.MatchedUserInfo;
+  });
+
   useEffect(() => {
     //android
     document.addEventListener("message", (e) => listener(e.data));
@@ -78,7 +86,13 @@ function MatchingProgressHeader(props) {
             <Reportbutton
               onClick={() => {
                 window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "report", data: "" })
+                  JSON.stringify({
+                    type: "report",
+                    data: {
+                      reporter: Name,
+                      reported: MatchedUserData.matchedUserNickname,
+                    },
+                  })
                 );
               }}
               style={{ marginRight: "15.4%" }}

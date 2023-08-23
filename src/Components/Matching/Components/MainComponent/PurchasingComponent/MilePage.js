@@ -12,6 +12,7 @@ import { ReactComponent as Jelly4 } from "../../../../../assets/Jelly4.svg";
 
 // 웹뷰통신 필요
 // buyjelly날라오면 서버로부터 자산 갱신하기
+
 function MilePage(props) {
   const dispatch = useDispatch();
   return (

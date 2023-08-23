@@ -13,6 +13,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import MenuHeader from "../../HeaderComponent/MenuHeader";
 import HistoryTicket from "./HistoryTicket";
 import HistoryMile from "./HistoryMile";
+// import axios from "axios";
+import { AxiosInstanse } from "../../../../../utils/AxiosInstance";
 
 function HistoryPage() {
   const navigate = useNavigate();
@@ -20,6 +22,39 @@ function HistoryPage() {
   const dispatch = useDispatch();
   const location = useLocation();
   const [isSelected, setIsSelected] = useState(0);
+
+  const getHistory = async (at, rt) => {
+    try {
+      const Response = await AxiosInstanse.get(`/item/history`, {
+        headers: {
+          Authorization: at,
+          "x-refresh-token": rt,
+          fcmToken: "123",
+          "content-type": "application/json",
+        },
+      });
+      console.log(Response.data.data);
+      dispatch(StateSlice.actions.userHistory(Response.data.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const userAt = useSelector((state) => {
+    return state.Popup.userToken.accessToken;
+  });
+
+  const userRt = useSelector((state) => {
+    return state.Popup.userToken.refreshToken;
+  });
+
+  useEffect(() => {
+    if (userAt != null) getHistory(userAt, userRt);
+  }, [userAt]);
+
+  // useEffect(() => {
+  //   console.log(userHistory);
+  // }, [userHistory]);
 
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
@@ -49,6 +84,10 @@ function HistoryPage() {
   }, []);
 
   const userAsset = useSelector((state) => {
+    return state.Popup.userAsset;
+  });
+
+  const userHistory = useSelector((state) => {
     return state.Popup.userAsset;
   });
 
@@ -85,7 +124,7 @@ function HistoryPage() {
           </TicketSection>
         </TicketMileChangeContainer>
         <ListContainer>
-          {isSelected ? <HistoryMile /> : <HistoryTicket />}
+          {isSelected ? <HistoryTicket /> : <HistoryMile />}
         </ListContainer>
       </PurchasePageContainer>
     </>

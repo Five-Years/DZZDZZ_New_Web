@@ -123,7 +123,7 @@ function TicketPage() {
         </TicketPurchaseContainer>
       </ProductContainer>
       <RematchHorizon />
-      <RematchContainer>
+      {/* <RematchContainer>
         <RematchText
           onClick={() => {
             window.ReactNativeWebView?.postMessage(
@@ -161,7 +161,7 @@ function TicketPage() {
             </TicketButton>
           </TicketPurchaseContainer>
         </RematchTicket>
-      </RematchContainer>
+      </RematchContainer> */}
     </>
   );
 }

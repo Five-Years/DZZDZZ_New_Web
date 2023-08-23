@@ -2,134 +2,32 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 function HistoryTicket() {
-  const data = [
-    {
-      time: "23.05.14 12:44",
-      title: "젤리 8개 구매 함",
-      type: "젤리",
-      count: 8,
-      won: 9600,
-    },
-    // {
-    //   time: "23.05.14 12:44",
-    //   title: "젤리 8개 구매 함",
-    //   type: "젤리",
-    //   count: 8,
-    //   won: 9600,
-    // },
-    // {
-    //   time: "23.05.14 12:44",
-    //   title: "젤리 8개 구매 함",
-    //   type: "젤리",
-    //   count: 8,
-    //   won: 9600,
-    // },
-    // {
-    //   time: "23.05.14 12:44",
-    //   title: "젤리 8개 구매 함",
-    //   type: "젤리",
-    //   count: 8,
-    //   won: 9600,
-    // },
-    // {
-    //   time: "23.05.14 12:44",
-    //   title: "젤리 8개 구매 함",
-    //   type: "젤리",
-    //   count: 8,
-    //   won: 9600,
-    // },
-    // {
-    //   time: "23.05.14 12:44",
-    //   title: "젤리 8개 구매 함",
-    //   type: "젤리",
-    //   count: 8,
-    //   won: 9600,
-    // },
-    // {
-    //   time: "23.05.14 12:44",
-    //   title: "젤리 8개 구매 함",
-    //   type: "젤리",
-    //   count: 8,
-    //   won: 9600,
-    // },
-    { time: "23.05.14 12:44", title: "티켓 1개", type: "젤리", count: -20 },
-    {
-      time: "23.05.14 12:44",
-      title: "젤리 8개 구매 함",
-      type: "젤리",
-      count: 8,
-      won: 9600,
-    },
-    { time: "23.05.14 12:44", title: "티켓 1개", type: "젤리", count: -20 },
-    {
-      time: "23.05.14 12:44",
-      title: "젤리 8개 구매 함",
-      type: "젤리",
-      count: 8,
-      won: 9600,
-    },
-    { time: "23.05.14 12:44", title: "티켓 1개", type: "젤리", count: -20 },
-    {
-      time: "23.05.14 12:44",
-      title: "젤리 8개 구매 함",
-      type: "젤리",
-      count: 8,
-      won: 9600,
-    },
-    { time: "23.05.14 12:44", title: "티켓 1개", type: "젤리", count: -20 },
-    {
-      time: "23.05.14 12:44",
-      title: "젤리 8개 구매 함",
-      type: "젤리",
-      count: 8,
-      won: 9600,
-    },
-    { time: "23.05.14 12:44", title: "티켓 1개", type: "젤리", count: -20 },
-    {
-      time: "23.05.14 12:44",
-      title: "젤리 8개 구매 함",
-      type: "젤리",
-      count: 8,
-      won: 9600,
-    },
-    { time: "23.05.14 12:44", title: "티켓 1개", type: "젤리", count: -20 },
-    {
-      time: "23.05.14 12:44",
-      title: "젤리 8개 구매 함",
-      type: "젤리",
-      count: 8,
-      won: 9600,
-    },
-    { time: "23.05.14 12:44", title: "티켓 1개", type: "젤리", count: -20 },
-    {
-      time: "23.05.14 12:44",
-      title: "젤리 8개 구매 함",
-      type: "젤리",
-      count: 8,
-      won: 9600,
-    },
-    { time: "23.05.14 12:44", title: "티켓 1개", type: "젤리", count: -20 },
-  ];
-
-  const userTicketHistory = useSelector((state) => {
-    return state.Popup.userHistory.jellyHistory;
+  const userHistoryTicket = useSelector((state) => {
+    return state.Popup.userHistory.ticketHistory;
   });
   return (
     <>
-      {data.map((data) => {
-        if (data.count > 0) {
+      {userHistoryTicket.map((data) => {
+        const date = new Date(data.createdDate);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        if (data.ticketHistoryType !== "CONSUME") {
           return (
             <ListItemContainer>
               <ItemBox>
                 <ItemLeft>
-                  <text className="time">{data.time}</text>
-                  <text>{data.title}</text>
+                  <text className="time">
+                    {year}-{month}-{day}
+                  </text>
+                  <text>{data.description}</text>
                 </ItemLeft>
                 <ItemRight>
                   <text className="title">{"티켓"}</text>
                   <text>
-                    +{data.count}
-                    <span>({data.won})</span>
+                    +1
+                    <span>(결제금액)</span>
+                    {/* 티켓 수량, 결제금액 추가반영필요 */}
                   </text>
                 </ItemRight>
               </ItemBox>
@@ -140,12 +38,15 @@ function HistoryTicket() {
             <ListItemContainer>
               <ItemBox>
                 <ItemLeft>
-                  <text className="time">{data.time}</text>
-                  <text>{data.title}</text>
+                  <text className="time">
+                    {year}-{month}-{day}
+                  </text>
+                  <text>{data.description}</text>
                 </ItemLeft>
                 <ItemRight>
                   <text className="title">{"티켓"}</text>
-                  <text className="use">{data.count}</text>
+                  <text className="use">-1</text>
+                  {/* 사용수량 추가 반영 필요 */}
                 </ItemRight>
               </ItemBox>
             </ListItemContainer>
@@ -176,11 +77,12 @@ const ItemLeft = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: start;
   padding: 0px;
+  text-align: start;
 
   width: 30%;
-  min-width: 120px;
+  min-width: 150px;
   height: 100%;
   margin-left: 4.57%;
 

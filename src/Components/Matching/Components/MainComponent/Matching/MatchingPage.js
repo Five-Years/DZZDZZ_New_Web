@@ -10,6 +10,7 @@ import MyTicket from "../../ReusableComponents/MyTicket";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import StateSlice from "features/State/StateSlice";
+import { AxiosInstanse } from "../../../../../utils/AxiosInstance";
 
 function MatchingPage() {
   const dispatch = useDispatch();
@@ -67,6 +68,13 @@ function MatchingPage() {
     navigate("/MatchingProgress", { state: { theme: Theme } });
   };
 
+  const GotoChoice = (data) => {
+    navigate("/choiceLoading", { state: { theme: Theme, result: data } });
+    // choiceloading페이지로 이동
+    // data : 0 => 매칭대기중
+    // data : 1 => 결과나온상태
+  };
+
   useEffect(() => {
     //android
     document.addEventListener("message", (e) => listener(e.data));
@@ -108,21 +116,14 @@ function MatchingPage() {
   //지원학교여부, 사용자필수정보, 사진인증, 학생인증
   const getAvailable = async (at, rt) => {
     try {
-      const Response = await axios.get(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/matching/user/available`,
-        {
-          headers: {
-            Authorization: at,
-            "x-refresh-token": rt,
-            fcmToken: "123",
-            "content-type": "application/json",
-          },
-        }
-      );
+      const Response = await AxiosInstanse.get(`/matching/user/available`, {
+        headers: {
+          Authorization: at,
+          "x-refresh-token": rt,
+          fcmToken: "123",
+          "content-type": "application/json",
+        },
+      });
       dispatch(StateSlice.actions.matchAvailable(Response.data.data));
     } catch (error) {
       console.log(error);
@@ -134,15 +135,28 @@ function MatchingPage() {
     if (userAt) getAvailable(userAt, userRt);
   }, [userAt]);
 
+  const getAsset = async (at, rt) => {
+    try {
+      const Response = await AxiosInstanse.get(`/item/remain`, {
+        headers: {
+          Authorization: at,
+          "x-refresh-token": rt,
+          fcmToken: "123",
+          "content-type": "application/json",
+        },
+      });
+
+      dispatch(StateSlice.actions.userAsset(Response.data.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   //@ 매칭신청하기
   const Apply = async (at, rt) => {
     try {
-      const Response = await axios.post(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/matching/participate?matchingType=${matchingType[Theme]}`, // 신청하기, 친구매칭 Friend, 커플매칭 Couple
+      const Response = await AxiosInstanse.post(
+        `/matching/participate?matchingType=${matchingType[Theme]}`, // 신청하기, 친구매칭 Friend, 커플매칭 Couple
         {},
         {
           headers: {
@@ -161,6 +175,9 @@ function MatchingPage() {
         window.ReactNativeWebView?.postMessage(
           JSON.stringify({ type: "toast", data: "신청이 완료되었습니다" }) // 메시지
         );
+        // 사용자 티켓 최신화
+        getAsset(userAt, userRt);
+
         navigate("/matching");
       } else {
         window.ReactNativeWebView?.postMessage(
@@ -247,11 +264,34 @@ function MatchingPage() {
         <EachButton
           className="activate"
           onClick={() => {
-            GotoMatching();
+            GotoChoice(0);
+            // 상황에 따라 적절하게 페이지 이동해야함
+            //초이스로딩시 친구인지, 매칭인지, 어떤페이지로 이동해야하는지가 필요
+            // choiceLoading -> chociepage choicepage로 이동해야함 (이동중 자원로딩뷰 필요)
           }}
           matching={Theme}
         >
-          <text className="enter">결과 대기중</text>
+          <text className="enter">결과를 기다리는중</text>
+        </EachButton>
+      );
+    } else if (
+      SeasonStep === 1 &&
+      status.matchingResult === "RoundFail" &&
+      status.myChoice == "Reject"
+    ) {
+      //매칭시작하기 버튼
+      return (
+        <EachButton
+          className="activate"
+          onClick={() => {
+            GotoChoice(0);
+            // 상황에 따라 적절하게 페이지 이동해야함
+            //초이스로딩시 친구인지, 매칭인지, 어떤페이지로 이동해야하는지가 필요
+            // choiceLoading -> chociepage choicepage로 이동해야함 (이동중 자원로딩뷰 필요)
+          }}
+          matching={Theme}
+        >
+          <text className="enter">상대를 거절하셨어요</text>
         </EachButton>
       );
     } else if (
@@ -265,7 +305,11 @@ function MatchingPage() {
         <EachButton
           className="activate"
           onClick={() => {
-            GotoMatching();
+            GotoChoice(1);
+
+            // GotoMatching();
+            //초이스로딩시 친구인지, 매칭인지, 어떤페이지로 이동해야하는지가 필요
+            // choiceLoading -> choiceresult로 이동해야함 (이동중 자원로딩뷰 필요)
           }}
           matching={Theme}
         >
@@ -371,7 +415,7 @@ export const MobileContainer = styled.div`
   width: 100%;
   height: 100%;
   min-width: 375px;
-  min-height: 720px;
+  min-height: 700px;
   position: absolute;
 `;
 

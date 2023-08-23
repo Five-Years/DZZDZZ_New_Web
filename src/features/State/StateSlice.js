@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  //@ 개발/상용 여부
+  isProd: undefined,
+
   value: false,
   query: 1,
   //@ 사용자 티켓수
@@ -69,6 +72,9 @@ const StateSlice = createSlice({
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
+    setIsProd: (state, action) => {
+      state.isProd = action.payload;
+    },
     Popup: (state) => {
       state.value = !state.value;
     },

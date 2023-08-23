@@ -1,44 +1,31 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 function HistoryMile() {
-  const data = [
-    { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    // { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
-    // { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
-    // { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
-    // { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
-    // { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
-    // { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
-    // { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
-    // { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
-    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    // { time: "23.05.14 12:44", title: "매칭", type: "사용", count: -1 },
-    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-    // { time: "23.05.14 12:44", title: "이벤트 보상", type: "티켓", count: 1 },
-  ];
+  const userHistoryJelly = useSelector((state) => {
+    return state.Popup.userHistory.jellyHistory;
+  });
+
   return (
     <>
-      {data.map((data) => {
-        if (data.count > 0) {
+      {userHistoryJelly.map((data) => {
+        const date = new Date(data.createdDate);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        if (data.jellyHistoryType !== "CONSUME") {
           return (
             <ListItemContainer>
               <ItemBox>
                 <ItemLeft>
-                  <text className="time">{data.time}</text>
-                  <text>{data.title}</text>
+                  <text className="time">
+                    {year}-{month}-{day}
+                  </text>
+                  <text>{data.description}</text>
                 </ItemLeft>
                 <ItemRight>
-                  <text className="title">{data.type}</text>
-                  <text>+{data.count}</text>
+                  <text className="title">{"젤리"}</text>
+                  <text>+1</text>
                 </ItemRight>
               </ItemBox>
             </ListItemContainer>
@@ -48,12 +35,15 @@ function HistoryMile() {
             <ListItemContainer>
               <ItemBox>
                 <ItemLeft>
-                  <text className="time">{data.time}</text>
-                  <text>{data.title}</text>
+                  <text className="time">
+                    {" "}
+                    {year}-{month}-{day}
+                  </text>
+                  <text>{data.description}</text>
                 </ItemLeft>
                 <ItemRight>
-                  <text className="title">{data.type}</text>
-                  <text className="use">{data.count}</text>
+                  <text className="title">{"젤리"}</text>
+                  <text className="use">-1</text>
                 </ItemRight>
               </ItemBox>
             </ListItemContainer>

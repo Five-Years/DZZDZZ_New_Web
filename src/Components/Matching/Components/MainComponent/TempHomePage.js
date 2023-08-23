@@ -330,16 +330,16 @@ function TempHomePage(props) {
 
     switch (type) {
       //@ 사용자 토큰을 받아 리덕스에 저장
-      case "loginToken":
-        if (Name === "anonymous") {
-          dispatch(
-            StateSlice.actions.userToken({
-              accessToken: data.accessToken,
-              refreshToken: data.refreshToken,
-            })
-          );
-        }
-        break;
+      //   case "loginToken":
+      //     if (Name === "anonymous") {
+      //       dispatch(
+      //         StateSlice.actions.userToken({
+      //           accessToken: data.accessToken,
+      //           refreshToken: data.refreshToken,
+      //         })
+      //       );
+      //     }
+      //     break;
 
       //@초기화면으로 되돌리는 이벤트
       case "onBlur":

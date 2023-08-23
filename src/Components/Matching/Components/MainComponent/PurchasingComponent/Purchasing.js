@@ -5,7 +5,7 @@ import { ReactComponent as Jelly } from "assets/jelly.svg";
 import { ReactComponent as DisabledTicket } from "assets/disabledTicket.svg";
 import { ReactComponent as DisabledJelly } from "assets/DisabledJelly.svg";
 import { ReactComponent as Ticket } from "assets/ticket.svg";
-import axios from "axios";
+// import axios from "axios";
 
 import {
   PurchasePageContainer,
@@ -23,6 +23,7 @@ import MenuHeader from "../../HeaderComponent/MenuHeader";
 import MilePage from "./MilePage";
 import InviteEventButton from "../../ReusableComponents/InviteEventButton";
 import JellyButtonContainer from "../../ReusableComponents/JellyButtonContainer";
+import { AxiosInstanse } from "../../../../../utils/AxiosInstance";
 
 function Purchasing() {
   const navigate = useNavigate();
@@ -37,6 +38,23 @@ function Purchasing() {
 
   const [isSelected, setIsSelected] = useState(0);
   const title = "충전하기";
+
+  const getAsset = async (at, rt) => {
+    try {
+      const Response = await AxiosInstanse.get(`/item/remain`, {
+        headers: {
+          Authorization: at,
+          "x-refresh-token": rt,
+          fcmToken: "123",
+          "content-type": "application/json",
+        },
+      });
+
+      dispatch(StateSlice.actions.userAsset(Response.data.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
@@ -54,6 +72,16 @@ function Purchasing() {
 
       case "back":
         navigate(-1);
+        break;
+      case "buyJelly":
+        if (data) getAsset(userAt, userRt);
+        // 만약 true라면
+        // 자산 갱신
+        break;
+      case "buyTicket":
+        if (data) getAsset(userAt, userRt);
+        //만약 true라면
+        // 티켓 갱신
         break;
     }
   };
@@ -73,21 +101,14 @@ function Purchasing() {
 
   const getHistory = async (at, rt) => {
     try {
-      const Response = await axios.get(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/item/history`,
-        {
-          headers: {
-            Authorization: at,
-            "x-refresh-token": rt,
-            fcmToken: "123",
-            "content-type": "application/json",
-          },
-        }
-      );
+      const Response = await AxiosInstanse.get(`/item/history`, {
+        headers: {
+          Authorization: at,
+          "x-refresh-token": rt,
+          fcmToken: "123",
+          "content-type": "application/json",
+        },
+      });
 
       dispatch(StateSlice.actions.userHistory(Response.data.data));
     } catch (error) {
