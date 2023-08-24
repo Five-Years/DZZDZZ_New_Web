@@ -6,6 +6,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import StateSlice from "features/State/StateSlice";
 import { useSelector } from "react-redux";
+import { AxiosInstanse } from "utils/AxiosInstance";
 
 function CountTimer() {
   const dispatch = useDispatch();
@@ -34,7 +35,6 @@ function CountTimer() {
 
   // @ 현재 시즌 상태를 가져오는 매소드, 날짜 객체를 이용
   const getSeason = async () => {
-    // @ 시즌 정보 통신을 위한 날짜 객체
     const today = new Date();
     const todaytime = {
       year: today.getFullYear(),
@@ -46,12 +46,8 @@ function CountTimer() {
     };
 
     try {
-      const Response = await axios.get(
-        `${
-          process.env.NODE_ENV === "development"
-            ? ""
-            : "https://dev.fiveyears.click"
-        }/matching/calendar?today=${`${todaytime.year}-${String(
+      const Response = await AxiosInstanse.get(
+        `/matching/calendar?today=${`${todaytime.year}-${String(
           todaytime.month
         ).padStart(2, "0")}-${String(todaytime.date).padStart(2, "0")}`}`,
 
@@ -61,18 +57,35 @@ function CountTimer() {
           },
         }
       );
+
       dispatch(
-        StateSlice.actions.seasonTimer(new Date(Response.data.data.endsAt))
+        StateSlice.actions.seasonTimer(
+          new Date(Response.data.data.endsAt).getTime()
+        )
       );
 
-      if (Response.data.data.status === "Register") {
-        dispatch(StateSlice.actions.SeasonStep(0));
-      } else if (Response.data.data.status === "Matching") {
-        {
+      if (isProd) {
+        //운영 바꾸면안됨!!
+        if (Response.data.data.status === "Register") {
+          //@ 접수기간
+          dispatch(StateSlice.actions.SeasonStep(0));
+        } else if (Response.data.data.status === "Matching") {
+          //@ 매칭기간
           dispatch(StateSlice.actions.SeasonStep(1));
+        } else if (Response.data.data.status === "None") {
+          //@ 휴식기간
+          dispatch(StateSlice.actions.SeasonStep(2));
         }
-      } else if (Response.data.data.status === "None") {
-        {
+      } else {
+        //개발일때
+        if (Response.data.data.status === "Register") {
+          //@ 접수기간
+          dispatch(StateSlice.actions.SeasonStep(0));
+        } else if (Response.data.data.status === "Matching") {
+          //@ 매칭기간
+          dispatch(StateSlice.actions.SeasonStep(1));
+        } else if (Response.data.data.status === "None") {
+          //@ 휴식기간
           dispatch(StateSlice.actions.SeasonStep(2));
         }
       }
@@ -80,6 +93,14 @@ function CountTimer() {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    setHeader(true);
+  }, []);
+
+  const isProd = useSelector((state) => {
+    return state.Popup.isProd;
+  });
 
   const SeasonTimer = useSelector((state) => {
     return state.Popup.seasonTimer;

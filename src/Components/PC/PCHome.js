@@ -101,8 +101,9 @@ function PCHome() {
     }
   };
 
-  setHeader(true);
-
+  useEffect(() => {
+    setHeader(true);
+  }, []);
   const isProd = useSelector((state) => {
     return state.Popup.isProd;
   });
