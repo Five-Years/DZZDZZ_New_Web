@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import StateSlice from "features/State/StateSlice";
 // import axios from "axios";
-import { AxiosInstanse } from "../../utils/AxiosInstance";
+import { AxiosInstanse, setHeader } from "../../utils/AxiosInstance";
 
 // 홈페이지가 로드되면 시즌 정보를 가져온다
 // 시즌정보에는 현재의 시즌단계와 현재시즌의 마감정보가 담겨있다
@@ -37,6 +37,7 @@ function PCHome() {
         )
       );
       setMinute(String(Math.floor((dis % (min * 60)) / min)).padStart(2, "0"));
+      setSecond(String(Math.floor((dis % min) / 1000)).padStart(2, "0"));
     }, 1000);
   };
 
@@ -76,15 +77,11 @@ function PCHome() {
           //@ 접수기간
           dispatch(StateSlice.actions.SeasonStep(0));
         } else if (Response.data.data.status === "Matching") {
-          {
-            //@ 매칭기간
-            dispatch(StateSlice.actions.SeasonStep(1));
-          }
+          //@ 매칭기간
+          dispatch(StateSlice.actions.SeasonStep(1));
         } else if (Response.data.data.status === "None") {
-          {
-            //@ 휴식기간
-            dispatch(StateSlice.actions.SeasonStep(2));
-          }
+          //@ 휴식기간
+          dispatch(StateSlice.actions.SeasonStep(2));
         }
       } else {
         //개발일때
@@ -92,21 +89,19 @@ function PCHome() {
           //@ 접수기간
           dispatch(StateSlice.actions.SeasonStep(0));
         } else if (Response.data.data.status === "Matching") {
-          {
-            //@ 매칭기간
-            dispatch(StateSlice.actions.SeasonStep(1));
-          }
+          //@ 매칭기간
+          dispatch(StateSlice.actions.SeasonStep(1));
         } else if (Response.data.data.status === "None") {
-          {
-            //@ 휴식기간
-            dispatch(StateSlice.actions.SeasonStep(2));
-          }
+          //@ 휴식기간
+          dispatch(StateSlice.actions.SeasonStep(2));
         }
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  setHeader(true);
 
   const isProd = useSelector((state) => {
     return state.Popup.isProd;
@@ -117,13 +112,13 @@ function PCHome() {
   });
 
   useEffect(() => {
-    if (SeasonTimer !== null) StartTimer();
-  }, [SeasonTimer]);
-
-  useEffect(() => {
     if (SeasonTimer === null) {
       getSeason();
     }
+  }, [SeasonTimer]);
+
+  useEffect(() => {
+    if (SeasonTimer !== null) StartTimer();
   }, [SeasonTimer]);
 
   const navigate = useNavigate();
