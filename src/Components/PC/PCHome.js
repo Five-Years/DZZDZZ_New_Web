@@ -121,8 +121,10 @@ function PCHome() {
   }, [SeasonTimer]);
 
   useEffect(() => {
-    getSeason();
-  }, []);
+    if (SeasonTimer === null) {
+      getSeason();
+    }
+  }, [SeasonTimer]);
 
   const navigate = useNavigate();
   return (
