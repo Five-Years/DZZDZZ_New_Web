@@ -25,8 +25,8 @@ function HistoryTicket() {
                 <ItemRight>
                   <text className="title">{"티켓"}</text>
                   <text>
-                    +1
-                    <span>(결제금액)</span>
+                    {data.diff}
+                    {/* <span>(결제금액)</span> */}
                     {/* 티켓 수량, 결제금액 추가반영필요 */}
                   </text>
                 </ItemRight>
@@ -45,7 +45,7 @@ function HistoryTicket() {
                 </ItemLeft>
                 <ItemRight>
                   <text className="title">{"티켓"}</text>
-                  <text className="use">-1</text>
+                  <text className="use">{data.diff}</text>
                   {/* 사용수량 추가 반영 필요 */}
                 </ItemRight>
               </ItemBox>

@@ -42,7 +42,7 @@ function MenuLinks() {
         </text>
         <text
           onClick={() => {
-            dispatch(StateSlice.actions.URL("https://dzz-guide.stibee.com"));
+            dispatch(StateSlice.actions.URL("https://dzzdzz.oopy.io/dzzguide"));
             dispatch(StateSlice.actions.isFrame(true));
             dispatch(StateSlice.actions.isStatic(false));
             dispatch(StateSlice.actions.isDzz(false));
@@ -55,9 +55,7 @@ function MenuLinks() {
         </text>
         <text
           onClick={() => {
-            dispatch(
-              StateSlice.actions.URL("https://dzzdzz-notice.stibee.com/")
-            );
+            dispatch(StateSlice.actions.URL("https://dzzdzz.oopy.io/notice"));
             dispatch(StateSlice.actions.isFrame(true));
             dispatch(StateSlice.actions.isStatic(false));
             dispatch(StateSlice.actions.isDzz(false));
@@ -82,12 +80,11 @@ function MenuLinks() {
         </text>
         <text
           onClick={() => {
-            dispatch(StateSlice.actions.isFrame(false));
-
+            dispatch(StateSlice.actions.URL("https://dzzdzz.oopy.io/faq"));
+            dispatch(StateSlice.actions.isFrame(true));
             dispatch(StateSlice.actions.isStatic(false));
             dispatch(StateSlice.actions.isDzz(false));
             dispatch(StateSlice.actions.isFAQ(true));
-            dispatch(StateSlice.actions.isNotice(false));
             dispatch(StateSlice.actions.isGuide(false));
           }}
         >
@@ -98,9 +95,7 @@ function MenuLinks() {
         <a
           href="#"
           onClick={() => {
-            window.open(
-              "https://dzzdzz.notion.site/78dbf85d5258479badc2f8eaf31c297f?pvs=4"
-            );
+            window.open("https://dzzdzz.oopy.io/policy/terms");
           }}
         >
           이용약관
@@ -108,9 +103,7 @@ function MenuLinks() {
         <a
           href="#"
           onClick={() => {
-            window.open(
-              "https://dzzdzz.notion.site/d48fbfd46b354eda9c71543bfbe1b0ee?pvs=4"
-            );
+            window.open("https://dzzdzz.oopy.io/policy/privacy");
           }}
         >
           개인정보 처리방침
@@ -118,9 +111,7 @@ function MenuLinks() {
         <a
           href="#"
           onClick={() => {
-            window.open(
-              "https://dzzdzz.notion.site/461ea44398c042a585db3cb78647ba3c?pvs=4"
-            );
+            window.open("https://dzzdzz.oopy.io/marketing");
           }}
         >
           마케팅 이용약관

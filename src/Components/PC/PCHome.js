@@ -24,6 +24,7 @@ function PCHome() {
   const [Second, setSecond] = useState("00");
   const min = 1000 * 60; //1000ms => 1s , 1s*60 = 1m
 
+  //@ 매칭타이머, 하단 팝업창 시간 표시용
   const StartTimer = () => {
     setInterval(() => {
       const now = new Date();
@@ -36,13 +37,10 @@ function PCHome() {
         )
       );
       setMinute(String(Math.floor((dis % (min * 60)) / min)).padStart(2, "0"));
-      setSecond(String(Math.floor((dis % min) / 1000)).padStart(2, "0"));
     }, 1000);
   };
 
-  // @ 현재 시즌 상태를 가져오는 매소드, 날짜 객체를 이용
   const getSeason = async () => {
-    // @ 시즌 정보 통신을 위한 날짜 객체
     const today = new Date();
     const todaytime = {
       year: today.getFullYear(),
@@ -65,37 +63,66 @@ function PCHome() {
           },
         }
       );
+
       dispatch(
-        StateSlice.actions.seasonTimer(new Date(Response.data.data.endsAt))
+        StateSlice.actions.seasonTimer(
+          new Date(Response.data.data.endsAt).getTime()
+        )
       );
 
-      if (Response.data.data.status === "Register") {
-        dispatch(StateSlice.actions.SeasonStep(0));
-      } else if (Response.data.data.status === "Matching") {
-        dispatch(StateSlice.actions.SeasonStep(1));
-      } else if (Response.data.data.status === "None") {
-        dispatch(StateSlice.actions.SeasonStep(2));
+      if (isProd) {
+        //운영 바꾸면안됨!!
+        if (Response.data.data.status === "Register") {
+          //@ 접수기간
+          dispatch(StateSlice.actions.SeasonStep(0));
+        } else if (Response.data.data.status === "Matching") {
+          {
+            //@ 매칭기간
+            dispatch(StateSlice.actions.SeasonStep(1));
+          }
+        } else if (Response.data.data.status === "None") {
+          {
+            //@ 휴식기간
+            dispatch(StateSlice.actions.SeasonStep(2));
+          }
+        }
+      } else {
+        //개발일때
+        if (Response.data.data.status === "Register") {
+          //@ 접수기간
+          dispatch(StateSlice.actions.SeasonStep(0));
+        } else if (Response.data.data.status === "Matching") {
+          {
+            //@ 매칭기간
+            dispatch(StateSlice.actions.SeasonStep(1));
+          }
+        } else if (Response.data.data.status === "None") {
+          {
+            //@ 휴식기간
+            dispatch(StateSlice.actions.SeasonStep(2));
+          }
+        }
       }
     } catch (error) {
       console.log(error);
     }
   };
 
+  const isProd = useSelector((state) => {
+    return state.Popup.isProd;
+  });
+
   const SeasonTimer = useSelector((state) => {
     return state.Popup.seasonTimer;
   });
 
   useEffect(() => {
-    if (SeasonTimer !== 0) {
-      StartTimer();
-    }
+    if (SeasonTimer !== null) StartTimer();
   }, [SeasonTimer]);
 
   useEffect(() => {
-    if (SeasonTimer === 0) {
-      getSeason();
-    }
-  }, [SeasonTimer]);
+    getSeason();
+  }, []);
 
   const navigate = useNavigate();
   return (
@@ -103,7 +130,7 @@ function PCHome() {
       <ContentContainer>
         <Logo />
         <Timer>
-          {/* {Day >= 1 ? (
+          {Day >= 1 ? (
             <>
               <text>
                 [<span>{Day}</span>:<span>{Hour}</span>:<span>{Minute}</span>]
@@ -116,18 +143,18 @@ function PCHome() {
                 ]
               </text>
             </>
-          )} */}
-          <text>
+          )}
+          {/* <text>
             [<span>??</span>:<span>??</span>:<span>??</span>]
-          </text>
+          </text> */}
         </Timer>
-        {/* <ButtonContainer
+        <ButtonContainer
           onClick={() => {
             navigate("/pc");
           }}
         >
           <text>홈페이지로 이동</text>
-        </ButtonContainer> */}
+        </ButtonContainer>
       </ContentContainer>
     </BackgroundContainer>
   );

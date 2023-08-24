@@ -53,6 +53,7 @@ function ChoiceLoading() {
       setMatchResult(FriendmatchResult);
     }
   });
+
   const getMatchedUserInfo = async (at, rt) => {
     try {
       const Response = await AxiosInstanse.get(

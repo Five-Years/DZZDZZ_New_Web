@@ -366,7 +366,10 @@ function MatchingHomePage(props) {
         CouplematchResult.myChoice === null)
     ) {
       window.ReactNativeWebView?.postMessage(
-        JSON.stringify({ type: "giveBack", data: "" })
+        JSON.stringify({
+          type: "giveBack",
+          data: new Date(SeasonTimer).getDate,
+        })
       );
     }
   }, [FriendmatchResult, CouplematchResult]);

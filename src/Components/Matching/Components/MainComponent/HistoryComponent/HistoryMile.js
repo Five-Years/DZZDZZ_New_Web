@@ -25,7 +25,7 @@ function HistoryMile() {
                 </ItemLeft>
                 <ItemRight>
                   <text className="title">{"젤리"}</text>
-                  <text>+1</text>
+                  <text>{data.diff}</text>
                 </ItemRight>
               </ItemBox>
             </ListItemContainer>
@@ -43,7 +43,7 @@ function HistoryMile() {
                 </ItemLeft>
                 <ItemRight>
                   <text className="title">{"젤리"}</text>
-                  <text className="use">-1</text>
+                  <text className="use">{data.diff}</text>
                 </ItemRight>
               </ItemBox>
             </ListItemContainer>

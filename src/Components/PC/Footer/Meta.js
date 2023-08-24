@@ -17,7 +17,7 @@ function Meta() {
           </Information>
           <Information>
             <text>
-              주소 서울 특별시 마포구 희우정로 10길 28 3층 3-20호 플랙스홈
+              서울특별시 서초구 마방로6길 13, 4층 4193호(양재동, 범정빌딩)
             </text>
           </Information>
           <Information>
@@ -30,13 +30,13 @@ function Meta() {
         </ContentInformation>
       </CorporateContainer>
       <ContentSns>
-        <img
+        {/* <img
           src={require("../../../assets/facebook.png")}
           onClick={() => {
             window.open("https://www.facebook.com/");
           }}
           alt=""
-        />
+        /> */}
         <img
           src={require("../../../assets/Instagram.png")}
           onClick={() => {

@@ -32,12 +32,6 @@ function CountTimer() {
     }, 1000);
   };
 
-  useEffect(() => {
-    if (SeasonTimer != 0) {
-      StartTimer();
-    }
-  }, []);
-
   // @ 현재 시즌 상태를 가져오는 매소드, 날짜 객체를 이용
   const getSeason = async () => {
     // @ 시즌 정보 통신을 위한 날짜 객체
@@ -97,9 +91,13 @@ function CountTimer() {
     return state.Popup.seasonStep;
   });
   useEffect(() => {
-    if (SeasonTimer === 0) {
+    if (SeasonTimer === null) {
       getSeason();
     }
+  }, [SeasonTimer]);
+
+  useEffect(() => {
+    if (SeasonTimer !== null) StartTimer();
   }, [SeasonTimer]);
 
   return (
@@ -107,7 +105,7 @@ function CountTimer() {
       <TitleContainer>
         <Title>
           <span>지금상태는 {seasonlist[SeasonStep]} </span>
-          <span className="text"> 종료까지</span>
+          {SeasonStep === 2 ? <></> : <span className="text"> 종료까지</span>}
         </Title>
         <Timer>
           {Day >= 1 ? (
@@ -119,7 +117,8 @@ function CountTimer() {
           ) : (
             <>
               <text>
-                [<span>{"00"}</span>:<span>{"00"}</span>:<span>{"00"}</span>]
+                [<span>{Hour}</span>:<span>{Minute}</span>:<span>{Second}</span>
+                ]
               </text>
             </>
           )}
@@ -137,7 +136,9 @@ function CountTimer() {
                 width="100%"
                 height="auto"
                 onClick={() => {
-                  alert("배포 준비중입니다!");
+                  window.open(
+                    "https://apps.apple.com/us/app/단짠단짠/id6447145462"
+                  );
                 }}
               />
             </div>
@@ -146,7 +147,9 @@ function CountTimer() {
                 width="100%"
                 height="auto"
                 onClick={() => {
-                  alert("배포 준비중입니다!");
+                  window.open(
+                    "https://play.google.com/store/apps/details?id=com.fiveyears.dzzdzz"
+                  );
                 }}
               />
             </div>

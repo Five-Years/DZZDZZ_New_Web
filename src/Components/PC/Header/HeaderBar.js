@@ -75,7 +75,7 @@ function HeaderBar() {
               className={isGuide ? "isClicked" : ""}
               onClick={() => {
                 dispatch(
-                  StateSlice.actions.URL("https://dzz-guide.stibee.com")
+                  StateSlice.actions.URL("https://dzzdzz.oopy.io/dzzguide")
                 );
                 dispatch(StateSlice.actions.isFrame(true));
                 dispatch(StateSlice.actions.isGuide(true));
@@ -91,7 +91,7 @@ function HeaderBar() {
               className={isNotice ? "isClicked" : ""}
               onClick={() => {
                 dispatch(
-                  StateSlice.actions.URL("https://dzzdzz-notice.stibee.com/")
+                  StateSlice.actions.URL("https://dzzdzz.oopy.io/notice")
                 );
                 dispatch(StateSlice.actions.isFrame(true));
                 dispatch(StateSlice.actions.isNotice(true));
@@ -121,11 +121,7 @@ function HeaderBar() {
             <span
               className={isFAQ ? "isClicked" : ""}
               onClick={() => {
-                dispatch(
-                  StateSlice.actions.URL(
-                    "https://dzzdzz.notion.site/FAQ-bbd41fcf81eb4c7c8cb09ef7b1bfe8bd?pvs=4"
-                  )
-                );
+                dispatch(StateSlice.actions.URL("https://dzzdzz.oopy.io/faq"));
                 dispatch(StateSlice.actions.isFrame(true));
                 dispatch(StateSlice.actions.isStatic(false));
                 dispatch(StateSlice.actions.isDzz(false));
