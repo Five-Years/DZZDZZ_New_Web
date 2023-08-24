@@ -41,6 +41,8 @@ function PCHome() {
     }, 1000);
   };
 
+  // @ 현재 시즌 상태를 가져오고 리듀서에 저장한다
+  // (현재 시즌상태, 마감일에 대한 정보)
   const getSeason = async () => {
     const today = new Date();
     const todaytime = {
@@ -71,17 +73,21 @@ function PCHome() {
         )
       );
 
-      if (isProd) {
+      if (true) {
         //운영 바꾸면안됨!!
         if (Response.data.data.status === "Register") {
           //@ 접수기간
           dispatch(StateSlice.actions.SeasonStep(0));
         } else if (Response.data.data.status === "Matching") {
-          //@ 매칭기간
-          dispatch(StateSlice.actions.SeasonStep(1));
+          {
+            //@ 매칭기간
+            dispatch(StateSlice.actions.SeasonStep(1));
+          }
         } else if (Response.data.data.status === "None") {
-          //@ 휴식기간
-          dispatch(StateSlice.actions.SeasonStep(2));
+          {
+            //@ 휴식기간
+            dispatch(StateSlice.actions.SeasonStep(2));
+          }
         }
       } else {
         //개발일때
@@ -89,11 +95,15 @@ function PCHome() {
           //@ 접수기간
           dispatch(StateSlice.actions.SeasonStep(0));
         } else if (Response.data.data.status === "Matching") {
-          //@ 매칭기간
-          dispatch(StateSlice.actions.SeasonStep(1));
+          {
+            //@ 매칭기간
+            dispatch(StateSlice.actions.SeasonStep(1));
+          }
         } else if (Response.data.data.status === "None") {
-          //@ 휴식기간
-          dispatch(StateSlice.actions.SeasonStep(2));
+          {
+            //@ 휴식기간
+            dispatch(StateSlice.actions.SeasonStep(2));
+          }
         }
       }
     } catch (error) {
@@ -102,8 +112,9 @@ function PCHome() {
   };
 
   useEffect(() => {
-    setHeader(true);
-  }, []);
+    setHeader(false);
+  });
+
   const isProd = useSelector((state) => {
     return state.Popup.isProd;
   });

@@ -6,7 +6,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import StateSlice from "features/State/StateSlice";
 import { useSelector } from "react-redux";
-import { AxiosInstanse } from "utils/AxiosInstance";
+import { AxiosInstanse, setHeader } from "utils/AxiosInstance";
 
 function CountTimer() {
   const dispatch = useDispatch();
@@ -33,7 +33,10 @@ function CountTimer() {
     }, 1000);
   };
 
-  // @ 현재 시즌 상태를 가져오는 매소드, 날짜 객체를 이용
+  useEffect(() => {
+    setHeader(false);
+  });
+
   const getSeason = async () => {
     const today = new Date();
     const todaytime = {
@@ -64,7 +67,7 @@ function CountTimer() {
         )
       );
 
-      if (isProd) {
+      if (true) {
         //운영 바꾸면안됨!!
         if (Response.data.data.status === "Register") {
           //@ 접수기간
@@ -93,11 +96,6 @@ function CountTimer() {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    setHeader(true);
-  }, []);
-
   const isProd = useSelector((state) => {
     return state.Popup.isProd;
   });
