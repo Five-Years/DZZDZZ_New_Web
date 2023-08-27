@@ -69,7 +69,9 @@ function MatchingPage() {
   };
 
   const GotoChoice = (data) => {
-    navigate("/choiceLoading", { state: { theme: Theme, result: data } });
+    navigate("/choiceLoading", {
+      state: { theme: Theme, Result: data, Direct: false },
+    });
     // choiceloading페이지로 이동
     // data : 0 => 매칭대기중
     // data : 1 => 결과나온상태
@@ -106,8 +108,10 @@ function MatchingPage() {
         break;
 
       case "application": {
-        // true가 왔다면 매칭을 신청한다
-        if (data) Apply(userAt, userRt);
+        // true가 왔다면 매칭을 신청한다, 자산 최신화 필요할 듯?
+        if (data) {
+          Apply(userAt, userRt);
+        }
       }
     }
   };

@@ -1,33 +1,32 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import MatchingProgressHeader from "../HeaderComponent/MatchingProgressHeader";
-
 import { ReactComponent as ToggleRight } from "../../../../assets/toggle-right.svg";
-
 import MatchingHeaderNew from "../HeaderComponent/MatchingHeaderNew";
 import StateSlice from "features/State/StateSlice";
-// import MyTicket from "../ReusableComponents/MyTicket";
 import MyTicket from "Components/Matching/Components/ReusableComponents/MyTicket";
-// import axios from "axios";
 import { AxiosInstanse, setHeader } from "../../../../utils/AxiosInstance";
+import Lottie from "lottie-react";
+import newLogo from "assets/newLogo.json";
+
+// 자원로딩 뷰 추가
 
 function MatchingHomePage(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
   //@ 커플매칭, 친구매칭 신청여부, true => 신청가능(미신청), false => 신청불가능(신청))
   //사용자의 at,rt정보를 userToken에 저장한다, 테스트용 코드
   // useEffect(() => {
   //   dispatch(
   //     StateSlice.actions.userToken({
-  //       accessToken:
-  //         "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLaW5nOTFAZXhhbXBsZS5uZXQiLCJhdXRoIjoiRkVNQUxFLOuLqOq1reuMgO2Vmeq1kCjso73soIQpLElULE5PUk1BTF9VU0VSLFVOUkVTVFJJQ1RFRCIsImV4cCI6MTY5NTA0OTU5N30.H_jxIKtu9uHQ6WmvRynepOxCvPdegmjX4Nyb-290pmQ",
-  //       refreshToken:
-  //         "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTUwNDk1OTd9.epbO4uyjinz_-nlMUeuq1ehcpkKftvxY2srQSBB4ISg",
+  //       accessToken: ""
+  //       refreshToken: ""
   //     })
   //   );
   // }, []);
@@ -69,6 +68,8 @@ function MatchingHomePage(props) {
       console.log(error);
     }
   };
+
+  //사용자 정보를 가져온다
 
   const getAsset = async (at, rt) => {
     try {
@@ -118,38 +119,30 @@ function MatchingHomePage(props) {
           new Date(Response.data.data.endsAt).getTime()
         )
       );
-
+      //isProd
       if (isProd) {
         //운영 바꾸면안됨!!
         if (Response.data.data.status === "Register") {
           //@ 접수기간
           dispatch(StateSlice.actions.SeasonStep(0));
         } else if (Response.data.data.status === "Matching") {
-          {
-            //@ 매칭기간
-            dispatch(StateSlice.actions.SeasonStep(1));
-          }
+          //@ 매칭기간
+          dispatch(StateSlice.actions.SeasonStep(1));
         } else if (Response.data.data.status === "None") {
-          {
-            //@ 휴식기간
-            dispatch(StateSlice.actions.SeasonStep(2));
-          }
+          //@ 휴식기간
+          dispatch(StateSlice.actions.SeasonStep(2));
         }
       } else {
         //개발일때
         if (Response.data.data.status === "Register") {
           //@ 접수기간
-          dispatch(StateSlice.actions.SeasonStep(0));
+          dispatch(StateSlice.actions.SeasonStep(1));
         } else if (Response.data.data.status === "Matching") {
-          {
-            //@ 매칭기간
-            dispatch(StateSlice.actions.SeasonStep(1));
-          }
+          //@ 매칭기간
+          dispatch(StateSlice.actions.SeasonStep(1));
         } else if (Response.data.data.status === "None") {
-          {
-            //@ 휴식기간
-            dispatch(StateSlice.actions.SeasonStep(2));
-          }
+          //@ 휴식기간
+          dispatch(StateSlice.actions.SeasonStep(1));
         }
       }
     } catch (error) {
@@ -222,11 +215,6 @@ function MatchingHomePage(props) {
     return state.Popup.isProd;
   });
 
-  //@ 사용자 티켓 수 => 아직 서버 통신 구현안됨, 기다리는 중
-  const Ticket = useSelector((state) => {
-    return state.Popup.ticket;
-  });
-
   //@ 사용자 정보가 담기는 리듀서
   const userInfo = useSelector((state) => {
     return state.Popup.userInfo;
@@ -292,6 +280,7 @@ function MatchingHomePage(props) {
 
   //@ 현재 시즌상태 없다면 시즌상태를 가져온다, 시즌상태가 있다면 매칭 결과를 가져온다
   //접수를 안한 상태라면 상태가 None이 나온다, 접수를 한 상태라면 waiting, 매칭결과는 기타 등등
+
   useEffect(() => {
     if (typeof isProd !== "undefined") {
       if (SeasonStep === -1 && userAt != null) {
@@ -319,6 +308,8 @@ function MatchingHomePage(props) {
   }, [userInfo]);
 
   //@웹뷰 통신을 하기위한 리스너 이벤트들
+
+  // pc환경 테스트를 위한 강제 환경 설정
 
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
@@ -353,8 +344,15 @@ function MatchingHomePage(props) {
         navigate(-1);
         break;
       }
+      default:
+        break;
     }
   };
+
+  useEffect(() => {
+    setHeader(false);
+    dispatch(StateSlice.actions.setIsProd(false));
+  }, []);
 
   // 만약 시즌이 진행중인데 매칭이 실패하였다면 웹뷰로 티켓을 돌려드린다는 팝업을 띄워줌 둘중 하나라도 실패했을때
   useEffect(() => {
@@ -368,7 +366,7 @@ function MatchingHomePage(props) {
       window.ReactNativeWebView?.postMessage(
         JSON.stringify({
           type: "giveBack",
-          data: new Date(SeasonTimer).getDate,
+          data: new Date(SeasonTimer).toISOString(),
         })
       );
     }
@@ -484,152 +482,189 @@ function MatchingHomePage(props) {
     );
   }, []);
 
+  useEffect(() => {
+    if (
+      userAt &&
+      Name !== "anonymous" &&
+      SeasonStep !== -1 &&
+      matchParticipate &&
+      userInfo &&
+      userAsset
+    ) {
+      setLoading(false);
+    }
+  }, [userAt, Name, SeasonStep, matchParticipate, userAsset, userInfo]);
+
   return (
     <>
-      <MobileContainer>
-        <HeaderContainer>
-          <ToggleContainer>
-            <MatchingProgressHeader isFirst={true} />
-          </ToggleContainer>
-          <ProfileContainer>
-            <MatchingHeaderNew isFirst={true} />
-          </ProfileContainer>
-        </HeaderContainer>
-        <CouponContainer>
-          <MyTicket />
-        </CouponContainer>
-        <SelectionContainer>
-          <Selection
-            theme={0}
-            onClick={() => {
-              if (
-                SeasonStep === 1 &&
-                matchParticipate.coupleMatchingAvailable
-              ) {
-                cantApplyPopup();
-              } else if (SeasonStep == 2) {
-                seasonBreaking();
-              }
-              navigate("/matchingpage", {
-                state: {
-                  theme: 0,
-                  // 이성매칭으로 들어갔는지, 혼성매칭으로 들어갔는지에대한 정보 theme
-                  season: Season,
-                  // 현재 시즌이 진행중인지 아닌지에 대한 정보 season
-                },
-              });
-            }}
-          >
-            <SelectionTitle>
-              <text>
-                {SeasonStep === 1 &&
-                (CouplematchResult.matchingResult === "WaitChoice" ||
-                  CouplematchResult.matchingResult === "RoundSuccess" ||
-                  CouplematchResult.matchingResult === "NoneWithHistory") ? (
-                  <>
-                    {" "}
-                    <span>#</span> <span>확인하러가기</span>
-                  </>
-                ) : (
-                  <>
-                    {" "}
-                    <span>#</span> 소개팅을 원해요 (커플매칭)
-                  </>
-                )}
-              </text>
-            </SelectionTitle>
-            <MoveContainer>
-              <KeyboardArrowRightIcon />
-            </MoveContainer>
-          </Selection>
-          <Selection
-            theme={1}
-            onClick={() => {
-              if (
-                SeasonStep === 1 &&
-                matchParticipate.friendMatchingAvailable
-              ) {
-                cantApplyPopup();
-              } else if (SeasonStep === 2) {
-                seasonBreaking();
-              }
-              navigate("/matchingpage", {
-                state: {
-                  theme: 1,
-                  // 이성매칭으로 들어갔는지, 혼성매칭으로 들어갔는지에대한 정보 theme
-                  season: Season,
-                  // 현재 시즌이 진행중인지 아닌지에 대한 정보 season
-                },
-              });
-            }}
-          >
-            <SelectionTitle>
-              {/*  className="disalbed" */}
-              <text>
-                {SeasonStep === 1 &&
-                (FriendmatchResult.matchingResult === "WaitChoice" ||
-                  FriendmatchResult.matchingResult === "RoundSuccess" ||
-                  FriendmatchResult.matchingResult === "NoneWithHistory") ? (
-                  <>
-                    {" "}
-                    <span className="friend">#</span>{" "}
-                    <span className="friend">확인하러가기</span>
-                  </>
-                ) : (
-                  <>
-                    {" "}
-                    <span className="friend">#</span> 친구를 원해요 (친구매칭)
-                  </>
-                )}
-              </text>
-            </SelectionTitle>
-            <MoveContainer>
-              <KeyboardArrowRightIcon />
-            </MoveContainer>
-            {/* color="disabled" */}
-          </Selection>
-        </SelectionContainer>
-        <MatchingOptionContainer></MatchingOptionContainer>
-        <BottomContainer>
-          <BottomContents>
-            {/* 추후 지원예정 */}
-            {/* <HistoryButton
+      {loading ? (
+        <LoadingContainer>
+          <LottieContainer>
+            <Lottie animationData={newLogo} />
+          </LottieContainer>
+        </LoadingContainer>
+      ) : (
+        <MobileContainer>
+          {/* <Lottie animationData={newLogo} /> */}
+          <HeaderContainer>
+            <ToggleContainer>
+              <MatchingProgressHeader isFirst={true} />
+            </ToggleContainer>
+            <ProfileContainer>
+              <MatchingHeaderNew isFirst={true} />
+            </ProfileContainer>
+          </HeaderContainer>
+          <CouponContainer>
+            <MyTicket />
+          </CouponContainer>
+          <SelectionContainer>
+            <Selection
+              theme={0}
               onClick={() => {
-                navigate("/MatchHistory", { state: { title: "히스토리" } });
+                if (
+                  SeasonStep === 1 &&
+                  matchParticipate.coupleMatchingAvailable
+                ) {
+                  cantApplyPopup();
+                } else if (SeasonStep === 2) {
+                  seasonBreaking();
+                }
+                navigate("/matchingpage", {
+                  state: {
+                    theme: 0,
+                    // 이성매칭으로 들어갔는지, 혼성매칭으로 들어갔는지에대한 정보 theme
+                    season: Season,
+                    // 현재 시즌이 진행중인지 아닌지에 대한 정보 season
+                  },
+                });
               }}
             >
-              <text>히스토리 보기</text>
-            </HistoryButton> */}
-          </BottomContents>
-          <BottomContents>
-            <CalenderContainer
+              <SelectionTitle>
+                <text>
+                  {SeasonStep === 1 &&
+                  (CouplematchResult.matchingResult === "WaitChoice" ||
+                    CouplematchResult.matchingResult === "RoundSuccess" ||
+                    CouplematchResult.matchingResult === "NoneWithHistory") ? (
+                    <>
+                      {" "}
+                      <span>#</span> <span>확인하러가기</span>
+                    </>
+                  ) : (
+                    <>
+                      {" "}
+                      <span>#</span> 소개팅을 원해요 (커플매칭)
+                    </>
+                  )}
+                </text>
+              </SelectionTitle>
+              <MoveContainer>
+                <KeyboardArrowRightIcon />
+              </MoveContainer>
+            </Selection>
+            <Selection
+              theme={1}
               onClick={() => {
-                window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "calender", data: "" })
-                );
+                if (
+                  SeasonStep === 1 &&
+                  matchParticipate.friendMatchingAvailable
+                ) {
+                  cantApplyPopup();
+                } else if (SeasonStep === 2) {
+                  seasonBreaking();
+                }
+                navigate("/matchingpage", {
+                  state: {
+                    theme: 1,
+                    // 이성매칭으로 들어갔는지, 혼성매칭으로 들어갔는지에대한 정보 theme
+                    season: Season,
+                    // 현재 시즌이 진행중인지 아닌지에 대한 정보 season
+                  },
+                });
               }}
             >
-              <CalenderTextContainer>
-                <text>이번 매칭 일정이 궁금하다면?</text>
-              </CalenderTextContainer>
-              <CalenderIconContainer>
-                <CalenderButton>
-                  <text>단짠 캘린더</text>
-                </CalenderButton>
-                <ToggleRight />
-              </CalenderIconContainer>
-            </CalenderContainer>
-          </BottomContents>
-        </BottomContainer>
-        <EventContainer>
-          {matchParticipate != null ? Description(SeasonStep) : <></>}
-        </EventContainer>
-      </MobileContainer>
+              <SelectionTitle>
+                {/*  className="disalbed" */}
+                <text>
+                  {SeasonStep === 1 &&
+                  (FriendmatchResult.matchingResult === "WaitChoice" ||
+                    FriendmatchResult.matchingResult === "RoundSuccess" ||
+                    FriendmatchResult.matchingResult === "NoneWithHistory") ? (
+                    <>
+                      {" "}
+                      <span className="friend">#</span>{" "}
+                      <span className="friend">확인하러가기</span>
+                    </>
+                  ) : (
+                    <>
+                      {" "}
+                      <span className="friend">#</span> 친구를 원해요 (친구매칭)
+                    </>
+                  )}
+                </text>
+              </SelectionTitle>
+              <MoveContainer>
+                <KeyboardArrowRightIcon />
+              </MoveContainer>
+              {/* color="disabled" */}
+            </Selection>
+          </SelectionContainer>
+          <MatchingOptionContainer></MatchingOptionContainer>
+          <BottomContainer>
+            <BottomContents>
+              {/* 추후 지원예정 */}
+              {/* <HistoryButton
+            onClick={() => {
+              navigate("/MatchHistory", { state: { title: "히스토리" } });
+            }}
+          >
+            <text>히스토리 보기</text>
+          </HistoryButton> */}
+            </BottomContents>
+            <BottomContents>
+              <CalenderContainer
+                onClick={() => {
+                  window.ReactNativeWebView?.postMessage(
+                    JSON.stringify({ type: "calender", data: "" })
+                  );
+                }}
+              >
+                <CalenderTextContainer>
+                  <text>이번 매칭 일정이 궁금하다면?</text>
+                </CalenderTextContainer>
+                <CalenderIconContainer>
+                  <CalenderButton>
+                    <text>단짠 캘린더</text>
+                  </CalenderButton>
+                  <ToggleRight />
+                </CalenderIconContainer>
+              </CalenderContainer>
+            </BottomContents>
+          </BottomContainer>
+          <EventContainer>
+            {matchParticipate != null ? Description(SeasonStep) : <></>}
+          </EventContainer>
+        </MobileContainer>
+      )}
     </>
   );
 }
 
 export default MatchingHomePage;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+`;
+
+const LottieContainer = styled.div`
+  width: 30px;
+  height: 30px;
+`;
 
 const CalenderButton = styled.div`
   display: flex;
@@ -1057,65 +1092,65 @@ const HeaderName = styled.div`
 //   left: 16.67%;
 // `;
 
-const HeaderProfile = styled.div`
-  width: 66.98%;
-  min-width: 142px;
-  height: 78.41%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+// const HeaderProfile = styled.div`
+//   width: 66.98%;
+//   min-width: 142px;
+//   height: 78.41%;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
-const HeaderSeason = styled.div`
-  width: 100%;
-  min-width: 250px;
-  height: 21.59%;
-  min-height: 19px;
-  background-color: white;
+// const HeaderSeason = styled.div`
+//   width: 100%;
+//   min-width: 250px;
+//   height: 21.59%;
+//   min-height: 19px;
+//   background-color: white;
 
-  > text {
-    font-family: var(--font-Pretendard);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 19px;
-    color: #000000;
-  }
+//   > text {
+//     font-family: var(--font-Pretendard);
+//     font-style: normal;
+//     font-weight: 400;
+//     font-size: 14px;
+//     line-height: 19px;
+//     color: #000000;
+//   }
 
-  > text > span {
-    font-family: var(--font-Pretendard-SemiBold);
-    color: ${(props) =>
-      props.theme === 1
-        ? "#0094FF"
-        : props.theme === 2
-        ? "#888888"
-        : "#FF477E"};
-    font-weight: 600;
-    font-size: 14px;
-  }
-`;
+//   > text > span {
+//     font-family: var(--font-Pretendard-SemiBold);
+//     color: ${(props) =>
+//       props.theme === 1
+//         ? "#0094FF"
+//         : props.theme === 2
+//         ? "#888888"
+//         : "#FF477E"};
+//     font-weight: 600;
+//     font-size: 14px;
+//   }
+// `;
 
 export const HeaderBoarder = styled.div`
   width: 100%;
   height: 22.35%;
 `;
 
-const Boarder = styled.div`
-  position: relative;
-  top: 50%;
-  box-sizing: border-box;
-  border-bottom: 0.3px solid #888888;
-`;
+// const Boarder = styled.div`
+//   position: relative;
+//   top: 50%;
+//   box-sizing: border-box;
+//   border-bottom: 0.3px solid #888888;
+// `;
 
-const HeaderBottom = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
+// const HeaderBottom = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   gap: 10px;
 
-  width: 100%;
-  height: 25.88%;
-`;
+//   width: 100%;
+//   height: 25.88%;
+// `;
 
 const SelectionTitle = styled.div`
   display: flex;

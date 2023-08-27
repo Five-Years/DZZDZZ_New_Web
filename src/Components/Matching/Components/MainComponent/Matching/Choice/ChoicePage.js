@@ -19,13 +19,25 @@ import sadlook from "assets/sadlook.json";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
+// 만약 내가 선택했다면 상대방도 나를 선택했는지 한번더 검사가 필요함
+// 만약 상대방도 나를 선택해서 결과가 Success혹은 Failure로 바뀌었다면
+// 결과 확인하기 버튼이 활성화 되게 만든다.
+
 function ChoicePage() {
   const location = useLocation();
-  const Result = location.state.Result;
+  const Result = location.state.Result; // 매칭 결과
+  const isDirect = location.state.Direct; // API별 구조가 다름
+  const isReject = location.state.rejectReason;
+  const Theme = location.state.matchingType;
+  const matchingTypeList = ["Couple", "Friend"];
   const [isStart, setIsStart] = useState(true);
   const [detail, setDetail] = useState(false);
   const navigate = useNavigate();
   const { state } = useLocation();
+
+  // 거절 사유 확인이 가능한지 확인을 한다.
+  // 거절 사유 확인이 가능하다면 웹뷰통신으로 거절사유 확인요청을 보낸다.
+
   // const ReportedData = useSelector((state) => {
   //   return state.Popup.ReportData;
   // });
@@ -66,11 +78,22 @@ function ChoicePage() {
     if (SeasonTimer !== null) StartTimer();
   }, [SeasonTimer]);
 
+  // 거절사유가 있는지 서버 통신 후 있다면 버튼으로 노출, 버튼을 누르면 웹뷰요청
+
   const MatchedUserData = useSelector((state) => {
     return state.Popup.MatchedUserInfo;
   });
 
-  console.log(MatchedUserData);
+  const rejectedReasonData = useSelector((state) => {
+    return state.Popup.rejectReason;
+  });
+
+  const userAsset = useSelector((state) => {
+    return state.Popup.userAsset;
+  });
+
+  console.log(MatchedUserData.image);
+  console.log(isDirect);
   return (
     <MatchingContainers detail={detail}>
       <ContentContainer>
@@ -79,17 +102,37 @@ function ChoicePage() {
 
       <ProfileImageContainer>
         <CarouselContainer dynamicHeight={true} showThumbs={false}>
-          {MatchedUserData.images.map((item) => (
+          {/* api별로 들어오는 데이터 형식이 조금씩 달라 데이터들어오는것에 맞게 표시해줘야함 */}
+          {/* 다이렉트로 들어온경우 */}
+          {/* 매칭이 성공한 경우에도 데이터 형식이 조금 다름.. */}
+
+          {isDirect ? (
+            MatchedUserData.images.map((item) => (
+              <div>
+                <img src={item.imageUrl} alt="" />
+              </div>
+            ))
+          ) : Result === 0 ? (
+            MatchedUserData.matchingBasicInfo.images.map((item) => (
+              <div>
+                <img src={item.imageUrl} alt="" />
+              </div>
+            ))
+          ) : (
             <div>
-              <img src={item.imageUrl} alt="" />
+              <img src={MatchedUserData.image.imageUrl} alt="" />
             </div>
-          ))}
+          )}
         </CarouselContainer>{" "}
       </ProfileImageContainer>
 
       <ProfileNameContainer>
         <ProfileName>
-          <text>{MatchedUserData.matchedUserNickname}</text>
+          <text>
+            {Result === 0
+              ? MatchedUserData.matchingBasicInfo.matchedUserNickname
+              : MatchedUserData.matchedUserNickname}
+          </text>
         </ProfileName>
       </ProfileNameContainer>
       <ContentsContainer>
@@ -135,12 +178,15 @@ function ChoicePage() {
                 </LottieContainer>
                 <text>축하합니다!</text>
                 <text>
-                  <span>{MatchedUserData.matchedUserNickname}</span>님과매칭이
-                  성공했어요!
+                  <span>
+                    {MatchedUserData.matchingBasicInfo.matchedUserNickname}
+                  </span>
+                  님과매칭이 성공했어요!
                 </text>
               </>
             )}
           </ResultBox>
+          {/* 매칭성공 + 상대방이 아직 선택이 안했다면 */}
           {Result === 1 ? (
             <WaitingBox state={state}>
               <text>
@@ -170,7 +216,7 @@ function ChoicePage() {
                     window.ReactNativeWebView?.postMessage(
                       JSON.stringify({
                         type: "openchat",
-                        data: "https://open.kakao.com/o/gZ5Purqf",
+                        data: `${MatchedUserData.openchatUrl}`,
                       })
                     );
                   }}
@@ -178,8 +224,29 @@ function ChoicePage() {
                   <text>오픈 카톡 URL 열기</text>
                 </SuggestionButton>
               </>
+            ) : Result === 2 && isReject ? (
+              <>
+                <SuggestionButton
+                  onClick={() => {
+                    window.ReactNativeWebView?.postMessage(
+                      JSON.stringify({
+                        type: "rejectedReason",
+                        data: {
+                          name: MatchedUserData.matchedUserNickname,
+                          matchingType: matchingTypeList[Theme],
+                          code: rejectedReasonData.code,
+                          description: rejectedReasonData.maskedDescription,
+                          canBuy: userAsset.jelly > 3,
+                        },
+                      })
+                    );
+                  }}
+                >
+                  <text>거절 사유 확인</text>
+                </SuggestionButton>{" "}
+              </>
             ) : (
-              <></>
+              <>{/* <text>이유가 없음, 버튼없음</text> */}</>
             )}
             <text
               onClick={() => {

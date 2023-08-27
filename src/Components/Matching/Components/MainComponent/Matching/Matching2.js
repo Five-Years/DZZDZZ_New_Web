@@ -7,7 +7,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Lottie from "lottie-react";
 import Slider from "react-slick";
-
 import styled from "styled-components";
 import heartHand from "assets/heartHand.json";
 import search from "assets/search.json";
@@ -24,7 +23,6 @@ function Matching2(props) {
   const matchingType = ["Couple", "Friend"];
   const location = useLocation();
   const Theme = location.state.theme; // Theme-> 0이면 커플, 1이면 친구
-
   const DetailDownRef = useRef();
   const DetailUpRef = useRef();
 
@@ -66,8 +64,12 @@ function Matching2(props) {
           },
         }
       );
+      // 동의 수락시 매칭결과 한번 업로드 해줘야 할듯?
+
       if (Response.data.status == 200)
-        navigate("/Choice", { state: { theme: Theme, Result: 1 } });
+        navigate("/Choice", {
+          state: { theme: Theme, Result: 1, Direct: true },
+        });
     } catch (error) {
       alert(error);
     }
@@ -76,7 +78,7 @@ function Matching2(props) {
   const rejects = async (at, rt) => {
     try {
       const Response = await AxiosInstanse.post(
-        `/matching/user/decide?matchingChoice=Reject&matchingType=${matchingType[Theme]}`, // 동의, couple, friend
+        `/matching/user/decide?matchingChoice=Reject&matchingType=${matchingType[Theme]}`, // 거절, couple, friend
         {},
         {
           headers: {
@@ -88,8 +90,8 @@ function Matching2(props) {
         }
       );
       if (Response.data.status == 200)
-        navigate("/ChoiceLoading", {
-          state: { theme: Theme, result: 0 },
+        navigate("/Choice", {
+          state: { theme: Theme, Result: 3, Direct: true },
         });
     } catch (error) {
       alert(error);
@@ -221,7 +223,7 @@ function Matching2(props) {
           <Option
             onClick={() => {
               window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "accept", data: "" })
+                JSON.stringify({ type: "accept", data: matchingType[Theme] })
               );
               // accept(userAt, userRt);
             }}
@@ -238,7 +240,7 @@ function Matching2(props) {
             className="reject"
             onClick={() => {
               window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "reject", data: "" })
+                JSON.stringify({ type: "reject", data: matchingType[Theme] })
               );
               // reject(userAt, userRt);
             }}
@@ -463,7 +465,7 @@ function Matching2(props) {
             <Option
               onClick={() => {
                 window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "accept", data: "" })
+                  JSON.stringify({ type: "accept", data: matchingType[Theme] })
                 );
                 // accept(userAt, userRt);
               }}
@@ -480,7 +482,7 @@ function Matching2(props) {
               className="reject"
               onClick={() => {
                 window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "reject", data: "" })
+                  JSON.stringify({ type: "reject", data: matchingType[Theme] })
                 );
                 // reject(userAt, userRt);
               }}

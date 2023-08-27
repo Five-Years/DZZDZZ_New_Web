@@ -20,11 +20,13 @@ var Spinner = require("react-spinkit");
 function ChoiceLoading() {
   const location = useLocation();
   const Theme = location.state.theme; // Theme-> 0이면 커플, 1이면 친구임
-  const Category = location.state.result; // Category -> 0이면 상대방정보 불러오기, Category ->1 이면 결과 가져오기
+  const Category = location.state.Result; // Category -> 0이면 상대방정보 불러오기, Category ->1 이면 결과 가져오기
   const matchingType = ["Couple", "Friend"];
   const [loading, setLoading] = useState(true);
   const [MatchedUserData, setMatchedUserData] = useState(null);
   const [MatchResult, setMatchResult] = useState("");
+  const [domain, setDomain] = useState();
+  const [isReject, setReject] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -46,18 +48,36 @@ function ChoiceLoading() {
 
   // 현재 데이터 가져오는 API 수정중, 추후 대체하기
 
-  useEffect(() => {
-    if (Theme === 0) {
-      setMatchResult(CouplematchResult);
-    } else {
-      setMatchResult(FriendmatchResult);
-    }
-  });
+  const getReason = async (at, rt) => {
+    try {
+      const Response = await AxiosInstanse.get(
+        `/matching/user/reject-reason/preview?matchingType=${matchingType[Theme]}`, // 매칭타입 가변적으로 만들어주기
+        {
+          headers: {
+            Authorization: at,
+            "x-refresh-token": rt,
+            fcmToken: "123",
+            "content-type": "application/json",
+          },
+        }
+      );
+      //  거절사유가 있는 경우
+      if (Response.data.data.exists) {
+        setReject(true);
+        dispatch(StateSlice.actions.rejectReason(Response.data.data));
+      } else {
+        setReject(false);
+      }
 
+      // 매칭상대방 정보 불러오기
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const getMatchedUserInfo = async (at, rt) => {
     try {
       const Response = await AxiosInstanse.get(
-        `/matching/user/info?matchingType=${matchingType[Theme]}`, // 매칭타입 가변적으로 만들어주기
+        `${domain}${matchingType[Theme]}`, // 매칭타입 가변적으로 만들어주기
         {
           headers: {
             Authorization: at,
@@ -77,13 +97,42 @@ function ChoiceLoading() {
     }
   };
 
+  // 커플, 친구 매칭결과 조회 (받은 테마에 따라)
   useEffect(() => {
-    if (MatchedUserData === null) {
+    if (Theme === 0) {
+      setMatchResult(CouplematchResult);
+    } else {
+      setMatchResult(FriendmatchResult);
+    }
+  }, []);
+
+  useEffect(() => {
+    // 도메인정하기
+    if (MatchResult) {
+      if (MatchResult.matchingResult === "RoundSuccess") {
+        setDomain("/matching/user/success/info?matchingType=");
+      }
+      // 상대방을 거절한 경우
+      else if (MatchResult.myChoice === "Reject") {
+        setDomain("/matching/user/fail/info?matchingType=");
+      } else if (MatchResult.matchingResult === "RoundFail") {
+        //  상대방이 나를 거절한 경우
+        setDomain("/matching/user/fail/info?matchingType=");
+        getReason(userAt, userRt);
+      } else if (MatchResult.matchingResult === "WaitRoundResult") {
+        // 나는 상대방을 선택했는데 아직 상대방이 나를 선택안한 경우
+        setDomain("/matching/user/info?matchingType=");
+      }
+    }
+  }, [MatchResult]);
+
+  useEffect(() => {
+    if (!MatchedUserData && domain) {
       getMatchedUserInfo(userAt, userRt); //토큰값 넣어주기
     } else {
       setLoading(false);
     }
-  }, [MatchedUserData]);
+  }, [MatchedUserData, domain]);
 
   // 매칭성공한 경우는 상대방 정보를 불러와 전송 (현재 어떤식으로 데이터가 들어올지 모르는 상태)
   // 그 외 라면 나랑 매칭된 상대방 정보를 불러와 전송
@@ -91,28 +140,50 @@ function ChoiceLoading() {
   useEffect(() => {
     console.log(MatchResult);
   }, [MatchResult]);
+
   useEffect(() => {
     {
-      if (MatchedUserData !== null) {
+      if (MatchedUserData !== null && domain) {
         setLoading(false);
         // 매칭이 성사된 경우
 
         if (MatchResult.matchingResult === "RoundSuccess") {
-          navigate("/choice", { state: { Result: 0 } });
+          navigate("/choice", { state: { Result: 0, Direct: false } });
         }
         // 상대방을 거절한 경우
         else if (MatchResult.myChoice === "Reject") {
-          navigate("/choice", { state: { Result: 3 } });
+          navigate("/choice", { state: { Result: 3, Direct: false } });
         } else if (MatchResult.matchingResult === "RoundFail") {
           //  상대방이 나를 거절한 경우
-          navigate("/choice", { state: { Result: 2 } });
+          if (isReject === true) {
+            navigate("/choice", {
+              state: {
+                Result: 2,
+                Direct: false,
+                rejectReason: true,
+                matchingType: Theme,
+              },
+            });
+          } else if (isReject === false) {
+            navigate("/choice", {
+              state: { Result: 2, Direct: false, rejectReason: false },
+            });
+          }
         } else if (MatchResult.matchingResult === "WaitRoundResult") {
           // 나는 상대방을 선택했는데 아직 상대방이 나를 선택안한 경우
-          navigate("/choice", { state: { Result: 1 } });
+          navigate("/choice", {
+            state: { Result: 1, Direct: true, Selected: false },
+          });
         }
       }
     }
   }, [MatchedUserData]);
+
+  //
+  // 내가 선택했는데 상대방은 아직 나를 선택안한경우 -> 나랑매칭된상대방정보 조회 API
+  // 내가 상대방 거절했을때, 상대방이 나를 거졀했을때 -> 실패API (누가 거절했는지 구분필요)
+  // 나도 상대방을 승락, 상대방도 나를 승락 (매칭성사시) -> 성공한 API필요
+  //
 
   return (
     <MatchingContainer>

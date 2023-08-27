@@ -58,6 +58,7 @@ const initialState = {
   //@매칭 성사 여부, 나의 결정 여부
   FriendmatchResult: {},
   CouplematchResult: {},
+  rejectReason: {},
 
   //@ 매칭된 상대방 정보
   MatchedUserInfo: null,
@@ -149,6 +150,9 @@ const StateSlice = createSlice({
     },
     matchAvailable: (state, action) => {
       state.userMatchAvailable = action.payload;
+    },
+    rejectReason: (state, action) => {
+      state.rejectReason = action.payload;
     },
   },
 });

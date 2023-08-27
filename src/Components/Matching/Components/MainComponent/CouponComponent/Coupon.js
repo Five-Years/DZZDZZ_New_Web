@@ -3,7 +3,8 @@ import MenuHeader from "../../HeaderComponent/MenuHeader";
 import styled from "styled-components";
 import { useState } from "react";
 // import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import StateSlice from "features/State/StateSlice";
 
 import { AxiosInstanse } from "../../../../../utils/AxiosInstance";
 
@@ -11,11 +12,29 @@ function Coupon() {
   const [isError, setIsError] = useState(false);
   const [ErrorMessage, setErrorMessage] = useState("");
   const [inputValue, setInputValue] = useState("");
+  const dispatch = useDispatch();
+
+  const getAsset = async (at, rt) => {
+    try {
+      const Response = await AxiosInstanse.get(`/item/remain`, {
+        headers: {
+          Authorization: at,
+          "x-refresh-token": rt,
+          fcmToken: "123",
+          "content-type": "application/json",
+        },
+      });
+
+      dispatch(StateSlice.actions.userAsset(Response.data.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const postCoupon = async (at, rt) => {
     try {
       const Response = await AxiosInstanse.post(
-        `/item/coupon?code=${inputValue}`,
+        `/item/coupon?code=${inputValue.toUpperCase()}`,
         {},
         {
           headers: {
@@ -26,7 +45,6 @@ function Coupon() {
           },
         }
       );
-
       // 비정상적으로 처리되었다면 isError 를 false로 하고 웹뷰에 표시 요청
       if (Response.data.status === 6000) {
         setErrorMessage(Response.data.data.message);
@@ -35,6 +53,7 @@ function Coupon() {
         window.ReactNativeWebView?.postMessage(
           JSON.stringify({ type: "coupon", data: "" })
         );
+        getAsset(userAt, userRt); // 쿠폰이 등록완료되었다면 자산 최신화
         setErrorMessage("");
         isError(false);
       }

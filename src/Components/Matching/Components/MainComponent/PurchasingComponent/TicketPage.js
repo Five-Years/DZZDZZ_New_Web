@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import StateSlice from "../../../../../features/State/StateSlice";
 import Ticket1 from "../../../../../assets/package1.png";
 import Ticket2 from "../../../../../assets/package2.png";
@@ -17,6 +17,11 @@ import { ReactComponent as RematchUndo } from "../../../../../assets/undo 1.svg"
 
 function TicketPage() {
   const dispatch = useDispatch();
+
+  const userAsset = useSelector((state) => {
+    return state.Popup.userAsset;
+  });
+
   return (
     <>
       <ProductContainer>
@@ -36,10 +41,14 @@ function TicketPage() {
           <TicketButton
             onClick={() => {
               window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "buyTicket", data: 1 })
+                JSON.stringify({
+                  type: "buyTicket",
+                  data: { amount: 1, canBuy: userAsset.jelly > 20 },
+                })
               );
             }}
           >
+            {/* 수량이랑 지금 갖고있는 젤리로 살수있는지 */}
             <text>구매</text>
           </TicketButton>
         </TicketPurchaseContainer>
@@ -62,7 +71,10 @@ function TicketPage() {
           <TicketButton
             onClick={() => {
               window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "buyTicket", data: 4 })
+                JSON.stringify({
+                  type: "buyTicket",
+                  data: { amount: 4, canBuy: userAsset.jelly > 64 },
+                })
               );
             }}
           >
@@ -88,7 +100,10 @@ function TicketPage() {
           <TicketButton
             onClick={() => {
               window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "buyTicket", data: 8 })
+                JSON.stringify({
+                  type: "buyTicket",
+                  data: { amount: 8, canBuy: userAsset.jelly > 110 },
+                })
               );
             }}
           >
@@ -114,7 +129,10 @@ function TicketPage() {
           <TicketButton
             onClick={() => {
               window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "buyTicket", data: 15 })
+                JSON.stringify({
+                  type: "buyTicket",
+                  data: { amount: 8, canBuy: userAsset.jelly > 190 },
+                })
               );
             }}
           >
@@ -153,7 +171,7 @@ function TicketPage() {
             <TicketButton
               onClick={() => {
                 window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "reMatchBuy", data: 1 })
+                  JSON.stringify({ type: "reMatchBuy", data: {amount : 1, canBuy : (userAsset.jelly > 14)} })
                 );
               }}
             >
