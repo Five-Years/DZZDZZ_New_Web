@@ -11,9 +11,6 @@ import { ReactComponent as Mile1pri } from "../../../../../assets/TicketProduct1
 import { ReactComponent as Mile2pri } from "../../../../../assets/TicketProduct2.svg";
 import { ReactComponent as Mile3pri } from "../../../../../assets/TicketProduct3.svg";
 import { ReactComponent as Mile4pri } from "../../../../../assets/TicketProduct4.svg";
-import { ReactComponent as RematchInfo } from "../../../../../assets/RematchInfo.svg";
-import { ReactComponent as RematchPrice } from "../../../../../assets/RematchPrice.svg";
-import { ReactComponent as RematchUndo } from "../../../../../assets/undo 1.svg";
 
 function TicketPage() {
   const dispatch = useDispatch();

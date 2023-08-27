@@ -12,20 +12,19 @@ import heartHand from "assets/heartHand.json";
 import search from "assets/search.json";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { backIn } from "framer-motion";
-import { BackgroundCard } from "../../StyledComponent/MatchingStyled";
 import { ReactComponent as Careup } from "assets/CaretDoubleUp.svg";
 // import axios from "axios";
 import { useSelector } from "react-redux";
 import { AxiosInstanse } from "../../../../../utils/AxiosInstance";
-
+import { useDispatch } from "react-redux";
+import StateSlice from "features/State/StateSlice";
 function Matching2(props) {
+  const dispatch = useDispatch();
   const matchingType = ["Couple", "Friend"];
   const location = useLocation();
   const Theme = location.state.theme; // Theme-> 0이면 커플, 1이면 친구
   const DetailDownRef = useRef();
   const DetailUpRef = useRef();
-
   const [offset, setOffset] = useState(0);
   useEffect(() => {
     setOffset(DetailDownRef.current.offsetTop);
@@ -50,6 +49,46 @@ function Matching2(props) {
     return state.Popup.ReportCase;
   });
 
+  const getMatchResult = async (at, rt) => {
+    try {
+      const CoupleResponse = await AxiosInstanse.get(
+        `/matching/user/result?matchingType=Couple`,
+        {
+          headers: {
+            Authorization: at,
+            "x-refresh-token": rt,
+            fcmToken: "123",
+            "content-type": "application/json",
+          },
+        }
+      );
+
+      dispatch(StateSlice.actions.CouplematchResult(CoupleResponse.data.data));
+      // 커플 매칭 성사 조회
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      const FriendResponse = await AxiosInstanse.get(
+        `/matching/user/result?matchingType=Friend`,
+        {
+          headers: {
+            Authorization: at,
+            "x-refresh-token": rt,
+            fcmToken: "123",
+            "content-type": "application/json",
+          },
+        }
+      );
+
+      dispatch(StateSlice.actions.FriendmatchResult(FriendResponse.data.data));
+      //친구매칭 성사 조회
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const accepts = async (at, rt) => {
     try {
       const Response = await AxiosInstanse.post(
@@ -66,10 +105,12 @@ function Matching2(props) {
       );
       // 동의 수락시 매칭결과 한번 업로드 해줘야 할듯?
 
-      if (Response.data.status == 200)
+      if (Response.data.status === 200) {
+        getMatchResult(userAt, userRt);
         navigate("/Choice", {
           state: { theme: Theme, Result: 1, Direct: true },
         });
+      }
     } catch (error) {
       alert(error);
     }
@@ -89,10 +130,12 @@ function Matching2(props) {
           },
         }
       );
-      if (Response.data.status == 200)
+      if (Response.data.status === 200) {
+        getMatchResult(userAt, userRt);
         navigate("/Choice", {
           state: { theme: Theme, Result: 3, Direct: true },
         });
+      }
     } catch (error) {
       alert(error);
     }
@@ -102,30 +145,18 @@ function Matching2(props) {
     const { data, type } = JSON.parse(event);
 
     switch (type) {
-      case "accept":
+      case "accept": {
         if (data) accepts(userAt, userRt);
         break;
-      case "reject":
+      }
+
+      case "reject": {
         if (data) rejects(userAt, userRt);
         break;
+      }
 
-      case "application":
-        if (data) {
-          if (window.confirm("선택하시겠습니까?")) {
-            navigate("/Choice", { state: "accept" });
-          }
-        }
-        break;
       case "report":
         {
-          window.ReactNativeWebView?.postMessage(
-            JSON.stringify({
-              type: "toast",
-              data:
-                reportCase[data.reportNum] +
-                "의 항목으로 신고가 접수되었습니다.",
-            }) // 메시지
-          );
           // 신고 API완성되면 대체하기
           rejects(userAt, userRt); // 거절처리하기
         }
@@ -263,7 +294,7 @@ function Matching2(props) {
         {/* <KeyboardDoubleArrowUpIcon color="disabled" fontSize="large" /> */}
         <Careup />
         <DetailView>
-          <MatchingLink ref={DetailUpRef}>
+          <MatchingLink>
             <text>자세히 보기</text>
           </MatchingLink>
         </DetailView>
@@ -608,12 +639,15 @@ export const Option = styled.div`
 `;
 
 export const TextContainer = styled.div`
+  display: flex;
   width: 53.33%;
   min-width: 208px;
   height: 20px;
   overflow: ${(props) => (props.detail ? "visible" : "hidden")};
   /* background-color: ${(props) => (props.detail ? "#888888" : "#FFFFFF")}; */
   z-index: 2;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   margin-left: 20px;
 
@@ -624,8 +658,6 @@ export const TextContainer = styled.div`
     font-weight: 300;
     font-size: 16px;
     line-height: 22px;
-    display: flex;
-    align-items: center;
     /* background-color: ${(props) =>
       props.detail ? "#888888" : "#FFFFFF"}; */
     color: ${(props) => (props.detail ? "#FFFFFF" : "#888888")};
@@ -754,8 +786,9 @@ export const DetailView = styled.div`
   height: 22px;
 `;
 
-export const MatchingLink = styled(Link)`
+export const MatchingLink = styled.div`
   text-decoration-line: none;
+
   > text {
     width: 80px;
     height: 22px;

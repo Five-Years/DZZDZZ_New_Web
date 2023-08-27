@@ -14,16 +14,6 @@ function MatchingProgressHeader(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const listener = (event) => {
-    const { data, type } = JSON.parse(event);
-
-    switch (type) {
-      case "report":
-        dispatch(StateSlice.actions.ReportData(data));
-        navigate("/ChoicePage", { state: "reject" });
-    }
-  };
-
   const userAsset = useSelector((state) => {
     return state.Popup.userAsset;
   });
@@ -36,12 +26,6 @@ function MatchingProgressHeader(props) {
     return state.Popup.MatchedUserInfo;
   });
 
-  useEffect(() => {
-    //android
-    document.addEventListener("message", (e) => listener(e.data));
-    //ios
-    window.addEventListener("message", (e) => listener(e.data));
-  }, []);
   return (
     // <ContentContainers>      </ContentContainers>
 

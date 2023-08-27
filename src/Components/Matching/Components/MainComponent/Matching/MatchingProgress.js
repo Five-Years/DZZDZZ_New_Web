@@ -20,14 +20,14 @@ function MatchingProgress() {
   const dispatch = useDispatch();
   const { state } = useLocation();
   const Theme = location.state.theme; // Theme-> 0이면 커플, 1이면 친구
+  const [isLoading, setLoading] = useState(true);
 
-  const [loading, setLoading] = useState(true);
   const [MatchedUserData, setMatchedUserData] = useState(null);
   const matchingType = ["Couple", "Friend"];
 
-  setInterval(() => {
-    setLoading(false);
-  }, 5000);
+  useEffect(() => {
+    if (MatchedUserData) setLoading(false);
+  }, [MatchedUserData]);
 
   const navigate = useNavigate();
 
@@ -48,16 +48,14 @@ function MatchingProgress() {
       // dispatch(StateSlice.actions.matchParticipate(Response.data.data));
       dispatch(StateSlice.actions.MatchedUserInfo(Response.data.data));
       setMatchedUserData(Response.data.data);
-
-      // 매칭상대방 정보 불러오기
     } catch (error) {
       console.log(error);
     }
   };
   //@ 매칭된 상대방 정보
-  // const matchedUserInfo = useSelector((state) => {
-  //   return state.Popup.MatchedUserInfo;
-  // });
+  const matchedUserInfo = useSelector((state) => {
+    return state.Popup.MatchedUserInfo;
+  });
 
   const userAt = useSelector((state) => {
     return state.Popup.userToken.accessToken;
@@ -69,15 +67,13 @@ function MatchingProgress() {
 
   useEffect(() => {
     if (MatchedUserData === null) {
-      getMatchedUserInfo(userAt, userRt); //토큰값 넣어주기
-    } else {
-      setLoading(false);
+      getMatchedUserInfo(userAt, userRt);
     }
   }, [MatchedUserData]);
 
   return (
     <MatchingContainer>
-      {loading ? (
+      {isLoading ? (
         <SpinnerContainer>
           <Spinners name="line-spin-fade-loader" />
         </SpinnerContainer>
@@ -89,28 +85,21 @@ function MatchingProgress() {
           <text>
             지금부터<br></br>
             <span>매칭상대</span>가<br />
-            공개됩니다.
+            공개됩니다!
           </text>
         </CardContents>
         {state.theme === 1 ? (
           <LottieContainer>
-            {" "}
             <Lottie animationData={Logo} />
           </LottieContainer>
         ) : (
-          //   <img
-          //   src={require("assets/dzzdzz_logo.png")}
-          //   alt="이미지"
-          // />
           <LottieContainer>
-            {" "}
             <Lottie animationData={Logo} />
           </LottieContainer>
-          // <DzzDate />
         )}
       </CardContainer>
       <MatchingConfirmContainer theme={state.theme}>
-        {loading ? (
+        {isLoading ? (
           <text>
             곧 매칭된 상대방을<br></br> 볼 수 있어요!
           </text>

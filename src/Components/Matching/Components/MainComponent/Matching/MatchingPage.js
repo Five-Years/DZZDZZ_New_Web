@@ -11,15 +11,19 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import StateSlice from "features/State/StateSlice";
 import { AxiosInstanse } from "../../../../../utils/AxiosInstance";
+import Lottie from "lottie-react";
+import newLogo from "assets/newLogo.json";
 
 function MatchingPage() {
+  // const userAgent = navigator.userAgent.toLowerCase(); //userAgent 문자열 값 받아오기
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const Theme = location.state.theme; // Theme-> 0이면 커플, 1이면 친구
   const [can, setCan] = useState();
-  const [status, setStatus] = useState({});
+  const [status, setStatus] = useState();
   const matchingType = ["Couple", "Friend"];
+  const [isLoading, setLoading] = useState(true);
 
   const SeasonStep = useSelector((state) => {
     return state.Popup.seasonStep;
@@ -54,9 +58,9 @@ function MatchingPage() {
     return state.Popup.CouplematchResult;
   });
 
-  const userMatchAvailable = useSelector((state) => {
-    return state.Popup.userMatchAvailable;
-  });
+  // const userMatchAvailable = useSelector((state) => {
+  //   return state.Popup.userMatchAvailable;
+  // });
 
   useEffect(() => {
     window.ReactNativeWebView?.postMessage(
@@ -78,11 +82,23 @@ function MatchingPage() {
   };
 
   useEffect(() => {
-    //android
     document.addEventListener("message", (e) => listener(e.data));
-    //ios
+    // iOS 플랫폼에서의 동작 설정
     window.addEventListener("message", (e) => listener(e.data));
+    // ...
   }, []);
+
+  // useEffect(()=>{
+  //   if (userAgent.indexOf("android") > -1) {
+  //     //안드로이드일 때 실행할 동작
+  //  } else if (
+  //      userAgent.indexOf("iphone") > -1 ||
+  //      userAgent.indexOf("ipad") > -1 ||
+  //      userAgent.indexOf("ipod") > -1
+  //    ) {
+  //    //IOS일 때 실행할 동작
+  //  }
+  // }, [])
 
   //@매칭을 신청 유무 확인, 신청을 안한상태라면 true값이 들어옴
   useEffect(() => {
@@ -94,24 +110,21 @@ function MatchingPage() {
       setCan(matchParticipate.friendMatchingAvailable);
       setStatus(FriendmatchResult);
     }
-  }, []);
+  }, [Theme]);
 
   const listener = (event) => {
     const { data, type } = JSON.parse(event);
     switch (type) {
-      case "back":
-        if (this.props.navigation.isFirstRouteInParent()) {
-          navigate("/Matching");
-        } else {
-          navigate(-1);
-        }
+      case "back": {
+        navigate(-1);
         break;
+      }
 
       case "application": {
-        // true가 왔다면 매칭을 신청한다, 자산 최신화 필요할 듯?
         if (data) {
           Apply(userAt, userRt);
         }
+        break;
       }
     }
   };
@@ -128,16 +141,46 @@ function MatchingPage() {
           "content-type": "application/json",
         },
       });
-      dispatch(StateSlice.actions.matchAvailable(Response.data.data));
+      // 지원하는 학교가 아닌 경우
+      if (!Response.data.data.isSupportedCampus) {
+        window.ReactNativeWebView?.postMessage(
+          JSON.stringify({
+            type: "unSupportedSchool",
+            data: userInfo.campusIdentifier,
+          })
+        );
+        // 학교는 지원하지만 필수인증정보 3가지중 하나이상이 부족한 경우
+      } else if (
+        (!Response.data.data.profileDescription ||
+          !Response.data.data.representativeImageStatus ||
+          !Response.data.data.campusAuthStatus) &&
+        can
+      ) {
+        window.ReactNativeWebView?.postMessage(
+          JSON.stringify({
+            type: "lackinfo",
+            data: {
+              photoauthen: Response.data.data.representativeImageStatus,
+              campusauthen: Response.data.data.campusAuthStatus,
+              infoauthen: Response.data.data.profileDescription,
+            },
+          })
+        );
+      } else {
+        window.ReactNativeWebView?.postMessage(
+          JSON.stringify({
+            type: "application",
+            data: {
+              matchingType: matchingType[Theme],
+              ticket: userAsset.ticket,
+            },
+          })
+        );
+      }
     } catch (error) {
       console.log(error);
     }
   };
-
-  //@ 사용자 매칭신청 조건 충족여부
-  useEffect(() => {
-    if (userAt) getAvailable(userAt, userRt);
-  }, [userAt]);
 
   const getAsset = async (at, rt) => {
     try {
@@ -173,16 +216,14 @@ function MatchingPage() {
       );
 
       // 신청이 성공했다면 매칭 페이지로 이동하면서 토스트메시지 띄우기
-
       // 신청이 실패했다면 토스트메시지로 실패했습니다 띄우기
-      if (Response.data.data == "success") {
+      if (Response.data.status == 200) {
         window.ReactNativeWebView?.postMessage(
           JSON.stringify({ type: "toast", data: "신청이 완료되었습니다" }) // 메시지
         );
         // 사용자 티켓 최신화
-        getAsset(userAt, userRt);
-
-        navigate("/matching");
+        // getAsset(userAt, userRt);
+        // navigate("/matching");
       } else {
         window.ReactNativeWebView?.postMessage(
           JSON.stringify({ type: "toast", data: "신청이 실패하였습니다" }) // 메시지
@@ -196,53 +237,20 @@ function MatchingPage() {
   const Button = () => {
     // 접수중 + 신청가능한 상태
     if (SeasonStep === 0 && can) {
-      return (
-        <EachButton
-          className="activate"
-          onClick={() => {
-            // 지원하는 학교가 아닌 경우
-            if (!userMatchAvailable.isSupportedCampus) {
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({
-                  type: "unSupportedSchool",
-                  data: userInfo.campusIdentifier,
-                })
-              );
-              // 학교는 지원하지만 필수인증정보 3가지중 하나이상이 부족한 경우
-            } else if (
-              (!userMatchAvailable.profileDescription ||
-                !userMatchAvailable.representativeImageStatus ||
-                !userMatchAvailable.campusAuthStatus) &&
-              can
-            ) {
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({
-                  type: "lackinfo",
-                  data: {
-                    photoauthen: userMatchAvailable.representativeImageStatus,
-                    campusauthen: userMatchAvailable.campusAuthStatus,
-                    infoauthen: userMatchAvailable.profileDescription,
-                  },
-                })
-              );
-            } //그외, 즉 조건이 모두 충족하였고 신청하지 않은 경우
-            else {
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({
-                  type: "application",
-                  data: {
-                    matchingType: matchingType[Theme],
-                    ticket: userAsset.ticket,
-                  },
-                })
-              );
-            }
-          }}
-          matching={Theme}
-        >
-          <text className="enter">신청하기</text>
-        </EachButton>
-      );
+      if (Theme === 0) {
+        return (
+          <EachButton
+            className="activate"
+            onClick={() => {
+              // getAvailable(userAt, userRt);
+              Apply(userAt, userRt);
+            }}
+            matching={Theme}
+          >
+            <text className="enter">신청하기</text>
+          </EachButton>
+        );
+      }
     }
 
     // @매칭중, 매칭상대가 존재하는 경우에는 상대방 확인하기 버튼 활성화
@@ -330,88 +338,121 @@ function MatchingPage() {
     }
   };
 
+  useEffect(() => {
+    if (can != null && status != null) setLoading(false);
+  }, [can, status]);
+
   return (
     <>
-      <MobileContainer>
-        <HeaderContainer>
-          <ToggleContainer>
-            <MatchingProgressHeader />
-          </ToggleContainer>
-          <ProfileContainer>
-            <MatchingHeaderNew isFrist={false} theme={Theme} />
-          </ProfileContainer>
-        </HeaderContainer>
-        <CouponContainer>
-          <MyTicket />
-        </CouponContainer>
-        <MatchingContainer>
-          <MatchingCardContainer theme={Theme}>
-            <CardContainer>
-              <CardTitleContainer>
-                <CardTag theme={Theme}>
-                  {Theme === 0 ? (
-                    <text>
-                      <span>#</span>소개팅을 원해요
-                    </text>
-                  ) : (
-                    <text>
-                      <span>#</span>친구를 원해요
-                    </text>
-                  )}
-                </CardTag>
-                <CardTitle>
-                  <TextField theme={Theme}>
-                    {Theme === 0 ? (
-                      <text>
-                        매칭의 정석 소개팅♥
-                        <br />
-                        <text className="highlight">
-                          ‘대체 다들 어디서 만나?’
-                          <br />
-                          ‘연애 수문장 졸업기원..ㅠㅠ’
+      {isLoading ? (
+        <>
+          {" "}
+          <LoadingContainer>
+            <LottieContainer>
+              <Lottie animationData={newLogo} />
+            </LottieContainer>
+          </LoadingContainer>
+        </>
+      ) : (
+        <>
+          {" "}
+          <MobileContainer>
+            <HeaderContainer>
+              <ToggleContainer>
+                <MatchingProgressHeader />
+              </ToggleContainer>
+              <ProfileContainer>
+                <MatchingHeaderNew isFrist={false} theme={Theme} />
+              </ProfileContainer>
+            </HeaderContainer>
+            <CouponContainer>
+              <MyTicket />
+            </CouponContainer>
+            <MatchingContainer>
+              <MatchingCardContainer theme={Theme}>
+                <CardContainer>
+                  <CardTitleContainer>
+                    <CardTag theme={Theme}>
+                      {Theme === 0 ? (
+                        <text>
+                          <span>#</span>소개팅을 원해요
                         </text>
-                        <br />
-                        <span>더이상 고민 하지말고 입장!</span>
-                      </text>
-                    ) : (
-                      <text>
-                        나도 어쩌면
-                        <br />
-                        누군가의 소울메이트🥹?!
-                        <br />
-                        <text className="highlight">
-                          ‘맛집 뿌실 단짝 어디 없나?’
+                      ) : (
+                        <text>
+                          <span>#</span>친구를 원해요
                         </text>
-                        <br />
-                        <span>애매하게 서성이지 말고 입장!</span>
-                      </text>
-                    )}
-                  </TextField>
-                </CardTitle>
-              </CardTitleContainer>
-            </CardContainer>
-          </MatchingCardContainer>
-        </MatchingContainer>
-        <ButtonContainer>
-          <EachButtonContainer>{Button()}</EachButtonContainer>
-          <EachButtonContainer>
-            <EachButton
-              onClick={() => {
-                window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "modify", data: "" })
-                );
-              }}
-            >
-              <text>내 정보 수정하기</text>
-            </EachButton>
-          </EachButtonContainer>
-        </ButtonContainer>
-      </MobileContainer>
+                      )}
+                    </CardTag>
+                    <CardTitle>
+                      <TextField theme={Theme}>
+                        {Theme === 0 ? (
+                          <text>
+                            매칭의 정석 소개팅♥
+                            <br />
+                            <text className="highlight">
+                              ‘대체 다들 어디서 만나?’
+                              <br />
+                              ‘연애 수문장 졸업기원..ㅠㅠ’
+                            </text>
+                            <br />
+                            <span>더이상 고민 하지말고 입장!</span>
+                          </text>
+                        ) : (
+                          <text>
+                            나도 어쩌면
+                            <br />
+                            누군가의 소울메이트🥹?!
+                            <br />
+                            <text className="highlight">
+                              ‘맛집 뿌실 단짝 어디 없나?’
+                            </text>
+                            <br />
+                            <span>애매하게 서성이지 말고 입장!</span>
+                          </text>
+                        )}
+                      </TextField>
+                    </CardTitle>
+                  </CardTitleContainer>
+                </CardContainer>
+              </MatchingCardContainer>
+            </MatchingContainer>
+            <ButtonContainer>
+              <EachButtonContainer>{Button()}</EachButtonContainer>
+              <EachButtonContainer>
+                <EachButton
+                  onClick={() => {
+                    window.ReactNativeWebView?.postMessage(
+                      JSON.stringify({ type: "modify", data: "" })
+                    );
+                  }}
+                >
+                  <text>내 정보 수정하기</text>
+                </EachButton>
+              </EachButtonContainer>
+            </ButtonContainer>
+          </MobileContainer>
+        </>
+      )}
     </>
   );
 }
 
 export default MatchingPage;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+`;
+
+const LottieContainer = styled.div`
+  width: 50px;
+  height: 50px;
+`;
 
 export const MobileContainer = styled.div`
   display: flex;

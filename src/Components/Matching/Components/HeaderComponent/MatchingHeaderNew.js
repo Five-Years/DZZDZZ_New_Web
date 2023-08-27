@@ -7,23 +7,11 @@ import styled from "styled-components";
 
 function MatchingHeaderNew(props) {
   // 유저티켓 보유 갯수 확인, 추후 서버 연동 필요
-  const location = useLocation();
   const color = props.theme;
-
-  // const Ticket = useSelector((state) => {
-  //   return state.Popup.ticket;
-  // });
-  // const Season = useSelector((state) => {
-  //   return state.Popup.season;
-  // });
-  // const SeasonNumber = useSelector((state) => {
-  //   return state.Popup.seasonNumber;
-  // });
 
   const Name = useSelector((state) => {
     return state.Popup.name;
   });
-  // 실제 서비스시엔 userData로 통일하는게 나을거 같기도..?
 
   const SeasonStep = useSelector((state) => {
     return state.Popup.seasonStep;

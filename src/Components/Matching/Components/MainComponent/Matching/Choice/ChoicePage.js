@@ -34,9 +34,7 @@ function ChoicePage() {
   const [detail, setDetail] = useState(false);
   const navigate = useNavigate();
   const { state } = useLocation();
-
-  // 거절 사유 확인이 가능한지 확인을 한다.
-  // 거절 사유 확인이 가능하다면 웹뷰통신으로 거절사유 확인요청을 보낸다.
+  const [MatchingResult, setMatchingResult] = useState(); // 나의 선택으로 인해 매칭이 결정됐는지 확인
 
   // const ReportedData = useSelector((state) => {
   //   return state.Popup.ReportData;
@@ -92,8 +90,36 @@ function ChoicePage() {
     return state.Popup.userAsset;
   });
 
-  console.log(MatchedUserData.image);
-  console.log(isDirect);
+  const userAt = useSelector((state) => {
+    return state.Popup.userToken.accessToken;
+  });
+
+  const userRt = useSelector((state) => {
+    return state.Popup.userToken.refreshToken;
+  });
+
+  //매칭진행 결과 관련데이터, 친구매칭 결과 (접수안했다면 상태가 None, 접수했다면 waiting, 실패했다면, ??? 성공했다면 기타 등등)
+  const FriendmatchResult = useSelector((state) => {
+    return state.Popup.FriendmatchResult;
+  });
+
+  //매칭진행 결과 관련데이터, 커플매칭 결과  (접수안했다면 상태가 None, 접수했다면 waiting, 실패했다면, ??? 성공했다면 기타 등등)
+  const CouplematchResult = useSelector((state) => {
+    return state.Popup.CouplematchResult;
+  });
+
+  // useEffect(() => {
+  //   // 현재 테마의 매칭결과를 가져온다
+  //   if (Theme === 0) {
+  //     // 커플매칭
+  //     setMatchingResult(CouplematchResult);
+  //   } else if (Theme === 1) {
+  //     setMatchingResult(FriendmatchResult);
+  //   }
+  // }, [userAt, userRt]);
+
+  // 최신화된 매칭결과를 가져오고 만약 성공했는지 거절당했는지가 결정됐다면?
+
   return (
     <MatchingContainers detail={detail}>
       <ContentContainer>
@@ -188,25 +214,29 @@ function ChoicePage() {
           </ResultBox>
           {/* 매칭성공 + 상대방이 아직 선택이 안했다면 */}
           {Result === 1 ? (
-            <WaitingBox state={state}>
-              <text>
-                선택시간이
-                <span>
-                  {Hour}
-                  <span>시간</span>
-                </span>
-                <span>
-                  {Minute}
-                  <span>분</span>
-                </span>{" "}
-                남았어요.
-              </text>
-              <text>상대방이 선택하면 결과가 나와요.</text>
-            </WaitingBox>
+            <>
+              <WaitingBox state={state}>
+                <text>
+                  선택시간이
+                  <span>
+                    {Hour}
+                    <span>시간</span>
+                  </span>
+                  <span>
+                    {Minute}
+                    <span>분</span>
+                  </span>{" "}
+                  남았어요.
+                </text>
+                <text>상대방이 선택하면 결과가 나와요.</text>
+              </WaitingBox>
+            </>
           ) : (
-            <></>
+            <> </>
           )}
-
+          {/* <SuggestionButton>
+                <text>결과확인하러 가기</text>
+              </SuggestionButton> */}
           <ChanceBox state={state}>
             {Result === 0 ? (
               <>
@@ -236,7 +266,7 @@ function ChoicePage() {
                           matchingType: matchingTypeList[Theme],
                           code: rejectedReasonData.code,
                           description: rejectedReasonData.maskedDescription,
-                          canBuy: userAsset.jelly > 3,
+                          canBuy: userAsset.jelly > 5,
                         },
                       })
                     );
