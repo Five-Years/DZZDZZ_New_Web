@@ -40,42 +40,37 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/Temp" element={<TempHomePage />}></Route>
-          <Route path="/Matching" element={<MatchingHomePage />}></Route>
-          <Route path="/purchasing" element={<Purchasing />}></Route>
-          <Route path="/matchingPage" element={<MatchingPage />}></Route>
-          <Route
-            path="/matchingProgress"
-            element={<MatchingProgress />}
-          ></Route>
-          <Route path="/matching2" element={<Matching2 />}></Route>
-          <Route path="/detail" element={<DetailProfile />}></Route>
-          <Route path="/choice" element={<ChoicePage />}></Route>
-          <Route path="/choiceResult" element={<ChoiceResult />}></Route>
-          <Route path="/choiceLoading" element={<ChoiceLoading />}></Route>
-          <Route path="/coupon" element={<Coupon />}></Route>
-          <Route path="/history" element={<HistoryPage />}></Route>
-          <Route path="/matchhistory" element={<MatchHistory />}></Route>
-          <Route
-            path="/historymatchingprofile"
-            element={<HistoryMatchingProfile />}
-          ></Route>
+  <Provider store={store}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/Temp" element={<TempHomePage />}></Route>
+        <Route path="/Matching" element={<MatchingHomePage />}></Route>
+        <Route path="/purchasing" element={<Purchasing />}></Route>
+        <Route path="/matchingPage" element={<MatchingPage />}></Route>
+        <Route path="/matchingProgress" element={<MatchingProgress />}></Route>
+        <Route path="/matching2" element={<Matching2 />}></Route>
+        <Route path="/detail" element={<DetailProfile />}></Route>
+        <Route path="/choice" element={<ChoicePage />}></Route>
+        <Route path="/choiceResult" element={<ChoiceResult />}></Route>
+        <Route path="/choiceLoading" element={<ChoiceLoading />}></Route>
+        <Route path="/coupon" element={<Coupon />}></Route>
+        <Route path="/history" element={<HistoryPage />}></Route>
+        <Route path="/matchhistory" element={<MatchHistory />}></Route>
+        <Route
+          path="/historymatchingprofile"
+          element={<HistoryMatchingProfile />}
+        ></Route>
 
-          <Route path="/" element={<PCHome />}></Route>
-          <Route path="/pc" element={<App />}></Route>
-          <Route path="MobileMenu" element={<MobileMenu />}></Route>
-          <Route path="DzzIntroduce" element={<DzzDzzIntrodue />}></Route>
-          <Route path="Terms" element={<Terms />}></Route>
-          <Route path="Privacy" element={<Privacy />}></Route>
-          <Route path="marketing" element={<Marketing />}></Route>
-        </Routes>
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>
+        <Route path="/" element={<PCHome />}></Route>
+        <Route path="/pc" element={<App />}></Route>
+        <Route path="MobileMenu" element={<MobileMenu />}></Route>
+        <Route path="DzzIntroduce" element={<DzzDzzIntrodue />}></Route>
+        <Route path="Terms" element={<Terms />}></Route>
+        <Route path="Privacy" element={<Privacy />}></Route>
+        <Route path="marketing" element={<Marketing />}></Route>
+      </Routes>
+    </BrowserRouter>
+  </Provider>
 );
 
 reportWebVitals();

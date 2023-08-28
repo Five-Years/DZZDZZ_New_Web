@@ -24,11 +24,160 @@ function Matching2(props) {
   const location = useLocation();
   const Theme = location.state.theme; // Theme-> 0이면 커플, 1이면 친구
   const DetailDownRef = useRef();
-  const DetailUpRef = useRef();
   const [offset, setOffset] = useState(0);
   useEffect(() => {
     setOffset(DetailDownRef.current.offsetTop);
   }, [DetailDownRef]);
+
+  function getKeyByValue(object, value) {
+    return Object.keys(object).find((key) => object[key] === value);
+  }
+
+  // getKeyByValue(ENUM_AGE, 'OLDER')
+
+  const ENUM_AGE = {
+    연상: "OLDER",
+    연하: "YOUNGER",
+    동갑: "SAME_AGE",
+    "상관 없어요": "INDETERMINATE",
+  };
+
+  const ENUM_DRINK = {
+    안마셔요: "NONE",
+    "분위기에 따라 1~2잔": "BY_MOOD",
+    "가끔 마셔요": "SOMETIMES",
+    "자주 마셔요": "OFTEN",
+    "술을 좋아해요": "LIKE",
+    "술자리만 좋아해요": "ONLY_PARTY",
+    "상관 없어요": "INDETERMINATE",
+  };
+
+  const ENUM_INTEREST = {
+    산책: "WALKING",
+    자전거: "BICYCLE",
+    레져: "LEISURE",
+    "PC/모바일 게임": "GAME",
+    쇼핑: "SHOPPING",
+    독서: "READING",
+    "사진 촬영": "TAKING_PICTURE",
+    "요리/베이킹": "COOKING",
+    자기계발: "SELF_IMPROVEMENT",
+    헬스: "HEALTH",
+    패션: "FASHION",
+    맛집: "FAMOUS_RESTAURANT",
+    댄스: "DANCE",
+    정치: "POLITICS",
+    "금융/재태크": "FINANCIAL",
+    부동산: "REAL_ESTATE",
+    여행: "TRAVEL",
+    어학: "LANGUAGE",
+    영화: "MOVIE",
+    드라이브: "DRIVE",
+    애니메이션: "ANIMATION",
+    공연관람: "PERFORMANCE",
+    전시회: "EXHIBITION",
+    반려동물: "PETS",
+    인테리어: "INTERIOR",
+    봉사활동: "VOLUNTEER",
+    악기: "INSTRUMENT",
+    안마셔요: "MUSIC",
+    "기타(직접 알아가도록 해요)": "ETC",
+  };
+
+  const ENUM_MAJOR = {
+    "같은 전공은 피하고 싶어요": "DIFFERENT",
+    "같은 전공이 좋아요": "SAME",
+    "상관 없어요": "INDETERMINATE",
+  };
+
+  const ENUM_MILITARYSERVICE = {
+    병역필: "COMPLETED",
+    미필: "UNFULFILLED",
+    "해당사항 없음": "EXEMPTED",
+    "알려주고 싶지 않아요": "INDETERMINATE",
+  };
+
+  const ENUM_PERSONALITY = {
+    귀여운: "CUTE",
+    섹시한: "SEXY",
+    도도한: "UPSTAGE",
+    예의바른: "POLITE",
+    시크한: "CHIC",
+    진지한: "SERIOUS",
+    어른스러운: "MATURE",
+    솔직한: "CANDID",
+    "호기심이 많은": "CURIOS",
+    외향적인: "OUTGOING",
+    상냥한: "AFFABLE",
+    차분한: "TRANQUIL",
+    지적인: "INTELLECTUAL",
+    듬직한: "TRUSTWORTHY",
+    자유로운: "FREE",
+    감성적인: "SENTIMENTAL",
+    시원시원한: "COOL",
+    "4차원적인": "STRANGE",
+    낙천적인: "OPTIMISTIC",
+    열정적인: "ENTHUSIASTIC",
+  };
+
+  const ENUM_RELIGION = {
+    기독교: "CHRISTIAN",
+    천주교: "CATHOLIC",
+    불교: "BUDDHISM",
+    "기타 종교": "ETC",
+    무교: "NONE",
+    "상관 없어요": "INDETERMINATE",
+    "알려주고 싶지 않아요": "~",
+  };
+
+  const ENUM_SMOKE = {
+    비흡연자: "NONE",
+    "가끔 흡연함": "SOMETIMES",
+    "자주 흡연함": "OFTEN",
+    "상관 없어요": "INDETERMINATE",
+  };
+
+  const ENUM_UNIVERSITY = {
+    "다른 학교가 좋아요": "DIFFERENT",
+    "같은 학교가 좋아요": "SAME",
+    "상관 없어요": "INDETERMINATE",
+  };
+
+  const ENUM_MBTI = {
+    "미묘한 INFJ": "INFJ",
+    "요정같은 INFP": "INFP",
+    "은근 다정한 INTJ": "INTJ",
+    "영리한 INTP": "INTP",
+    "조용한 ISTP": "ISTP",
+    "예술적인 ISFP": "ISFP",
+    "모범적인 ISTJ": "ISTJ",
+    "따뜻한 ISFJ": "ISFJ",
+    "다정한 ENFJ": "ENFJ",
+    "뽀짝발랄한 ENFP": "ENFP",
+    "호탕한 ENTJ": "ENTJ",
+    "재잘재잘 ENTP": "ENTP",
+    "지휘관같은 ESTJ": "ESTJ",
+    "사교적인 ESFJ": "ESFJ",
+    "쿨한 모험가 ESTP": "ESTP",
+    "인싸같은 ESFP": "ESFP",
+  };
+
+  const ENUM_COLLEGE = {
+    인문계: "HUMANITIES",
+    "사회계(경상)": "SOCIAL_ECONOMICS",
+    "사회계(법학)": "SOCIAL_LAW",
+    "사회계(사회과학)": "SOCIAL_SCIENCE",
+    교육계: "EDUCATION",
+    "이공계(자연)": "NATURAL_SCIENCE",
+    "이공계(공학)": "ENGINEERING",
+    "이공계(IT)": "IT",
+    "의약계(의학)": "MEDICINE",
+    "의약계(약학)": "PHARMACY",
+    "의약계(간호,보건)": "HEALTH_CARE",
+    미술계: "FINE_ARTS",
+    체육계: "PHYSICAL_EDUCATION",
+    음악계: "MUSIC",
+  };
 
   useEffect(() => {
     //android
@@ -550,7 +699,8 @@ const CarouselContainer = styled(Carousel)`
     height: 100%;
   }
   > img {
-    width: 100%;
+    /* width: 100%;
+    height: 100%; */
     object-fit: cover;
   }
 `;

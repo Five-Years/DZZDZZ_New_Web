@@ -82,6 +82,14 @@ function ChoicePage() {
     return state.Popup.MatchedUserInfo;
   });
 
+  // 추가예정, 최신화된 매칭 결과를 가져온다
+  // const FriendmatchResult = useSelector((state) => {
+  //   return state.Popup.FriendmatchResult;
+  // });
+
+  // const CouplematchResult = useSelector((state) => {
+  //   return state.Popup.CouplematchResult;
+  // });
   const rejectedReasonData = useSelector((state) => {
     return state.Popup.rejectReason;
   });
@@ -96,16 +104,6 @@ function ChoicePage() {
 
   const userRt = useSelector((state) => {
     return state.Popup.userToken.refreshToken;
-  });
-
-  //매칭진행 결과 관련데이터, 친구매칭 결과 (접수안했다면 상태가 None, 접수했다면 waiting, 실패했다면, ??? 성공했다면 기타 등등)
-  const FriendmatchResult = useSelector((state) => {
-    return state.Popup.FriendmatchResult;
-  });
-
-  //매칭진행 결과 관련데이터, 커플매칭 결과  (접수안했다면 상태가 None, 접수했다면 waiting, 실패했다면, ??? 성공했다면 기타 등등)
-  const CouplematchResult = useSelector((state) => {
-    return state.Popup.CouplematchResult;
   });
 
   // useEffect(() => {
@@ -234,6 +232,34 @@ function ChoicePage() {
           ) : (
             <> </>
           )}
+
+          {/* {
+            Result == 1 && (MatchingResult.matchingResult === "Success" || MatchingResult.matchingResul === "RoundFail") ?
+            <><SuggestionButton onClick = {navigate("/choiceLoading", {
+      state: { theme: Theme, Result: 1, Direct: false },
+    }  }>
+                <text>결과확인하러 가기</text>
+              </SuggestionButton></> : Result === 1 ? <> <WaitingBox state={state}>
+                <text>
+                  선택시간이
+                  <span>
+                    {Hour}
+                    <span>시간</span>
+                  </span>
+                  <span>
+                    {Minute}
+                    <span>분</span>
+                  </span>{" "}
+                  남았어요.
+                </text>
+                <text>상대방이 선택하면 결과가 나와요.</text>
+              </WaitingBox></> : <></>           
+          } */}
+          {/* 
+        Result 가 1이면서 현재 Theme에 맞는 매칭 결과가 Success 또는 RoundFail이라면 결과가 결정된것임으로 결과확인버튼이 활성화
+        Result 가 1이면서 waitRoundResult이면 상대방이 아직 선택을 안한것임으로 시간을 띄워준다 
+        */}
+
           {/* <SuggestionButton>
                 <text>결과확인하러 가기</text>
               </SuggestionButton> */}
@@ -366,8 +392,7 @@ const CarouselContainer = styled(Carousel)`
     height: 100%;
   }
   > img {
-    width: 100%;
-    object-fit: cover;
+    object-fit: fill;
   }
 `;
 

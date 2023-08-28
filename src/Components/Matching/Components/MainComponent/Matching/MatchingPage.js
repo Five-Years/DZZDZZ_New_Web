@@ -7,7 +7,6 @@ import styled from "styled-components";
 import MatchingHeaderNew from "../../HeaderComponent/MatchingHeaderNew";
 import MatchingProgressHeader from "../../HeaderComponent/MatchingProgressHeader";
 import MyTicket from "../../ReusableComponents/MyTicket";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import StateSlice from "features/State/StateSlice";
 import { AxiosInstanse } from "../../../../../utils/AxiosInstance";
@@ -58,9 +57,9 @@ function MatchingPage() {
     return state.Popup.CouplematchResult;
   });
 
-  // const userMatchAvailable = useSelector((state) => {
-  //   return state.Popup.userMatchAvailable;
-  // });
+  const userMatchAvailable = useSelector((state) => {
+    return state.Popup.userMatchAvailable;
+  });
 
   useEffect(() => {
     window.ReactNativeWebView?.postMessage(
@@ -104,7 +103,10 @@ function MatchingPage() {
   useEffect(() => {
     //현재 테마에 맞게 status를 설정
     if (Theme === 0) {
-      setCan(matchParticipate.coupleMatchingAvailable);
+      setCan(
+        matchParticipate.coupleMatchingAvailable &&
+          userMatchAvailable.notAlreadyCoupleMatched
+      );
       setStatus(CouplematchResult);
     } else {
       setCan(matchParticipate.friendMatchingAvailable);
@@ -222,8 +224,8 @@ function MatchingPage() {
           JSON.stringify({ type: "toast", data: "신청이 완료되었습니다" }) // 메시지
         );
         // 사용자 티켓 최신화
-        // getAsset(userAt, userRt);
-        // navigate("/matching");
+        getAsset(userAt, userRt);
+        navigate("/matching");
       } else {
         window.ReactNativeWebView?.postMessage(
           JSON.stringify({ type: "toast", data: "신청이 실패하였습니다" }) // 메시지
@@ -237,20 +239,18 @@ function MatchingPage() {
   const Button = () => {
     // 접수중 + 신청가능한 상태
     if (SeasonStep === 0 && can) {
-      if (Theme === 0) {
-        return (
-          <EachButton
-            className="activate"
-            onClick={() => {
-              // getAvailable(userAt, userRt);
-              Apply(userAt, userRt);
-            }}
-            matching={Theme}
-          >
-            <text className="enter">신청하기</text>
-          </EachButton>
-        );
-      }
+      return (
+        <EachButton
+          className="activate"
+          onClick={() => {
+            getAvailable(userAt, userRt);
+            // Apply(userAt, userRt);
+          }}
+          matching={Theme}
+        >
+          <text className="enter">신청하기</text>
+        </EachButton>
+      );
     }
 
     // @매칭중, 매칭상대가 존재하는 경우에는 상대방 확인하기 버튼 활성화

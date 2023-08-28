@@ -253,11 +253,6 @@ function MatchingHomePage(props) {
     return state.Popup.CouplematchResult;
   });
 
-  //@ 현재 시즌 회차 (삭제 예정)
-  const Season = useSelector((state) => {
-    return state.Popup.Season;
-  });
-
   const userAt = useSelector((state) => {
     return state.Popup.userToken.accessToken;
   });
@@ -304,8 +299,8 @@ function MatchingHomePage(props) {
   //접수를 안한 상태라면 상태가 None이 나온다, 접수를 한 상태라면 waiting, 매칭결과는 기타 등등
 
   useEffect(() => {
-    if (typeof isProd !== "undefined") {
-      if (SeasonStep === -1 && userAt) {
+    if (typeof isProd !== "undefined" && userAt) {
+      if (SeasonStep === -1) {
         getCurrentSeasonInfo();
         getUserAsset(userAt, userRt);
         getUserInfo(userAt, userRt);
@@ -315,7 +310,7 @@ function MatchingHomePage(props) {
         getMatchResult(userAt, userRt);
       }
     }
-  }, [SeasonStep, isProd, userAt]);
+  }, [SeasonStep, userAt, isProd]);
 
   // //@ 시즌타이머 정보를 서버로부터 받아 왔다면 타이머 실행.
   useEffect(() => {
@@ -376,10 +371,10 @@ function MatchingHomePage(props) {
     }
   };
 
-  useEffect(() => {
-    setHeader(false);
-    dispatch(StateSlice.actions.setIsProd(false));
-  }, []);
+  // useEffect(() => {
+  //   setHeader(false);
+  //   dispatch(StateSlice.actions.setIsProd(false));
+  // }, []);
 
   // 만약 시즌이 진행중인데 매칭이 실패하였다면 웹뷰로 티켓을 돌려드린다는 팝업을 띄워줌 둘중 하나라도 실패했을때
   useEffect(() => {
@@ -547,7 +542,8 @@ function MatchingHomePage(props) {
       userInfo &&
       userAsset &&
       FriendmatchResult &&
-      CouplematchResult
+      CouplematchResult &&
+      userMatchAvailable
     ) {
       setLoading(false);
     }
@@ -560,6 +556,7 @@ function MatchingHomePage(props) {
     userInfo,
     FriendmatchResult,
     CouplematchResult,
+    userMatchAvailable,
   ]);
 
   return (
@@ -600,7 +597,6 @@ function MatchingHomePage(props) {
                   state: {
                     theme: 0,
                     // 이성매칭으로 들어갔는지, 혼성매칭으로 들어갔는지에대한 정보 theme
-                    season: Season,
                     // 현재 시즌이 진행중인지 아닌지에 대한 정보 season
                   },
                 });
@@ -644,8 +640,6 @@ function MatchingHomePage(props) {
                   state: {
                     theme: 1,
                     // 이성매칭으로 들어갔는지, 혼성매칭으로 들어갔는지에대한 정보 theme
-                    season: Season,
-                    // 현재 시즌이 진행중인지 아닌지에 대한 정보 season
                   },
                 });
               }}
@@ -697,7 +691,11 @@ function MatchingHomePage(props) {
                 }}
               >
                 <CalenderTextContainer>
-                  <text>이번 매칭 일정이 궁금하다면?</text>
+                  <text>
+                    이번 매칭 일정이
+                    <br />
+                    궁금하다면?
+                  </text>
                 </CalenderTextContainer>
                 <CalenderIconContainer>
                   <CalenderButton>
@@ -770,6 +768,7 @@ const CalenderTextContainer = styled.div`
   display: flex;
   width: 30.38%;
   height: 100%;
+  min-width: 110px;
   align-items: center;
   justify-content: center;
 
