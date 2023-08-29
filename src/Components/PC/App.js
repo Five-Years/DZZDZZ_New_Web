@@ -25,8 +25,6 @@ function App() {
     return state.Popup.isStatic;
   });
 
-  useEffect(() => {}, [isStatic]);
-
   return (
     <div className="App">
       <meta

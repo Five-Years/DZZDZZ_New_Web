@@ -81,6 +81,11 @@ function HistoryPage() {
     window.ReactNativeWebView?.postMessage(
       JSON.stringify({ type: "notfirst", data: "" })
     );
+    return () => {
+      document.removeEventListener("message", (e) => listener(e.data));
+      // iOS 플랫폼에서의 동작 설정
+      window.removeEventListener("message", (e) => listener(e.data));
+    };
   }, []);
 
   const userAsset = useSelector((state) => {

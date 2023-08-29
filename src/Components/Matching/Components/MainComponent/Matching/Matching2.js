@@ -90,13 +90,17 @@ function Matching2(props) {
     "상관 없어요": "INDETERMINATE",
   };
 
+  const ENUM_GENDER = {
+    FEMALE: "여자",
+    MALE: "남자",
+  };
+
   const ENUM_MILITARYSERVICE = {
     병역필: "COMPLETED",
     미필: "UNFULFILLED",
     "해당사항 없음": "EXEMPTED",
     "알려주고 싶지 않아요": "INDETERMINATE",
   };
-
   const ENUM_PERSONALITY = {
     귀여운: "CUTE",
     섹시한: "SEXY",
@@ -180,10 +184,16 @@ function Matching2(props) {
   };
 
   useEffect(() => {
-    //android
     document.addEventListener("message", (e) => listener(e.data));
-    //ios
+    // iOS 플랫폼에서의 동작 설정
     window.addEventListener("message", (e) => listener(e.data));
+
+    return () => {
+      document.removeEventListener("message", (e) => listener(e.data));
+      // iOS 플랫폼에서의 동작 설정
+      window.removeEventListener("message", (e) => listener(e.data));
+    };
+    // ...
   }, []);
 
   const userAt = useSelector((state) => {
@@ -265,6 +275,38 @@ function Matching2(props) {
     }
   };
 
+  const report = async (at, rt) => {
+    try {
+      const Response = await AxiosInstanse.post(
+        `/user/report`, // 거절, couple, friend
+        {
+          // "commentSeq": 0,
+          // "communitySeq": 0,
+          reportType: "USER",
+          matchingType: matchingType[Theme],
+          // "reCommentSeq": 0,
+          // "reportReason": "ABUSE",
+          // "reportedUser": "string"
+        },
+        {
+          headers: {
+            Authorization: at,
+            "x-refresh-token": rt,
+            fcmToken: "123",
+            "content-type": "application/json",
+          },
+        }
+      );
+      if (Response.data.status === 200) {
+        getMatchResult(userAt, userRt);
+        navigate("/Choice", {
+          state: { theme: Theme, Result: 3, Direct: true },
+        });
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
   const rejects = async (at, rt) => {
     try {
       const Response = await AxiosInstanse.post(
@@ -300,6 +342,10 @@ function Matching2(props) {
       }
 
       case "reject": {
+        // getMatchResult(userAt, userRt);
+        // navigate("/Choice", {
+        //   state: { theme: Theme, Result: 3, Direct: true },
+        // });
         if (data) rejects(userAt, userRt);
         break;
       }
@@ -307,7 +353,7 @@ function Matching2(props) {
       case "report":
         {
           // 신고 API완성되면 대체하기
-          rejects(userAt, userRt); // 거절처리하기
+          report(userAt, userRt); // 거절처리하기
         }
         break;
     }
@@ -364,7 +410,11 @@ function Matching2(props) {
         <MatchingProgressHeader isReport={true} direct={true} />
       </ContentContainer>
       <ProfileImageContainer>
-        <CarouselContainer dynamicHeight={true} showThumbs={false}>
+        <CarouselContainer
+          dynamicHeight={true}
+          showThumbs={false}
+          showIndicators={false}
+        >
           {MatchedUserData.images.map((item) => (
             <div>
               <img src={item.imageUrl} alt="" />
@@ -474,7 +524,8 @@ function Matching2(props) {
               <text>성별</text>
             </ContentsTitle>
             <ContentsWindow className="fixed">
-              <text>{MatchedUserData.gender}</text>
+              {/* <text>{MatchedUserData.gender}</text> */}
+              <text>{ENUM_GENDER[MatchedUserData.gender]}</text>
               {/* {MatcherInfo.sex} */}
             </ContentsWindow>
           </Contents>
@@ -497,7 +548,9 @@ function Matching2(props) {
               <span>변경이 필요한 경우 고객센터를 통해 요청해주세요</span>
             </ContentsTitle>
             <ContentsWindow className="fixed">
-              <text>{MatchedUserData.college}</text>
+              <text>
+                {getKeyByValue(ENUM_COLLEGE, MatchedUserData.college)}
+              </text>
               {/* {MatcherInfo.major} */}
             </ContentsWindow>
           </Contents>
@@ -527,7 +580,7 @@ function Matching2(props) {
                   {MatchedUserData.personalities.map((item) => (
                     <text>
                       <span>#</span>
-                      {item}
+                      {getKeyByValue(ENUM_PERSONALITY, item)}
                     </text>
                   ))}
                 </TagContainer>
@@ -547,7 +600,7 @@ function Matching2(props) {
                   {MatchedUserData.interests.map((item) => (
                     <text>
                       <span>#</span>
-                      {item}
+                      {getKeyByValue(ENUM_INTEREST, item)}
                     </text>
                   ))}
                 </TagContainer>
@@ -701,7 +754,7 @@ const CarouselContainer = styled(Carousel)`
   > img {
     /* width: 100%;
     height: 100%; */
-    object-fit: cover;
+    object-fit: fill;
   }
 `;
 
@@ -790,15 +843,16 @@ export const Option = styled.div`
 
 export const TextContainer = styled.div`
   display: flex;
+  flex-direction: column;
   width: 53.33%;
   min-width: 208px;
-  height: 20px;
+  height: 22px;
   overflow: ${(props) => (props.detail ? "visible" : "hidden")};
   /* background-color: ${(props) => (props.detail ? "#888888" : "#FFFFFF")}; */
   z-index: 2;
   align-items: center;
-  justify-content: center;
-  text-align: center;
+  justify-content: start;
+  text-align: start;
   margin-left: 20px;
 
   > text {
@@ -808,6 +862,9 @@ export const TextContainer = styled.div`
     font-weight: 300;
     font-size: 16px;
     line-height: 22px;
+    display: flex;
+
+    text-align: center;
     /* background-color: ${(props) =>
       props.detail ? "#888888" : "#FFFFFF"}; */
     color: ${(props) => (props.detail ? "#FFFFFF" : "#888888")};
@@ -1151,11 +1208,12 @@ const Contents = styled.div`
   gap: 8px;
 
   width: 100%;
-  height: 76px;
+  height: auto;
+  /* height: 76px; */
 
-  &.long {
+  /* &.long {
     height: 105px;
-  }
+  } */
 `;
 
 const ContentsTitle = styled.div`
@@ -1163,13 +1221,12 @@ const ContentsTitle = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;
-  gap: 5px;
 
   width: 100%;
-  height: 21px;
+  height: auto;
 
   &.long {
-    height: 50px;
+    height: auto;
   }
 
   > text {
@@ -1186,14 +1243,16 @@ const ContentsTitle = styled.div`
   }
 
   > span {
+    /* width: 100%; */
+    margin-top: 5px;
     margin-left: 20px;
     font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
-    line-height: 150%;
+    /* line-height: 150%; */
     /* identical to box height, or 21px */
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
     /* Text Black */
     color: #888888;
   }
@@ -1205,7 +1264,8 @@ const ContentsWindow = styled.div`
   align-items: center;
 
   width: 92.05%;
-  height: 47px;
+  min-height: 50px;
+  height: auto;
   /* white */
 
   background: #ffffff;
@@ -1225,7 +1285,10 @@ const ContentsWindow = styled.div`
   }
 
   > text {
-    margin-left: 14px;
+    margin-left: 17px;
+    margin-right: 17px;
+    margin-top: 13px;
+    margin-bottom: 13px;
     font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 400;
@@ -1252,7 +1315,10 @@ const TagContainer = styled.div`
   align-items: center;
   padding: 0px;
   gap: 10px;
-  margin-left: 14px;
+  margin-left: 17px;
+  margin-right: 17px;
+  margin-top: 13px;
+  margin-bottom: 13px;
 
   width: 96%;
   /* white-space: normal; */
@@ -1333,13 +1399,13 @@ const ContentsSection = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 7px;
+  gap: 15px;
+  margin-top: 10px;
   /* background-color: red; */
 
   width: 100%;
-  height: 100px;
-
+  height: auto;
   &.long {
-    height: 140px;
+    height: auto;
   }
 `;

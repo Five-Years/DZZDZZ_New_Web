@@ -35,8 +35,6 @@ function MatchHistory() {
     }
   };
 
-
-
   useEffect(() => {
     //android
     document.addEventListener("message", (e) => listener(e.data));
@@ -46,6 +44,12 @@ function MatchHistory() {
     window.ReactNativeWebView?.postMessage(
       JSON.stringify({ type: "notfirst", data: "" })
     );
+
+    return () => {
+      document.removeEventListener("message", (e) => listener(e.data));
+      // iOS 플랫폼에서의 동작 설정
+      window.removeEventListener("message", (e) => listener(e.data));
+    };
   }, []);
 
   return (
@@ -55,7 +59,7 @@ function MatchHistory() {
           <MenuHeader title={location.state.title} />
         </HeaderContainer>
         <ListContainer>
-            <HistoryMatch />
+          <HistoryMatch />
         </ListContainer>
       </PurchasePageContainer>
     </>
@@ -82,7 +86,6 @@ const ListContainer = styled.div`
   overflow-x: hidden;
 `;
 
-
 const PurchasePageContainer = styled.div`
   display: flex;
   position: absolute;
@@ -90,7 +93,6 @@ const PurchasePageContainer = styled.div`
   height: 100%;
   justify-content: center;
   overflow: hidden;
-
 `;
 
 const ItemContainer = styled.div`

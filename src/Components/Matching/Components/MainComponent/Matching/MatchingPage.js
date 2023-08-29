@@ -84,6 +84,12 @@ function MatchingPage() {
     document.addEventListener("message", (e) => listener(e.data));
     // iOS 플랫폼에서의 동작 설정
     window.addEventListener("message", (e) => listener(e.data));
+
+    return () => {
+      document.removeEventListener("message", (e) => listener(e.data));
+      // iOS 플랫폼에서의 동작 설정
+      window.removeEventListener("message", (e) => listener(e.data));
+    };
     // ...
   }, []);
 
@@ -225,7 +231,8 @@ function MatchingPage() {
         );
         // 사용자 티켓 최신화
         getAsset(userAt, userRt);
-        navigate("/matching");
+
+        // navigate(-1);
       } else {
         window.ReactNativeWebView?.postMessage(
           JSON.stringify({ type: "toast", data: "신청이 실패하였습니다" }) // 메시지

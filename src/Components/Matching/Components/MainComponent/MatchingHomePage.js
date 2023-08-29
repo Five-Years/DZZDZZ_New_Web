@@ -154,13 +154,13 @@ function MatchingHomePage(props) {
         //개발일때
         if (Response.data.data.status === "Register") {
           //@ 접수기간
-          dispatch(StateSlice.actions.SeasonStep(1));
+          dispatch(StateSlice.actions.SeasonStep(0));
         } else if (Response.data.data.status === "Matching") {
           //@ 매칭기간
           dispatch(StateSlice.actions.SeasonStep(1));
         } else if (Response.data.data.status === "None") {
           //@ 휴식기간
-          dispatch(StateSlice.actions.SeasonStep(1));
+          dispatch(StateSlice.actions.SeasonStep(2));
         }
       }
     } catch (error) {
@@ -388,7 +388,15 @@ function MatchingHomePage(props) {
       window.ReactNativeWebView?.postMessage(
         JSON.stringify({
           type: "giveBack",
-          data: new Date(SeasonTimer).toISOString(),
+          data: {
+            time: new Date(SeasonTimer).toISOString(),
+            Friend:
+              FriendmatchResult.matchingResult === "RoundFail" &&
+              FriendmatchResult.myChoice === null,
+            Couple:
+              CouplematchResult.matchingResult === "RoundFail" &&
+              CouplematchResult.myChoice === null,
+          },
         })
       );
     }
@@ -531,6 +539,13 @@ function MatchingHomePage(props) {
     window.ReactNativeWebView?.postMessage(
       JSON.stringify({ type: "onLoad", data: "" })
     );
+
+    return () => {
+      document.removeEventListener("message", (e) => listener(e.data));
+      // iOS 플랫폼에서의 동작 설정
+      window.removeEventListener("message", (e) => listener(e.data));
+    };
+    // ...
   }, []);
 
   useEffect(() => {

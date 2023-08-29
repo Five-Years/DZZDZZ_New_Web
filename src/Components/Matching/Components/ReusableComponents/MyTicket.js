@@ -18,7 +18,9 @@ function MyTicket() {
     <TicketContainer>
       <TicketButton>
         <Ticket>
-          <Tickets />
+          <div>
+            <Tickets />
+          </div>
           <text>{userAsset.ticket}</text>
         </Ticket>
         <Charge
@@ -64,6 +66,12 @@ const Ticket = styled.div`
   margin-left: 7.69%;
   align-items: center;
   justify-content: space-between;
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   > text {
     font-family: var(--font-Pretendard);

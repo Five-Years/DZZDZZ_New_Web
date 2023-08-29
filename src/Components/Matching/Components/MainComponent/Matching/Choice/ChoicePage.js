@@ -18,12 +18,16 @@ import pokerface from "assets/pokerface.json";
 import sadlook from "assets/sadlook.json";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { AxiosInstanse } from "utils/AxiosInstance";
+import { useDispatch } from "react-redux";
+import StateSlice from "features/State/StateSlice";
 
 // 만약 내가 선택했다면 상대방도 나를 선택했는지 한번더 검사가 필요함
 // 만약 상대방도 나를 선택해서 결과가 Success혹은 Failure로 바뀌었다면
 // 결과 확인하기 버튼이 활성화 되게 만든다.
 
 function ChoicePage() {
+  const dispatch = useDispatch();
   const location = useLocation();
   const Result = location.state.Result; // 매칭 결과
   const isDirect = location.state.Direct; // API별 구조가 다름
@@ -76,6 +80,45 @@ function ChoicePage() {
     if (SeasonTimer !== null) StartTimer();
   }, [SeasonTimer]);
 
+  useEffect(() => {
+    document.addEventListener("message", (e) => listener(e.data));
+    // iOS 플랫폼에서의 동작 설정
+    window.addEventListener("message", (e) => listener(e.data));
+
+    return () => {
+      document.removeEventListener("message", (e) => listener(e.data));
+      // iOS 플랫폼에서의 동작 설정
+      window.removeEventListener("message", (e) => listener(e.data));
+    };
+    // ...
+  }, []);
+
+  const getAsset = async (at, rt) => {
+    try {
+      const Response = await AxiosInstanse.get(`/item/remain`, {
+        headers: {
+          Authorization: at,
+          "x-refresh-token": rt,
+          fcmToken: "123",
+          "content-type": "application/json",
+        },
+      });
+
+      dispatch(StateSlice.actions.userAsset(Response.data.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const listener = (event) => {
+    const { data, type } = JSON.parse(event);
+    switch (type) {
+      case "detailReason": {
+        if (data) getAsset(userAt, userRt);
+        break;
+      }
+    }
+  };
   // 거절사유가 있는지 서버 통신 후 있다면 버튼으로 노출, 버튼을 누르면 웹뷰요청
 
   const MatchedUserData = useSelector((state) => {
@@ -179,7 +222,8 @@ function ChoicePage() {
                   <Lottie animationData={sadlook} />
                 </LottieContainer>{" "}
                 <text>
-                  아쉽게도<span>단짠지기임당</span>님은
+                  아쉽게도 <span>{MatchedUserData.matchedUserNickname}</span>{" "}
+                  님은
                 </text>
                 <text>인연이 아닌가봐요</text>
               </>
@@ -193,6 +237,14 @@ function ChoicePage() {
                   <span>{MatchedUserData.matchedUserNickname}</span>님을
                   거절하셨습니다
                 </text>
+                {/* <text
+                  onClick={() => {
+                    navigate("/matching");
+                  }}
+                  className="result"
+                >
+                  메인으로 돌아가기
+                </text> */}
               </>
             ) : (
               <>
@@ -279,6 +331,10 @@ function ChoicePage() {
                 >
                   <text>오픈 카톡 URL 열기</text>
                 </SuggestionButton>
+                {/* <text>
+                  상대방의 오픈카톡 URL에 문제가 발생했다면 고객센터로 문의해
+                  주세요.
+                </text> */}
               </>
             ) : Result === 2 && isReject ? (
               <>
@@ -292,6 +348,8 @@ function ChoicePage() {
                           matchingType: matchingTypeList[Theme],
                           code: rejectedReasonData.code,
                           description: rejectedReasonData.maskedDescription,
+                          isPaidForDetailView:
+                            rejectedReasonData.isPaidForDetailView,
                           canBuy: userAsset.jelly > 5,
                         },
                       })
@@ -304,14 +362,28 @@ function ChoicePage() {
             ) : (
               <>{/* <text>이유가 없음, 버튼없음</text> */}</>
             )}
-            <text
-              onClick={() => {
-                navigate("/matching");
-              }}
-              className="result"
-            >
-              메인으로 돌아가기
-            </text>
+            {Result === 0 ? (
+              <>
+                <text>
+                  {" "}
+                  상대방의 오픈카톡 URL에 문제가 발생했다면 고객센터로 문의해
+                  주세요.
+                </text>
+              </>
+            ) : (
+              <>
+                {" "}
+                <text
+                  onClick={() => {
+                    navigate("/matching");
+                  }}
+                  className="result"
+                >
+                  메인으로 돌아가기
+                </text>
+              </>
+            )}
+
             {/* {state === "accept" ? (
               <text
                 onClick={() => {
@@ -531,6 +603,7 @@ const ReportCard = styled.div`
 const ContentContainer = styled.div`
   box-sizing: border-box;
   display: flex;
+
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -713,7 +786,7 @@ const ChanceBox = styled.div`
 
     /* system_blue */
 
-    color: ${(props) => (props.state === "accept" ? "#0094FF" : "#888888")};
+    color: ${(props) => (props.state === "accept" ? "#007DFE" : "#007DFE")};
   }
 
   > text.accept {

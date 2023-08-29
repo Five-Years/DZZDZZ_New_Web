@@ -50,10 +50,16 @@ function Purchasing() {
   }, []);
 
   useEffect(() => {
-    //android
     document.addEventListener("message", (e) => listener(e.data));
-    //ios
+    // iOS 플랫폼에서의 동작 설정
     window.addEventListener("message", (e) => listener(e.data));
+
+    return () => {
+      document.removeEventListener("message", (e) => listener(e.data));
+      // iOS 플랫폼에서의 동작 설정
+      window.removeEventListener("message", (e) => listener(e.data));
+    };
+    // ...
   }, []);
 
   const getHistory = async (at, rt) => {
