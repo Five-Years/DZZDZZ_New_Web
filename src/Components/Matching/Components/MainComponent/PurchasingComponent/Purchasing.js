@@ -50,16 +50,24 @@ function Purchasing() {
   }, []);
 
   useEffect(() => {
-    document.addEventListener("message", (e) => listener(e.data));
+    const messageListener = (e) => listener(e.data);
+
+    document.removeEventListener("message", messageListener);
+    window.removeEventListener("message", messageListener);
+
+    document.addEventListener("message", messageListener);
     // iOS 플랫폼에서의 동작 설정
-    window.addEventListener("message", (e) => listener(e.data));
+    window.addEventListener("message", messageListener);
+
+    window.ReactNativeWebView?.postMessage(
+      JSON.stringify({ type: "onLoad", data: "" })
+    );
 
     return () => {
-      document.removeEventListener("message", (e) => listener(e.data));
+      document.removeEventListener("message", messageListener);
       // iOS 플랫폼에서의 동작 설정
-      window.removeEventListener("message", (e) => listener(e.data));
+      window.removeEventListener("message", messageListener);
     };
-    // ...
   }, []);
 
   const getHistory = async (at, rt) => {

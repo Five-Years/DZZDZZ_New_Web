@@ -81,16 +81,20 @@ function MatchingPage() {
   };
 
   useEffect(() => {
-    document.addEventListener("message", (e) => listener(e.data));
+    const messageListener = (e) => listener(e.data);
+
+    document.removeEventListener("message", messageListener);
+    window.removeEventListener("message", messageListener);
+
+    document.addEventListener("message", messageListener);
     // iOS 플랫폼에서의 동작 설정
-    window.addEventListener("message", (e) => listener(e.data));
+    window.addEventListener("message", messageListener);
 
     return () => {
-      document.removeEventListener("message", (e) => listener(e.data));
+      document.removeEventListener("message", messageListener);
       // iOS 플랫폼에서의 동작 설정
-      window.removeEventListener("message", (e) => listener(e.data));
+      window.removeEventListener("message", messageListener);
     };
-    // ...
   }, []);
 
   // useEffect(()=>{
@@ -125,6 +129,7 @@ function MatchingPage() {
     switch (type) {
       case "back": {
         navigate(-1);
+        // alert("Hello");
         break;
       }
 
@@ -232,7 +237,7 @@ function MatchingPage() {
         // 사용자 티켓 최신화
         getAsset(userAt, userRt);
 
-        // navigate(-1);
+        navigate(-1);
       } else {
         window.ReactNativeWebView?.postMessage(
           JSON.stringify({ type: "toast", data: "신청이 실패하였습니다" }) // 메시지

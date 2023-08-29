@@ -35,6 +35,17 @@ function Matching2(props) {
 
   // getKeyByValue(ENUM_AGE, 'OLDER')
 
+  const ENUM_ReportReason = {
+    "낚시/놀람/도배": "PHISHING_OR_SPAMMING",
+    "상업적 광고 및 판매": "ADVERTISEMENT",
+    "불건전한 만남 및 대화유도": "INDUCE_UNWHOLESOME_MEETING",
+    "음란성 게시물 공유 및 게시": "OBSCENE_POSTS",
+    "정당/정치인 비하 및 선거운동": "POLITICS",
+    "욕설/모욕/비하": "ABUSE",
+    "유출/사칭/사기": "IMPERSONATE_OR_SCAM",
+    "닉네임 신고": "NICKNAME",
+  };
+
   const ENUM_AGE = {
     연상: "OLDER",
     연하: "YOUNGER",
@@ -184,16 +195,24 @@ function Matching2(props) {
   };
 
   useEffect(() => {
-    document.addEventListener("message", (e) => listener(e.data));
+    const messageListener = (e) => listener(e.data);
+
+    document.removeEventListener("message", messageListener);
+    window.removeEventListener("message", messageListener);
+
+    document.addEventListener("message", messageListener);
     // iOS 플랫폼에서의 동작 설정
-    window.addEventListener("message", (e) => listener(e.data));
+    window.addEventListener("message", messageListener);
+
+    window.ReactNativeWebView?.postMessage(
+      JSON.stringify({ type: "onLoad", data: "" })
+    );
 
     return () => {
-      document.removeEventListener("message", (e) => listener(e.data));
+      document.removeEventListener("message", messageListener);
       // iOS 플랫폼에서의 동작 설정
-      window.removeEventListener("message", (e) => listener(e.data));
+      window.removeEventListener("message", messageListener);
     };
-    // ...
   }, []);
 
   const userAt = useSelector((state) => {
@@ -275,7 +294,7 @@ function Matching2(props) {
     }
   };
 
-  const report = async (at, rt) => {
+  const report = async (at, rt, index) => {
     try {
       const Response = await AxiosInstanse.post(
         `/user/report`, // 거절, couple, friend
@@ -284,10 +303,11 @@ function Matching2(props) {
           // "communitySeq": 0,
           reportType: "USER",
           matchingType: matchingType[Theme],
+          reportReason: ENUM_ReportReason[reportCase[index]],
           // "reCommentSeq": 0,
-          // "reportReason": "ABUSE",
           // "reportedUser": "string"
         },
+
         {
           headers: {
             Authorization: at,
@@ -353,7 +373,7 @@ function Matching2(props) {
       case "report":
         {
           // 신고 API완성되면 대체하기
-          report(userAt, userRt); // 거절처리하기
+          report(userAt, userRt, data.reportNum); // 거절처리하기
         }
         break;
     }
@@ -637,7 +657,7 @@ function Matching2(props) {
           </ContentsSection>
         )}
 
-        {MatchedUserData.mbti && (
+        {MatchedUserData.mbti && MatchedUserData.mbti != "INITIAL_VALUE" && (
           <ContentsSection>
             <Contents>
               <ContentsTitle>
