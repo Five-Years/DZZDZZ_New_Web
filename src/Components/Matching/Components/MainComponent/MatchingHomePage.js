@@ -157,10 +157,10 @@ function MatchingHomePage(props) {
           dispatch(StateSlice.actions.SeasonStep(0));
         } else if (Response.data.data.status === "Matching") {
           //@ 매칭기간
-          dispatch(StateSlice.actions.SeasonStep(1));
+          dispatch(StateSlice.actions.SeasonStep(0));
         } else if (Response.data.data.status === "None") {
           //@ 휴식기간
-          dispatch(StateSlice.actions.SeasonStep(2));
+          dispatch(StateSlice.actions.SeasonStep(0));
         }
       }
     } catch (error) {
