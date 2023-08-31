@@ -26,6 +26,12 @@ function MobileMenu() {
         <Content>
           <ContentContainer
             onClick={() => {
+              dispatch(StateSlice.actions.isDzz(false));
+              dispatch(StateSlice.actions.isStatic(false));
+              dispatch(StateSlice.actions.isFrame(false));
+              dispatch(StateSlice.actions.isFAQ(false));
+              dispatch(StateSlice.actions.isNotice(false));
+              dispatch(StateSlice.actions.isGuide(false));
               navigate("/pc");
             }}
           >
@@ -49,11 +55,15 @@ function MobileMenu() {
         <Content>
           <ContentContainer
             onClick={() => {
-              // https://www.notion.so/URL-802ee347ca324ff48616617bd4931627?pvs=4
-              dispatch(StateSlice.actions.isFrame(false));
+              dispatch(
+                StateSlice.actions.URL("https://dzzdzz.oopy.io/dzzguide")
+              );
+              dispatch(StateSlice.actions.isFrame(true));
               dispatch(StateSlice.actions.isStatic(false));
-              dispatch(StateSlice.actions.isDzz(true));
+              dispatch(StateSlice.actions.isDzz(false));
               dispatch(StateSlice.actions.isFAQ(false));
+              dispatch(StateSlice.actions.isNotice(false));
+              dispatch(StateSlice.actions.isGuide(true));
               navigate("/pc");
             }}
           >
@@ -63,13 +73,13 @@ function MobileMenu() {
         <Content>
           <ContentContainer
             onClick={() => {
-              dispatch(
-                StateSlice.actions.URL("https://dzzdzz-notice.stibee.com/")
-              );
+              dispatch(StateSlice.actions.URL("https://dzzdzz.oopy.io/notice"));
               dispatch(StateSlice.actions.isFrame(true));
               dispatch(StateSlice.actions.isStatic(false));
               dispatch(StateSlice.actions.isDzz(false));
               dispatch(StateSlice.actions.isFAQ(false));
+              dispatch(StateSlice.actions.isNotice(true));
+              dispatch(StateSlice.actions.isGuide(false));
               navigate("/pc");
             }}
           >
@@ -96,7 +106,16 @@ function MobileMenu() {
         <Content>
           <ContentContainer
             onClick={() => {
-              navigate("/Terms");
+              dispatch(
+                StateSlice.actions.URL("https://dzzdzz.oopy.io/policy/terms")
+              );
+              dispatch(StateSlice.actions.isFrame(true));
+              dispatch(StateSlice.actions.isStatic(false));
+              dispatch(StateSlice.actions.isDzz(false));
+              dispatch(StateSlice.actions.isFAQ(false));
+              dispatch(StateSlice.actions.isNotice(true));
+              dispatch(StateSlice.actions.isGuide(false));
+              navigate("/pc");
             }}
           >
             <text>이용약관</text>
@@ -105,7 +124,16 @@ function MobileMenu() {
         <Content>
           <ContentContainer
             onClick={() => {
-              navigate("/Privacy");
+              dispatch(
+                StateSlice.actions.URL("https://dzzdzz.oopy.io/policy/privacy")
+              );
+              dispatch(StateSlice.actions.isFrame(true));
+              dispatch(StateSlice.actions.isStatic(false));
+              dispatch(StateSlice.actions.isDzz(false));
+              dispatch(StateSlice.actions.isFAQ(false));
+              dispatch(StateSlice.actions.isNotice(true));
+              dispatch(StateSlice.actions.isGuide(false));
+              navigate("/pc");
             }}
           >
             <text>개인정보 처리방침</text>
@@ -114,7 +142,18 @@ function MobileMenu() {
         <Content>
           <ContentContainer
             onClick={() => {
-              navigate("/Privacy");
+              dispatch(
+                StateSlice.actions.URL(
+                  "https://dzzdzz.oopy.io/policy/marketing"
+                )
+              );
+              dispatch(StateSlice.actions.isFrame(true));
+              dispatch(StateSlice.actions.isStatic(false));
+              dispatch(StateSlice.actions.isDzz(false));
+              dispatch(StateSlice.actions.isFAQ(false));
+              dispatch(StateSlice.actions.isNotice(true));
+              dispatch(StateSlice.actions.isGuide(false));
+              navigate("/pc");
             }}
           >
             <text>마케팅 이용약관</text>

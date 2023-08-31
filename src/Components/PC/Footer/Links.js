@@ -90,7 +90,7 @@ const MobileWrapper = styled.div`
     padding: 0px;
     gap: 20px;
     height: 10%;
-    background-color: yellow;
+    /* background-color: yellow; */
   }
 `;
 
@@ -116,6 +116,7 @@ const Link = styled.div`
     cursor: pointer;
 
     font-family: var(--font-Pretendard);
+
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -142,7 +143,6 @@ const Link = styled.div`
 
     width: 100%;
     height: 100%;
-    background-color: yellow;
 
     > a {
       width: 120px;

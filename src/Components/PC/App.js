@@ -27,10 +27,10 @@ function App() {
 
   return (
     <div className="App">
-      <meta
+      {/* <meta
         name="viewport"
         content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width"
-      />
+      /> */}
       {/* user-scalable=no, 모바일 화면에서 input창 확대되는것 방지 */}
       <MainFrame>
         <HeaderContainer>
@@ -80,16 +80,16 @@ const SectionContainer = styled.div`
   position: relative;
   flex-direction: column;
   width: 100%;
+  height: 100%;
   /* height: 92%; */
-  flex: 1;
+  /* flex: 1; */
 
   @media screen and (max-width: 800px) {
     display: flex;
-    position: relative;
+    /* position: absolute; */
     flex-direction: column;
     width: 100%;
-    height: 92%;
-    background-color: red;
+    height: 100%;
   }
 `;
 
@@ -116,6 +116,7 @@ const HeaderContainer = styled.div`
     display: flex;
     position: relative;
     width: 100%;
-    height: 8%;
+    height: auto;
+    min-height: 8%;
   }
 `;

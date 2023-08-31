@@ -76,7 +76,7 @@ const ListItemContainer = styled.div`
 const ItemLeft = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: start;
   padding: 0px;
   text-align: start;
@@ -94,7 +94,7 @@ const ItemLeft = styled.div`
     line-height: 150%;
     /* identical to box height, or 21px */
 
-    text-align: center;
+    text-align: start;
     letter-spacing: 0.05em;
     text-transform: capitalize;
 

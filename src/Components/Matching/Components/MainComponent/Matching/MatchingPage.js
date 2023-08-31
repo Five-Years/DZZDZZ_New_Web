@@ -83,9 +83,6 @@ function MatchingPage() {
   useEffect(() => {
     const messageListener = (e) => listener(e.data);
 
-    document.removeEventListener("message", messageListener);
-    window.removeEventListener("message", messageListener);
-
     document.addEventListener("message", messageListener);
     // iOS 플랫폼에서의 동작 설정
     window.addEventListener("message", messageListener);
@@ -276,7 +273,7 @@ function MatchingPage() {
           }}
           matching={Theme}
         >
-          <text className="enter">매칭상대 확인하기</text>
+          <text className="enter">매칭상대 확인하기🥳</text>
         </EachButton>
       );
     } else if (
@@ -295,7 +292,7 @@ function MatchingPage() {
           }}
           matching={Theme}
         >
-          <text className="enter">결과를 기다리는중</text>
+          <text className="enter">결과를 기다리는중⏳</text>
         </EachButton>
       );
     } else if (
@@ -315,7 +312,7 @@ function MatchingPage() {
           }}
           matching={Theme}
         >
-          <text className="enter">상대를 거절하셨어요</text>
+          <text className="enter">상대를 거절하셨어요❤️‍🩹</text>
         </EachButton>
       );
     } else if (
@@ -337,7 +334,7 @@ function MatchingPage() {
           }}
           matching={Theme}
         >
-          <text className="enter">결과 확인하러 가기</text>
+          <text className="enter">결과 확인하러 가기💌</text>
         </EachButton>
       );
     } else {
@@ -431,15 +428,19 @@ function MatchingPage() {
             <ButtonContainer>
               <EachButtonContainer>{Button()}</EachButtonContainer>
               <EachButtonContainer>
-                <EachButton
-                  onClick={() => {
-                    window.ReactNativeWebView?.postMessage(
-                      JSON.stringify({ type: "modify", data: "" })
-                    );
-                  }}
-                >
-                  <text>내 정보 수정하기</text>
-                </EachButton>
+                {userInfo.profileEditable ? (
+                  <EachButton
+                    onClick={() => {
+                      window.ReactNativeWebView?.postMessage(
+                        JSON.stringify({ type: "modify", data: "" })
+                      );
+                    }}
+                  >
+                    <text>내 정보 수정하기</text>
+                  </EachButton>
+                ) : (
+                  <></>
+                )}
               </EachButtonContainer>
             </ButtonContainer>
           </MobileContainer>
@@ -471,8 +472,8 @@ export const MobileContainer = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  min-width: 375px;
-  min-height: 700px;
+  min-width: 360px;
+  /* min-height: 700px; */
   position: absolute;
 `;
 
@@ -484,7 +485,7 @@ const HeaderContainer = styled.div`
 
 const ToggleContainer = styled.div`
   display: flex;
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 5.143%;
   top: 3px;

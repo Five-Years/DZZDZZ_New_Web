@@ -491,7 +491,7 @@ function MatchingHomePage(props) {
             </EventText>
             <EventTextTime>
               <text>
-                {Day}일 {Hour}시간 {Minute}분 까지 매칭이 진행될 예정이에요
+                {Day}일 {Hour}시간 {Minute}분 까지 매칭이 진행될 예정이에요.
               </text>
             </EventTextTime>
           </EventTextContainer>
@@ -532,9 +532,6 @@ function MatchingHomePage(props) {
 
   useEffect(() => {
     const messageListener = (e) => listener(e.data);
-
-    document.removeEventListener("message", messageListener);
-    window.removeEventListener("message", messageListener);
 
     document.addEventListener("message", messageListener);
     // iOS 플랫폼에서의 동작 설정
@@ -859,7 +856,8 @@ const EventTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  justify-content: start;
+  justify-content: center;
+  margin-top: 10px;
   width: 80%;
   height: 60.98%;
   left: 7.43%;
@@ -886,9 +884,11 @@ const ProfileContainer = styled.div`
 
 const EventContainer = styled.div`
   width: 100%;
-  height: 12.3%;
+  min-height: 82px;
+  height: auto;
   background-color: white;
   position: fixed;
+  margin-top: 10px;
   /* top: 88%; */
   bottom: 0px;
   border-radius: 20px 20px 0px 0px;
@@ -928,8 +928,8 @@ export const MobileContainer = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  min-width: 375px;
-  min-height: 700px;
+  min-width: 360px;
+  /* min-height: 700px; */
   /* max-width: 412px;
   max-height: 915px; */
   position: absolute;
@@ -1245,10 +1245,11 @@ const SelectionTitle = styled.div`
   padding: 0px;
   gap: 10px;
   left: 16.67%;
-  width: 55.9%;
+  /* width: 55.9%; */
   min-width: 140px;
   height: 16.32%;
   min-height: 31px;
+  width: auto;
 
   > text > span {
     margin-right: 10px;

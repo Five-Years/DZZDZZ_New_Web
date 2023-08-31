@@ -92,6 +92,8 @@ function MatchingProgressHeader(props) {
               style={{ width: "50%", height: "50%", marginRight: "15.4%" }}
             /> */}
           </>
+        ) : props.isMain ? (
+          <></>
         ) : (
           <>
             <MileHeader>

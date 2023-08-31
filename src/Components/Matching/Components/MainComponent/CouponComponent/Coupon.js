@@ -46,16 +46,16 @@ function Coupon() {
         }
       );
       // 비정상적으로 처리되었다면 isError 를 false로 하고 웹뷰에 표시 요청
-      if (Response.data.status === 6000) {
-        setErrorMessage(Response.data.data.message);
-        setIsError(true);
-      } else {
+      if (Response.data.status === 200) {
         window.ReactNativeWebView?.postMessage(
           JSON.stringify({ type: "coupon", data: "" })
         );
         getAsset(userAt, userRt); // 쿠폰이 등록완료되었다면 자산 최신화
         setErrorMessage("");
         isError(false);
+      } else {
+        setErrorMessage(Response.data.data.message);
+        setIsError(true);
       }
 
       // 정상적이지 않다면 isError를 true로 바꾼다

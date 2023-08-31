@@ -128,7 +128,7 @@ function TicketPage() {
               window.ReactNativeWebView?.postMessage(
                 JSON.stringify({
                   type: "buyTicket",
-                  data: { amount: 8, canBuy: userAsset.jelly > 190 },
+                  data: { amount: 15, canBuy: userAsset.jelly > 190 },
                 })
               );
             }}

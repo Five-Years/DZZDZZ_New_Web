@@ -192,6 +192,7 @@ function Matching2(props) {
     미술계: "FINE_ARTS",
     체육계: "PHYSICAL_EDUCATION",
     음악계: "MUSIC",
+    예술계: "ART",
   };
 
   useEffect(() => {
@@ -203,10 +204,6 @@ function Matching2(props) {
     document.addEventListener("message", messageListener);
     // iOS 플랫폼에서의 동작 설정
     window.addEventListener("message", messageListener);
-
-    window.ReactNativeWebView?.postMessage(
-      JSON.stringify({ type: "onLoad", data: "" })
-    );
 
     return () => {
       document.removeEventListener("message", messageListener);
@@ -361,11 +358,15 @@ function Matching2(props) {
         break;
       }
 
+      case "withoutReject": {
+        getMatchResult(userAt, userRt);
+        navigate("/Choice", {
+          state: { theme: Theme, Result: 3, Direct: true },
+        });
+        break;
+      }
+
       case "reject": {
-        // getMatchResult(userAt, userRt);
-        // navigate("/Choice", {
-        //   state: { theme: Theme, Result: 3, Direct: true },
-        // });
         if (data) rejects(userAt, userRt);
         break;
       }
@@ -565,7 +566,7 @@ function Matching2(props) {
           <Contents className="long">
             <ContentsTitle className="long">
               <text>단과대/전공</text>
-              <span>변경이 필요한 경우 고객센터를 통해 요청해주세요</span>
+              <span>변경이 필요한 경우 고객센터를 통해 요청해주세요.</span>
             </ContentsTitle>
             <ContentsWindow className="fixed">
               <text>
@@ -743,7 +744,7 @@ function Matching2(props) {
               <LottieContainer>
                 <Lottie animationData={search} />
               </LottieContainer>
-              <text className="reject">다른 메이트를 찾아볼게요</text>
+              <text className="reject">다른 메이트를 찾아볼게요.</text>
             </Option>
           </Selection>
           {/* <SelectionButton><Button onClick={()=>{   
@@ -819,8 +820,8 @@ export const MatchingContainers = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  min-width: 375px;
-  min-height: 700px;
+  min-width: 360px;
+  /* min-height: 700px; */
   background: white;
 `;
 
@@ -1253,7 +1254,7 @@ const ContentsTitle = styled.div`
     margin-left: 20px;
     font-family: var(--font-Pretendard);
     font-style: normal;
-    font-weight: bold;
+    font-weight: 400;
     font-size: 14px;
     line-height: 150%;
     /* identical to box height, or 21px */
@@ -1268,7 +1269,7 @@ const ContentsTitle = styled.div`
     margin-left: 20px;
     font-family: var(--font-Pretendard);
     font-style: normal;
-    font-weight: bold;
+    font-weight: 400;
     font-size: 14px;
     /* line-height: 150%; */
     /* identical to box height, or 21px */

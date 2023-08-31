@@ -31,7 +31,7 @@ const ReportContainer = styled.div`
     height: 50px;
   }
   > text.ready {
-    font-family: var(--font-Pretendard);
+    font-family: var(--font-Pretendard-Bold);
     font-size: 32px;
     font-weight: 700;
     line-height: 38px;

@@ -16,6 +16,7 @@ function CountTimer() {
   const [Second, setSecond] = useState("00");
   const min = 1000 * 60; //1000ms => 1s , 1s*60 = 1m
   const seasonlist = ["매칭 접수", "매칭 진행", "준비중"];
+  const userAgent = navigator.userAgent;
 
   const StartTimer = () => {
     setInterval(() => {
@@ -67,7 +68,7 @@ function CountTimer() {
         )
       );
 
-      if (true) {
+      if (isProd) {
         //운영 바꾸면안됨!!
         if (Response.data.data.status === "Register") {
           //@ 접수기간
@@ -144,7 +145,20 @@ function CountTimer() {
         </Timer>
       </TitleContainer>
       <Description>
-        <DownButton>
+        <DownButton
+          onClick={() => {
+            if (/iPhone|iPad|iPod/i.test(userAgent)) {
+              window.open(
+                "https://apps.apple.com/us/app/단짠단짠/id6447145462"
+              );
+            } else if (/Android/i.test(userAgent)) {
+              // Android specific code
+              window.open(
+                "https://play.google.com/store/apps/details?id=com.fiveyears.dzzdzz"
+              );
+            }
+          }}
+        >
           <span>다운로드</span>
         </DownButton>
         <Sns>
@@ -208,8 +222,9 @@ const CountTimerContainer = styled.div`
   height: 100%;
 
   @media screen and (max-width: 800px) {
-    height: 50%;
-    position: relative;
+    top: 0px;
+    height: 55%;
+    position: absolute;
   }
 `;
 

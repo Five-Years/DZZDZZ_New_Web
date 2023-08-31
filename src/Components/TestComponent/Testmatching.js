@@ -26,141 +26,11 @@ import StateSlice from "features/State/StateSlice";
 // 만약 상대방도 나를 선택해서 결과가 Success혹은 Failure로 바뀌었다면
 // 결과 확인하기 버튼이 활성화 되게 만든다.
 
-function ChoicePage() {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const Result = location.state.Result; // 매칭 결과
-  const isDirect = location.state.Direct; // API별 구조가 다름
-  const isReject = location.state.rejectReason;
-  const Theme = location.state.matchingType;
-  const matchingTypeList = ["Couple", "Friend"];
-  const [isStart, setIsStart] = useState(true);
+function Testmatching() {
   const [detail, setDetail] = useState(false);
   const navigate = useNavigate();
   const { state } = useLocation();
-  const [MatchingResult, setMatchingResult] = useState(); // 나의 선택으로 인해 매칭이 결정됐는지 확인
-
-  // const ReportedData = useSelector((state) => {
-  //   return state.Popup.ReportData;
-  // });
-  // const ReportCase = useSelector((state) => {
-  //   return state.Popup.ReportCase;
-  // });
-
-  const today = new Date();
-  const todaytime = {
-    year: today.getFullYear(),
-    month: today.getMonth() + 1,
-    date: today.getDate(),
-    hours: today.getHours(),
-    minutes: today.getMinutes(),
-    seconds: today.getSeconds(),
-  };
-  const [Hour, setHour] = useState("00");
-  const [Minute, setMinute] = useState("00");
-  const min = 1000 * 60; //1000ms => 1s , 1s*60 = 1m
-  const SeasonTimer = useSelector((state) => {
-    return state.Popup.seasonTimer;
-  });
-  const StartTimer = () => {
-    setInterval(() => {
-      const now = new Date();
-      const dis = SeasonTimer - now.getTime(); // 잔여시간(ms단위)
-      setHour(
-        String(Math.floor((dis % (min * 60 * 24)) / (min * 60))).padStart(
-          2,
-          "0"
-        )
-      );
-      setMinute(String(Math.floor((dis % (min * 60)) / min)).padStart(2, "0"));
-    }, 1000);
-  };
-
-  useEffect(() => {
-    if (SeasonTimer !== null) StartTimer();
-  }, [SeasonTimer]);
-
-  useEffect(() => {
-    const messageListener = (e) => listener(e.data);
-
-    document.addEventListener("message", messageListener);
-    // iOS 플랫폼에서의 동작 설정
-    window.addEventListener("message", messageListener);
-
-    return () => {
-      document.removeEventListener("message", messageListener);
-      // iOS 플랫폼에서의 동작 설정
-      window.removeEventListener("message", messageListener);
-    };
-  }, []);
-
-  const getAsset = async (at, rt) => {
-    try {
-      const Response = await AxiosInstanse.get(`/item/remain`, {
-        headers: {
-          Authorization: at,
-          "x-refresh-token": rt,
-          fcmToken: "123",
-          "content-type": "application/json",
-        },
-      });
-
-      dispatch(StateSlice.actions.userAsset(Response.data.data));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const listener = (event) => {
-    const { data, type } = JSON.parse(event);
-    switch (type) {
-      case "detailReason": {
-        if (data) getAsset(userAt, userRt);
-        break;
-      }
-    }
-  };
-  // 거절사유가 있는지 서버 통신 후 있다면 버튼으로 노출, 버튼을 누르면 웹뷰요청
-
-  const MatchedUserData = useSelector((state) => {
-    return state.Popup.MatchedUserInfo;
-  });
-
-  // 추가예정, 최신화된 매칭 결과를 가져온다
-  // const FriendmatchResult = useSelector((state) => {
-  //   return state.Popup.FriendmatchResult;
-  // });
-
-  // const CouplematchResult = useSelector((state) => {
-  //   return state.Popup.CouplematchResult;
-  // });
-  const rejectedReasonData = useSelector((state) => {
-    return state.Popup.rejectReason;
-  });
-
-  const userAsset = useSelector((state) => {
-    return state.Popup.userAsset;
-  });
-
-  const userAt = useSelector((state) => {
-    return state.Popup.userToken.accessToken;
-  });
-
-  const userRt = useSelector((state) => {
-    return state.Popup.userToken.refreshToken;
-  });
-
-  // useEffect(() => {
-  //   // 현재 테마의 매칭결과를 가져온다
-  //   if (Theme === 0) {
-  //     // 커플매칭
-  //     setMatchingResult(CouplematchResult);
-  //   } else if (Theme === 1) {
-  //     setMatchingResult(FriendmatchResult);
-  //   }
-  // }, [userAt, userRt]);
-
-  // 최신화된 매칭결과를 가져오고 만약 성공했는지 거절당했는지가 결정됐다면?
+  const Result = 0;
 
   return (
     <MatchingContainers detail={detail}>
@@ -173,7 +43,7 @@ function ChoicePage() {
           {/* api별로 들어오는 데이터 형식이 조금씩 달라 데이터들어오는것에 맞게 표시해줘야함 */}
           {/* 다이렉트로 들어온경우 */}
           {/* 매칭이 성공한 경우에도 데이터 형식이 조금 다름.. */}
-
+          {/* 
           {isDirect ? (
             MatchedUserData.images.map((item) => (
               <div>
@@ -190,17 +60,13 @@ function ChoicePage() {
             <div>
               <img src={MatchedUserData.image.imageUrl} alt="" />
             </div>
-          )}
+          )} */}
         </CarouselContainer>{" "}
       </ProfileImageContainer>
 
       <ProfileNameContainer>
         <ProfileName>
-          <text>
-            {Result === 0
-              ? MatchedUserData.matchingBasicInfo.matchedUserNickname
-              : MatchedUserData.matchedUserNickname}
-          </text>
+          <text>{"미쥬미쥬미쥬"}</text>
         </ProfileName>
       </ProfileNameContainer>
       <ContentsContainer>
@@ -213,8 +79,7 @@ function ChoicePage() {
                   <Lottie animationData={lovelykiss} />
                 </LottieContainer>
                 <text>
-                  <span>{MatchedUserData.matchedUserNickname}</span>님을
-                  선택하셨습니다!
+                  <span>미쥬미쥬미쥬</span>님을 선택하셨습니다!
                 </text>
               </>
             ) : Result === 2 ? (
@@ -223,10 +88,9 @@ function ChoicePage() {
                   <Lottie animationData={sadlook} />
                 </LottieContainer>{" "}
                 <text>
-                  아쉽게도 <span>{MatchedUserData.matchedUserNickname}</span>{" "}
-                  님은
+                  아쉽게도 <span>미쥬미쥬미쥬</span> 님은
                 </text>
-                <text>인연이 아닌가봐요.</text>
+                <text>인연이 아닌가봐요</text>
               </>
             ) : Result === 3 ? (
               <>
@@ -235,8 +99,7 @@ function ChoicePage() {
                   <Lottie animationData={sadlook} />
                 </LottieContainer>
                 <text>
-                  <span>{MatchedUserData.matchedUserNickname}</span>님을
-                  거절하셨습니다.
+                  <span>미쥬미쥬미쥬</span>님을 거절하셨습니다
                 </text>
                 {/* <text
                   onClick={() => {
@@ -255,9 +118,7 @@ function ChoicePage() {
                 </LottieContainer>
                 <text>축하합니다!</text>
                 <text>
-                  <span>
-                    {MatchedUserData.matchingBasicInfo.matchedUserNickname}
-                  </span>
+                  <span>미쥬미쥬미쥬</span>
                   님과매칭이 성공했어요!
                 </text>
               </>
@@ -270,11 +131,10 @@ function ChoicePage() {
                 <text>
                   선택시간이
                   <span>
-                    {Hour}
-                    <span>시간</span>
+                    6<span>시간</span>
                   </span>
                   <span>
-                    {Minute}
+                    59
                     <span>분</span>
                   </span>{" "}
                   남았어요.
@@ -285,6 +145,7 @@ function ChoicePage() {
           ) : (
             <> </>
           )}
+
           {/* {
             Result == 1 && (MatchingResult.matchingResult === "Success" || MatchingResult.matchingResul === "RoundFail") ?
             <><SuggestionButton onClick = {navigate("/choiceLoading", {
@@ -324,7 +185,7 @@ function ChoicePage() {
                     window.ReactNativeWebView?.postMessage(
                       JSON.stringify({
                         type: "openchat",
-                        data: `${MatchedUserData.openchatUrl}`,
+                        data: `${"dsdkasdkao"}`,
                       })
                     );
                   }}
@@ -336,26 +197,9 @@ function ChoicePage() {
                   주세요.
                 </text> */}
               </>
-            ) : Result === 2 && isReject ? (
+            ) : Result === 2 ? (
               <>
-                <SuggestionButton
-                  onClick={() => {
-                    window.ReactNativeWebView?.postMessage(
-                      JSON.stringify({
-                        type: "rejectedReason",
-                        data: {
-                          name: MatchedUserData.matchedUserNickname,
-                          matchingType: matchingTypeList[Theme],
-                          code: rejectedReasonData.code,
-                          description: rejectedReasonData.maskedDescription,
-                          isPaidForDetailView:
-                            rejectedReasonData.isPaidForDetailView,
-                          canBuy: userAsset.jelly > 5,
-                        },
-                      })
-                    );
-                  }}
-                >
+                <SuggestionButton>
                   <text>거절 사유 확인</text>
                 </SuggestionButton>{" "}
               </>
@@ -418,7 +262,7 @@ function ChoicePage() {
   );
 }
 
-export default ChoicePage;
+export default Testmatching;
 
 const SuggestionButton = styled.div`
   display: flex;
@@ -428,6 +272,7 @@ const SuggestionButton = styled.div`
   gap: 4px;
 
   width: 56.41%;
+
   min-height: 52px;
 
   /* dzz_pink */
@@ -492,8 +337,8 @@ export const MatchingContainers = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  min-width: 360px;
-  /* min-height: 700px; */
+  min-width: 375px;
+  min-height: 700px;
   background: white;
 `;
 
@@ -684,15 +529,14 @@ const ResultBox = styled.div`
   z-index: 10;
 
   > text {
-    font-family: var(--font-Pretendard);
+    font-family: var(--font-Pretendard-Light);
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     font-size: 16px;
     line-height: 25px;
     /* identical to box height */
 
     > span {
-      font-family: var(--font-Pretendard-Bold);
       font-weight: 700;
     }
   }
@@ -792,6 +636,7 @@ const ChanceBox = styled.div`
   > text.openchat {
     text-align: center;
     color: #888888;
+    margin-bottom: 25px;
   }
 
   > text.accept {

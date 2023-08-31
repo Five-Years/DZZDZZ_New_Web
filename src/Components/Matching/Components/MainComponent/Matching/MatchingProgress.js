@@ -169,9 +169,9 @@ const CardContents = styled.div`
   height: 100%;
 
   > text {
-    font-family: var(--font-Pretendard-SemiBold);
+    font-family: var(--font-Pretendard-Bold);
     font-style: normal;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 22px;
     line-height: 34px;
     text-align: center;
@@ -230,9 +230,9 @@ const ConfirmButton = styled.div`
   border-radius: 13px;
 
   > text {
-    font-family: var(--font-Pretendard-SemiBold);
+    font-family: var(--font-Pretendard-Bold);
     font-style: normal;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 16px;
     line-height: 150%;
     /* identical to box height, or 24px */

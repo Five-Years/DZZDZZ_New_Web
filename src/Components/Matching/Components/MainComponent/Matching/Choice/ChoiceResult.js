@@ -52,7 +52,7 @@ function ChoiceResult() {
                 <text>
                   아쉽게도<span>단짠지기임당</span>님은
                 </text>
-                <text>인연이 아닌가봐요</text>
+                <text>인연이 아닌가봐요.</text>
               </>
             )}
           </ResultBox>

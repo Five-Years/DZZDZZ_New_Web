@@ -33,14 +33,14 @@ const FooterContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #231815;
-
   bottom: 0px;
 
   @media screen and (max-width: 800px) {
-    min-height: 0px;
-    height: 50%;
-    position: relative;
-    min-height: 300px;
+    display: flex;
+    position: absolute;
+    height: 45%;
+    bottom: 0px;
+    /* background-color: red; */
   }
 `;
 
@@ -59,7 +59,8 @@ const FooterContentContainer = styled.div`
     gap: 10px;
 
     width: 84.6%;
-    height: 77%;
+    min-height: 77%;
+    height: auto;
   }
 `;
 
@@ -86,8 +87,8 @@ const Content = styled.div`
   width: 93.8%;
   height: 85%;
   @media screen and (max-width: 800px) {
-    width: 85%;
-    height: 85%;
+    width: auto;
+    height: auto;
     position: absolute;
   }
 `;
@@ -104,7 +105,7 @@ const ContentLink = styled.div`
     /* padding: 0px 0px 30px; */
     /* gap: 10px; */
 
-    width: 100%;
+    width: auto;
     height: 15%;
     position: relative;
   }

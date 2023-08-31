@@ -78,7 +78,14 @@ function HeaderRight() {
     <ContentContainer>
       <>
         {getView()}
-        {isDzz ? <></> : <Footer />}
+        {isDzz ? (
+          <></>
+        ) : (
+          <>
+            {" "}
+            <Footer />
+          </>
+        )}
       </>
     </ContentContainer>
   );
@@ -98,6 +105,16 @@ const ContentContainer = styled.div`
 
   > img {
     visibility: hidden;
+  }
+
+  @media screen and (max-width: 800px) {
+    /* 전체 가로 390 세로 844px 중 헤더부분은 가로 390 세로 중 */
+    display: flex;
+    /* top: 7.8%; */
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    justify-content: center;
   }
 `;
 

@@ -153,8 +153,6 @@ const HeaderBarContainer = styled.div`
   /* height: 100%; */
 
   @media screen and (max-width: 800px) {
-    flex-direction: row;
-    height: 8%;
   }
 `;
 

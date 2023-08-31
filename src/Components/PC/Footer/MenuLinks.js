@@ -168,7 +168,7 @@ const Link = styled.div`
       opacity: 0.5;
     }
 
-    font-family: "Noto Sans";
+    font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
@@ -197,7 +197,7 @@ const Link = styled.div`
     height: 18px;
 
     > a {
-      font-family: "Noto Sans";
+      font-family: var(--font-Pretendard);
       font-style: normal;
       font-weight: 500;
       font-size: 13px;
