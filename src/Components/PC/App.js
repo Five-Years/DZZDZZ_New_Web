@@ -27,10 +27,10 @@ function App() {
 
   return (
     <div className="App">
-      {/* <meta
+      <meta
         name="viewport"
         content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width"
-      /> */}
+      />
       {/* user-scalable=no, 모바일 화면에서 input창 확대되는것 방지 */}
       <MainFrame>
         <HeaderContainer>
