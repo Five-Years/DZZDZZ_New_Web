@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import StateSlice from "../../../../../features/State/StateSlice";
@@ -15,173 +15,180 @@ import { ReactComponent as Jelly4 } from "../../../../../assets/Jelly4.svg";
 
 function MilePage(props) {
   const dispatch = useDispatch();
+  const [isLoading, setLoading] = useState(false);
   return (
     <>
-      <TemporaryContainer>
-        <ProductContainer className="section">
-          <TicketProduct>
-            <TicketImage>
-              <Jelly />
-            </TicketImage>
-            <TicketCount>
-              <text>8 젤리</text>
-            </TicketCount>
-          </TicketProduct>
-          <TicketPurchaseContainer>
-            <TicketPrice>
-              <text>1,600 </text>
-              <Won />
-            </TicketPrice>
-            <TicketButton
-              onClick={() => {
-                window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "buyJelly", data: 8 })
-                );
-              }}
-            >
-              <text>구매</text>
-            </TicketButton>
-          </TicketPurchaseContainer>
-        </ProductContainer>
-        <ProductContainer className="section">
-          <TicketProduct>
-            <TicketImage>
-              <Jelly2 />
-            </TicketImage>
-            <TicketCount>
-              <text>25 젤리</text>
-            </TicketCount>
-          </TicketProduct>
-          <TicketPurchaseContainer>
-            {" "}
-            <TicketPrice>
-              <text>4,200 </text>
-              <Won />
-            </TicketPrice>
-            <TicketButton
-              onClick={() => {
-                window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "buyJelly", data: 25 })
-                );
-              }}
-            >
-              <text>구매</text>
-            </TicketButton>
-          </TicketPurchaseContainer>
-        </ProductContainer>
-        <ProductContainer className="section">
-          <TicketProduct>
-            <TicketImage>
-              <Jelly2 />
-            </TicketImage>
-            <TicketCount>
-              <text>56 젤리</text>
-            </TicketCount>
-          </TicketProduct>
-          <TicketPurchaseContainer>
-            {" "}
-            <TicketPrice>
-              <text>8,400 </text>
-              <Won />
-            </TicketPrice>
-            <TicketButton
-              onClick={() => {
-                window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "buyJelly", data: 56 })
-                );
-              }}
-            >
-              <text>구매</text>
-            </TicketButton>
-          </TicketPurchaseContainer>
-        </ProductContainer>
-      </TemporaryContainer>
-      <RecommendContainer className="popular">
-        <text className="popular">가장 인기가 많아요</text>
-        <ProductContainer className="popular">
-          <TicketProduct>
-            <TicketImage>
-              <Jelly3 />
-            </TicketImage>
-            <TicketCount>
-              <text>77 젤리</text>
-            </TicketCount>
-          </TicketProduct>
-          <TicketPurchaseContainer>
-            {" "}
-            <TicketPrice>
-              <text>10,500 </text>
-              <Won />
-            </TicketPrice>
-            <TicketButton
-              onClick={() => {
-                window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "buyJelly", data: 77 })
-                );
-              }}
-            >
-              <text>구매</text>
-            </TicketButton>
-          </TicketPurchaseContainer>
-        </ProductContainer>
-      </RecommendContainer>
-      <RecommendContainer className="hundred">
-        <ProductContainer>
-          <TicketProduct>
-            <TicketImage>
-              <Jelly3 />
-            </TicketImage>
-            <TicketCount>
-              <text>100 젤리</text>
-            </TicketCount>
-          </TicketProduct>
-          <TicketPurchaseContainer>
-            {" "}
-            <TicketPrice>
-              <text>12,600 </text>
-              <Won />
-            </TicketPrice>
-            <TicketButton
-              onClick={() => {
-                window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "buyJelly", data: 100 })
-                );
-              }}
-            >
-              <text>구매</text>
-            </TicketButton>
-          </TicketPurchaseContainer>
-        </ProductContainer>
-      </RecommendContainer>
-      <RecommendContainer className="cheap">
-        <text className="cheap">가장 가성비가 좋아요</text>
-        <ProductContainer className="cheap">
-          <TicketProduct>
-            <TicketImage>
-              <Jelly4 />
-            </TicketImage>
-            <TicketCount>
-              <text>130 젤리</text>
-            </TicketCount>
-          </TicketProduct>
-          <TicketPurchaseContainer>
-            {" "}
-            <TicketPrice>
-              <text>15,000 </text>
-              <Won />
-            </TicketPrice>
-            <TicketButton
-              onClick={() => {
-                window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "buyJelly", data: 130 })
-                );
-              }}
-            >
-              <text>구매</text>
-            </TicketButton>
-          </TicketPurchaseContainer>
-        </ProductContainer>
-      </RecommendContainer>
+      {isLoading ? (
+        <></>
+      ) : (
+        <>
+          <TemporaryContainer>
+            <ProductContainer className="section">
+              <TicketProduct>
+                <TicketImage>
+                  <Jelly />
+                </TicketImage>
+                <TicketCount>
+                  <text>8 젤리</text>
+                </TicketCount>
+              </TicketProduct>
+              <TicketPurchaseContainer>
+                <TicketPrice>
+                  <text>1,600 </text>
+                  <Won />
+                </TicketPrice>
+                <TicketButton
+                  onClick={() => {
+                    window.ReactNativeWebView?.postMessage(
+                      JSON.stringify({ type: "buyJelly", data: 8 })
+                    );
+                  }}
+                >
+                  <text>구매</text>
+                </TicketButton>
+              </TicketPurchaseContainer>
+            </ProductContainer>
+            <ProductContainer className="section">
+              <TicketProduct>
+                <TicketImage>
+                  <Jelly2 />
+                </TicketImage>
+                <TicketCount>
+                  <text>25 젤리</text>
+                </TicketCount>
+              </TicketProduct>
+              <TicketPurchaseContainer>
+                {" "}
+                <TicketPrice>
+                  <text>4,200 </text>
+                  <Won />
+                </TicketPrice>
+                <TicketButton
+                  onClick={() => {
+                    window.ReactNativeWebView?.postMessage(
+                      JSON.stringify({ type: "buyJelly", data: 25 })
+                    );
+                  }}
+                >
+                  <text>구매</text>
+                </TicketButton>
+              </TicketPurchaseContainer>
+            </ProductContainer>
+            <ProductContainer className="section">
+              <TicketProduct>
+                <TicketImage>
+                  <Jelly2 />
+                </TicketImage>
+                <TicketCount>
+                  <text>56 젤리</text>
+                </TicketCount>
+              </TicketProduct>
+              <TicketPurchaseContainer>
+                {" "}
+                <TicketPrice>
+                  <text>8,400 </text>
+                  <Won />
+                </TicketPrice>
+                <TicketButton
+                  onClick={() => {
+                    window.ReactNativeWebView?.postMessage(
+                      JSON.stringify({ type: "buyJelly", data: 56 })
+                    );
+                  }}
+                >
+                  <text>구매</text>
+                </TicketButton>
+              </TicketPurchaseContainer>
+            </ProductContainer>
+          </TemporaryContainer>
+          <RecommendContainer className="popular">
+            <text className="popular">가장 인기가 많아요</text>
+            <ProductContainer className="popular">
+              <TicketProduct>
+                <TicketImage>
+                  <Jelly3 />
+                </TicketImage>
+                <TicketCount>
+                  <text>77 젤리</text>
+                </TicketCount>
+              </TicketProduct>
+              <TicketPurchaseContainer>
+                {" "}
+                <TicketPrice>
+                  <text>10,500 </text>
+                  <Won />
+                </TicketPrice>
+                <TicketButton
+                  onClick={() => {
+                    window.ReactNativeWebView?.postMessage(
+                      JSON.stringify({ type: "buyJelly", data: 77 })
+                    );
+                  }}
+                >
+                  <text>구매</text>
+                </TicketButton>
+              </TicketPurchaseContainer>
+            </ProductContainer>
+          </RecommendContainer>
+          <RecommendContainer className="hundred">
+            <ProductContainer>
+              <TicketProduct>
+                <TicketImage>
+                  <Jelly3 />
+                </TicketImage>
+                <TicketCount>
+                  <text>100 젤리</text>
+                </TicketCount>
+              </TicketProduct>
+              <TicketPurchaseContainer>
+                {" "}
+                <TicketPrice>
+                  <text>12,600 </text>
+                  <Won />
+                </TicketPrice>
+                <TicketButton
+                  onClick={() => {
+                    window.ReactNativeWebView?.postMessage(
+                      JSON.stringify({ type: "buyJelly", data: 100 })
+                    );
+                  }}
+                >
+                  <text>구매</text>
+                </TicketButton>
+              </TicketPurchaseContainer>
+            </ProductContainer>
+          </RecommendContainer>
+          <RecommendContainer className="cheap">
+            <text className="cheap">가장 가성비가 좋아요</text>
+            <ProductContainer className="cheap">
+              <TicketProduct>
+                <TicketImage>
+                  <Jelly4 />
+                </TicketImage>
+                <TicketCount>
+                  <text>130 젤리</text>
+                </TicketCount>
+              </TicketProduct>
+              <TicketPurchaseContainer>
+                {" "}
+                <TicketPrice>
+                  <text>15,000 </text>
+                  <Won />
+                </TicketPrice>
+                <TicketButton
+                  onClick={() => {
+                    window.ReactNativeWebView?.postMessage(
+                      JSON.stringify({ type: "buyJelly", data: 130 })
+                    );
+                  }}
+                >
+                  <text>구매</text>
+                </TicketButton>
+              </TicketPurchaseContainer>
+            </ProductContainer>
+          </RecommendContainer>
+        </>
+      )}
     </>
   );
 }

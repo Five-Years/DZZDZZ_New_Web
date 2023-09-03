@@ -46,13 +46,13 @@ function HistoryMatchingProfile() {
         reject();
         break;
 
-      case "application":
-        if (data) {
-          if (window.confirm("선택하시겠습니까?")) {
-            alert("선택하셨습니다");
-            navigate("/Choice", { state: "accept" });
-          }
-        }
+      // case "application":
+      //   if (data) {
+      //     if (window.confirm("선택하시겠습니까?")) {
+      //       alert("선택하셨습니다");
+      //       navigate("/Choice", { state: "accept" });
+      //     }
+      //   }
     }
   };
 

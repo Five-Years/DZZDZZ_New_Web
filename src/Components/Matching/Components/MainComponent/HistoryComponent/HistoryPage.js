@@ -23,17 +23,9 @@ function HistoryPage() {
   const location = useLocation();
   const [isSelected, setIsSelected] = useState(0);
 
-  const getHistory = async (at, rt) => {
+  const getHistory = async () => {
     try {
-      const Response = await AxiosInstanse.get(`/item/history`, {
-        headers: {
-          Authorization: at,
-          "x-refresh-token": rt,
-          fcmToken: "123",
-          "content-type": "application/json",
-        },
-      });
-      console.log(Response.data.data);
+      const Response = await AxiosInstanse.get(`/item/history`);
       dispatch(StateSlice.actions.userHistory(Response.data.data));
     } catch (error) {
       console.log(error);
@@ -49,7 +41,7 @@ function HistoryPage() {
   });
 
   useEffect(() => {
-    if (userAt != null) getHistory(userAt, userRt);
+    if (userAt != null) getHistory();
   }, [userAt]);
 
   // useEffect(() => {
@@ -170,6 +162,12 @@ const ItemContainer = styled.div`
 
   width: 46.15%;
   height: 66.66%;
+
+  > text {
+    font-weight: 700;
+    font-size: 16px;
+    font-family: var(--font-Pretendard);
+  }
 `;
 
 const MileSection = styled.div`

@@ -61,17 +61,15 @@ export default App;
 
 const MainFrame = styled.div`
   display: flex;
-  position: absolute;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
+  flex: 1;
+  position: relative;
 
   @media screen and (max-width: 800px) {
     display: flex;
-    position: absolute;
     flex-direction: column;
-    width: 100%;
-    height: 100%;
+    flex: 1;
+    position: relative;
   }
 `;
 
@@ -79,24 +77,22 @@ const SectionContainer = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
+  /* flex: auto; */
   /* height: 92%; */
-  /* flex: 1; */
+  flex: 7;
 
   @media screen and (max-width: 800px) {
     display: flex;
-    /* position: absolute; */
+    position: relative;
     flex-direction: column;
-    width: 100%;
-    height: 100%;
+    flex: 7;
   }
 `;
 
 const IFrame = styled.div`
   display: flex;
-  position: absolute;
-  top: 8%;
+  flex: 8;
+  position: relative;
   width: 100%;
   height: 92%;
 
@@ -109,14 +105,13 @@ const IFrame = styled.div`
 const HeaderContainer = styled.div`
   display: flex;
   position: relative;
-  width: 100%;
-  height: 8%;
+  align-items: center;
+  flex: 1;
 
   @media screen and (max-width: 800px) {
     display: flex;
-    position: relative;
     width: 100%;
-    height: auto;
-    min-height: 8%;
+    /* height: auto; */
+    /* min-height: 8%; */
   }
 `;

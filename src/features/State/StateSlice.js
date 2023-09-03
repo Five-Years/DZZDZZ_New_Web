@@ -61,10 +61,10 @@ const initialState = {
   rejectReason: {},
 
   //@ 매칭된 상대방 정보
-  MatchedUserInfo: null,
+  MatchedUserInfo: {},
 
   //@사용자 자산 정보
-  userAsset: { jelly: 0, ticket: 0 },
+  userAsset: {},
   userMatchAvailable: {},
 };
 

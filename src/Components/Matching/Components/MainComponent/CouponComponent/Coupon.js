@@ -14,43 +14,27 @@ function Coupon() {
   const [inputValue, setInputValue] = useState("");
   const dispatch = useDispatch();
 
-  const getAsset = async (at, rt) => {
+  const getAsset = async () => {
     try {
-      const Response = await AxiosInstanse.get(`/item/remain`, {
-        headers: {
-          Authorization: at,
-          "x-refresh-token": rt,
-          fcmToken: "123",
-          "content-type": "application/json",
-        },
-      });
-
+      const Response = await AxiosInstanse.get(`/item/remain`);
       dispatch(StateSlice.actions.userAsset(Response.data.data));
     } catch (error) {
       console.log(error);
     }
   };
 
-  const postCoupon = async (at, rt) => {
+  const postCoupon = async () => {
     try {
       const Response = await AxiosInstanse.post(
         `/item/coupon?code=${inputValue.toUpperCase()}`,
-        {},
-        {
-          headers: {
-            Authorization: at,
-            "x-refresh-token": rt,
-            fcmToken: "123",
-            "content-type": "application/json",
-          },
-        }
+        {}
       );
       // 비정상적으로 처리되었다면 isError 를 false로 하고 웹뷰에 표시 요청
       if (Response.data.status === 200) {
         window.ReactNativeWebView?.postMessage(
           JSON.stringify({ type: "coupon", data: "" })
         );
-        getAsset(userAt, userRt); // 쿠폰이 등록완료되었다면 자산 최신화
+        getAsset(); // 쿠폰이 등록완료되었다면 자산 최신화
         setErrorMessage("");
         isError(false);
       } else {

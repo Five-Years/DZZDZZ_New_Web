@@ -94,16 +94,9 @@ function ChoicePage() {
     };
   }, []);
 
-  const getAsset = async (at, rt) => {
+  const getAsset = async () => {
     try {
-      const Response = await AxiosInstanse.get(`/item/remain`, {
-        headers: {
-          Authorization: at,
-          "x-refresh-token": rt,
-          fcmToken: "123",
-          "content-type": "application/json",
-        },
-      });
+      const Response = await AxiosInstanse.get(`/item/remain`);
 
       dispatch(StateSlice.actions.userAsset(Response.data.data));
     } catch (error) {
@@ -115,7 +108,12 @@ function ChoicePage() {
     const { data, type } = JSON.parse(event);
     switch (type) {
       case "detailReason": {
-        if (data) getAsset(userAt, userRt);
+        if (data) getAsset();
+        break;
+      }
+
+      case "back": {
+        navigate("/matching");
         break;
       }
     }
@@ -796,5 +794,9 @@ const ChanceBox = styled.div`
 
   > text.accept {
     font-size: 16px;
+  }
+
+  > text.result {
+    color: #0094ff;
   }
 `;

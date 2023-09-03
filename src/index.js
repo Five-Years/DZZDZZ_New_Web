@@ -35,7 +35,8 @@ import MatchHistory from "Components/Matching/Components/MainComponent/HistoryCo
 import HistoryMatchingProfile from "Components/Matching/Components/MainComponent/HistoryComponent/HistoryMatchingProfile";
 import Marketing from "Components/PC/Policy/Marketing";
 import TempHomePage from "Components/Matching/Components/MainComponent/TempHomePage";
-import Testmatching from "Components/TestComponent/Testmatching";
+// import Testmatching from "Components/TestComponent/Testmatching";
+// import TestProfileDetail from "Components/TestComponent/TestProfileDetail";
 const container = document.getElementById("root");
 const root = createRoot(container);
 
@@ -68,8 +69,11 @@ root.render(
         <Route path="Terms" element={<Terms />}></Route>
         <Route path="Privacy" element={<Privacy />}></Route>
         <Route path="marketing" element={<Marketing />}></Route>
+        {/* <Route
+          path="/testprofiledetail"
+          element={<TestProfileDetail />}
+        ></Route> */}
 
-        <Route path="testmatching" element={<Testmatching />}></Route>
         {/* <Route path="testpage" element={<Testmatching />}></Route> */}
       </Routes>
     </BrowserRouter>

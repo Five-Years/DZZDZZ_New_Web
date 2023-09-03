@@ -3,6 +3,7 @@ import { AxiosInstanse, setHeader } from "../utils/AxiosInstance";
 import StateSlice from "features/State/StateSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import axios from "axios";
 
 // @ 사용자 정보를 가져와 userInfo에 넣은후 리덕스에 저장. (엑세스,리프래시토큰은 웹뷰통신으로 리덕스에 저장)
 

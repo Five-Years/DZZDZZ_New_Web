@@ -78,9 +78,9 @@ export default Links;
 
 const MobileWrapper = styled.div`
   display: flex;
-  width: 50%;
-  height: 100%;
-  justify-content: end;
+  flex-direction: row;
+  flex: 1;
+  justify-content: flex-end;
 
   @media screen and (max-width: 800px) {
     display: none;
@@ -96,15 +96,17 @@ const MobileWrapper = styled.div`
 
 const Link = styled.div`
   display: flex;
-  width: 100%;
+  flex-direction: row;
+  min-width: 400px;
+  justify-content: flex-end;
 
   /* align-items: center; */
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 
   /* Auto layout */
 
-  align-items: center;
-  justify-content: center;
+  /* align-items: center;
+  justify-content: center; */
   color: white;
   gap: 24px;
   text-underline-offset: 3px;
@@ -123,9 +125,6 @@ const Link = styled.div`
     line-height: 19px;
     /* identical to box height */
 
-    display: flex;
-    align-items: center;
-    text-align: center;
     /* border-bottom: 1px solid #FFFFFF; */
     color: white;
   }

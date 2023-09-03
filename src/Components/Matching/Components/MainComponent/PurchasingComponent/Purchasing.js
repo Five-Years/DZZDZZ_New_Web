@@ -26,16 +26,9 @@ function Purchasing() {
   const [isSelected, setIsSelected] = useState(0);
   const title = "충전하기";
 
-  const getAsset = async (at, rt) => {
+  const getAsset = async () => {
     try {
-      const Response = await AxiosInstanse.get(`/item/remain`, {
-        headers: {
-          Authorization: at,
-          "x-refresh-token": rt,
-          fcmToken: "123",
-          "content-type": "application/json",
-        },
-      });
+      const Response = await AxiosInstanse.get(`/item/remain`);
 
       dispatch(StateSlice.actions.userAsset(Response.data.data));
     } catch (error) {
@@ -52,16 +45,9 @@ function Purchasing() {
   useEffect(() => {
     const messageListener = (e) => listener(e.data);
 
-    document.removeEventListener("message", messageListener);
-    window.removeEventListener("message", messageListener);
-
     document.addEventListener("message", messageListener);
     // iOS 플랫폼에서의 동작 설정
     window.addEventListener("message", messageListener);
-
-    window.ReactNativeWebView?.postMessage(
-      JSON.stringify({ type: "onLoad", data: "" })
-    );
 
     return () => {
       document.removeEventListener("message", messageListener);
@@ -72,14 +58,7 @@ function Purchasing() {
 
   const getHistory = async (at, rt) => {
     try {
-      const Response = await AxiosInstanse.get(`/item/history`, {
-        headers: {
-          Authorization: at,
-          "x-refresh-token": rt,
-          fcmToken: "123",
-          "content-type": "application/json",
-        },
-      });
+      const Response = await AxiosInstanse.get(`/item/history`);
 
       dispatch(StateSlice.actions.userHistory(Response.data.data));
     } catch (error) {
@@ -100,7 +79,7 @@ function Purchasing() {
   });
 
   useEffect(() => {
-    if (userAt) getHistory(userAt, userRt);
+    if (userAt) getHistory();
   }, [userAt]);
 
   const listener = (event) => {
@@ -121,12 +100,12 @@ function Purchasing() {
         navigate(-1);
         break;
       case "buyJelly":
-        if (data) getAsset(userAt, userRt);
+        if (data) getAsset();
         // 만약 true라면
         // 자산 갱신
         break;
       case "buyTicket":
-        if (data) getAsset(userAt, userRt);
+        if (data) getAsset();
         //만약 true라면
         // 티켓 갱신
         break;

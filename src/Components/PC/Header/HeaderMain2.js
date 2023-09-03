@@ -20,7 +20,6 @@ function HeaderMain2() {
     >
       <HeaderContainer>
         <HeaderContentContainer>
-          {/* <HeaderLeft /> */}
           <HeaderRight />
         </HeaderContentContainer>
       </HeaderContainer>
@@ -33,52 +32,43 @@ export default HeaderMain2;
 //전체 헤더부분
 const HeaderBackground = styled.div`
   display: flex;
-  width: 100%;
-  height: 100%;
-  position: absolute;
+  flex: 1;
+  position: relative;
   justify-content: center;
 
   @media screen and (max-width: 800px) {
     /* 전체 가로 390 세로 844px 중 헤더부분은 가로 390 세로 중 */
     display: flex;
-    width: 100%;
-    height: 100%;
-    position: absolute;
+    flex: 1;
+    position: relative;
     justify-content: center;
+    background-color: yellow;
   }
 `;
 
 //헤더 컨텐츠 배치할 영역 구분
 const HeaderContainer = styled.div`
-  width: 100%;
-  height: 100%;
   display: flex;
+  flex: 1;
   position: relative;
-  align-items: center;
-  justify-content: center;
 
-  @media screen and (max-width: 800px) {
-    width: 100%;
-    height: 100%;
-  }
+  /* @media screen and (max-width: 800px) {
+    display: ;
+   
+  } */
 `;
 
 //컨텐츠 배치 예정 영역
 const HeaderContentContainer = styled.div`
   display: flex;
-  position: absolute;
-  flex-direction: row;
-  justify-content: center;
+  flex: 1;
+  /* justify-content: center;
   align-items: center;
   padding: 0px;
-  gap: 44px;
-
-  width: 100%;
-  height: 100%;
+  gap: 44px; */
 
   @media screen and (max-width: 800px) {
-    width: 100%;
-    height: 100%;
+    display: flex;
     justify-content: center;
   }
 `;

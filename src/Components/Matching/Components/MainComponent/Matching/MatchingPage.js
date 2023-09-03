@@ -132,7 +132,7 @@ function MatchingPage() {
 
       case "application": {
         if (data) {
-          Apply(userAt, userRt);
+          Apply();
         }
         break;
       }
@@ -141,16 +141,9 @@ function MatchingPage() {
 
   //@ 사용자의 매칭 신청가능 조건 상태를 가져온다
   //지원학교여부, 사용자필수정보, 사진인증, 학생인증
-  const getAvailable = async (at, rt) => {
+  const getAvailable = async () => {
     try {
-      const Response = await AxiosInstanse.get(`/matching/user/available`, {
-        headers: {
-          Authorization: at,
-          "x-refresh-token": rt,
-          fcmToken: "123",
-          "content-type": "application/json",
-        },
-      });
+      const Response = await AxiosInstanse.get(`/matching/user/available`);
       // 지원하는 학교가 아닌 경우
       if (!Response.data.data.isSupportedCampus) {
         window.ReactNativeWebView?.postMessage(
@@ -192,16 +185,9 @@ function MatchingPage() {
     }
   };
 
-  const getAsset = async (at, rt) => {
+  const getAsset = async () => {
     try {
-      const Response = await AxiosInstanse.get(`/item/remain`, {
-        headers: {
-          Authorization: at,
-          "x-refresh-token": rt,
-          fcmToken: "123",
-          "content-type": "application/json",
-        },
-      });
+      const Response = await AxiosInstanse.get(`/item/remain`);
 
       dispatch(StateSlice.actions.userAsset(Response.data.data));
     } catch (error) {
@@ -210,19 +196,11 @@ function MatchingPage() {
   };
 
   //@ 매칭신청하기
-  const Apply = async (at, rt) => {
+  const Apply = async () => {
     try {
       const Response = await AxiosInstanse.post(
         `/matching/participate?matchingType=${matchingType[Theme]}`, // 신청하기, 친구매칭 Friend, 커플매칭 Couple
-        {},
-        {
-          headers: {
-            Authorization: at,
-            "x-refresh-token": rt,
-            fcmToken: "123",
-            "content-type": "application/json",
-          },
-        }
+        {}
       );
 
       // 신청이 성공했다면 매칭 페이지로 이동하면서 토스트메시지 띄우기
@@ -232,7 +210,7 @@ function MatchingPage() {
           JSON.stringify({ type: "toast", data: "신청이 완료되었습니다" }) // 메시지
         );
         // 사용자 티켓 최신화
-        getAsset(userAt, userRt);
+        getAsset();
 
         navigate(-1);
       } else {
@@ -247,12 +225,30 @@ function MatchingPage() {
 
   const Button = () => {
     // 접수중 + 신청가능한 상태
-    if (SeasonStep === 0 && can) {
+
+    // 만약 현재 들어온 페이지가 커플 매칭 + 이미 커플매치잉 된 경우라면
+    if (Theme === 0 && !userMatchAvailable.notAlreadyCoupleMatched) {
       return (
         <EachButton
           className="activate"
           onClick={() => {
-            getAvailable(userAt, userRt);
+            GotoChoice(1);
+
+            // GotoMatching();
+            //초이스로딩시 친구인지, 매칭인지, 어떤페이지로 이동해야하는지가 필요
+            // choiceLoading -> choiceresult로 이동해야함 (이동중 자원로딩뷰 필요)
+          }}
+          matching={Theme}
+        >
+          <text className="enter">이미 커플이 되셨어요😘</text>
+        </EachButton>
+      );
+    } else if (SeasonStep === 0 && can) {
+      return (
+        <EachButton
+          className="activate"
+          onClick={() => {
+            getAvailable();
             // Apply(userAt, userRt);
           }}
           matching={Theme}
@@ -260,10 +256,22 @@ function MatchingPage() {
           <text className="enter">신청하기</text>
         </EachButton>
       );
+    } else if (SeasonStep === 0 && !can) {
+      return (
+        <EachButton className="deactivate" matching={Theme}>
+          <text className="enter">이미 신청이 완료되었어요.</text>
+        </EachButton>
+      );
     }
 
     // @매칭중, 매칭상대가 존재하는 경우에는 상대방 확인하기 버튼 활성화
-    else if (SeasonStep === 1 && status.matchingResult === "WaitChoice") {
+    else if (SeasonStep === 1 && status.matchingResult === "WaitMatching") {
+      return (
+        <EachButton className="deactivate" matching={Theme}>
+          <text className="enter">상대를 찾는 중이에요⏳</text>
+        </EachButton>
+      );
+    } else if (SeasonStep === 1 && status.matchingResult === "WaitChoice") {
       //매칭시작하기 버튼
       return (
         <EachButton
@@ -319,7 +327,7 @@ function MatchingPage() {
       SeasonStep === 1 &&
       (status.matchingResult === "RoundFail" ||
         status.matchingResult === "RoundSuccess") &&
-      status.myChoice != null
+      status.myChoice !== null
     ) {
       //@ 결과대기중, 상대방 결정 확인 페이지로 이동
       return (

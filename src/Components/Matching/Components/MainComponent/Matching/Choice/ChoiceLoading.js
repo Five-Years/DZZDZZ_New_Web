@@ -48,18 +48,10 @@ function ChoiceLoading() {
 
   // 현재 데이터 가져오는 API 수정중, 추후 대체하기
 
-  const getReason = async (at, rt) => {
+  const getReason = async () => {
     try {
       const Response = await AxiosInstanse.get(
-        `/matching/user/reject-reason/preview?matchingType=${matchingType[Theme]}`, // 매칭타입 가변적으로 만들어주기
-        {
-          headers: {
-            Authorization: at,
-            "x-refresh-token": rt,
-            fcmToken: "123",
-            "content-type": "application/json",
-          },
-        }
+        `/matching/user/reject-reason/preview?matchingType=${matchingType[Theme]}` // 매칭타입 가변적으로 만들어주기
       );
       //  거절사유가 있는 경우
       if (Response.data.data.exists) {
@@ -74,18 +66,10 @@ function ChoiceLoading() {
       console.log(error);
     }
   };
-  const getMatchedUserInfo = async (at, rt) => {
+  const getMatchedUserInfo = async () => {
     try {
       const Response = await AxiosInstanse.get(
-        `${domain}${matchingType[Theme]}`, // 매칭타입 가변적으로 만들어주기
-        {
-          headers: {
-            Authorization: at,
-            "x-refresh-token": rt,
-            fcmToken: "123",
-            "content-type": "application/json",
-          },
-        }
+        `${domain}${matchingType[Theme]}`
       );
       // dispatch(StateSlice.actions.matchParticipate(Response.data.data));
       dispatch(StateSlice.actions.MatchedUserInfo(Response.data.data));
@@ -118,7 +102,7 @@ function ChoiceLoading() {
       } else if (MatchResult.matchingResult === "RoundFail") {
         //  상대방이 나를 거절한 경우
         setDomain("/matching/user/fail/info?matchingType=");
-        getReason(userAt, userRt);
+        getReason();
       } else if (MatchResult.matchingResult === "WaitRoundResult") {
         // 나는 상대방을 선택했는데 아직 상대방이 나를 선택안한 경우
         setDomain("/matching/user/info?matchingType=");
@@ -128,7 +112,7 @@ function ChoiceLoading() {
 
   useEffect(() => {
     if (!MatchedUserData && domain) {
-      getMatchedUserInfo(userAt, userRt); //토큰값 넣어주기
+      getMatchedUserInfo(); //토큰값 넣어주기
     } else {
       setLoading(false);
     }
@@ -137,9 +121,6 @@ function ChoiceLoading() {
   // 매칭성공한 경우는 상대방 정보를 불러와 전송 (현재 어떤식으로 데이터가 들어올지 모르는 상태)
   // 그 외 라면 나랑 매칭된 상대방 정보를 불러와 전송
   // 나랑 매칭된 상대방의 정보 자원이 로딩되면 바로 화면 넘길거임
-  useEffect(() => {
-    console.log(MatchResult);
-  }, [MatchResult]);
 
   useEffect(() => {
     {
@@ -155,7 +136,7 @@ function ChoiceLoading() {
           navigate("/choice", { state: { Result: 3, Direct: false } });
         } else if (MatchResult.matchingResult === "RoundFail") {
           //  상대방이 나를 거절한 경우
-          if (isReject === true) {
+          if (isReject) {
             navigate("/choice", {
               state: {
                 Result: 2,
@@ -164,7 +145,7 @@ function ChoiceLoading() {
                 matchingType: Theme,
               },
             });
-          } else if (isReject === false) {
+          } else if (!isReject) {
             navigate("/choice", {
               state: { Result: 2, Direct: false, rejectReason: false },
             });
@@ -223,12 +204,10 @@ function ChoiceLoading() {
             <text>
               불러오는중...
               <br />
-              자동으로 이동 예정이에요
+              자동으로 이동 예정이에요.
             </text>
           ) : (
-            <>
-              <text>로딩완료</text>
-            </>
+            <></>
           ) // 로딩되면 자동으로 결과페이지로 이동
         }
       </MatchingConfirmContainer>

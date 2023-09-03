@@ -24,7 +24,7 @@ AxiosInstanse.interceptors.response.use(
   }
 );
 
-export const setHeader = (isProd) => {
+export const setHeader = (isProd, at, rt) => {
   // AxiosInstanse.defaults.headers.common.Authorization = accessToken;
   // AxiosInstanse.defaults.headers.common['x-refresh-token'] = refreshToken;
   // AxiosInstanse.defaults.headers.post['Content-Type'] = 'application/json';
@@ -35,6 +35,10 @@ export const setHeader = (isProd) => {
       : isProd
       ? "https://server.fiveyears.me"
       : "https://dev.fiveyears.click";
+  AxiosInstanse.defaults.headers.common.Authorization = at;
+  AxiosInstanse.defaults.headers.common["x-refresh-token"] = rt;
+  AxiosInstanse.defaults.headers.common.fcmToken = "123";
+  AxiosInstanse.defaults.headers.post["Content-Type"] = "application/json";
 };
 
 export const removeHeader = () => {

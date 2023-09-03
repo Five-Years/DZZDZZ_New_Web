@@ -5,7 +5,7 @@ import { ReactComponent as Logo } from "../../assets/dzzdzzNew.svg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import StateSlice from "features/State/StateSlice";
-// import axios from "axios";
+import axios from "axios";
 import { AxiosInstanse, setHeader } from "../../utils/AxiosInstance";
 
 // 홈페이지가 로드되면 시즌 정보를 가져온다
@@ -43,6 +43,7 @@ function PCHome() {
 
   // @ 현재 시즌 상태를 가져오고 리듀서에 저장한다
   // (현재 시즌상태, 마감일에 대한 정보)
+
   const getSeason = async () => {
     const today = new Date();
     const todaytime = {
@@ -55,11 +56,14 @@ function PCHome() {
     };
 
     try {
-      const Response = await AxiosInstanse.get(
-        `/matching/calendar?today=${`${todaytime.year}-${String(
+      const Response = await axios.get(
+        `${
+          process.env.NODE_ENV === "development"
+            ? ""
+            : "https://server.fiveyears.me"
+        }/matching/calendar?today=${`${todaytime.year}-${String(
           todaytime.month
         ).padStart(2, "0")}-${String(todaytime.date).padStart(2, "0")}`}`,
-
         {
           headers: {
             "content-type": "application/json",
@@ -135,37 +139,39 @@ function PCHome() {
 
   const navigate = useNavigate();
   return (
-    <BackgroundContainer>
-      <ContentContainer>
-        <Logo />
-        <Timer>
-          {Day >= 1 ? (
-            <>
-              <text>
-                [<span>{Day}</span>:<span>{Hour}</span>:<span>{Minute}</span>]
-              </text>
-            </>
-          ) : (
-            <>
-              <text>
-                [<span>{Hour}</span>:<span>{Minute}</span>:<span>{Second}</span>
-                ]
-              </text>
-            </>
-          )}
-          {/* <text>
+    <>
+      <BackgroundContainer>
+        <ContentContainer>
+          <Logo />
+          <Timer>
+            {Day >= 1 ? (
+              <>
+                <text>
+                  [<span>{Day}</span>:<span>{Hour}</span>:<span>{Minute}</span>]
+                </text>
+              </>
+            ) : (
+              <>
+                <text>
+                  [<span>{Hour}</span>:<span>{Minute}</span>:
+                  <span>{Second}</span>]
+                </text>
+              </>
+            )}
+            {/* <text>
             [<span>??</span>:<span>??</span>:<span>??</span>]
           </text> */}
-        </Timer>
-        <ButtonContainer
-          onClick={() => {
-            navigate("/pc");
-          }}
-        >
-          <text>홈페이지로 이동</text>
-        </ButtonContainer>
-      </ContentContainer>
-    </BackgroundContainer>
+          </Timer>
+          <ButtonContainer
+            onClick={() => {
+              navigate("/pc");
+            }}
+          >
+            <text>홈페이지로 이동</text>
+          </ButtonContainer>
+        </ContentContainer>
+      </BackgroundContainer>
+    </>
   );
 }
 
@@ -175,16 +181,17 @@ export default PCHome;
 
 const BackgroundContainer = styled.div`
   display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
   align-items: center;
   justify-content: center;
-
-  width: 100vw;
-  height: 100vh;
   background: #231815;
 
   @media screen and (max-width: 800px) {
-    width: 100vw;
-    height: 100vh;
+    display: flex;
+    width: 100%;
+    height: 100%;
     background: #231815;
     align-items: center;
     justify-content: center;
@@ -288,7 +295,8 @@ const ButtonContainer = styled.div`
   gap: 10px;
 
   width: 147px;
-  height: 43px;
+  min-height: 43px;
+  /* height: auto; */
 
   background: #f2f3f6;
   border-radius: 8px;

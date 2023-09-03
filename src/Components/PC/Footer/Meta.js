@@ -7,7 +7,6 @@ function Meta() {
       <CorporateContainer>
         {" "}
         <ContentLogo>
-          {/* <img src={require("../../../assets/5Years.png")} alt="" /> */}
           <FYLogo />
         </ContentLogo>
         <ContentInformation>
@@ -30,13 +29,6 @@ function Meta() {
         </ContentInformation>
       </CorporateContainer>
       <ContentSns>
-        {/* <img
-          src={require("../../../assets/facebook.png")}
-          onClick={() => {
-            window.open("https://www.facebook.com/");
-          }}
-          alt=""
-        /> */}
         <img
           src={require("../../../assets/Instagram.png")}
           onClick={() => {
@@ -62,10 +54,10 @@ export default Meta;
 
 const MetaContainer = styled.div`
   display: flex;
+  flex: 5;
   position: relative;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
+  flex-wrap: wrap;
 
   @media screen and (max-width: 800px) {
     display: flex;
@@ -78,11 +70,10 @@ const MetaContainer = styled.div`
 
 const CorporateContainer = styled.div`
   display: flex;
+  flex: 3;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 80%;
 
   @media screen and (max-width: 800px) {
     width: 100%;
@@ -95,13 +86,14 @@ const CorporateContainer = styled.div`
 
 const ContentLogo = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   padding: 0px;
 
-  width: 20%;
-  height: 100%;
+  /* width: 20%;
+  height: 100%; */
 
   @media screen and (max-width: 800px) {
     width: 30%;
@@ -123,7 +115,7 @@ const ContentInformation = styled.div`
 
   padding: 0px;
 
-  width: 80%;
+  width: 100%;
   height: 60%;
 
   @media screen and (max-width: 800px) {
@@ -135,15 +127,13 @@ const ContentInformation = styled.div`
 
 const ContentSns = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: row;
-  align-items: center;
   padding: 0px;
   gap: 40px;
 
-  width: 20%;
-  height: 20%;
   align-items: start;
-  justify-content: center;
+  justify-content: start;
 
   > img {
     :active {
@@ -166,9 +156,7 @@ const Information = styled.div`
   align-items: flex-start;
   justify-content: start;
   padding: 0px;
-
-  width: 100%;
-  height: 20%;
+  width: auto;
 
   > text {
     font-family: var(--font-Pretendard);

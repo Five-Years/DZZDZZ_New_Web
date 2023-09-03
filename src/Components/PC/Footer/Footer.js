@@ -25,52 +25,50 @@ function Footer() {
 export default Footer;
 
 const FooterContainer = styled.div`
-  width: 100%;
-  height: 300px;
   display: flex;
+  flex: 1;
   position: relative;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   background-color: #231815;
-  bottom: 0px;
+  padding-bottom: 10px;
+  /* min-height: 200px; */
+  /* bottom: 0px; */
 
   @media screen and (max-width: 800px) {
     display: flex;
-    position: absolute;
-    height: 45%;
-    bottom: 0px;
-    /* background-color: red; */
+    flex: 1;
+    /* overflow: hidden; */
+    min-height: 250px;
   }
 `;
 
 const FooterContentContainer = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  /* gap: 10px; */
 
-  width: 75%;
-  height: 100%;
+  /* width: 75%;
+  height: 100%; */
 
   @media screen and (max-width: 800px) {
+    display: flex;
+    flex: 1;
     align-items: flex-start;
     padding: 0px;
     gap: 10px;
 
-    width: 84.6%;
-    min-height: 77%;
     height: auto;
   }
 `;
 
 const ContentContainer = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
 
   @media screen and (max-width: 800px) {
     width: 100%;
@@ -79,13 +77,14 @@ const ContentContainer = styled.div`
 
 const Content = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
+  /* background-color: antiquewhite; */
+  /* align-items: flex-start;
+  justify-content: space-between; */
 
-  width: 93.8%;
-  height: 85%;
+  /* width: 93.8%;
+  height: 85%; */
   @media screen and (max-width: 800px) {
     width: auto;
     height: auto;
@@ -94,10 +93,10 @@ const Content = styled.div`
 `;
 
 const ContentLink = styled.div`
-  width: 100%;
-  height: 10%;
   display: flex;
+  flex: 3;
   justify-content: space-between;
+  align-items: center;
 
   @media screen and (max-width: 800px) {
     flex-direction: column;

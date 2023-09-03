@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import StateSlice from "../../../features/State/StateSlice";
 import { useSelector } from "react-redux";
 import { backIn } from "framer-motion";
+import { ReactComponent as MobileLogo } from "assets/webLogo.svg";
 
 function HeaderBar() {
   const navigate = useNavigate();
@@ -39,6 +40,10 @@ function HeaderBar() {
           <MenuIcon style={{ width: 32, height: 32 }} />
         </MobileMenuBar>
         {/* <MobileLogoContainer><Logo width={35} height={28} /></MobileLogoContainer> */}
+        <LogoContainer>
+          {" "}
+          <MobileLogo />
+        </LogoContainer>
       </MobileHeaderBar>
       <HeaderBarContents>
         <LogoContainer>
@@ -210,6 +215,14 @@ const LogoContainer = styled.div`
   height: 34px;
 
   cursor: pointer;
+
+  @media screen and (max-width: 800px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 const MenuContainer = styled.div`

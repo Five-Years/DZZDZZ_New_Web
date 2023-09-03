@@ -53,7 +53,7 @@ function MatchingProgressHeader(props) {
                 {
                   navigate("/Matching");
                 }
-                else 
+                else
                 {
                   navigate(-1);
                 }              }}

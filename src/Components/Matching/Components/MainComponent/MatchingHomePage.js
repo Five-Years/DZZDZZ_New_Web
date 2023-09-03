@@ -20,25 +20,28 @@ function MatchingHomePage(props) {
   const [Day, setDay] = useState("00");
   const [Hour, setHour] = useState("00");
   const [Minute, setMinute] = useState("00");
+  const [Second, setSecond] = useState("00");
+
   const min = 1000 * 60; //1000ms => 1s , 1s*60 = 1m
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(
-  //     StateSlice.actions.userToken({
-  //       accessToken:
-  //         "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSZWFubmFfTW9zY2lza2lAZXhhbXBsZS5uZXQiLCJhdXRoIjoiTk9STUFMX1VTRVIsVU5SRVNUUklDVEVELElULOuLqOq1reuMgO2Vmeq1kCjso73soIQpLE1BTEUiLCJleHAiOjE2OTU3MTQ3NTd9.c-u7Ay3POYbPfyXDXHaXwC40r9ngguu198D2-jJvdcc",
-  //       refreshToken:
-  //         "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTU3MTQ3NTd9.spbNQnvw7DKznPiZGw_xUZB0_fRZg9V7mYpC0nCxDqE",
-  //     })
-  //   );
-  // }, []);
-
   useEffect(() => {
+    const messageListener = (e) => listener(e.data);
+
+    document.addEventListener("message", messageListener);
+    // iOS 플랫폼에서의 동작 설정
+    window.addEventListener("message", messageListener);
+
     window.ReactNativeWebView?.postMessage(
-      JSON.stringify({ type: "notfirst", data: "" })
+      JSON.stringify({ type: "onLoad", data: "" })
     );
+
+    return () => {
+      document.removeEventListener("message", messageListener);
+      // iOS 플랫폼에서의 동작 설정
+      window.removeEventListener("message", messageListener);
+    };
   }, []);
 
   const StartSeasonRemainTimer = () => {
@@ -56,16 +59,9 @@ function MatchingHomePage(props) {
     }, 1000);
   };
 
-  const getUserInfo = async (accessToken, refreshToken) => {
+  const getUserInfo = async () => {
     try {
-      const Response = await AxiosInstanse.get(`/login/token`, {
-        headers: {
-          Authorization: accessToken,
-          "x-refresh-token": refreshToken,
-          fcmToken: "123",
-          "content-type": "application/json",
-        },
-      });
+      const Response = await AxiosInstanse.get(`/login/token`);
 
       dispatch(StateSlice.actions.userInfo(Response.data.data));
     } catch (error) {
@@ -74,16 +70,9 @@ function MatchingHomePage(props) {
   };
 
   //지원학교여부, 사용자필수정보, 사진인증, 학생인증
-  const getAvailable = async (at, rt) => {
+  const getAvailable = async () => {
     try {
-      const Response = await AxiosInstanse.get(`/matching/user/available`, {
-        headers: {
-          Authorization: at,
-          "x-refresh-token": rt,
-          fcmToken: "123",
-          "content-type": "application/json",
-        },
-      });
+      const Response = await AxiosInstanse.get(`/matching/user/available`);
       dispatch(StateSlice.actions.matchAvailable(Response.data.data));
     } catch (error) {
       console.log(error);
@@ -91,16 +80,9 @@ function MatchingHomePage(props) {
   };
 
   //사용자 자산
-  const getUserAsset = async (at, rt) => {
+  const getUserAsset = async () => {
     try {
-      const Response = await AxiosInstanse.get(`/item/remain`, {
-        headers: {
-          Authorization: at,
-          "x-refresh-token": rt,
-          fcmToken: "123",
-          "content-type": "application/json",
-        },
-      });
+      const Response = await AxiosInstanse.get(`/item/remain`);
 
       dispatch(StateSlice.actions.userAsset(Response.data.data));
     } catch (error) {
@@ -170,16 +152,9 @@ function MatchingHomePage(props) {
 
   // @ 사용자의 매칭 정보를 가져온다
   // @ 친구매칭, 커플 매칭 신청 정보를 가져와 리듀서에 저장한다
-  const getMatchParticipateStatus = async (at, rt) => {
+  const getMatchParticipateStatus = async () => {
     try {
-      const Response = await AxiosInstanse.get(`/matching/participate/status`, {
-        headers: {
-          Authorization: at,
-          "x-refresh-token": rt,
-          fcmToken: "123",
-          "content-type": "application/json",
-        },
-      });
+      const Response = await AxiosInstanse.get(`/matching/participate/status`);
       dispatch(StateSlice.actions.matchParticipate(Response.data.data));
     } catch (error) {
       console.log(error);
@@ -188,18 +163,10 @@ function MatchingHomePage(props) {
 
   //@ 사용자의 매칭 결과 상태를 가져온다.
   // 접수단계에서 매칭 접수를 안한 상태라면 None, 매칭을 접수했다면 waiting, 진행단계에서 실패했다면 ??? 성공했다면 ??? 등으로 나올듯
-  const getMatchResult = async (at, rt) => {
+  const getMatchResult = async () => {
     try {
       const CoupleResponse = await AxiosInstanse.get(
-        `/matching/user/result?matchingType=Couple`,
-        {
-          headers: {
-            Authorization: at,
-            "x-refresh-token": rt,
-            fcmToken: "123",
-            "content-type": "application/json",
-          },
-        }
+        `/matching/user/result?matchingType=Couple`
       );
 
       dispatch(StateSlice.actions.CouplematchResult(CoupleResponse.data.data));
@@ -210,15 +177,7 @@ function MatchingHomePage(props) {
 
     try {
       const FriendResponse = await AxiosInstanse.get(
-        `/matching/user/result?matchingType=Friend`,
-        {
-          headers: {
-            Authorization: at,
-            "x-refresh-token": rt,
-            fcmToken: "123",
-            "content-type": "application/json",
-          },
-        }
+        `/matching/user/result?matchingType=Friend`
       );
 
       dispatch(StateSlice.actions.FriendmatchResult(FriendResponse.data.data));
@@ -302,12 +261,12 @@ function MatchingHomePage(props) {
     if (typeof isProd !== "undefined" && userAt) {
       if (SeasonStep === -1) {
         getCurrentSeasonInfo();
-        getUserAsset(userAt, userRt);
-        getUserInfo(userAt, userRt);
+        getUserAsset();
+        getUserInfo();
       } else if (SeasonStep !== -1 && userAt) {
         // 만약 현재 시즌진행중이라면 매칭 결과정보를 가져온다.
-        getMatchParticipateStatus(userAt, userRt);
-        getMatchResult(userAt, userRt);
+        getMatchParticipateStatus();
+        getMatchResult();
       }
     }
   }, [SeasonStep, userAt, isProd]);
@@ -319,7 +278,7 @@ function MatchingHomePage(props) {
 
   //@ 사용자 매칭신청 조건 충족여부
   useEffect(() => {
-    if (userAt) getAvailable(userAt, userRt);
+    if (userAt) getAvailable();
   }, [userAt]);
 
   // //@ 만약 사용자 정보가 있다면 닉네임, 티켓수 등 최신화. (아직 티켓수는 반영안됨.)
@@ -346,7 +305,7 @@ function MatchingHomePage(props) {
               refreshToken: data.refreshToken,
             })
           );
-          setHeader(data.isProd ?? false);
+          setHeader(data.isProd ?? false, data.accessToken, data.refreshToken);
           dispatch(StateSlice.actions.setIsProd(data.isProd ?? false));
         }
         break;
@@ -377,13 +336,14 @@ function MatchingHomePage(props) {
   // }, []);
 
   // 만약 시즌이 진행중인데 매칭이 실패하였다면 웹뷰로 티켓을 돌려드린다는 팝업을 띄워줌 둘중 하나라도 실패했을때
-  useEffect(() => {
+  // 한번만 호출 할 수 있게 해야함.
+  const isFail = () => {
     if (
-      (SeasonStep === 1 &&
-        FriendmatchResult.matchingResult === "RoundFail" &&
+      SeasonStep === 1 &&
+      ((FriendmatchResult.matchingResult === "RoundFail" &&
         FriendmatchResult.myChoice === null) ||
-      (CouplematchResult.matchingResult === "RoundFail" &&
-        CouplematchResult.myChoice === null)
+        (CouplematchResult.matchingResult === "RoundFail" &&
+          CouplematchResult.myChoice === null))
     ) {
       window.ReactNativeWebView?.postMessage(
         JSON.stringify({
@@ -400,7 +360,7 @@ function MatchingHomePage(props) {
         })
       );
     }
-  }, [FriendmatchResult, CouplematchResult]);
+  };
 
   const Description = (props) => {
     //@ 접수중 상태일때
@@ -416,7 +376,7 @@ function MatchingHomePage(props) {
           <EventTextContainer>
             {" "}
             <EventText>
-              <text>이번 시즌 커플이 되셨군요💘 친구 매칭은 어때요?</text>
+              <text>커플매칭 성공💘 친구매칭은 어떠세요?</text>
             </EventText>
             <EventTextTime>
               <text>
@@ -433,7 +393,7 @@ function MatchingHomePage(props) {
           <EventTextContainer>
             {" "}
             <EventText>
-              <text>아직 신청하지 않으셨네요!</text>
+              <text>앗, 지금 단짠메이트가 기다리고 있어요 👋</text>
             </EventText>
             <EventTextTime>
               <text>
@@ -470,12 +430,28 @@ function MatchingHomePage(props) {
     //@ 매칭 시작!
     else if (props === 1) {
       if (
+        FriendmatchResult.matchingResult === "WaitMatching" ||
+        CouplematchResult === "WaitMatching"
+      ) {
+        //아직 서버에서 매칭분류중일때 띄워줄 화면
+        return (
+          <EventTextContainer>
+            {" "}
+            <EventText>
+              <text>지금 열심히 상대방을 찾고 있어요.🏃</text>
+            </EventText>
+            <EventTextTime>
+              <text>최대 30분까지 걸릴 수 있어요.</text>
+            </EventTextTime>
+          </EventTextContainer>
+        );
+      } else if (
         CouplematchResult.matchingResult === "WaitRoundResult" ||
         CouplematchResult.matchingResult === "WaitChoice" ||
         CouplematchResult.matchingResult === "RoundSuccess" ||
         CouplematchResult.matchingResult === "NoneWithHistory" ||
         (CouplematchResult.matchingResult === "RoundFail" &&
-          FriendmatchResult.myChoice !== null) ||
+          CouplematchResult.myChoice !== null) ||
         FriendmatchResult.matchingResult === "WaitRoundResult" ||
         FriendmatchResult.matchingResult === "WaitChoice" ||
         FriendmatchResult.matchingResult === "RoundSuccess" ||
@@ -487,7 +463,7 @@ function MatchingHomePage(props) {
           <EventTextContainer>
             {" "}
             <EventText>
-              <text>매칭시작</text>
+              <text>두근두근💗 매칭시작!</text>
             </EventText>
             <EventTextTime>
               <text>
@@ -504,7 +480,7 @@ function MatchingHomePage(props) {
           <EventTextContainer>
             {" "}
             <EventText>
-              <text>지금은 매칭중!</text>
+              <text>지금은 매칭중✨</text>
             </EventText>
             <EventTextTime>
               <text>다음 매칭접수 일정을 기다려주세요.</text>
@@ -518,7 +494,7 @@ function MatchingHomePage(props) {
         <EventTextContainer>
           {" "}
           <EventText>
-            <text>지금은 준비중</text>
+            <text>지금은 준비중 🔨</text>
           </EventText>
           <EventTextTime>
             <text>
@@ -531,39 +507,23 @@ function MatchingHomePage(props) {
   };
 
   useEffect(() => {
-    const messageListener = (e) => listener(e.data);
-
-    document.addEventListener("message", messageListener);
-    // iOS 플랫폼에서의 동작 설정
-    window.addEventListener("message", messageListener);
-
-    window.ReactNativeWebView?.postMessage(
-      JSON.stringify({ type: "onLoad", data: "" })
-    );
-
-    return () => {
-      document.removeEventListener("message", messageListener);
-      // iOS 플랫폼에서의 동작 설정
-      window.removeEventListener("message", messageListener);
-    };
-  }, []);
+    if (!isLoading) isFail();
+  }, [isLoading]);
 
   useEffect(() => {
     if (
-      userAt &&
       Name !== "anonymous" &&
       SeasonStep !== -1 &&
-      matchParticipate &&
-      userInfo &&
-      userAsset &&
-      FriendmatchResult &&
-      CouplematchResult &&
-      userMatchAvailable
+      Object.keys(matchParticipate).length > 0 &&
+      Object.keys(userInfo).length > 0 &&
+      Object.keys(userAsset).length > 0 &&
+      Object.keys(FriendmatchResult).length > 0 &&
+      Object.keys(CouplematchResult).length > 0 &&
+      Object.keys(userMatchAvailable).length > 0
     ) {
       setLoading(false);
     }
   }, [
-    userAt,
     Name,
     SeasonStep,
     matchParticipate,
@@ -602,7 +562,9 @@ function MatchingHomePage(props) {
               onClick={() => {
                 if (
                   SeasonStep === 1 &&
-                  matchParticipate.coupleMatchingAvailable
+                  (matchParticipate.coupleMatchingAvailable ||
+                    (CouplematchResult.matchingResult === "RoundFail" &&
+                      CouplematchResult.myChoice === null))
                 ) {
                   cantApplyPopup();
                 } else if (SeasonStep === 2) {
@@ -645,7 +607,9 @@ function MatchingHomePage(props) {
               onClick={() => {
                 if (
                   SeasonStep === 1 &&
-                  matchParticipate.friendMatchingAvailable
+                  (matchParticipate.friendMatchingAvailable ||
+                    (FriendmatchResult.matchingResult === "RoundFail" &&
+                      FriendmatchResult.myChoice === null))
                 ) {
                   cantApplyPopup();
                 } else if (SeasonStep === 2) {
@@ -885,7 +849,6 @@ const ProfileContainer = styled.div`
 const EventContainer = styled.div`
   width: 100%;
   min-height: 82px;
-  height: auto;
   background-color: white;
   position: fixed;
   margin-top: 10px;
@@ -923,7 +886,7 @@ const EventTextTime = styled.div`
   }
 `;
 
-export const MobileContainer = styled.div`
+const MobileContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;

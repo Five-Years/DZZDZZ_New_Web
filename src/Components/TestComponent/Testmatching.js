@@ -1,26 +1,14 @@
 import React from "react";
-import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useState, useEffect } from "react";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
 import styled from "styled-components";
-import Smile from "assets/SmileHeartEye.gif";
-import Tear from "assets/SweatFace.gif";
-import { useSelector } from "react-redux";
 import MatchingProgressHeader from "Components/Matching/Components/HeaderComponent/MatchingProgressHeader";
 import Lottie from "lottie-react";
 import lovelykiss from "assets/lovelykiss.json";
-import pokerface from "assets/pokerface.json";
 import sadlook from "assets/sadlook.json";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { AxiosInstanse } from "utils/AxiosInstance";
-import { useDispatch } from "react-redux";
-import StateSlice from "features/State/StateSlice";
 
 // 만약 내가 선택했다면 상대방도 나를 선택했는지 한번더 검사가 필요함
 // 만약 상대방도 나를 선택해서 결과가 Success혹은 Failure로 바뀌었다면
@@ -226,35 +214,6 @@ function Testmatching() {
                 </text>
               </>
             )}
-
-            {/* {state === "accept" ? (
-              <text
-                onClick={() => {
-                  navigate("/Matching");
-                }}
-                className="accept"
-              >
-                메인으로 돌아가기
-              </text>
-            ) : ReportedData ? (
-              <></>
-            ) : (
-              <>
-                <text>이대로 끝내기 아쉽다면?</text>
-                <SuggentionButton
-                  onClick={() => {
-                    window.ReactNativeWebView?.postMessage(
-                      JSON.stringify({
-                        type: "rematch",
-                        data: { applicant: "miju", target: "target" },
-                      })
-                    );
-                  }}
-                >
-                  <text>이건 어때요?</text>
-                </SuggentionButton> 
-              </>
-            )} */}
           </ChanceBox>
         </ContentsBox>
       </ContentsContainer>

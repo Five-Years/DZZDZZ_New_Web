@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 import StateSlice from "features/State/StateSlice";
 import { useSelector } from "react-redux";
 import { AxiosInstanse, setHeader } from "utils/AxiosInstance";
-
 function CountTimer() {
   const dispatch = useDispatch();
   const [Day, setDay] = useState("00");
@@ -50,10 +49,12 @@ function CountTimer() {
     };
 
     try {
-      const Response = await AxiosInstanse.get(
-        `/matching/calendar?today=${`${todaytime.year}-${String(
-          todaytime.month
-        ).padStart(2, "0")}-${String(todaytime.date).padStart(2, "0")}`}`,
+      const Response = await axios.get(
+        `https://server.fiveyears.me/matching/calendar?today=${`${
+          todaytime.year
+        }-${String(todaytime.month).padStart(2, "0")}-${String(
+          todaytime.date
+        ).padStart(2, "0")}`}`,
 
         {
           headers: {
@@ -68,7 +69,7 @@ function CountTimer() {
         )
       );
 
-      if (isProd) {
+      if (true) {
         //운영 바꾸면안됨!!
         if (Response.data.data.status === "Register") {
           //@ 접수기간
@@ -97,6 +98,66 @@ function CountTimer() {
       console.log(error);
     }
   };
+
+  // const getSeason = async () => {
+  //   const today = new Date();
+  //   const todaytime = {
+  //     year: today.getFullYear(),
+  //     month: today.getMonth() + 1,
+  //     date: today.getDate(),
+  //     hours: today.getHours(),
+  //     minutes: today.getMinutes(),
+  //     seconds: today.getSeconds(),
+  //   };
+
+  //   try {
+  //     const Response = await AxiosInstanse.get(
+  //       `/matching/calendar?today=${`${todaytime.year}-${String(
+  //         todaytime.month
+  //       ).padStart(2, "0")}-${String(todaytime.date).padStart(2, "0")}`}`,
+
+  //       {
+  //         headers: {
+  //           "content-type": "application/json",
+  //         },
+  //       }
+  //     );
+
+  //     dispatch(
+  //       StateSlice.actions.seasonTimer(
+  //         new Date(Response.data.data.endsAt).getTime()
+  //       )
+  //     );
+
+  //     if (true) {
+  //       //운영 바꾸면안됨!!
+  //       if (Response.data.data.status === "Register") {
+  //         //@ 접수기간
+  //         dispatch(StateSlice.actions.SeasonStep(0));
+  //       } else if (Response.data.data.status === "Matching") {
+  //         //@ 매칭기간
+  //         dispatch(StateSlice.actions.SeasonStep(1));
+  //       } else if (Response.data.data.status === "None") {
+  //         //@ 휴식기간
+  //         dispatch(StateSlice.actions.SeasonStep(2));
+  //       }
+  //     } else {
+  //       //개발일때
+  //       if (Response.data.data.status === "Register") {
+  //         //@ 접수기간
+  //         dispatch(StateSlice.actions.SeasonStep(0));
+  //       } else if (Response.data.data.status === "Matching") {
+  //         //@ 매칭기간
+  //         dispatch(StateSlice.actions.SeasonStep(1));
+  //       } else if (Response.data.data.status === "None") {
+  //         //@ 휴식기간
+  //         dispatch(StateSlice.actions.SeasonStep(2));
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   const isProd = useSelector((state) => {
     return state.Popup.isProd;
   });
@@ -124,21 +185,24 @@ function CountTimer() {
     <CountTimerContainer>
       <TitleContainer>
         <Title>
-          <span>지금상태는 {seasonlist[SeasonStep]} </span>
+          <span> {seasonlist[SeasonStep]} </span>
           {SeasonStep === 2 ? <></> : <span className="text"> 종료까지</span>}
         </Title>
         <Timer>
           {Day >= 1 ? (
             <>
               <text>
-                [<span>{Day}</span>:<span>{Hour}</span>:<span>{Minute}</span>]
+                [<span> {Day}일 </span>
+                <span>{Hour}시 </span>
+                <span>{Minute}분 </span>]
               </text>
             </>
           ) : (
             <>
               <text>
-                [<span>{Hour}</span>:<span>{Minute}</span>:<span>{Second}</span>
-                ]
+                [<span> {Hour}시</span>
+                <span>{Minute}분</span>
+                <span style={{ width: "40px" }}>{Second}초 </span>]
               </text>
             </>
           )}
@@ -215,16 +279,18 @@ export default CountTimer;
 
 const CountTimerContainer = styled.div`
   display: flex;
+  flex: 3;
+  min-height: 400px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
 
   @media screen and (max-width: 800px) {
-    top: 0px;
-    height: 55%;
-    position: absolute;
+    flex: 2;
+    flex-direction: column;
+    min-height: 300px;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
@@ -233,11 +299,13 @@ const TitleContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 15px;
-  width: 47.67%;
+  /* gap: 15px; */
+  width: 481px;
+  height: 139px;
+  /* width: 47.67%;
   height: 19.71%;
   min-width: 572px;
-  min-height: 135px;
+  min-height: 135px; */
 
   @media screen and (max-width: 800px) {
     min-width: 0px;
@@ -288,8 +356,8 @@ const Title = styled.div`
   display: flex;
   flex-direction: row;
   align-items: end;
-  width: 550px;
-  height: 26.67%;
+  width: 421px;
+  height: 36px;
 
   > span {
     height: 36px;
@@ -349,12 +417,11 @@ const Description = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 25.25%;
-  height: 10.22%;
-  min-width: 303px;
-  min-height: 70px;
+  /* width: 25.25%;
+  height: 10.22%; */
+  width: 303px;
+  height: 70px;
   border-radius: 10px;
-  margin-top: 10px;
 
   @media screen and (max-width: 800px) {
     min-width: 0px;
@@ -364,38 +431,37 @@ const Description = styled.div`
     align-items: center;
     justify-content: center;
     gap: 10px;
-    background-color: r;
+    /* background-color: r; */
   }
 `;
 
 const Timer = styled.div`
   display: flex;
+  flex: 1;
+  flex-direction: column;
   position: relative;
-  width: 700px;
-  height: 90px;
+  width: 450px;
+  height: 95px;
   align-items: center;
   justify-content: center;
+  /* min-width: 460px; */
 
   > text {
-    display: flex;
-    width: 80%;
-    height: 90px;
-    align-items: center;
-    justify-content: space-between;
     overflow: hidden;
+    width: 100%;
+    text-align: center;
+    flex-wrap: wrap;
     font-family: var(--font-Pretendard);
     font-style: normal;
     font-weight: 700;
-    font-size: 80px;
+    font-size: 50px;
     line-height: 80px;
     color: #ff477e;
-    /* text-align: center; */
 
     > span {
-      width: 25%;
-      text-align: center;
       overflow: hidden;
       color: black;
+      width: 70px;
       /* letter-spacing: 2rem; */
     }
   }
@@ -416,16 +482,15 @@ const Timer = styled.div`
 
   @media screen and (max-width: 800px) {
     display: flex;
-    width: 100%;
+    flex: 1;
+    width: 260px;
     height: 75px;
 
     > text {
-      font-size: 50px;
-      line-height: 70px;
+      font-size: 32px;
+      line-height: 38px;
       text-align: center;
       border-radius: 10px;
-      font-size: 50px;
-      line-height: 70px;
 
       > span {
         color: black;
@@ -500,8 +565,8 @@ const DownButton = styled.div`
   @media screen and (max-width: 800px) {
     visibility: visible;
     display: flex;
-    width: 64.1%;
-    height: 33%;
+    width: 250px;
+    height: 43px;
     justify-content: center;
     align-items: center;
     gap: 10px;

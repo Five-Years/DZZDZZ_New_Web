@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 import { useState, useRef } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import MatchingProgressHeader from "../../HeaderComponent/MatchingProgressHeader";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Lottie from "lottie-react";
@@ -15,10 +13,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { ReactComponent as Careup } from "assets/CaretDoubleUp.svg";
 // import axios from "axios";
 import { useSelector } from "react-redux";
-import { AxiosInstanse } from "../../../../../utils/AxiosInstance";
 import { useDispatch } from "react-redux";
-import StateSlice from "features/State/StateSlice";
-function Matching2(props) {
+function TestProfileDetail(props) {
   const dispatch = useDispatch();
   const matchingType = ["Couple", "Friend"];
   const location = useLocation();
@@ -195,20 +191,6 @@ function Matching2(props) {
     예술계: "ART",
   };
 
-  useEffect(() => {
-    const messageListener = (e) => listener(e.data);
-
-    document.addEventListener("message", messageListener);
-    // iOS 플랫폼에서의 동작 설정
-    window.addEventListener("message", messageListener);
-
-    return () => {
-      document.removeEventListener("message", messageListener);
-      // iOS 플랫폼에서의 동작 설정
-      window.removeEventListener("message", messageListener);
-    };
-  }, []);
-
   const userAt = useSelector((state) => {
     return state.Popup.userToken.accessToken;
   });
@@ -220,154 +202,6 @@ function Matching2(props) {
   const reportCase = useSelector((state) => {
     return state.Popup.ReportCase;
   });
-
-  const getMatchResult = async () => {
-    try {
-      const CoupleResponse = await AxiosInstanse.get(
-        `/matching/user/result?matchingType=Couple`
-      );
-
-      dispatch(
-        StateSlice.actions.setCouplematchResult(CoupleResponse.data.data)
-      );
-      // 커플 매칭 성사 조회
-    } catch (error) {
-      console.log(error);
-    }
-
-    try {
-      const FriendResponse = await AxiosInstanse.get(
-        `/matching/user/result?matchingType=Friend`
-      );
-
-      dispatch(StateSlice.actions.FriendmatchResult(FriendResponse.data.data));
-      //친구매칭 성사 조회
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const accepts = async () => {
-    try {
-      const Response = await AxiosInstanse.post(
-        `/matching/user/decide?matchingChoice=Accept&matchingType=${matchingType[Theme]}`, // 동의, Couple, Friend
-        {}
-      );
-      // 동의 수락시 매칭결과 한번 업로드 해줘야 할듯?
-
-      if (Response.data.status === 200) {
-        getMatchResult();
-        navigate("/Choice", {
-          state: { theme: Theme, Result: 1, Direct: true },
-        });
-      }
-    } catch (error) {
-      alert(error);
-    }
-  };
-
-  const report = async (index) => {
-    try {
-      const Response = await AxiosInstanse.post(
-        `/user/report`, // 거절, couple, friend
-        {
-          reportType: "USER",
-          matchingType: matchingType[Theme],
-          reportReason: ENUM_ReportReason[reportCase[index]],
-        }
-      );
-      if (Response.data.status === 200) {
-        getMatchResult();
-        navigate("/Choice", {
-          state: { theme: Theme, Result: 3, Direct: true },
-        });
-      }
-    } catch (error) {
-      alert(error);
-    }
-  };
-  const rejects = async () => {
-    try {
-      const Response = await AxiosInstanse.post(
-        `/matching/user/decide?matchingChoice=Reject&matchingType=${matchingType[Theme]}`, // 거절, couple, friend
-        {}
-      );
-      if (Response.data.status === 200) {
-        getMatchResult(userAt, userRt);
-        navigate("/Choice", {
-          state: { theme: Theme, Result: 3, Direct: true },
-        });
-      }
-    } catch (error) {
-      alert(error);
-    }
-  };
-
-  const listener = (event) => {
-    const { data, type } = JSON.parse(event);
-
-    switch (type) {
-      case "accept": {
-        if (data) accepts();
-        break;
-      }
-
-      case "withoutReject": {
-        getMatchResult();
-        navigate("/Choice", {
-          state: { theme: Theme, Result: 3, Direct: true },
-        });
-        break;
-      }
-
-      case "reject": {
-        if (data) rejects();
-        break;
-      }
-
-      case "back": {
-        navigate("/matching");
-        break;
-      }
-
-      case "report":
-        {
-          // 신고 API완성되면 대체하기
-          report(data.reportNum); // 거절처리하기
-        }
-        break;
-    }
-  };
-
-  // @ 사용자 정보를 가져와 리덕스에 저장하는 매소드
-  // 인자로 access token, refresh token 필요
-
-  // @ 매칭 상대방에 대한 정보를 가져오는 통신
-  // MatcherInfo배열에 정보를 저장한다
-
-  // const getData = async (at, rt) => {
-  //   try {
-  //     const Response = await axios.get(
-  //       `${
-  //         process.env.NODE_ENV === "development"
-  //           ? ""
-  //           : "https://dev.fiveyears.click"
-  //       }/login/token`,
-  //       {
-  //         headers: {
-  //           Authorization: at,
-  //           "x-refresh-token": rt,
-  //           fcmToken: "123",
-  //           "content-type": "application/json",
-  //         },
-  //       }
-  //     );
-
-  //     dispatch(StateSlice.actions.MatcherInfo(Response.data.data));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const [detail, setDetail] = useState(false);
   const [isSelected, setIsSelected] = useState(0);
@@ -386,9 +220,7 @@ function Matching2(props) {
 
   return (
     <MatchingContainers detail={detail}>
-      <ContentContainer>
-        <MatchingProgressHeader isReport={true} direct={true} />
-      </ContentContainer>
+      <ContentContainer></ContentContainer>
       <ProfileImageContainer>
         <CarouselContainer
           dynamicHeight={true}
@@ -401,7 +233,7 @@ function Matching2(props) {
             </div>
           ))}
         </CarouselContainer>
-        {/* <img src={require("assets/mango.jpg")} alt="" /> */}
+        <img src={require("assets/mango.jpg")} alt="" />
       </ProfileImageContainer>
       <IntroduceContainer
         onClick={() => {
@@ -410,9 +242,7 @@ function Matching2(props) {
       >
         <DetailTextView detail={detail}></DetailTextView>
         <TextContainer detail={detail}>
-          {MatchedUserData.introduce && (
-            <text>{MatchedUserData.introduce}</text>
-          )}
+          <text>kfodkasodkasodksaodksaodkasodksaodkoas</text>
         </TextContainer>
         <KeyboardArrowDownIcon
           style={{
@@ -424,20 +254,13 @@ function Matching2(props) {
       </IntroduceContainer>
       <ProfileNameContainer>
         <ProfileName>
-          <text>{MatchedUserData.matchedUserNickname}</text>
+          <text>미쥬미쥬미쥬미쥬</text>
         </ProfileName>
       </ProfileNameContainer>
       <SelectionContainer>
         {/* 선택시 서버에 사진인증, 학생인증, 1장이상의 쿠폰을 보유하고 있는지 확인  */}
         <Selection>
-          <Option
-            onClick={() => {
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "accept", data: matchingType[Theme] })
-              );
-              // accept(userAt, userRt);
-            }}
-          >
+          <Option>
             {/* <img src={require("assets/Like.png")} alt="이미지" /> */}
             <LottieContainer>
               <Lottie animationData={heartHand} />
@@ -446,15 +269,7 @@ function Matching2(props) {
           </Option>
         </Selection>
         <Selection>
-          <Option
-            className="reject"
-            onClick={() => {
-              window.ReactNativeWebView?.postMessage(
-                JSON.stringify({ type: "reject", data: matchingType[Theme] })
-              );
-              // reject(userAt, userRt);
-            }}
-          >
+          <Option className="reject">
             <LottieContainer>
               <Lottie animationData={search} />
             </LottieContainer>
@@ -470,7 +285,6 @@ function Matching2(props) {
           });
         }}
       >
-        {/* <KeyboardDoubleArrowUpIcon color="disabled" fontSize="large" /> */}
         <Careup />
         <DetailView>
           <MatchingLink>
@@ -478,13 +292,11 @@ function Matching2(props) {
           </MatchingLink>
         </DetailView>
       </DetailContainer>
-      <DetailProfileContainer>
-        {/* <DetailHeader><HeaderLeft onClick={()=>{navigate(-1)}}><KeyboardArrowDownIcon style={{transform : "rotate(90deg)", marginLeft : "30px", width:"32px", height : "32px"}}/></HeaderLeft><HeaderName><Authen/><text>단짠지기임당</text></HeaderName><HeaderRight><MoreHorizIcon style={{marginRight : "30px"}}/></HeaderRight></DetailHeader> */}
-      </DetailProfileContainer>
+      <DetailProfileContainer></DetailProfileContainer>
       <ContentsContainer ref={DetailDownRef}>
         <ContentsName>
           <text>
-            <span>{MatchedUserData.matchedUserNickname}</span>님의 정보
+            <span>미쥬미쥬미쥬미쥬</span>님의 정보
           </text>
         </ContentsName>
         <ContentsSection>
@@ -493,7 +305,7 @@ function Matching2(props) {
               <text>학교</text>
             </ContentsTitle>
             <ContentsWindow className="fixed">
-              <text>{MatchedUserData.campusIdentifier}</text>
+              <text>단국대학교</text>
               {/* {MatcherInfo.school} */}
             </ContentsWindow>
           </Contents>
@@ -505,7 +317,7 @@ function Matching2(props) {
             </ContentsTitle>
             <ContentsWindow className="fixed">
               {/* <text>{MatchedUserData.gender}</text> */}
-              <text>{ENUM_GENDER[MatchedUserData.gender]}</text>
+              남자
               {/* {MatcherInfo.sex} */}
             </ContentsWindow>
           </Contents>
@@ -516,8 +328,7 @@ function Matching2(props) {
               <text>학번</text>
             </ContentsTitle>
             <ContentsWindow className="fixed">
-              <text>{MatchedUserData.studentId}학번</text>
-              {/* {MatcherInfo.gradenumber} */}
+              <text>15학번</text>
             </ContentsWindow>
           </Contents>
         </ContentsSection>
@@ -528,151 +339,163 @@ function Matching2(props) {
               <span>변경이 필요한 경우 고객센터를 통해 요청해주세요.</span>
             </ContentsTitle>
             <ContentsWindow className="fixed">
-              <text>
-                {getKeyByValue(ENUM_COLLEGE, MatchedUserData.college)}
-              </text>
-              {/* {MatcherInfo.major} */}
+              <text>단국대학교 (죽전))</text>
             </ContentsWindow>
           </Contents>
         </ContentsSection>
-        {MatchedUserData.introduce && (
-          <ContentsSection>
-            <Contents>
-              <ContentsTitle>
-                <text>자기소개</text>
-              </ContentsTitle>
-              <ContentsWindow>
-                <text>{MatchedUserData.introduce}</text>
-                {/* {MatcherInfo.introduce} */}
-              </ContentsWindow>
-            </Contents>
-          </ContentsSection>
-        )}
-        {MatchedUserData.personalities.length !== 0 && (
-          <ContentsSection>
-            <Contents>
-              <ContentsTitle>
-                <text>내 성격</text>
-              </ContentsTitle>
-              <ContentsWindow className="tag">
-                <TagContainer>
-                  {/* {MatcherInfo.personality, => foreach} */}
-                  {MatchedUserData.personalities.map((item) => (
-                    <text>
-                      <span>#</span>
-                      {getKeyByValue(ENUM_PERSONALITY, item)}
-                    </text>
-                  ))}
-                </TagContainer>
-              </ContentsWindow>
-            </Contents>
-          </ContentsSection>
-        )}
-        {MatchedUserData.interests.length !== 0 && (
-          <ContentsSection>
-            <Contents>
-              <ContentsTitle>
-                <text>관심사</text>
-              </ContentsTitle>
-              <ContentsWindow className="tag">
-                <TagContainer>
-                  {/* {MatcherInfo.interest} =>foreach */}
-                  {MatchedUserData.interests.map((item) => (
-                    <text>
-                      <span>#</span>
-                      {getKeyByValue(ENUM_INTEREST, item)}
-                    </text>
-                  ))}
-                </TagContainer>
-              </ContentsWindow>
-            </Contents>
-          </ContentsSection>
-        )}
-
-        {MatchedUserData.region && (
-          <ContentsSection>
-            <Contents>
-              <ContentsTitle>
-                <text>지역</text>
-              </ContentsTitle>
-              <ContentsWindow>
-                <text>{MatchedUserData.region}</text>
-                {/* {MatcherInfo.area} */}
-              </ContentsWindow>
-            </Contents>
-          </ContentsSection>
-        )}
-
-        {MatchedUserData.militaryServiceStatus && (
-          <ContentsSection>
-            <Contents>
-              <ContentsTitle>
-                <text>병역 여부</text>
-              </ContentsTitle>
-              <ContentsWindow>
-                <text>{MatchedUserData.militaryServiceStatus}</text>
-                {/* {MatcherInfo.military} */}
-              </ContentsWindow>
-            </Contents>
-          </ContentsSection>
-        )}
-
-        {MatchedUserData.mbti && MatchedUserData.mbti != "INITIAL_VALUE" && (
-          <ContentsSection>
-            <Contents>
-              <ContentsTitle>
-                <text>MBTI</text>
-              </ContentsTitle>
-              <ContentsWindow>
-                <text>{MatchedUserData.mbti}</text>
-                {/* {MatcherInfo.mbti} */}
-              </ContentsWindow>
-            </Contents>
-          </ContentsSection>
-        )}
-
-        {MatchedUserData.religion && (
-          <ContentsSection>
-            <Contents>
-              <ContentsTitle>
-                <text>종교</text>
-              </ContentsTitle>
-              <ContentsWindow>
-                <text>{MatchedUserData.religion}</text>
-                {/* {MatcherInfo.religion} */}
-              </ContentsWindow>
-            </Contents>
-          </ContentsSection>
-        )}
-
-        {MatchedUserData.drink && (
-          <ContentsSection>
-            <Contents>
-              <ContentsTitle>
-                <text>음주</text>
-              </ContentsTitle>
-              <ContentsWindow>
-                <text>{MatchedUserData.drink}</text>
-                {/* {MatcherInfo.alcohol} */}
-              </ContentsWindow>
-            </Contents>
-          </ContentsSection>
-        )}
-
-        {MatchedUserData.smoke && (
-          <ContentsSection>
-            <Contents>
-              <ContentsTitle>
-                <text>흡연</text>
-              </ContentsTitle>
-              <ContentsWindow>
-                <text>{MatchedUserData.smoke}</text>
-                {/* {MatcherInfo.smoke} */}
-              </ContentsWindow>
-            </Contents>
-          </ContentsSection>
-        )}
-
+        <ContentsSection>
+          <Contents>
+            <ContentsTitle>
+              <text>자기소개</text>
+            </ContentsTitle>
+            <ContentsWindow>
+              <text>
+                dkdoaskdaoskdosadksaodkasodkasodksaodkasodkasodkasodkaosdkasodkaos
+              </text>
+            </ContentsWindow>
+          </Contents>
+        </ContentsSection>
+        <ContentsSection>
+          <Contents>
+            <ContentsTitle>
+              <text>내 성격</text>
+            </ContentsTitle>
+            <ContentsWindow className="tag">
+              <TagContainer>
+                <text>
+                  <span>#</span>
+                  좋아요
+                </text>
+                <text>
+                  <span>#</span>
+                  좋아요
+                </text>{" "}
+                <text>
+                  <span>#</span>
+                  좋아요
+                </text>{" "}
+                <text>
+                  <span>#</span>
+                  좋아요
+                </text>{" "}
+                <text>
+                  <span>#</span>
+                  좋아요
+                </text>{" "}
+                <text>
+                  <span>#</span>
+                  좋아요
+                </text>{" "}
+                <text>
+                  <span>#</span>
+                  좋아요
+                </text>
+              </TagContainer>
+            </ContentsWindow>
+          </Contents>
+        </ContentsSection>
+        (
+        <ContentsSection>
+          <Contents>
+            <ContentsTitle>
+              <text>관심사</text>
+            </ContentsTitle>
+            <ContentsWindow className="tag">
+              <TagContainer>
+                <text>
+                  <span>#</span>
+                  재밌어
+                </text>
+                <text>
+                  <span>#</span>
+                  재밌어
+                </text>{" "}
+                <text>
+                  <span>#</span>
+                  재밌어
+                </text>{" "}
+                <text>
+                  <span>#</span>
+                  재밌어
+                </text>{" "}
+                <text>
+                  <span>#</span>
+                  재밌어
+                </text>{" "}
+                <text>
+                  <span>#</span>
+                  재밌어
+                </text>
+              </TagContainer>
+            </ContentsWindow>
+          </Contents>
+        </ContentsSection>
+        )
+        <ContentsSection>
+          <Contents>
+            <ContentsTitle>
+              <text>지역</text>
+            </ContentsTitle>
+            <ContentsWindow>
+              <text>경기도</text>
+              {/* {MatcherInfo.area} */}
+            </ContentsWindow>
+          </Contents>
+        </ContentsSection>
+        <ContentsSection>
+          <Contents>
+            <ContentsTitle>
+              <text>병역 여부</text>
+            </ContentsTitle>
+            <ContentsWindow>
+              <text>군필</text>
+              {/* {MatcherInfo.military} */}
+            </ContentsWindow>
+          </Contents>
+        </ContentsSection>
+        <ContentsSection>
+          <Contents>
+            <ContentsTitle>
+              <text>MBTI</text>
+            </ContentsTitle>
+            <ContentsWindow>
+              <text>ISTJ</text>
+            </ContentsWindow>
+          </Contents>
+        </ContentsSection>
+        <ContentsSection>
+          <Contents>
+            <ContentsTitle>
+              <text>종교</text>
+            </ContentsTitle>
+            <ContentsWindow>
+              <text>천주교</text>
+              {/* {MatcherInfo.religion} */}
+            </ContentsWindow>
+          </Contents>
+        </ContentsSection>
+        <ContentsSection>
+          <Contents>
+            <ContentsTitle>
+              <text>음주</text>
+            </ContentsTitle>
+            <ContentsWindow>
+              <text>가끔마셔요</text>
+              {/* {MatcherInfo.alcohol} */}
+            </ContentsWindow>
+          </Contents>
+        </ContentsSection>
+        <ContentsSection>
+          <Contents>
+            <ContentsTitle>
+              <text>흡연</text>
+            </ContentsTitle>
+            <ContentsWindow>
+              <text>비흡연자</text>
+              {/* {MatcherInfo.smoke} */}
+            </ContentsWindow>
+          </Contents>
+        </ContentsSection>
         <SelectButtonContainer>
           <Selection>
             <Option
@@ -691,27 +514,19 @@ function Matching2(props) {
             </Option>
           </Selection>
           <Selection>
-            <Option
-              className="reject"
-              onClick={() => {
-                window.ReactNativeWebView?.postMessage(
-                  JSON.stringify({ type: "reject", data: matchingType[Theme] })
-                );
-                // reject(userAt, userRt);
-              }}
-            >
+            <Option>
               <LottieContainer>
                 <Lottie animationData={search} />
               </LottieContainer>
               <text className="reject">다른 메이트를 찾아볼게요.</text>
             </Option>
           </Selection>
-          {/* <SelectionButton><Button onClick={()=>{   
+          {/* <SelectionButton><Button onClick={()=>{
               window.ReactNativeWebView?.postMessage(
                 JSON.stringify({ type: "accept" , data: "" })
               );}}
             ><text>단짠메이트를 찾았어요!</text></Button></SelectionButton>
-          <SelectionButton className="reject"><Button onClick={()=>{   
+          <SelectionButton className="reject"><Button onClick={()=>{
               window.ReactNativeWebView?.postMessage(
                 JSON.stringify({ type: "reject" , data: "" })
               );}} className='reject'><text>다른 메이트를 찾아볼게요</text></Button></SelectionButton> */}
@@ -721,7 +536,7 @@ function Matching2(props) {
   );
 }
 
-export default Matching2;
+export default TestProfileDetail;
 
 const CarouselContainer = styled(Carousel)`
   width: 100%;

@@ -95,13 +95,9 @@ export default HeaderRight;
 
 const ContentContainer = styled.div`
   display: flex;
+  flex: 1;
   position: relative;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  /* top : 7.8%; */
 
   > img {
     visibility: hidden;
@@ -111,9 +107,8 @@ const ContentContainer = styled.div`
     /* 전체 가로 390 세로 844px 중 헤더부분은 가로 390 세로 중 */
     display: flex;
     /* top: 7.8%; */
-    width: 100%;
-    height: 100%;
-    position: absolute;
+
+    position: relative;
     justify-content: center;
   }
 `;

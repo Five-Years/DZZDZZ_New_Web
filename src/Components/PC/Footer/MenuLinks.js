@@ -124,10 +124,8 @@ function MenuLinks() {
 export default MenuLinks;
 
 const MobileWrapper = styled.div`
-  width: 70%;
-  height: 100%;
   display: flex;
-  justify-content: space-between;
+  flex: 1;
 
   @media screen and (max-width: 800px) {
     flex-direction: column;
@@ -140,15 +138,15 @@ const MobileWrapper = styled.div`
 `;
 
 const Link = styled.div`
-  box-sizing: border-box;
-
+  display: flex;
+  flex: 1;
+  min-width: 280px;
   > text {
     font-family: var(--font-Pretendard);
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 17px;
-    letter-spacing: 0em;
-    text-align: center;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 19px;
 
     :hover {
       cursor: pointer;
@@ -217,6 +215,7 @@ const Link = styled.div`
     }
     &.Mobile {
       display: flex;
+      /* background-color: red; */
       flex-direction: row;
       align-items: center;
       justify-content: start;
