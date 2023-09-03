@@ -41,7 +41,6 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
       <Routes>
-        <Route path="/Temp" element={<TempHomePage />}></Route>
         <Route path="/Matching" element={<MatchingHomePage />}></Route>
         <Route path="/purchasing" element={<Purchasing />}></Route>
         <Route path="/matchingPage" element={<MatchingPage />}></Route>
