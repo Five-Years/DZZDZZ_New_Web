@@ -40,7 +40,7 @@ function TicketPage() {
               window.ReactNativeWebView?.postMessage(
                 JSON.stringify({
                   type: "buyTicket",
-                  data: { amount: 1, canBuy: userAsset.jelly > 20 },
+                  data: { amount: 1, canBuy: userAsset.jelly >= 20 },
                 })
               );
             }}
@@ -70,7 +70,7 @@ function TicketPage() {
               window.ReactNativeWebView?.postMessage(
                 JSON.stringify({
                   type: "buyTicket",
-                  data: { amount: 4, canBuy: userAsset.jelly > 64 },
+                  data: { amount: 4, canBuy: userAsset.jelly >= 64 },
                 })
               );
             }}
@@ -99,7 +99,7 @@ function TicketPage() {
               window.ReactNativeWebView?.postMessage(
                 JSON.stringify({
                   type: "buyTicket",
-                  data: { amount: 8, canBuy: userAsset.jelly > 110 },
+                  data: { amount: 8, canBuy: userAsset.jelly >= 110 },
                 })
               );
             }}
@@ -128,7 +128,7 @@ function TicketPage() {
               window.ReactNativeWebView?.postMessage(
                 JSON.stringify({
                   type: "buyTicket",
-                  data: { amount: 15, canBuy: userAsset.jelly > 190 },
+                  data: { amount: 15, canBuy: userAsset.jelly >= 190 },
                 })
               );
             }}
