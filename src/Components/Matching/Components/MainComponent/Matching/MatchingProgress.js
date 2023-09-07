@@ -32,18 +32,10 @@ function MatchingProgress() {
   const navigate = useNavigate();
 
   //@ 현재 매칭하는 상대방의 정보를 불러오고 리듀서에 저장한다 (친구, 이성 테마에 맞춰서)
-  const getMatchedUserInfo = async (at, rt) => {
+  const getMatchedUserInfo = async () => {
     try {
       const Response = await AxiosInstanse.get(
-        `/matching/user/info?matchingType=${matchingType[Theme]}`, // 매칭타입 가변적으로 만들어주기
-        {
-          headers: {
-            Authorization: at,
-            "x-refresh-token": rt,
-            fcmToken: "123",
-            "content-type": "application/json",
-          },
-        }
+        `/matching/user/info?matchingType=${matchingType[Theme]}`
       );
       // dispatch(StateSlice.actions.matchParticipate(Response.data.data));
       dispatch(StateSlice.actions.MatchedUserInfo(Response.data.data));
@@ -67,7 +59,7 @@ function MatchingProgress() {
 
   useEffect(() => {
     if (MatchedUserData === null) {
-      getMatchedUserInfo(userAt, userRt);
+      getMatchedUserInfo();
     }
   }, [MatchedUserData]);
 

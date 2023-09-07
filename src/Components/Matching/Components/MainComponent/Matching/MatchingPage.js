@@ -305,6 +305,7 @@ function MatchingPage() {
       );
     } else if (
       SeasonStep === 1 &&
+      !can &&
       status.matchingResult === "RoundFail" &&
       status.myChoice == "Reject"
     ) {
@@ -325,6 +326,7 @@ function MatchingPage() {
       );
     } else if (
       SeasonStep === 1 &&
+      !can &&
       (status.matchingResult === "RoundFail" ||
         status.matchingResult === "RoundSuccess") &&
       status.myChoice !== null

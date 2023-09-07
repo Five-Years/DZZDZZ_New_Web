@@ -109,6 +109,11 @@ function Purchasing() {
         //만약 true라면
         // 티켓 갱신
         break;
+
+      case "refresh": {
+        getAsset();
+        break;
+      }
       default:
         break;
     }

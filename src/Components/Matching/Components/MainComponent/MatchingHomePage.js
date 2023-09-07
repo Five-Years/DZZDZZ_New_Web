@@ -21,6 +21,7 @@ function MatchingHomePage(props) {
   const [Hour, setHour] = useState("00");
   const [Minute, setMinute] = useState("00");
   const [Second, setSecond] = useState("00");
+  const [hasRun, setHasRun] = useState(false);
 
   const min = 1000 * 60; //1000ms => 1s , 1s*60 = 1m
   const navigate = useNavigate();
@@ -325,6 +326,11 @@ function MatchingHomePage(props) {
         navigate(-1);
         break;
       }
+
+      case "refresh": {
+        getUserAsset();
+        break;
+      }
       default:
         break;
     }
@@ -512,6 +518,7 @@ function MatchingHomePage(props) {
 
   useEffect(() => {
     if (
+      !hasRun &&
       Name !== "anonymous" &&
       SeasonStep !== -1 &&
       Object.keys(matchParticipate).length > 0 &&
@@ -522,6 +529,10 @@ function MatchingHomePage(props) {
       Object.keys(userMatchAvailable).length > 0
     ) {
       setLoading(false);
+      window.ReactNativeWebView?.postMessage(
+        JSON.stringify({ type: "loadFinish", data: "" })
+      );
+      setHasRun(true);
     }
   }, [
     Name,
@@ -587,12 +598,10 @@ function MatchingHomePage(props) {
                     //   CouplematchResult.matchingResult === "RoundSuccess" ||
                     //   CouplematchResult.matchingResult === "NoneWithHistory"
                     <>
-                      {" "}
                       <span>#</span> <span>확인하러가기</span>
                     </>
                   ) : (
                     <>
-                      {" "}
                       <span>#</span> 소개팅을 원해요 (커플매칭)
                     </>
                   )}
@@ -637,7 +646,6 @@ function MatchingHomePage(props) {
                     </>
                   ) : (
                     <>
-                      {" "}
                       <span className="friend">#</span> 친구를 원해요 (친구매칭)
                     </>
                   )}
